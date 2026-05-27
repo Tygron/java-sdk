@@ -77,10 +77,6 @@ public class Neighborhood extends PolygonAttributeItem implements ActiveItem, In
     @ItemIDField(MapLink.STAKEHOLDERS)
     private Integer municipalityID = Item.NONE;
 
-    public int getCityDegree() {
-        return (int) Math.round(getAttribute(NeighborhoodAttribute.URBANIZATION));
-    }
-
     @Override
     protected ReservedAttribute[] getDefaultAttributes() {
         return NeighborhoodAttribute.values();
@@ -97,6 +93,10 @@ public class Neighborhood extends PolygonAttributeItem implements ActiveItem, In
 
     public Integer getMunicipalityID() {
         return municipalityID;
+    }
+
+    public int getUrbanization() {
+        return (int) Math.round(getAttribute(NeighborhoodAttribute.URBANIZATION));
     }
 
     @Override

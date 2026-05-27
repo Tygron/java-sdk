@@ -1,0 +1,149 @@
+/*******************************************************************************************************************************************
+ * Copyright 2006-2026 TyTech B.V., Lange Vijverberg 4, 2513 AC, The Hague, The Netherlands. All rights reserved under the copyright laws of
+ * The Netherlands and applicable international laws, treaties, and conventions. TyTech B.V. is a subsidiary company of Tygron Group B.V..
+ *
+ * This software is proprietary information of TyTech B.V.. You may freely redistribute and use this SDK code, with or without modification,
+ * provided you include the original copyright notice and use it in compliance with your Tygron Platform License Agreement.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
+ * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+ * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *******************************************************************************************************************************************/
+package nl.tytech.data.editor.item;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import nl.tytech.core.item.annotations.ItemIDField;
+import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.core.net.serializable.MapLink;
+import nl.tytech.data.core.item.Item;
+import nl.tytech.util.StringUtils;
+
+/**
+ *
+ * Chat messages
+ *
+ * @author Maxim Knepfle
+ *
+ */
+public class ChatMessage extends Item {
+
+    public enum AIState {
+
+        NONE(0), QUEUING(1), GENERATING(2), FINISHED(3);
+
+        public static final AIState fromStep(int step) {
+
+            for (AIState s : AIState.values()) {
+                if (s.getStep() == step) {
+                    return s;
+                }
+            }
+            return null;
+        }
+
+        private final int step;
+
+        private AIState(int step) {
+            this.step = step;
+        }
+
+        public int getStep() {
+            return step;
+        }
+
+        public final boolean isBusy() {
+            return this == QUEUING || this == GENERATING;
+        }
+
+        @Override
+        public String toString() {
+            return name().toLowerCase();
+        }
+    }
+
+    public enum Role {
+
+        SYSTEM, INTRO, ASSISTANT, USER;
+
+        @Override
+        public String toString() {
+            return name().toLowerCase();
+        }
+    }
+
+    private static final long serialVersionUID = 6153041251983174279L;
+
+    @XMLValue
+    private Role role = Role.USER;
+
+    @XMLValue
+    protected String message = StringUtils.EMPTY;
+
+    @XMLValue
+    private long date = Item.NONE;
+
+    @XMLValue
+    @ItemIDField(MapLink.CHAT_CHANNELS)
+    private Integer channelID = Item.NONE;
+
+    public ChatMessage() {
+
+    }
+
+    public ChatMessage(Integer channelID, Role role, String message) {
+
+        this.channelID = channelID;
+        this.role = role;
+        this.message = message;
+        this.date = System.currentTimeMillis();
+    }
+
+    public AIState getAIState() {
+        return AIState.NONE;
+    }
+
+    public ChatChannel getChannel() {
+        return getItem(MapLink.CHAT_CHANNELS, getChannelID());
+    }
+
+    public Integer getChannelID() {
+        return channelID;
+    }
+
+    public String getDate() {
+
+        Calendar calendar = Calendar.getInstance();
+        if (date > 0) {
+            calendar.setTimeInMillis(date);
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss ");
+        return sdf.format(calendar.getTime());
+    }
+
+    public String getMessage(boolean includeReasoning) {
+        return message;
+    }
+
+    public String getName() {
+        return StringUtils.capitalizeWithSpacedUnderScores(getRole());
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setChannelID(Integer channelID) {
+        this.channelID = channelID;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return getMessage(false);
+    }
+}

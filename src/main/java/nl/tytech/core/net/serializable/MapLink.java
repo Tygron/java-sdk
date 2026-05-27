@@ -70,6 +70,8 @@ public enum MapLink implements EventTypeEnum {
 
     CHAT_MESSAGES(COMMUNITY, INTERACTION, false),
 
+    CHAT_CHANNELS(COMMUNITY, INTERACTION, false),
+
     CINEMATIC_DATAS(TOOLS, VISUALS, false),
 
     CLIENT_WORDS(TOOLS, ASSETS, false),
@@ -326,7 +328,15 @@ public enum MapLink implements EventTypeEnum {
     }
 
     public boolean isRestoreAfterTestrun() {
-        return this != PARAMETRIC_DESIGNS;
+
+        switch (this) {
+            case PARAMETRIC_DESIGNS:
+            case CHAT_CHANNELS:
+            case CHAT_MESSAGES:
+                return false;
+            default:
+                return true;
+        }
     }
 
     @Override

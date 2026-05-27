@@ -45,9 +45,4 @@ public class AreaGeoLink extends CustomGeoLink {
         return GeoLinkType.AREA;
     }
 
-    @Override
-    public boolean isWater() {
-        return false;
-    }
-
 }

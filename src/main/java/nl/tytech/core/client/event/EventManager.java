@@ -121,16 +121,16 @@ public class EventManager {
         SingletonHolder.INSTANCE._addEventListeners(true, listener, types);
     }
 
-    public static final void fire(Event event) {
-        SingletonHolder.INSTANCE.fireEvent(event);
+    public static final Event fire(Event event) {
+        return SingletonHolder.INSTANCE.fireEvent(event);
     }
 
-    public static final void fire(final EventTypeEnum type, final Object... contents) {
-        SingletonHolder.INSTANCE.fireEvent(new Event(type, contents));
+    public static final Event fire(final EventTypeEnum type, final Object... contents) {
+        return SingletonHolder.INSTANCE.fireEvent(new Event(type, contents));
     }
 
-    public static final void fire(final int connectionID, final EventTypeEnum type, final Object... contents) {
-        SingletonHolder.INSTANCE.fireEvent(new ConnectionIDEvent(connectionID, type, contents));
+    public static final Event fire(final int connectionID, final EventTypeEnum type, final Object... contents) {
+        return SingletonHolder.INSTANCE.fireEvent(new ConnectionIDEvent(connectionID, type, contents));
     }
 
     public static final void fire(List<CodedEvent> events) {
@@ -605,7 +605,7 @@ public class EventManager {
         }
     }
 
-    private final void fireEvent(final Event event) {
+    private final Event fireEvent(final Event event) {
 
         if (event.getType().isServerSide()) {
             if (SettingsManager.getRunMode() == RunMode.RELEASE) {
@@ -624,12 +624,13 @@ public class EventManager {
             } else {
                 TLogger.severe("ClientEvent failure: " + error);
             }
-            return;
+            return event;
         }
 
         fireToNormalEvent(event);
         fireToIDEvent(event);
         fireToEnumEvent(event);
+        return event;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -27,7 +27,7 @@ import nl.tytech.naming.EngineNC;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Events related to the GeoShare.")
+@ClassDescription("Endpoints related to the GeoShare.")
 public enum ShareServiceEventType implements ServiceEventType {
 
     @EventParamData(desc = "Add new Sharable for given path, name and type, returns unique path with primary extension. For files larger than 2GB, use the Stream API.", params = {

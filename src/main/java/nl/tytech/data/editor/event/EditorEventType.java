@@ -25,7 +25,7 @@ import nl.tytech.core.item.annotations.EventParamData;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Generic Editor events for creating a Project and updating.")
+@ClassDescription("Generic Editor endpoints for creating a Project and updating.")
 public enum EditorEventType implements EventTypeEnum {
 
     /**
@@ -55,8 +55,8 @@ public enum EditorEventType implements EventTypeEnum {
     @EventIDField(nullable = { 2, 3 })
     START_MAP_CREATION(Double.class, Double.class, MultiPolygon.class, MultiPolygon[].class),
 
-    @EventParamData(desc = "Waits for update of all active overlays, indicators, panels and triggers. "
-            + "Note: for long-running updates use: set_scheduled_update/ to schedule an update.", params = {
+    @EventParamData(desc = "Calculate all active overlays, indicators, panels and triggers and wait for the update. "
+            + "Note: for long-running calculations use: set_scheduled_update/ to schedule an update.", params = {
                     "Reset all X-Queries (optional)", }, defaults = { "false", })
     @EventIDField(nullable = { 0 })
     UPDATE(Boolean.class),

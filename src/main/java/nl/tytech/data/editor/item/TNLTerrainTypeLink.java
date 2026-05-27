@@ -52,11 +52,6 @@ public class TNLTerrainTypeLink extends TNLTerrainLink {
     }
 
     @Override
-    public boolean isWater() {
-        return getTerrainType().isWater();
-    }
-
-    @Override
     public boolean mustContainHouses() {
         return false;
     }

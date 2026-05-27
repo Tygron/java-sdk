@@ -278,7 +278,7 @@ public class SettingsManager {
 
         FIRST_TIME(true),
 
-        FIRST_EDITOR_2026(true),
+        CHAT_VERSION_2026(0),
 
         SCREEN_TEXTURE_SIZE(TextureSize.MEDIUM),
 
@@ -406,6 +406,10 @@ public class SettingsManager {
 
     public static String getCameraStyle() {
         return SingletonHolder.getInstance()._getCameraStyle();
+    }
+
+    public static int getChatVersion2026() {
+        return SingletonHolder.getInstance()._getChatVersion2026();
     }
 
     public static String getClientToken(int connectionID) {
@@ -608,10 +612,6 @@ public class SettingsManager {
         return true;
     }
 
-    public static boolean isFirstEditor2026() {
-        return SingletonHolder.getInstance()._isFirstEditor2026();
-    }
-
     public static boolean isFirstTime() {
         return SingletonHolder.getInstance()._isFirstTime();
     }
@@ -659,16 +659,16 @@ public class SettingsManager {
         SingletonHolder.getInstance()._setCameraStyle(style);
     }
 
+    public static void setChatVersion2026(int version) {
+        SingletonHolder.getInstance()._setChatVersion2026(version);
+    }
+
     public static void setClientToken(int connectionID, String clientToken) {
         SingletonHolder.getInstance()._setClientToken(connectionID, clientToken);
     }
 
     public static void setConditionsChecksum(Conditions conditions, String eulaChecksum) {
         SingletonHolder.getInstance()._setConditionsChecksum(conditions, eulaChecksum);
-    }
-
-    public static void setFirstEditor2026(boolean firstTime) {
-        SingletonHolder.getInstance()._setFirstEditor2026(firstTime);
     }
 
     public static void setFirstTime(boolean firstTime) {
@@ -937,6 +937,10 @@ public class SettingsManager {
         return getProperty(SettingsType.CAMERA_STYLE, String.class);
     }
 
+    private int _getChatVersion2026() {
+        return getProperty(SettingsType.CHAT_VERSION_2026, Integer.class);
+    }
+
     /**
      * _get the client token
      *
@@ -1154,10 +1158,6 @@ public class SettingsManager {
         return getProperty(SettingsType.VIDEO_DIRECTORY, String.class);
     }
 
-    private boolean _isFirstEditor2026() {
-        return getProperty(SettingsType.FIRST_EDITOR_2026, Boolean.class);
-    }
-
     private boolean _isFirstTime() {
         return getProperty(SettingsType.FIRST_TIME, Boolean.class);
     }
@@ -1190,6 +1190,10 @@ public class SettingsManager {
         setProperty(SettingsType.CAMERA_STYLE, style);
     }
 
+    private void _setChatVersion2026(int version) {
+        setProperty(SettingsType.CHAT_VERSION_2026, version);
+    }
+
     private void _setClientToken(int connectionID, String clientToken) {
         setProperty(SettingsType.CLIENT_TOKEN, connectionID, clientToken);
     }
@@ -1197,10 +1201,6 @@ public class SettingsManager {
     private void _setConditionsChecksum(Conditions conditions, String eulaChecksum) {
         setProperty(SettingsType.CONDITIONS_CHECKSUM, eulaChecksum);
         setProperty(SettingsType.CONDITIONS_REGION, conditions.name());
-    }
-
-    private void _setFirstEditor2026(boolean firstTime) {
-        setProperty(SettingsType.FIRST_EDITOR_2026, firstTime);
     }
 
     private void _setFirstTime(boolean firstTime) {

@@ -13,17 +13,14 @@
 package nl.tytech.data.editor.item;
 
 import java.util.Collection;
-import java.util.List;
 import nl.tytech.core.item.annotations.ItemIDField;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
 import nl.tytech.data.engine.item.Function;
-import nl.tytech.data.engine.item.Function.Region;
 import nl.tytech.data.engine.item.Stakeholder;
 import nl.tytech.data.engine.item.Stakeholder.Type;
 import nl.tytech.data.engine.serializable.Category;
-import nl.tytech.data.engine.serializable.ConstructionPeriod;
 
 /**
  *
@@ -80,10 +77,6 @@ public abstract class CustomFunctionGeoLink extends CustomGeoLink {
         return this.getFunction().getCategories();
     }
 
-    public List<ConstructionPeriod> getConstructionPeriods() {
-        return getFunction().getConstructionPeriods();
-    }
-
     @Override
     public Type getDefaultStakeholderType() {
         return getDefaultStakeholderType(getCategories());
@@ -95,15 +88,6 @@ public abstract class CustomFunctionGeoLink extends CustomGeoLink {
 
     public Integer getFunctionID() {
         return functionID;
-    }
-
-    public List<Region> getRegions() {
-        return getFunction().getRegions();
-    }
-
-    @Override
-    public boolean isWater() {
-        return false;
     }
 
     public void setFunctionID(Integer functionID) {

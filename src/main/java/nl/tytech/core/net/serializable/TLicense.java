@@ -36,42 +36,6 @@ public enum TLicense {
 
     STARTER(1, 6, 0, 5_000, 75, 0, new TColor(214, 122, 78), 100l * MemoryUtils.MB),
 
-    @Deprecated
-    BRONZE(1000, 6, 6_100, 5_000, 75, 0, new TColor(214, 122, 78), 100l * MemoryUtils.MB),
-
-    @Deprecated
-    SINGLE(1, 2, 6_250, DEFAULT_MAX_PROJECT_DIM_M, 75, 0, new TColor(214, 122, 78), 0),
-
-    @Deprecated
-    SILVER(1000, 20, 18_200, 10_000, 250, 0, new TColor(220, 220, 220), 1l * MemoryUtils.GB),
-
-    @Deprecated
-    PROFESSIONAL(5, 10, 18_750, DEFAULT_MAX_PROJECT_DIM_M, 150, 0, new TColor(220, 220, 220), 10l * MemoryUtils.GB),
-
-    @Deprecated
-    PROFESSIONAL_REGION(5, 10, 36_400, DEFAULT_MAX_PROJECT_DIM_M, 1250, 0, new TColor(220, 220, 220), 100l * MemoryUtils.GB),
-
-    @Deprecated
-    GOLD(1000, 100, 36_400, 30_000, 1250, 0, new TColor(238, 183, 68), 10l * MemoryUtils.GB),
-
-    @Deprecated
-    ENTERPRISE(20, 40, 38_000, DEFAULT_MAX_PROJECT_DIM_M, 300, 0, new TColor(238, 183, 68), 40l * MemoryUtils.GB),
-
-    @Deprecated
-    ENTERPRISE_REGION(20, 40, 54_000, DEFAULT_MAX_PROJECT_DIM_M, 2500, 0, new TColor(238, 183, 68), 400l * MemoryUtils.GB),
-
-    @Deprecated
-    PLATINUM(1000, 400, 67_100, DEFAULT_MAX_PROJECT_DIM_M, 5_000, 0, new TColor(164, 193, 201), 100l * MemoryUtils.GB),
-
-    @Deprecated
-    DIAMOND(1000, 2_000, 117_000, DEFAULT_MAX_PROJECT_DIM_M, 25_000, 0, new TColor(120, 168, 164), MemoryUtils.TB),
-
-    @Deprecated
-    EDU_FREE(1000, 30, 0, 1_000, 50, 0, new TColor(56, 86, 129), 100l * MemoryUtils.MB),
-
-    @Deprecated
-    EDU_PRO(1000, 50, 6_100, 10_000, 250, 0, new TColor(56, 86, 129), 1l * MemoryUtils.GB),
-
     // Table 2025 series with 2026 prices
 
     T25_BRONZE(5, 2, 6_430, DEFAULT_MAX_PROJECT_DIM_M, 75, 0, new TColor(214, 122, 78), 1l * MemoryUtils.GB),
@@ -319,29 +283,18 @@ public enum TLicense {
                 return STARTER;
             case STARTER:
                 return T25_BRONZE;
-            case EDU_FREE:
+            case T25_EDU_FREE:
                 return T25_EDU_PRO;
 
-            // new 2025
-            case BRONZE:
+            // licenses 2025
+            case T25_EDU_PRO:
             case T25_BRONZE:
-            case SINGLE:
-            case EDU_PRO:
                 return T25_SILVER;
-
-            case SILVER:
             case T25_SILVER:
-            case PROFESSIONAL:
                 return T25_GOLD;
-
-            case GOLD:
             case T25_GOLD:
-            case PROFESSIONAL_REGION:
                 return T25_PLATINUM;
-
-            case PLATINUM:
             case T25_PLATINUM:
-            case ENTERPRISE_REGION:
                 return T25_DIAMOND;
 
             // no upgrade
@@ -354,7 +307,7 @@ public enum TLicense {
 
         switch (variable) {
             case ALLOW_BASIC:
-                return isSingle() || this == NONE || this == PROFESSIONAL || this == ENTERPRISE ? 0 : 1;
+                return isSingle() || this == NONE ? 0 : 1;
             case ALLOW_PREVIEW:
                 return 0;
             case ALLOW_SUBDOMAINS:
@@ -374,16 +327,11 @@ public enum TLicense {
             case MAX_PROJECT_DIM_M:
                 return maxProjectDimM;
             case MAX_PROJECT_VERSIONS:
-                return isSingle() || isEducation() || this == T25_BRONZE ? 2
-                        : this == PROFESSIONAL || this == PROFESSIONAL_REGION || this == T25_SILVER ? 5 : 10;
+                return isSingle() || isEducation() || this == T25_BRONZE ? 2 : this == T25_SILVER ? 5 : 10;
             case SUPPORT:
                 switch (this) {
                     case NONE:
-                    case SINGLE:
                         return Support.COMMUNITY.ordinal();
-                    case ENTERPRISE:
-                    case ENTERPRISE_REGION:
-                        return Support.ADVANCED.ordinal();
                     default:
                         return Support.PREMIUM.ordinal();
                 }
@@ -394,39 +342,24 @@ public enum TLicense {
             case MIN_CELL_CM:
                 return isSingle() || isEducation() ? 50 : 25;
             case MIN_PROJECT_CELLS:
-                return isSingle() || this == EDU_FREE || this == T25_EDU_FREE ? 10_000_000_000l : 30_000_000_000l; // 30 billion default
+                return isSingle() || this == T25_EDU_FREE ? 10_000_000_000l : 30_000_000_000l; // 30 billion default
             case MAX_PROJECT_CELLS:
-                return isSingle() || this == EDU_FREE || this == T25_EDU_FREE ? 30_000_000_000l : 60_000_000_000l; // 60 billion default
+                return isSingle() || this == T25_EDU_FREE ? 30_000_000_000l : 60_000_000_000l; // 60 billion default
             default:
                 return 0;
         }
     }
 
     public final boolean isEducation() {
-        return this == EDU_PRO || this == EDU_FREE || this == T25_EDU_PRO || this == T25_EDU_FREE;
+        return this == T25_EDU_PRO || this == T25_EDU_FREE;
     }
 
     /**
-     * Old license model from before 2025
+     * Old license models
      */
     public final boolean isOldModel() {
 
         return switch (this) {
-            // old 2023
-            case BRONZE -> true;
-            case SILVER -> true;
-            case GOLD -> true;
-            case PLATINUM -> true;
-            case DIAMOND -> true;
-            // old 2024
-            case SINGLE -> true;
-            case ENTERPRISE -> true;
-            case ENTERPRISE_REGION -> true;
-            case PROFESSIONAL -> true;
-            case PROFESSIONAL_REGION -> true;
-            // old edu
-            case EDU_FREE -> true;
-            case EDU_PRO -> true;
             default -> false;
         };
     }
@@ -452,7 +385,7 @@ public enum TLicense {
     }
 
     private final boolean isSingle() {
-        return this == TRIAL || this == STARTER || this == SINGLE;
+        return this == TRIAL || this == STARTER;
     }
 
     @Override

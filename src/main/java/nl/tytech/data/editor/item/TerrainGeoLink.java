@@ -51,11 +51,6 @@ public class TerrainGeoLink extends GeoLink {
         return terrainTypeID;
     }
 
-    @Override
-    public boolean isWater() {
-        return getTerrainType().isWater();
-    }
-
     public void setTerrainTypeID(Integer terrainTypeID) {
         this.terrainTypeID = terrainTypeID;
     }

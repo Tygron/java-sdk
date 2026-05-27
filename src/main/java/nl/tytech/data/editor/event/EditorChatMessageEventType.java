@@ -12,25 +12,31 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.editor.event;
 
+import static nl.tytech.core.net.serializable.MapLink.CHAT_CHANNELS;
+import static nl.tytech.core.net.serializable.MapLink.CHAT_MESSAGES;
 import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
-import nl.tytech.core.item.annotations.ClassDescription;
+import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
+import nl.tytech.core.item.annotations.Linked;
 
 /**
- * Empty dummy Event (does nothing)
+ *
  * @author Maxim Knepfle
  *
  */
+@Linked(CHAT_MESSAGES)
+public enum EditorChatMessageEventType implements EventTypeEnum {
 
-@ClassDescription("Empty dummy endpoint.")
-public enum ServerDummyEventType implements EventTypeEnum {
-
-    NO_DEF();
+    @EventParamData(desc = "Add a new chat message", params = { "Channel ID",
+            "Message content" }, response = "Return ID of the future reponse message (note: not my own added message)")
+    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
+    ADD(Integer.class, String.class);
 
     private final List<Class<?>> classes;
 
-    private ServerDummyEventType(Class<?>... classes) {
+    private EditorChatMessageEventType(Class<?>... classes) {
         this.classes = Arrays.asList(classes);
     }
 
@@ -46,11 +52,15 @@ public enum ServerDummyEventType implements EventTypeEnum {
 
     @Override
     public Class<?> getResponseClass(Object[] args) {
-        return null;
+
+        return switch (this) {
+            case ADD -> Integer.class;
+        };
     }
 
     @Override
     public boolean isServerSide() {
         return true;
     }
+
 }

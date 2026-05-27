@@ -248,6 +248,10 @@ public abstract class AttributeItem extends UniqueNamedItem implements Attribute
         return getOrDefaultArray(getDefaultMap(), attribute);
     }
 
+    public final double getOrDefaultClamped(ReservedAttribute attribute, double min, double max) {
+        return MathUtils.clamp(getOrDefault(attribute), min, max);
+    }
+
     /**
      * Return attribute of related item, if relation does not exist return NULL
      */

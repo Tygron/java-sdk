@@ -194,7 +194,8 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     SET_VISIBLE(Integer[].class, Boolean[].class),
 
     @EventParamData(desc = "Change a key for a specified Overlay. The Overlay must be an Overlay which makes use of keys to read attributes of geographical items, as input for its calculation.", params = {
-            "Overlay ID (must relate to a grid Overlay)", "Key name", "Attribute to look for" })
+            "Overlay ID (must relate to a grid Overlay). Note: to change attribute values use set_attribute instead.", "Key name",
+            "Attribute name to look for" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_KEY_VALUE(Integer.class, String.class, String.class),
 

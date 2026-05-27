@@ -36,7 +36,7 @@ import nl.tytech.util.color.TColor;
 @Linked(AREAS)
 public enum EditorAreaEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(params = { "Amount (optional)" }, response = "Area IDs")
+    @EventParamData(params = { "Amount (optional)" }, response = "Area IDs", defaults = { "1" })
     @EventIDField(nullable = { 0 })
     ADD(Integer.class),
 
@@ -58,6 +58,9 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
 
     GENERATE_INUNDATION_AREAS(Double.class),
 
+    @EventParamData(desc = "Generate Sewer Areas for Neighborhoods", params = { "Degree of Urbanization",
+            "Sewer Storage (M) for neighborhood older than 1965", "Sewer Storage (M) for neighborhood younger than 1965",
+            "Pump speed (m/H)", "Water Level Attribute" }, response = "Number of generated Sewer Areas")
     GENERATE_SEWER_AREAS(Integer.class, Double.class, Double.class, Double.class, String.class),
 
     GENERATE_WATER_AREAS(Double.class),
@@ -104,12 +107,15 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { AREAS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
+    @EventParamData(params = { "Areas", "Area Colors (in ARGB single value format)" })
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0 })
     SET_COLOR(Integer[].class, TColor[].class),
 
+    @EventParamData(params = { "Areas", "Area Names" })
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(params = { "Areas", "Area MultiPolygons" })
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0 })
     SET_POLYGONS(Integer[].class, MultiPolygon[].class),
 

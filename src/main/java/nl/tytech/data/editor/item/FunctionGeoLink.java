@@ -13,17 +13,13 @@
 package nl.tytech.data.editor.item;
 
 import java.util.Collection;
-import java.util.List;
 import nl.tytech.core.item.annotations.ItemIDField;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
 import nl.tytech.data.engine.item.Function;
-import nl.tytech.data.engine.item.Function.Region;
 import nl.tytech.data.engine.item.Stakeholder;
 import nl.tytech.data.engine.serializable.Category;
-import nl.tytech.data.engine.serializable.CategoryValue;
-import nl.tytech.data.engine.serializable.ConstructionPeriod;
 
 /**
  * @author Jurrian Hartveldt, Frank Baars
@@ -71,16 +67,8 @@ public class FunctionGeoLink extends GeoLink {
     @XMLValue
     private boolean tree = false;
 
-    public double getAverageResidenceSurfaceArea() {
-        return getFunction().getValue(CategoryValue.UNIT_SIZE_M2);
-    }
-
     public Collection<Category> getCategories() {
         return this.getFunction().getCategories();
-    }
-
-    public List<ConstructionPeriod> getConstructionPeriods() {
-        return getFunction().getConstructionPeriods();
     }
 
     @Override
@@ -96,32 +84,15 @@ public class FunctionGeoLink extends GeoLink {
         return functionID;
     }
 
-    public int getMaxFloors() {
-        return getFunction().getMaxFloorsFunction();
-    }
-
-    public int getMinFloors() {
-        return getFunction().getMinFloorsFunction();
-    }
-
     @Override
     public String getName() {
         Function function = getFunction();
         return function == null ? FunctionGeoLink.class.getSimpleName() + " " + getID() : function.getName();
     }
 
-    public List<Region> getRegions() {
-        return getFunction().getRegions();
-    }
-
     @Override
     public boolean isTree() {
         return tree;
-    }
-
-    @Override
-    public boolean isWater() {
-        return false;
     }
 
     public void setFunctionID(Integer functionID) {

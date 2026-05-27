@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.data.engine.item.Function;
-import nl.tytech.data.engine.serializable.ConstructionPeriod;
 
 /**
  * Top10NL Building linkage
@@ -185,11 +184,6 @@ public class TNLBuildingLink extends FunctionGeoLink {
 
     public List<TNLBuildingType> getBuildingTypes() {
         return buildingTypes;
-    }
-
-    @Override
-    public List<ConstructionPeriod> getConstructionPeriods() {
-        return getFunction().getConstructionPeriods();
     }
 
     public List<TNLBuildingHeightType> getHeightTypes() {

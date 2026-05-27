@@ -83,7 +83,7 @@ public enum EditorAddressEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { ADDRESSES }, params = { 0 })
     SET_ZIP_CODE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Search addresses", params = { "Serach Query" })
+    @EventParamData(desc = "Search addresses", params = { "Search Query" })
     SEARCH(String.class);
 
     private final List<Class<?>> classes;

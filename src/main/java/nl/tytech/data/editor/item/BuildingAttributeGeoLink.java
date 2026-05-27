@@ -58,9 +58,4 @@ public class BuildingAttributeGeoLink extends GeoLink {
         return value;
     }
 
-    @Override
-    public boolean isWater() {
-        return false;
-    }
-
 }

@@ -62,7 +62,7 @@ public class DataLord {
      * Default platform specific location of the server-side events
      */
 
-    private static final String PLATFORM_EVENT_LOCATION = "nl.tytech.data.SPACE.event";
+    public static final String PLATFORM_EVENT_LOCATION = "nl.tytech.data.SPACE.event";
 
     /**
      * Used for internal network synchronization only. Do not call unless you know what you are doing.

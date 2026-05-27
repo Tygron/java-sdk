@@ -56,6 +56,8 @@ public class Rest {
 
     public static final String GPU = "gpu/";
 
+    public static final String INFO = "info/";
+
     public static final String TOKEN_TAG = "$TOKEN";
 
     public static final String TQL = "query/";

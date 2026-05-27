@@ -52,7 +52,7 @@ import nl.tytech.data.engine.serializable.TimeState;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Events for user actions (e.g. build building) in a testrun/impact Session.")
+@ClassDescription("Endpoints for user actions (e.g. build building) in a testrun/impact Session.")
 public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMyStakeholderEvent {
 
     @EventParamData(editor = true, desc = "Set a category active for a stakeholder.", params = { "Stakeholder ID", "ActionMenu ID",

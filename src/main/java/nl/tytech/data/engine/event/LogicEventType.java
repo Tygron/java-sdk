@@ -55,7 +55,7 @@ import nl.tytech.data.engine.serializable.TimeState;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Events changing functionality in a testrun/impact Session.")
+@ClassDescription("Endpoints changing functionality in a testrun/impact Session.")
 public enum LogicEventType implements SessionEventTypeEnum {
 
     @EventParamData(editor = true, desc = "Export history of actions taken by participants.", params = {})

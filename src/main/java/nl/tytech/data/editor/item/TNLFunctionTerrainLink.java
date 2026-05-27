@@ -66,11 +66,6 @@ public class TNLFunctionTerrainLink extends TNLTerrainLink {
     }
 
     @Override
-    public boolean isWater() {
-        return false;
-    }
-
-    @Override
     public boolean mustContainHouses() {
         return mustContainHouses;
     }

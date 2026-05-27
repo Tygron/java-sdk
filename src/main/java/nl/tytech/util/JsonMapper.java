@@ -61,6 +61,13 @@ public class JsonMapper {
         deserialModule.addDeserializer(MultiPolygon.class, new GeometryDeserializer<>(MultiPolygon.class));
         deserialModule.addDeserializer(GeometryCollection.class, new GeometryDeserializer<>(GeometryCollection.class));
 
+        for (Format format : Format.values()) {
+            localMappers[format.ordinal()] = createMapper(format);
+        }
+    }
+
+    public static final ObjectMapper createMapper(Format format) {
+
         SimpleModule serialModule = new SimpleModule();
         serialModule.addSerializer(Geometry.class, new GeometrySerializer<>(Geometry.class));
         serialModule.addSerializer(Point.class, new GeometrySerializer<>(Point.class));
@@ -69,10 +76,7 @@ public class JsonMapper {
         serialModule.addSerializer(Polygon.class, new GeometrySerializer<>(Polygon.class));
         serialModule.addSerializer(MultiPolygon.class, new GeometrySerializer<>(MultiPolygon.class));
         serialModule.addSerializer(GeometryCollection.class, new GeometrySerializer<>(GeometryCollection.class));
-
-        for (Format format : Format.values()) {
-            localMappers[format.ordinal()] = createMapper(format, serialModule);
-        }
+        return createMapper(format, serialModule);
     }
 
     public static final ObjectMapper createMapper(Format format, SimpleModule serialModule) {

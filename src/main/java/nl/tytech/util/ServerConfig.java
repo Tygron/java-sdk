@@ -86,6 +86,10 @@ public enum ServerConfig {
         return type;
     }
 
+    public final String getWebAddress() {
+        return WebUtils.HTTPS + getAddress() + "/";
+    }
+
     public boolean isActive() {
         return this != Localhost;
     }

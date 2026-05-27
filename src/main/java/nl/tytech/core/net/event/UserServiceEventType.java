@@ -31,7 +31,7 @@ import nl.tytech.core.net.serializable.User.AccessLevel;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Events related to Domain & User management (add, remove, etc).")
+@ClassDescription("Endpoints related to Domain & User management (add, remove, etc).")
 public enum UserServiceEventType implements ServiceEventType {
 
     @EventIDField(nullable = { 0 })

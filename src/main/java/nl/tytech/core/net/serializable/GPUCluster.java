@@ -138,8 +138,8 @@ public class GPUCluster implements Serializable, Comparable<GPUCluster> {
             return TColor.ORANGE;
         } else if (isFree()) {
             return TColor.GREEN;
-        } else {// failed
-            return TColor.RED;
+        } else {// offline
+            return TColor.ORANGE;
         }
     }
 

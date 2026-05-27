@@ -33,7 +33,7 @@ import nl.tytech.core.net.serializable.MapLink;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Events related to answering popups in a testrun/impact Session.")
+@ClassDescription("Endpoints related to answering popups in a testrun/impact Session.")
 public enum AnswerEvent implements SessionEventTypeEnum {
 
     @EventParamData(desc = "Stakeholder has planned the construction of a particular building for a particular date stored in a popup", params = {

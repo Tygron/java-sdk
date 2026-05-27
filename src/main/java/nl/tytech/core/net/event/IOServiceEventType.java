@@ -40,7 +40,7 @@ import nl.tytech.locale.TLanguage;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Events related to Project & Session management (start, close, etc).")
+@ClassDescription("Endpoints related to Project & Session management (start, close, etc).")
 public enum IOServiceEventType implements ServiceEventType {
 
     @EventParamData(desc = "Create a new Project with a given name and language, Returns the new Project´s data.", params = {

@@ -52,8 +52,6 @@ public abstract class GeoLink extends Item {
         return false;
     }
 
-    public abstract boolean isWater();
-
     public void setPriority(int priority) {
         if (priority < 0) {
             TLogger.warning("Warning: cannot set GeoLink priority with id '" + this.getID() + "' to value: " + priority
