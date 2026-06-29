@@ -12,8 +12,10 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.item;
 
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.data.core.item.EnumOrderedItem;
+import nl.tytech.util.ObjectUtils;
 
 /**
  * Time Recording to measure Project Performance
@@ -23,53 +25,62 @@ public class Recording extends EnumOrderedItem<Recording.Type> {
 
     public enum Type {
 
-        TOTAL("Total"),
+        @Description("Total")
+        TOTAL,
 
-        LOAD_QUERIES("Init Queries"),
+        @Description("Init Queries")
+        LOAD_QUERIES,
 
-        BEFORE_TRIGGERS(1, "API Triggers (before)"),
+        @Description("Step 1: API Triggers (before)")
+        BEFORE_TRIGGERS,
 
-        BEFORE_UPDATE_QUERIES(2, "Update Queries (before)"),
+        @Description("Step 2: Update Queries (before)")
+        BEFORE_UPDATE_QUERIES,
 
-        GRIDS(3, "Grids"),
+        @Description("Step 3: Grids")
+        GRIDS,
 
-        RASTER("Rasterizing"),
+        @Description("Rasterizing")
+        RASTER,
 
-        GRID_MODELS("Simulation Models"),
+        @Description("Simulation Models")
+        GRID_MODELS,
 
-        AFTER_UPDATE_QUERIES(4, "Update Queries (after)"),
+        @Description("Step 4: Update Queries (after)")
+        AFTER_UPDATE_QUERIES,
 
-        ALL_QUERIES("TQL Queries"),
+        @Description("TQL Queries")
+        ALL_QUERIES,
 
-        QUERY_GEOMETRIES("Shared Geometries"),
+        @Description("Shared Geometries")
+        QUERY_GEOMETRIES,
 
-        GEO_QUERIES("Unique Geometry Queries"),
+        @Description("Unique Geometry Queries")
+        GEO_QUERIES,
 
-        ITEM_QUERIES("Unique Item Queries"),
+        @Description("Unique Item Queries")
+        ITEM_QUERIES,
 
-        CALCULATORS(5, "Calculators"),
+        @Description("Step 5: Calculators")
+        CALCULATORS,
 
-        AFTER_TRIGGERS(6, "API Triggers (after)"),
+        @Description("Step 6: API Triggers (after)")
+        AFTER_TRIGGERS,
 
+        @Description("Deprecated: Replaced by CALCULATORS")
         @Deprecated(since = "August 2025: Replaced by CALCULATORS")
-        EXCELS("Excels"),
+        EXCELS,
 
+        @Description("Deprecated: Replaced by BEFORE_UPDATE_QUERIES and AFTER_UPDATE_QUERIES")
         @Deprecated(since = "August 2025: Replaced by BEFORE_UPDATE_QUERIES and AFTER_UPDATE_QUERIES")
-        GRID_UPDATE_QUERIES("Grid Updating Queries"),
+        GRID_UPDATE_QUERIES,
 
+        @Description("Deprecated: Replaced by GRIDS")
         @Deprecated(since = "August 2025: Replaced by GRIDS")
-        GPUS("Calculating Grids"),
+        GPUS;
 
-        ;
-
-        private String desc;
-
-        private Type(Integer step, String desc) {
-            this.desc = (step != null ? "Step " + step.toString() + ": " : "") + desc;
-        }
-
-        private Type(String desc) {
-            this(null, desc);
+        public final String getDescription() {
+            return ObjectUtils.getDescription(this);
         }
     }
 
@@ -94,7 +105,7 @@ public class Recording extends EnumOrderedItem<Recording.Type> {
     }
 
     public final String getName() {
-        return getType().desc;
+        return getType().getDescription();
     }
 
     public long getTimeMS() {

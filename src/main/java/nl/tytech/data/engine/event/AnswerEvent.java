@@ -23,7 +23,7 @@ import java.util.List;
 import org.locationtech.jts.geom.MultiPolygon;
 import nl.tytech.core.event.Event;
 import nl.tytech.core.event.Event.SessionEventTypeEnum;
-import nl.tytech.core.item.annotations.ClassDescription;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.EventIDField;
 import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.net.serializable.MapLink;
@@ -33,7 +33,7 @@ import nl.tytech.core.net.serializable.MapLink;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Endpoints related to answering popups in a testrun/impact Session.")
+@Description("Endpoints related to answering popups in a testrun/impact Session.")
 public enum AnswerEvent implements SessionEventTypeEnum {
 
     @EventParamData(desc = "Stakeholder has planned the construction of a particular building for a particular date stored in a popup", params = {

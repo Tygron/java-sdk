@@ -15,7 +15,7 @@ package nl.tytech.core.net.event;
 import static nl.tytech.core.net.event.RemoteServicesEvent.OPTIONAL_DOMAIN_NAME;
 import java.util.Arrays;
 import java.util.List;
-import nl.tytech.core.item.annotations.ClassDescription;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.EventIDField;
 import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.net.Network;
@@ -40,7 +40,7 @@ import nl.tytech.locale.TLanguage;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Endpoints related to Project & Session management (start, close, etc).")
+@Description("Endpoints related to Project & Session management (start, close, etc).")
 public enum IOServiceEventType implements ServiceEventType {
 
     @EventParamData(desc = "Create a new Project with a given name and language, Returns the new Project´s data.", params = {
@@ -93,7 +93,7 @@ public enum IOServiceEventType implements ServiceEventType {
     @EventIDField(nullable = { 0, 1 })
     @EventParamData(desc = "Get the License usage for a given domain.", params = { OPTIONAL_DOMAIN_NAME,
             "Subdomain Name (optional)" }, defaults = { "", Domain.ALL_SUB_DOMAINS }, //
-            response = "Returns an array with: New Projects per day, Project count, Domain Total Area (km2), Subdomain Total Area (km2) and GeoShare storage (MB).")
+            response = "Returns an array with: New Projects per day, Project count, Domain Total Area (km2), Subdomain Total Area (km2), GeoShare storage (MB) and Total Archive (km2).")
     GET_DOMAIN_USAGE(Integer[].class, AccessLevel.HOST_SESSION, String.class, String.class),
 
     @EventParamData(desc = "Get all Sessions in your Domain that you can join.", params = {})

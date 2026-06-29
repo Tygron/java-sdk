@@ -12,6 +12,9 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.core.serializable;
 
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.util.ObjectUtils;
+
 /**
  * MapType: defines the map you are playing in. e.g. current or maquette.
  *
@@ -19,14 +22,10 @@ package nl.tytech.data.core.serializable;
  */
 public enum MapType {
 
-    /**
-     * This map show the actual situation at this moment in the simulation.
-     */
+    @Description("This map show the actual situation at this moment in the simulation")
     CURRENT,
 
-    /**
-     * This map shows also shows the planned building etc that are not yet in the actual/current map.
-     */
+    @Description("This map shows a future Scenario (measures, buildings, terrain adjustements, etc) that are not yet in the actual/current map")
     MAQUETTE;
 
     /**
@@ -41,5 +40,9 @@ public enum MapType {
 
     public static final MapType[] CURRENT_ARRAY = new MapType[] { MapType.CURRENT };
     public static final MapType[] MAQUETTE_ARRAY = new MapType[] { MapType.MAQUETTE };
+
+    public final String getDescription() {
+        return ObjectUtils.getDescription(this);
+    }
 
 }

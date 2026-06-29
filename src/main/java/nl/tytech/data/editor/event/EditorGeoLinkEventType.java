@@ -52,7 +52,7 @@ public enum EditorGeoLinkEventType implements EventTypeEnum {
     REMOVE_MAPPING(Integer[].class, String[].class),
 
     @EventParamData(desc = "Match incoming features against this Attribute name and value.", params = { "CustomGeoLink IDs",
-            "Attribute Names", "Attribute Values", "Source (optional)" })
+            "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { GEO_LINKS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_MATCHING(Integer[].class, String[].class, String[][].class, Integer.class),
 
@@ -61,7 +61,7 @@ public enum EditorGeoLinkEventType implements EventTypeEnum {
     REMOVE_MATCHING(Integer[].class, String[].class),
 
     @EventParamData(desc = "Inject additional attributes into the created feature.", params = { "CustomGeoLink IDs", "Attribute Names",
-            "Attribute Values", "Source (optional)" })
+            "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { GEO_LINKS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ADDITIONAL(Integer[].class, String[].class, double[][].class, Integer.class),
 

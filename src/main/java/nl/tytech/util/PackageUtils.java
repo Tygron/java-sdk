@@ -175,29 +175,16 @@ public class PackageUtils {
         return candidates;
     }
 
-    /**
-     * list all the FILES in a directory.
-     *
-     * @param directory
-     * @param recurse
-     * @return
-     */
-    public static final List<File> getDirectoryListing(String directory, boolean recursive) {
-        return getDirectoryListing(directory, recursive, false);
-    }
-
-    public static final List<File> getDirectoryListing(String directory, boolean recursive, boolean includeDirs) {
+    public static final List<File> getDirectoryListing(File directory, boolean recursive, boolean includeDirs) {
 
         // bail out if directory does not exist or if it's a file
-        File d = new File(directory);
-        if (!exists(d) || !isDirectory(d)) {
+        if (!exists(directory) || !isDirectory(directory)) {
             return null;
         }
 
         // iterate over entries and recurse into subdirectories if needed
         List<File> r = new ArrayList<>();
-        for (String fileEntry : d.list()) {
-            File file = new File(directory + File.separator + fileEntry);
+        for (File file : directory.listFiles()) {
             if (isDirectory(file)) {
                 if (recursive) {
                     r.addAll(getDirectoryListing(file.getPath(), recursive, includeDirs));
@@ -210,6 +197,21 @@ public class PackageUtils {
             }
         }
         return r;
+    }
+
+    /**
+     * list all the FILES in a directory.
+     *
+     * @param directory
+     * @param recurse
+     * @return
+     */
+    public static final List<File> getDirectoryListing(String directory, boolean recursive) {
+        return getDirectoryListing(directory, recursive, false);
+    }
+
+    public static final List<File> getDirectoryListing(String directory, boolean recursive, boolean includeDirs) {
+        return getDirectoryListing(new File(directory), recursive, includeDirs);
     }
 
     /**
@@ -384,6 +386,7 @@ public class PackageUtils {
             } else if (url.getProtocol().equalsIgnoreCase("http") || url.getProtocol().equalsIgnoreCase("https")) {
                 web = true;
                 URLConnection con = url.openConnection();
+                con.setRequestProperty("User-Agent", Engine.USER_AGENT);
                 con.connect();
                 stream = con.getInputStream();
             } else {

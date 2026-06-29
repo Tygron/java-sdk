@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.core.net.serializable.SettingType;
 import nl.tytech.data.core.item.AbstractSetting;
@@ -166,90 +167,110 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
 
     public enum Type implements SettingType {
 
-        NL_BGT(DEFAULT, Boolean.class, "true", "BGT (dataset not complete, more details in roads, water, streetobjects, trees)",
-                Source.BGT),
+        @Description("BGT (provides more details in roads, water, streetobjects, trees)")
+        NL_BGT(DEFAULT, Boolean.class, "true", Source.BGT),
 
-        HEIGHTMAP_RESOLUTION(DEM, HeightmapOption.class, HeightmapOption.NORMAL.name(), "DEM Resolution"),
+        @Description("DEM Resolution")
+        HEIGHTMAP_RESOLUTION(DEM, HeightmapOption.class, HeightmapOption.NORMAL.name()),
 
-        SATELLITE_RESOLUTION(DEM, SatOption.class, SatOption.HIGH.name(), "Satellite Background Resolution"),
+        @Description("Satellite background imagery resolution")
+        SATELLITE_RESOLUTION(DEM, SatOption.class, SatOption.HIGH.name()),
 
+        @Description("Risk Assessment (detect e.g. dangerous objects like LPG stations)")
         @Deprecated(since = "Not available anymore since Dec 2023")
-        RISK_ASSESSMENT(DEFAULT, Boolean.class, "false", "Risk Assessment (detect e.g. dangerous objects like LPG stations)",
-                Source.RISICOKAART),
+        RISK_ASSESSMENT(DEFAULT, Boolean.class, "false", Source.RISICOKAART),
 
-        AGRICULTURE(DEFAULT, Boolean.class, "true", "Agriculture (crop fields, grassland, etc)", Source.BRP),
+        @Description("Agriculture (crop fields, grassland, etc)")
+        AGRICULTURE(DEFAULT, Boolean.class, "true", Source.BRP),
 
-        UNDERGROUND(DEFAULT, Boolean.class, "true", "Underground (soil type)", Source.BRO),
+        @Description("Underground (soil type)")
+        UNDERGROUND(DEFAULT, Boolean.class, "true", Source.BRO),
 
-        OWNERSHIP(DEFAULT, Boolean.class, "true", "Ownership (cadastral data)", Source.KADASTER),
+        @Description("Ownership (cadastral data)")
+        OWNERSHIP(DEFAULT, Boolean.class, "true", Source.KADASTER),
 
-        WATER(Group.WATER, Boolean.class, "true", "Water (rivers, canals, etc)"),
+        @Description("Water (rivers, canals, etc)")
+        WATER(Group.WATER, Boolean.class, "true"),
 
+        @Description("Zoningplan (limitations to buildings)")
         @Deprecated(since = "Not available anymore since June 2024")
-        ZONING(DEFAULT, Boolean.class, "false", "Zoningplan (limitations to buildings)", Source.RUIMTELIJKE_PLANNEN),
+        ZONING(DEFAULT, Boolean.class, "false", Source.RUIMTELIJKE_PLANNEN),
 
-        NL_AHN(DEM, AHN.class, AHN.AHN4.name(), "Dutch AHN version", Source.AHN4),
+        @Description("Dutch AHN elevation model version")
+        NL_AHN(DEM, AHN.class, AHN.AHN4.name(), Source.AHN4),
 
-        NL_MIN_TREE_HEIGHT(DEM, Double.class, "5", "Tree Height from AHN Surface (min value in meters)"),
+        @Description("Tree Height from AHN Surface (min value in meters)")
+        NL_MIN_TREE_HEIGHT(DEM, Double.class, "5"),
 
-        NL_MAX_TREE_HEIGHT(DEM, Double.class, "50", "Tree Height from AHN Surface (max value in meters)"), // largest NL Tree is 50.6m
+        @Description("Tree Height from AHN Surface (max value in meters)")
+        NL_MAX_TREE_HEIGHT(DEM, Double.class, "50"), // largest NL Tree is 50.6m
 
-        DTM_DSM_THRESHOLDS(DEM, double[].class, "0.0 0.0 0.0", "Apply DSM to DTM Thresholds for Land, Roads and Other.", Source.NONE,
-                "https://support.tygron.com/wiki/Terrain_height"),
+        @Description("Apply DSM to DTM Thresholds for Land, Roads and Other.")
+        DTM_DSM_THRESHOLDS(DEM, double[].class, "0.0 0.0 0.0", Source.NONE, "https://support.tygron.com/wiki/Terrain_height"),
 
-        WORLD_WATER(Group.WATER, WorldWaterOption.class, WorldWaterOption.OSM.name(), "Water (rivers, canals, etc)"),
+        @Description("Water (rivers, canals, etc)")
+        WORLD_WATER(Group.WATER, WorldWaterOption.class, WorldWaterOption.OSM.name()),
 
-        OSM_ROADS(DEFAULT, Boolean.class, "true", "Use OpenStreetMap for Roads", Source.OSM),
+        @Description("Use OpenStreetMap for Roads")
+        OSM_ROADS(DEFAULT, Boolean.class, "true", Source.OSM),
 
-        OSM_BUILDINGS(DEFAULT, Boolean.class, "true", "Use OpenStreetMap for Buildings", Source.OSM),
+        @Description("Use OpenStreetMap for Buildings")
+        OSM_BUILDINGS(DEFAULT, Boolean.class, "true", Source.OSM),
 
-        OSM_LANDUSE(DEFAULT, Boolean.class, "true", "Use OpenStreetMap for Landuse", Source.OSM),
+        @Description("Use OpenStreetMap for Landuse")
+        OSM_LANDUSE(DEFAULT, Boolean.class, "true", Source.OSM),
 
-        OSM_NEIGHBORHOODS(DEFAULT, Boolean.class, "true", "Use OpenStreetMap for Neighborhoods", Source.OSM),
+        @Description("Use OpenStreetMap for Neighborhoods")
+        OSM_NEIGHBORHOODS(DEFAULT, Boolean.class, "true", Source.OSM),
 
-        IMWA(Group.WATER, Boolean.class, "true", "IMWA Water System constructions such as culverts", Source.IMWA),
+        @Description("IMWA Water System constructions such as culverts")
+        IMWA(Group.WATER, Boolean.class, "true", Source.IMWA),
 
-        BAG3D_GEOMETRIES(DEFAULT, Boolean.class, "false", "Use 3D BAG by tudelft3d for Building Geometries", Source.BAG3D),
+        @Description("Use 3D BAG by tudelft3d for Building Geometries")
+        BAG3D_GEOMETRIES(DEFAULT, Boolean.class, "false", Source.BAG3D),
 
-        I3S_GEOMETRIES(DEFAULT, Boolean.class, "false", "Use I3S Scenelayer for Building Geometries " + EngineNC.BETA, Item.NONE,
-                "https://www.opengeospatial.org/standards/i3s"),
+        @Description("Use I3S Scenelayer for Building Geometries " + EngineNC.BETA)
+        I3S_GEOMETRIES(DEFAULT, Boolean.class, "false", Item.NONE, "https://www.opengeospatial.org/standards/i3s"),
 
-        NL_TRAFFIC_INWEVA(ROADS, Boolean.class, "true", "INWEVA 24h Data", Source.INWEVA),
+        @Description("INWEVA 24h Traffic Data")
+        NL_TRAFFIC_INWEVA(ROADS, Boolean.class, "true", Source.INWEVA),
 
-        NL_TRAFFIC_NSL(ROADS, Boolean.class, "true", "NSL Monitoring", Source.NSL),
+        @Description("NSL Monitoring")
+        NL_TRAFFIC_NSL(ROADS, Boolean.class, "true", Source.NSL),
 
-        NL_TRAFFIC_NSL_CONVERSION(ROADS, Double.class, "0.051", "NSL Conversion from day to hour values (default 1.22 / 24)"),
+        @Description("NSL Conversion from day to hour values (default 1.22 / 24)")
+        NL_TRAFFIC_NSL_CONVERSION(ROADS, Double.class, "0.051"),
 
-        NL_TRAFFIC_INFOMIL(ROADS, Boolean.class, "true", "InfoMil Ruleset", Source.INFOMILL),
+        @Description("InfoMil Ruleset")
+        NL_TRAFFIC_INFOMIL(ROADS, Boolean.class, "true", Source.INFOMILL),
 
-        NL_ENERGY_LABEL(DEFAULT, Boolean.class, "true", "Address Energy Labels", Source.EP),
+        @Description("Address Energy Labels")
+        NL_ENERGY_LABEL(DEFAULT, Boolean.class, "true", Source.EP),
 
-        INTEREST_AREA_MARGIN(CUSTOM, Double.class, "500", "Default margin around Area of Interest on file drop", Source.NONE),
+        @Description("Default margin around Area of Interest on file drop")
+        INTEREST_AREA_MARGIN(CUSTOM, Double.class, "500", Source.NONE),
 
-        TREES(DEFAULT, Trees.class, Trees.DEFAULT.name(), "Tree options"),
-
-        ;
+        @Description("Tree options (DEFAULT, NONE or AI generated)")
+        TREES(DEFAULT, Trees.class, Trees.DEFAULT.name());
 
         private final Group group;
         private final String defaultValue;
         private final Class<?> valueType;
-        private final String description;
         private final Integer sourceID;
         private final String webLink;
 
-        private Type(Group group, Class<?> valueType, String defaultValue, String description) {
-            this(group, valueType, defaultValue, description, Item.NONE);
+        private Type(Group group, Class<?> valueType, String defaultValue) {
+            this(group, valueType, defaultValue, Item.NONE);
         }
 
-        private Type(Group group, Class<?> valueType, String defaultValue, String description, Integer sourceID) {
-            this(group, valueType, defaultValue, description, sourceID, StringUtils.EMPTY);
+        private Type(Group group, Class<?> valueType, String defaultValue, Integer sourceID) {
+            this(group, valueType, defaultValue, sourceID, StringUtils.EMPTY);
         }
 
-        private Type(Group group, Class<?> valueType, String defaultValue, String description, Integer sourceID, String weblink) {
+        private Type(Group group, Class<?> valueType, String defaultValue, Integer sourceID, String weblink) {
             this.group = group;
             this.valueType = valueType;
             this.defaultValue = defaultValue;
-            this.description = description;
             this.sourceID = sourceID;
             this.webLink = weblink;
         }
@@ -277,7 +298,8 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
         }
 
         public String getDescription() {
-            return description;
+            Description annotation = ObjectUtils.getEnumAnnotation(this, Description.class);
+            return annotation != null ? annotation.value() : "";
         }
 
         public Group getGroup() {

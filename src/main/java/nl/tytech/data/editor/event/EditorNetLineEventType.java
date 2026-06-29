@@ -87,15 +87,15 @@ public enum EditorNetLineEventType implements IndicatorEventTypeEnum {
     REMOVE_REPEATED(Integer[].class, Boolean.class),
 
     @EventParamData(desc = "For each Net Line, set a particular Attribute to a specified array of values, optionally providing its Source.", params = {
-            "Net Lines", "Attribute Name", "Attribute Values", "Source (optional)" })
+            "Net Lines", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { NET_LINES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Net Lines", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Net Lines", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { NET_LINES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Net Lines", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Net Lines", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { NET_LINES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

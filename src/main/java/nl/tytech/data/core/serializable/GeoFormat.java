@@ -12,6 +12,9 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.core.serializable;
 
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.util.ObjectUtils;
+
 /**
  *
  * Supported GEO formats
@@ -21,74 +24,43 @@ package nl.tytech.data.core.serializable;
  */
 public enum GeoFormat {
 
-    /**
-     * Direct query to GeoJSON
-     */
+    @Description("Feature format of GeoJSON.org")
     GEOJSON(true),
 
-    /**
-     * Open Geospatial Consortium GeoPackage
-     */
+    @Description("Open Geospatial Consortium GeoPackage")
     GEOPACKAGE(true),
 
-    /**
-     * Open Geospatial Consortium WFS format for JSON features
-     */
+    @Description("Open Geospatial Consortium WFS format for GeoJSON features")
     WFS_JSON(true),
 
-    /**
-     * Open Geospatial Consortium WFS format for GML features
-     */
+    @Description("Open Geospatial Consortium WFS format for GML features")
     WFS_GML(true),
 
-    /**
-     * Open Geospatial Consortium WMS format for PNG/JPG Images
-     */
+    @Description("Open Geospatial Consortium WMS format for PNG/JPG Images")
     WMS_IMAGE(false),
 
-    /**
-     * Open Geospatial Consortium WMS format for TIFF Coverages
-     */
+    @Description("Open Geospatial Consortium WMS format for TIFF Coverages")
     WCS_TIFF(false),
 
-    /**
-     * Open Street Maps format for XML features
-     */
+    @Description("Open Street Maps format for XML features")
     OSM(true),
 
-    /**
-     * BGT Extract ZIP file format
-     */
+    @Description("BGT Extract Zipped GML file format")
     BGT_GML(true),
 
-    /**
-     * ESRI format for JSON features
-     */
+    @Description("ESRI format for JSON features")
     ESRI_JSON(true),
 
-    /**
-     * ESRI format for PNG/JPG Images
-     */
+    @Description("ESRI format for PNG/JPG Images")
     ESRI_IMAGE(false),
 
-    /**
-     * Cyclomedia own Image format
-     */
-    CYCLO_IMAGE(false),
-
-    /**
-     * OGC I3S format
-     */
+    @Description("OGC I3S format")
     I3S(true),
 
-    /**
-     * Direct query to GeoTIFF
-     */
+    @Description("Direct query to a GeoTIFF")
     GEOTIFF(false),
 
-    /**
-     * Autocad Exchange format
-     */
+    @Description("AutoCAD Drawing Exchange Format")
     DXF(true),
 
     ;
@@ -120,7 +92,11 @@ public enum GeoFormat {
         this.feature = feature;
     }
 
-    public boolean hasLayers() {
+    public final String getDescription() {
+        return ObjectUtils.getDescription(this);
+    }
+
+    public final boolean hasLayers() {
         switch (this) {
             case BGT_GML:
             case WFS_JSON:

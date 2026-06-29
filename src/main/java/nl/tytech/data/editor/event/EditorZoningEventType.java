@@ -54,7 +54,7 @@ public enum EditorZoningEventType implements IndicatorEventTypeEnum {
     DUPLICATE(Integer[].class),
 
     @EventParamData(desc = "Import Zone Collection", params = { "Collection of Zone geometries", "Zone Names", "Attribute Names",
-            "Attribute Values", "Permitter", "Import as category zone", "Buffer for Points and Lines to make Polygons (optional)",
+            "Numeric Attribute Values", "Permitter", "Import as category zone", "Buffer for Points and Lines to make Polygons (optional)",
             "Source (optional)" }, defaults = { "", "", "", "", "", "", "" + Setting.DEFAULT_PL_BUFFER,
                     "" }, exampleAmount = { 3, 3, 2, 6, 3 })
     @EventIDField(links = { STAKEHOLDERS, SOURCES }, params = { 4, 7 }, nullable = { 6, 7 })
@@ -74,15 +74,15 @@ public enum EditorZoningEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { ZONES }, params = { 0 })
     REMOVE_POLYGONS(Integer.class, MultiPolygon.class),
 
-    @EventParamData(params = { "Zones", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Zones", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { ZONES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Zones", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Zones", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { ZONES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Zones", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Zones", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { ZONES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

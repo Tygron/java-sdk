@@ -14,7 +14,7 @@ package nl.tytech.core.net.event;
 
 import java.util.Arrays;
 import java.util.List;
-import nl.tytech.core.item.annotations.ClassDescription;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.EventIDField;
 import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.net.event.RemoteServicesEvent.ServiceEventType;
@@ -27,7 +27,7 @@ import nl.tytech.naming.EngineNC;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Endpoints related to the GeoShare.")
+@Description("Endpoints related to the GeoShare.")
 public enum ShareServiceEventType implements ServiceEventType {
 
     @EventParamData(desc = "Add new Sharable for given path, name and type, returns unique path with primary extension. For files larger than 2GB, use the Stream API.", params = {

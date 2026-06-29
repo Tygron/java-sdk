@@ -54,15 +54,15 @@ public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { WEATHERS }, params = { 0 })
     REMOVE_FLOOD_OVERLAY(Integer[].class),
 
-    @EventParamData(params = { "Weathers", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Weathers", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { WEATHERS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Weathers", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Weathers", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { WEATHERS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Weathers", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Weathers", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { WEATHERS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

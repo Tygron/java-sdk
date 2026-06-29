@@ -115,6 +115,11 @@ public abstract class StringUtils {
     public static final Charset DEFAULT_ENCODING = StandardCharsets.UTF_8;
 
     /**
+     * Pattern used to split text into lines
+     */
+    private static final Pattern LINE_SEPARATOR = Pattern.compile(NEW_LINE);
+
+    /**
      * Amount of Hexadecimal chars needed for 32-bit Integer value
      */
     public static final int INTEGER_HEX_CHARS_LENGTH = 8;
@@ -229,6 +234,32 @@ public abstract class StringUtils {
         }
 
         return list.isEmpty() ? "0 seconds" : arrayToHumanString(list);
+    }
+
+    private static final String _toSimplePositiveNumber(long value) {
+
+        // Trillions
+        if (value >= 1_000_000_000_000l) {
+            return Math.round(value / (double) 1_000_000_000_000l) + " T";
+        }
+
+        // Billions
+        if (value >= 1_000_000_000) {
+            return Math.round(value / (double) 1_000_000_000) + " B";
+        }
+
+        // Millions
+        if (value >= 1_000_000) {
+            return Math.round(value / (double) 1_000_000) + " M";
+        }
+
+        // Thousands
+        if (value >= 1_000) {
+            return Math.round(value / (double) 1_000) + " K";
+        }
+
+        // remainder
+        return Long.toString(value);
     }
 
     private static final String _toSimplePositiveTime(long timeMS) {
@@ -656,6 +687,13 @@ public abstract class StringUtils {
     }
 
     /**
+     * Split String into lines
+     */
+    public static final String[] lines(String value) {
+        return split(value, LINE_SEPARATOR);
+    }
+
+    /**
      * Make a lowercase String with underscores ast spaces.
      *
      * @param text The String to manipulate
@@ -842,6 +880,10 @@ public abstract class StringUtils {
      * Split String into a String array based on whitespace
      */
     public static final String[] split(String value) {
+        return split(value, StringUtils.SEPARATOR);
+    }
+
+    public static final String[] split(String value, Pattern pattern) {
 
         // null == null
         if (value == null) {
@@ -854,8 +896,9 @@ public abstract class StringUtils {
         if (value.isEmpty()) {
             return EMPTY_ARRAY;
         }
-        // split with seperator
-        return StringUtils.SEPARATOR.split(value);
+        // split with pattern
+        return pattern.split(value);
+
     }
 
     /**
@@ -991,6 +1034,10 @@ public abstract class StringUtils {
      */
     public static final String toSI(Number number) {
         return UnitSystemType.SI.getImpl().formatLocalValue(number);
+    }
+
+    public static final String toSimpleNumber(long value) {
+        return (value >= 0 ? "" : "-") + _toSimplePositiveNumber(Math.abs(value));
     }
 
     public static final String toSimpleTime(long timeMS) {

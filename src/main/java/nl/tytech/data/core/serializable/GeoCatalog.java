@@ -12,6 +12,9 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.core.serializable;
 
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.util.ObjectUtils;
+
 /**
  * Supported GEO Catalog services
  *
@@ -20,14 +23,10 @@ package nl.tytech.data.core.serializable;
  */
 public enum GeoCatalog {
 
-    /**
-     * Open Geospatial Consortium Catalogue Service
-     */
+    @Description("Open Geospatial Consortium Catalogue Service")
     CSW(GeoFormat.WFS_JSON, GeoFormat.WFS_GML, GeoFormat.WMS_IMAGE, GeoFormat.WCS_TIFF),
 
-    /**
-     * ESRI ArcGIS Online
-     */
+    @Description("ESRI ArcGIS Online")
     ESRI(GeoFormat.ESRI_JSON, GeoFormat.ESRI_IMAGE, GeoFormat.I3S),
 
     ;
@@ -36,6 +35,10 @@ public enum GeoCatalog {
 
     private GeoCatalog(GeoFormat... formats) {
         this.formats = formats;
+    }
+
+    public final String getDescription() {
+        return ObjectUtils.getDescription(this);
     }
 
     public GeoFormat[] getSupportedFormats() {

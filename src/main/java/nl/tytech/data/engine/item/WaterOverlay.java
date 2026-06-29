@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import cjava.WaterVar;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.ItemIDField;
 import nl.tytech.core.item.annotations.NoDefaultText;
 import nl.tytech.core.item.annotations.XMLValue;
@@ -492,12 +493,19 @@ public abstract class WaterOverlay extends ResultParentOverlay<WaterResult, Wate
 
     public enum WaterModelAttribute implements ReservedAttribute {
 
+        @Description("The amount by which the water level in meters on a water terrain must increase before it is considered stressed by water. This is used to compute the WATER_STRESS result type.")
         ALLOWED_WATER_INCREASE_M(Double.class, 0.4f, 0, 0),
 
+        @Description("Add the surface water level to the groundwater table result when the groundwater level is close to the surface.")
         GROUND_WATERTABLE_WITH_SURFACE(Boolean.class, 1, 1, 1),
 
+        @Description("When water adjacent to a building reaches this level (or the building height) the building will overflow. "
+                + "\n- Value 1000m makes buildings flood resistant and the water will only flow over the roof. "
+                + "\n- Value 0m allows water to flow in directly. "
+                + "\n- Value 1m is default and allows water to build up before overflow occurs.")
         DESIGN_FLOOD_ELEVATION_M(Double.class, 1.0),
 
+        @Description("Assumed distance under the terrain, from the surface to the layer that separates the saturated zone with the deeper ground layers.")
         GROUND_BOTTOM_DISTANCE_M(Double.class, 10.0),
 
         GROUND_BOTTOM_PRESSURE_M(Double.class, 0.0, 0.0, 0.0),
@@ -574,6 +582,10 @@ public abstract class WaterOverlay extends ResultParentOverlay<WaterResult, Wate
 
         BREACH_MEASUREMENT_DISTANCE_M(Double.class, 100, 100, 100),
 
+        @Description("A partly flooded cell (especially at the edges of waterways) can become unstable when the angles in X and Y direction are too far apart. "
+                + "In this case the fluxes in U and V cannot easily be resolved mathematically while preserving balance. "
+                + "To prevent unrealistic fluxes from appearing, only the flux in the primary direction will be preserved. "
+                + "A stabilizer angle of zero means that all cells can be considered partly flooded cells, while an angle of 90 degrees will disable the stabilizer.")
         STABILIZER_ANGLE(Double.class, 10, 10, 10),
 
         WEIR_MOVE_INTERVAL_S(Double.class, 10),

@@ -35,7 +35,7 @@ import org.locationtech.jts.geom.Point;
 import nl.tytech.core.event.Event;
 import nl.tytech.core.event.Event.SessionEventTypeEnum;
 import nl.tytech.core.event.Event.StartWithMyStakeholderEvent;
-import nl.tytech.core.item.annotations.ClassDescription;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.EventIDField;
 import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.net.serializable.MapLink;
@@ -52,7 +52,7 @@ import nl.tytech.data.engine.serializable.TimeState;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Endpoints for user actions (e.g. build building) in a testrun/impact Session.")
+@Description("Endpoints for user actions (e.g. build building) in a testrun/impact Session.")
 public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMyStakeholderEvent {
 
     @EventParamData(editor = true, desc = "Set a category active for a stakeholder.", params = { "Stakeholder ID", "ActionMenu ID",

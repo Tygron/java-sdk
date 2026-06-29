@@ -16,12 +16,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.NoDefaultText;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.editor.item.ChatMessage.AIState;
 import nl.tytech.data.engine.item.AttributeItem;
+import nl.tytech.util.ObjectUtils;
 import nl.tytech.util.StringUtils;
 
 /**
@@ -94,30 +97,33 @@ public class ChatChannel extends AttributeItem {
 
     public enum Tool {
 
-        SEARCH_PAGE("Search Tygron Wiki Pages"),
+        @Description("Get AI Summary on a Tygron Wiki subject")
+        GET_SUMMARY,
 
-        GET_PAGE("Get specific Tygron Wiki Page"),
+        @Description("Search Tygron Wiki Pages")
+        SEARCH_PAGE,
 
-        VALIDATE_ENDPOINT("Validate Tygron API Endpoint"),
+        @Description("Get specific Tygron Wiki Page")
+        GET_PAGE,
 
-        VALIDATE_QUERY("Validate Tygron TQL Query"),
+        @Description("Validate Tygron API Endpoint")
+        VALIDATE_ENDPOINT,
 
-        EXECUTE_QUERY("Execute Tygron TQL Query"),
+        @Description("Validate Tygron TQL Query")
+        VALIDATE_QUERY,
 
-        EXECUTE_ENDPOINT("Execute Tygron API Endpoint");
+        @Description("Execute Tygron TQL Query")
+        EXECUTE_QUERY,
+
+        @Description("Execute Tygron API Endpoint")
+        EXECUTE_ENDPOINT;
 
         public static final Tool fromText(String text) {
             return Arrays.stream(values()).filter(t -> t.toString().equals(text) || t.name().equals(text)).findAny().orElse(null);
         }
 
-        private final String description;
-
-        private Tool(String description) {
-            this.description = description;
-        }
-
         public final String getDescription() {
-            return description;
+            return ObjectUtils.getDescription(this);
         }
 
         public final boolean isRead() {
@@ -165,7 +171,7 @@ public class ChatChannel extends AttributeItem {
     }
 
     public final AIState getAIState() {
-        return AIState.fromStep(getMessages().stream().filter(m -> m instanceof AIChatMessage).mapToInt(m -> m.getAIState().getStep()).min()
+        return AIState.fromStep(getMessageStream().filter(m -> m instanceof AIChatMessage).mapToInt(m -> m.getAIState().getStep()).min()
                 .orElse(AIState.NONE.getStep()));
     }
 
@@ -183,8 +189,11 @@ public class ChatChannel extends AttributeItem {
     }
 
     public List<ChatMessage> getMessages() {
-        return this.<ChatMessage> getMap(MapLink.CHAT_MESSAGES).stream().filter(m -> getID().equals(m.getChannelID()))
-                .collect(Collectors.toList());
+        return getMessageStream().collect(Collectors.toList());
+    }
+
+    private Stream<ChatMessage> getMessageStream() {
+        return this.<ChatMessage> getMap(MapLink.CHAT_MESSAGES).stream().filter(m -> getID().equals(m.getChannelID()));
     }
 
     public List<Tool> getTools() {

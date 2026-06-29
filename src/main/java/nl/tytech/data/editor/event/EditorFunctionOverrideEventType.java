@@ -59,11 +59,11 @@ public enum EditorFunctionOverrideEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     RESET_VALUES(Integer.class),
 
-    @EventParamData(params = { "Functions", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Functions", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Functions", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Functions", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

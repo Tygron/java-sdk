@@ -42,15 +42,15 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
     @EventIDField(sameLength = true, links = { CHAT_CHANNELS }, params = { 0 })
     SET_TOOLS(Integer[].class, Tool[][].class),
 
-    @EventParamData(params = { "Chat Channels", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Chat Channels", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { CHAT_CHANNELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Chat Channels", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Chat Channels", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { CHAT_CHANNELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Chat Channels", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Chat Channels", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { CHAT_CHANNELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

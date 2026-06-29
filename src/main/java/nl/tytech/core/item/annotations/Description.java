@@ -10,47 +10,21 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.editor.event;
+package nl.tytech.core.item.annotations;
 
-import java.util.Arrays;
-import java.util.List;
-import nl.tytech.core.event.Event.EventTypeEnum;
-import nl.tytech.core.item.annotations.Description;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import nl.tytech.util.StringUtils;
 
 /**
- * Empty dummy Event (does nothing)
- * @author Maxim Knepfle
+ * Description
  *
+ * Description of class
+ *
+ * @author Maxim Knepfle
  */
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Description {
 
-@Description("Empty dummy endpoint.")
-public enum ServerDummyEventType implements EventTypeEnum {
-
-    NO_DEF();
-
-    private final List<Class<?>> classes;
-
-    private ServerDummyEventType(Class<?>... classes) {
-        this.classes = Arrays.asList(classes);
-    }
-
-    @Override
-    public boolean canBePredefined() {
-        return false;
-    }
-
-    @Override
-    public List<Class<?>> getClasses() {
-        return classes;
-    }
-
-    @Override
-    public Class<?> getResponseClass(Object[] args) {
-        return null;
-    }
-
-    @Override
-    public boolean isServerSide() {
-        return true;
-    }
+    String value() default StringUtils.EMPTY;
 }

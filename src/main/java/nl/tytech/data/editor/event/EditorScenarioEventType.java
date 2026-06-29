@@ -92,15 +92,15 @@ public enum EditorScenarioEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { SCENARIOS }, params = { 0 })
     SET_RESTART_TESTRUN(Integer[].class, Boolean[].class),
 
-    @EventParamData(params = { "Scenarios", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Scenarios", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { SCENARIOS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Scenarios", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Scenarios", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { SCENARIOS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Scenarios", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Scenarios", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { SCENARIOS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class);
 

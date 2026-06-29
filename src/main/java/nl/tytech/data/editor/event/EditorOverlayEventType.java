@@ -105,15 +105,15 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SAVE_GRID(Integer[].class),
 
-    @EventParamData(params = { "Overlays", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Overlays", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Overlays", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Overlays", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Overlays", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Overlays", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { OVERLAYS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
@@ -135,8 +135,8 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_AVG_DISTANCE(Integer.class, Double.class),
 
-    @EventParamData(desc = "Set the type of rasterization a specified AVG or Distance Overlay should do.", params = {
-            "Overlay ID (must relate to an AVG or Distance Overlay)", "Rasterization type: FIRST, MIN, MAX, SINGLE_LAYER, GRID",
+    @EventParamData(desc = "Set the type of rasterization a specified Average, Combo or Distance Overlay should do.", params = {
+            "Overlay ID (must relate to an Average, Combo or Distance Overlay)", "Rasterization type: FIRST, MIN, MAX, SINGLE_LAYER, GRID",
             "MapLink (will only affect the SINGLE_LAYER rasterization type): BUILDINGS, TERRAINS, AREAS, NEIGHBORHOODS" })
     @EventIDField(links = { OVERLAYS }, params = { 0 }, nullable = { 2 })
     SET_RASTERIZATION(Integer.class, Rasterization.class, MapLink.class),

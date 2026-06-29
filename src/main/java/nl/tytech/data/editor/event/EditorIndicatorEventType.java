@@ -80,15 +80,15 @@ public enum EditorIndicatorEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { INDICATORS }, params = { 0 })
     SET_ACTIVE(Integer[].class, Boolean[].class),
 
-    @EventParamData(params = { "Indicators", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Indicators", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { INDICATORS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Indicators", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Indicators", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { INDICATORS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Indicators", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Indicators", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { INDICATORS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

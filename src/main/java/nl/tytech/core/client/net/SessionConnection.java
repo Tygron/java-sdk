@@ -109,6 +109,135 @@ public class SessionConnection {
         }
     }
 
+    /**
+     * Special thread that checks connection for freezing and server IP changes.
+     *
+     * @author Maxim Knepfle
+     */
+    private class PollChecker extends Thread {
+
+        private PollChecker(int connectionID) {
+            this.setName("Client-" + PollChecker.class.getSimpleName() + "-" + connectionID);
+            this.setPriority(ThreadPriorities.MEDIUM);
+            this.setDaemon(true);
+        }
+
+        @Override
+        public final void run() {
+            while (true) {
+                if (state == Network.ClientConnectionState.CONNECTED) {
+                    long updateDif = System.currentTimeMillis() - pollStart;
+                    // allow more time on first connect
+                    long lostTime = firstConnection ? FIRST_CONNECT_TIMEOUT : ConnectionState.LOST.getMaxWaitingTime();
+
+                    if (pollEnd > 0 && updateDif > lostTime && !state.isBusy()) {
+                        setState(Network.ClientConnectionState.OFFLINE, false);
+                    }
+                }
+
+                if (state == Network.ClientConnectionState.OFFLINE && !firstConnection) {
+                    connect();
+                }
+
+                try {
+                    Thread.sleep(Network.UPDATEFREQ);
+                } catch (InterruptedException e) {
+                }
+            }
+        }
+    }
+
+    public class Poller extends Thread {
+
+        private static final int UPDATE_TIMOUT = (int) (10 * Moment.MINUTE);
+
+        private Poller(int counter) {
+            this.setName(SessionConnection.THREAD_NAME + "-" + counter);
+            this.setPriority(ThreadPriorities.MEDIUM);
+            this.setDaemon(true);
+            pollStart = 0;
+            pollEnd = 0;
+        }
+
+        @Override
+        public final void run() {
+
+            while (poller == this) {
+                if (firstConnection) {
+                    // set time diff between server and client.
+                    updateServerTimeDiff();
+                    // wait for first update
+                    TLogger.info("Processing first item update...");
+                    // feedback
+                    EventManager.fire(LoadingEventType.PROGRESS, LoadingStage.DOWNLOAD, 35);
+                    waitForUpdate();
+                    // feedback
+                    EventManager.fire(LoadingEventType.PROGRESS, LoadingStage.DOWNLOAD, 50);
+                    TLogger.info("Finished first item update!");
+
+                    // (Frank) To prevent a racing condition with disconnect,
+                    // since firstConnection is used as a control variable...
+                    if (poller == this) {
+                        firstConnection = false;
+                    }
+                } else {
+                    // wait for update
+                    waitForUpdate();
+                    // yield thread to allow others, (not really required).
+                    Thread.yield();
+                }
+            }
+            TLogger.info("Killed " + this.getName() + " thread.");
+        }
+
+        private final boolean waitForUpdate() {
+
+            if (status == null) {
+                TLogger.severe("Cannot perform operation, initconnection is not started!");
+                return false;
+            }
+            // default false
+            boolean succes = false;
+            UpdateResult serverVersion = null;
+            // while command was not successful retry
+            while (!succes && poller == this) {
+                try {
+                    HashMap<MapLink, Integer> request = status.getVersionRequest();
+
+                    pollStart = System.currentTimeMillis();
+                    serverVersion = RestManager.post(sessionApiTarget, Rest.POLL, firstConnection ? firstParams : secondParams, request,
+                            UpdateResult.class, Format.DEFAULT_EVENT, Format.DEFAULT_ITEMS, UPDATE_TIMOUT);
+                    if (poller == this) {
+                        pollEnd = System.currentTimeMillis();
+                        succes = true;
+                        // stop processing
+                        setProcessing(false);
+                    }
+
+                } catch (Exception exp) {
+                    succes = poller == this ? handle(exp, sessionApiTarget + Rest.POLL) : true;
+                    try {
+                        Thread.sleep(Network.UPDATEFREQ);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+            if (poller == this && serverVersion != null && state == Network.ClientConnectionState.CONNECTED) {
+
+                // calculate latency
+                long serverTime = System.currentTimeMillis() - timeDiff;
+                latency = serverTime - serverVersion.getTimeStamp();
+                EventManager.fire(ConnectionEvent.CONNECTION_LATENCY, latency);
+
+                // update local versions
+                status.updateVersions(serverVersion);
+
+                return true;
+            }
+            return false;
+        }
+    }
+
     public enum Processing implements EventTypeEnum {
 
         START, DONE;
@@ -141,137 +270,6 @@ public class SessionConnection {
         }
     }
 
-    public class Updater extends Thread {
-
-        private static final int UPDATE_TIMOUT = (int) (10 * Moment.MINUTE);
-
-        private static final String UPDATE_PATH = "update/";
-
-        private Updater(int counter) {
-            this.setName(SessionConnection.THREAD_NAME + "-" + counter);
-            this.setPriority(ThreadPriorities.MEDIUM);
-            this.setDaemon(true);
-            updateStart = 0;
-            updateEnd = 0;
-        }
-
-        @Override
-        public final void run() {
-
-            while (updater == this) {
-                if (firstConnection) {
-                    // set time diff between server and client.
-                    updateServerTimeDiff();
-                    // wait for first update
-                    TLogger.info("Processing first item update...");
-                    // feedback
-                    EventManager.fire(LoadingEventType.PROGRESS, LoadingStage.DOWNLOAD, 35);
-                    waitForUpdate();
-                    // feedback
-                    EventManager.fire(LoadingEventType.PROGRESS, LoadingStage.DOWNLOAD, 50);
-                    TLogger.info("Finished first item update!");
-
-                    // (Frank) To prevent a racing condition with disconnect,
-                    // since firstConnection is used as a control variable...
-                    if (updater == this) {
-                        firstConnection = false;
-                    }
-                } else {
-                    // wait for update
-                    waitForUpdate();
-                    // yield thread to allow others, (not really required).
-                    Thread.yield();
-                }
-            }
-            TLogger.info("Killed " + this.getName() + " thread.");
-        }
-
-        private final boolean waitForUpdate() {
-
-            if (status == null) {
-                TLogger.severe("Cannot perform operation, initconnection is not started!");
-                return false;
-            }
-            // default false
-            boolean succes = false;
-            UpdateResult serverVersion = null;
-            // while command was not successful retry
-            while (!succes && updater == this) {
-                try {
-                    HashMap<MapLink, Integer> request = status.getVersionRequest();
-
-                    updateStart = System.currentTimeMillis();
-                    serverVersion = RestManager.post(sessionApiTarget, UPDATE_PATH, firstConnection ? firstParams : secondParams, request,
-                            UpdateResult.class, Format.DEFAULT_EVENT, Format.DEFAULT_ITEMS, UPDATE_TIMOUT);
-                    if (updater == this) {
-                        updateEnd = System.currentTimeMillis();
-                        succes = true;
-                        // stop processing
-                        setProcessing(false);
-                    }
-
-                } catch (Exception exp) {
-                    succes = updater == this ? handle(exp, sessionApiTarget + UPDATE_PATH) : true;
-                    try {
-                        Thread.sleep(Network.UPDATEFREQ);
-                    } catch (InterruptedException e) {
-                    }
-                }
-            }
-            if (updater == this && serverVersion != null && state == Network.ClientConnectionState.CONNECTED) {
-
-                // calculate latency
-                long serverTime = System.currentTimeMillis() - timeDiff;
-                latency = serverTime - serverVersion.getTimeStamp();
-                EventManager.fire(ConnectionEvent.CONNECTION_LATENCY, latency);
-
-                // update local versions
-                status.updateVersions(serverVersion);
-
-                return true;
-            }
-            return false;
-        }
-    }
-
-    /**
-     * Special thread that checks connection for freezing and server IP changes.
-     *
-     * @author Maxim Knepfle
-     */
-    private class UpdaterChecker extends Thread {
-
-        private UpdaterChecker(int connectionID) {
-            this.setName("Client-" + UpdaterChecker.class.getSimpleName() + "-" + connectionID);
-            this.setPriority(ThreadPriorities.MEDIUM);
-            this.setDaemon(true);
-        }
-
-        @Override
-        public final void run() {
-            while (true) {
-                if (state == Network.ClientConnectionState.CONNECTED) {
-                    long updateDif = System.currentTimeMillis() - updateStart;
-                    // allow more time on first connect
-                    long lostTime = firstConnection ? FIRST_CONNECT_TIMEOUT : ConnectionState.LOST.getMaxWaitingTime();
-
-                    if (updateEnd > 0 && updateDif > lostTime && !state.isBusy()) {
-                        setState(Network.ClientConnectionState.OFFLINE, false);
-                    }
-                }
-
-                if (state == Network.ClientConnectionState.OFFLINE && !firstConnection) {
-                    connect();
-                }
-
-                try {
-                    Thread.sleep(Network.UPDATEFREQ);
-                } catch (InterruptedException e) {
-                }
-            }
-        }
-    }
-
     public static final String[] DEFAULT_PARAMS = new String[] { Format.CRS, Crs.LOCAL_CODE };
 
     private static final String[] firstParams = new String[] { Format.GZIP, Integer.toString(ZipUtils.DEFAULT_COMPRESSION), Format.CRS,
@@ -280,7 +278,7 @@ public class SessionConnection {
     private static final String[] secondParams = new String[] { Format.GZIP, Integer.toString(Deflater.BEST_SPEED), Format.CRS,
             Crs.LOCAL_CODE };
 
-    private static final String THREAD_NAME = "Client-" + Updater.class.getSimpleName();
+    private static final String THREAD_NAME = "Client-" + Poller.class.getSimpleName();
 
     private static final Integer EVENT_TIMEOUT = (int) (10 * Moment.MINUTE);
 
@@ -293,9 +291,9 @@ public class SessionConnection {
     /**
      * Last time in MS the server was successfully connected.
      */
-    private volatile long updateStart = 0;
+    private volatile long pollStart = 0;
 
-    private volatile long updateEnd = 0;
+    private volatile long pollEnd = 0;
 
     /**
      * Time difference between Server and Client at connection. (used as reference).
@@ -357,9 +355,9 @@ public class SessionConnection {
 
     private long latency = 0;
 
-    private volatile Updater updater = null;
+    private volatile Poller poller = null;
 
-    private int updaterThreadCounter = 0;
+    private int pollerThreadCounter = 0;
 
     private volatile Integer processCounter = null;
 
@@ -374,7 +372,7 @@ public class SessionConnection {
         this.rootServices = rootServices;
 
         // start connection check
-        UpdaterChecker checker = new UpdaterChecker(connectionID);
+        PollChecker checker = new PollChecker(connectionID);
         checker.start();
     }
 
@@ -814,13 +812,13 @@ public class SessionConnection {
 
     private void killUpdater() {
         // zombiefy old thread
-        if (updater != null) {
-            Updater zombie = this.updater;
+        if (poller != null) {
+            Poller zombie = this.poller;
             zombie.setName(zombie.getName() + "-Zombie");
-            updater = null;
+            poller = null;
             zombie.interrupt();
-            updateStart = 0;
-            updateEnd = 0;
+            pollStart = 0;
+            pollEnd = 0;
         }
     }
 
@@ -893,9 +891,9 @@ public class SessionConnection {
 
     private void startUpdater() {
         // start updating the client
-        updater = new Updater(updaterThreadCounter);
-        updaterThreadCounter++;
-        updater.start();
+        poller = new Poller(pollerThreadCounter);
+        pollerThreadCounter++;
+        poller.start();
     }
 
     private void updateServerTimeDiff() {

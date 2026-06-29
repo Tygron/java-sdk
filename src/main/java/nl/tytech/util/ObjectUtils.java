@@ -33,6 +33,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.core.item.annotations.Internal;
 import nl.tytech.data.core.item.Item;
 import nl.tytech.data.core.other.LargeCloneItem;
 import nl.tytech.util.logger.TLogger;
@@ -263,6 +265,20 @@ public class ObjectUtils {
     }
 
     /**
+     * Checks if the enum or class has a @Description annotation and returns the value, otherwise returns an empty string.
+     */
+    public static final String getDescription(Object object) {
+
+        Description desc = null;
+        if (object instanceof Enum<?> e) {
+            desc = getEnumAnnotation(e, Description.class);
+        } else if (object instanceof Class<?> c) {
+            desc = c.getAnnotation(Description.class);
+        }
+        return desc != null ? desc.value() : StringUtils.EMPTY;
+    }
+
+    /**
      * Returns the enum value or NULL when none found
      */
     @SuppressWarnings("unchecked")
@@ -318,6 +334,20 @@ public class ObjectUtils {
      */
     public static final boolean isPrimitive(Class<?> c) {
         return c != null && (c.isPrimitive() || Number.class.isAssignableFrom(c) || c == Boolean.class);
+    }
+
+    /**
+     * Checks if the enum or class is public and does NOT have a Internal annotation
+     */
+    public static boolean isPublic(Object object) {
+
+        Internal intern = null;
+        if (object instanceof Enum<?> e) {
+            intern = getEnumAnnotation(e, Internal.class);
+        } else if (object instanceof Class<?> c) {
+            intern = c.getAnnotation(Internal.class);
+        }
+        return intern == null;
     }
 
     /**

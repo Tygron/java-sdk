@@ -31,8 +31,8 @@ public class HeatVar {
     public static final float SHORT_WIND_DISTANCE_M = 70.0f;
     public static final float SQUARE_WIND_DISTANCE_M = 87.5f;
 
-    public static final float LONG_AVG_DISTANCE_M = 850.0f; // bit shorter then spec due to short distance
-    public static final float SHORT_AVG_DISTANCE_M = 250.0f;
+    public static final float LONG_AVG_DISTANCE_M = 850.0f; // bit shorter then spec due to forward distance
+    public static final float SHORT_AVG_DISTANCE_M = 250.0f; // used for left, right and forward!
     public static final float SQUARE_AVG_DISTANCE_M = 350.0f; // (half of 700x700m window)
 
     public static final float MAX_FOLIAGE_HEIGHT_M = 100.0f;

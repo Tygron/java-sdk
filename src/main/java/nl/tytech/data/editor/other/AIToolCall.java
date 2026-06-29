@@ -10,47 +10,50 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.editor.event;
+package nl.tytech.data.editor.other;
 
-import java.util.Arrays;
-import java.util.List;
-import nl.tytech.core.event.Event.EventTypeEnum;
-import nl.tytech.core.item.annotations.Description;
+import java.io.Serializable;
+import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.util.StringUtils;
 
 /**
- * Empty dummy Event (does nothing)
- * @author Maxim Knepfle
+ * AIToolCall contains which tool was called by AI
  *
+ * @author Maxim Knepfle
  */
+public class AIToolCall implements Serializable {
 
-@Description("Empty dummy endpoint.")
-public enum ServerDummyEventType implements EventTypeEnum {
+    private static final long serialVersionUID = 5107188523631763204L;
 
-    NO_DEF();
+    @XMLValue
+    private String id = StringUtils.EMPTY;
 
-    private final List<Class<?>> classes;
+    @XMLValue
+    private String name = StringUtils.EMPTY;
 
-    private ServerDummyEventType(Class<?>... classes) {
-        this.classes = Arrays.asList(classes);
+    @XMLValue
+    private String arguments = StringUtils.EMPTY;
+
+    public AIToolCall() {
+
     }
 
-    @Override
-    public boolean canBePredefined() {
-        return false;
+    public AIToolCall(String id, String name, String arguments) {
+
+        this.id = id;
+        this.name = name;
+        this.arguments = arguments;
     }
 
-    @Override
-    public List<Class<?>> getClasses() {
-        return classes;
+    public String getArguments() {
+        return arguments;
     }
 
-    @Override
-    public Class<?> getResponseClass(Object[] args) {
-        return null;
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public boolean isServerSide() {
-        return true;
+    public String getName() {
+        return name;
     }
 }

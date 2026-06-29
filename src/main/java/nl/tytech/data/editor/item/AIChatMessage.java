@@ -12,7 +12,11 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.editor.item;
 
+import java.util.ArrayList;
+import java.util.List;
+import nl.tytech.core.item.annotations.ListOfClass;
 import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.data.editor.other.AIToolCall;
 import nl.tytech.util.StringUtils;
 
 /**
@@ -35,6 +39,10 @@ public class AIChatMessage extends ChatMessage {
 
     @XMLValue
     private AIState state = AIState.QUEUING;
+
+    @XMLValue
+    @ListOfClass(AIToolCall.class)
+    private ArrayList<AIToolCall> toolCalls = new ArrayList<>(0);
 
     @XMLValue
     private long calcTimeMS = 0;
@@ -83,6 +91,17 @@ public class AIChatMessage extends ChatMessage {
         return thinking;
     }
 
+    public List<AIToolCall> getToolCalls() {
+        return toolCalls;
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        // reset messages are always finished (only new can generate)
+        state = AIState.FINISHED;
+    }
+
     public void setCalcTimeMS(long calcTimeMS) {
         this.calcTimeMS = calcTimeMS;
     }
@@ -93,5 +112,9 @@ public class AIChatMessage extends ChatMessage {
 
     public void setThinking(String thinking) {
         this.thinking = thinking;
+    }
+
+    public void setToolCalls(List<AIToolCall> toolCalls) {
+        this.toolCalls = new ArrayList<>(toolCalls);
     }
 }

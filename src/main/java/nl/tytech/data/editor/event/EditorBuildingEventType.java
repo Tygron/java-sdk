@@ -86,7 +86,7 @@ public enum EditorBuildingEventType implements IndicatorEventTypeEnum {
             Double.class, Double.class, Boolean.class),
 
     @EventParamData(desc = "Import Building Collection", params = { "Collection of Building geometries", "Building Names",
-            "Attribute Names", "Attribute Values", "Functions", "Owners", "Buffer for Points and Lines to make Polygons (optional)",
+            "Attribute Names", "Numeric Attribute Values", "Functions", "Owners", "Buffer for Points and Lines to make Polygons (optional)",
             "Source (optional)" }, defaults = { "", "", "", "", "", "", "" + Setting.DEFAULT_PL_BUFFER,
                     "" }, exampleAmount = { 3, 3, 2, 6, 3, 3 })
     @EventIDField(links = { FUNCTIONS, SOURCES }, params = { 4, 7 }, nullable = { 6, 7 })
@@ -124,15 +124,15 @@ public enum EditorBuildingEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { BUILDINGS }, params = { 0 })
     RESET_SLANTING_ROOF_HEIGHT(Integer.class, Integer.class),
 
-    @EventParamData(params = { "Buildings", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Buildings", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { BUILDINGS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Buildings", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Buildings", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { BUILDINGS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Buildings", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Buildings", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { BUILDINGS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

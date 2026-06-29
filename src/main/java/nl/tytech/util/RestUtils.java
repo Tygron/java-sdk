@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PushbackInputStream;
 import java.net.URL;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -48,17 +49,22 @@ public final class RestUtils {
     public static final JsonParser createParser(Format format, InputStream inputStream) throws IOException {
 
         // handle zipped or plain
-        InputStream is = format.isZipped() ? new GZIPInputStream(inputStream) : inputStream;
+        PushbackInputStream pis = new PushbackInputStream(format.isZipped() ? new GZIPInputStream(inputStream) : inputStream);
 
-        // wait for the stream to become available, note: this may never happen
+        // wait for the stream to become available
         for (int i = 0; i < INPUTSTREAM_ATTEMPTS; i++) {
-            if (is.available() == 0) {
-                ThreadUtils.sleepInterruptible(INPUTSTREAM_SLEEP_MS);
+            if (pis.available() == 0) {
+                // check is stream is empty (e.g. no arguments in event) in that case it already ended with code -1
+                int firstByte = pis.read();
+                if (firstByte != -1) {
+                    pis.unread(firstByte);
+                    ThreadUtils.sleepInterruptible(INPUTSTREAM_SLEEP_MS);
+                }
             }
         }
 
         // connect anyway
-        return JsonMapper.getLocalMapper(format).getFactory().createParser(is);
+        return JsonMapper.getLocalMapper(format).getFactory().createParser(pis);
     }
 
     public static final boolean isSupportedGML(String contentType) {

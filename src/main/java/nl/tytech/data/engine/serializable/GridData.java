@@ -15,6 +15,7 @@ package nl.tytech.data.engine.serializable;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.core.net.Lord;
 import nl.tytech.data.engine.item.GridOverlay;
 import nl.tytech.data.engine.item.Setting.Size;
 import nl.tytech.data.engine.other.Grid;
@@ -51,6 +52,14 @@ public class GridData extends Grid implements Serializable {
         }
 
         public float[] putShort(float[] array, int shortIndex, short value) {
+            throw new IllegalArgumentException("Not supported for Client");
+        }
+
+        public float[][] storageLoad(int sessionID, int overlayID, int timeframe) {
+            throw new IllegalArgumentException("Not supported for Client");
+        }
+
+        public boolean storageSave(int sessionID, int overlayID, int timeframe, float[][] data) {
             throw new IllegalArgumentException("Not supported for Client");
         }
     }
@@ -185,7 +194,7 @@ public class GridData extends Grid implements Serializable {
     private int blockSize = 1;
 
     @XMLValue
-    private float[][] data;
+    private float[][] data = new float[0][0];
 
     @XMLValue
     private long count = RESET;
@@ -268,6 +277,26 @@ public class GridData extends Grid implements Serializable {
                 }
             }
         }
+    }
+
+    /**
+     * Save (single) or load (multiple threads) to Grid Storage (must be in sync)
+     */
+    public final synchronized boolean _storage(Lord lord, int overlayID, int timeframe, boolean save) {
+
+        if (lord == null) {
+            return false;
+        }
+
+        if (save && data != null && unsafe.storageSave(lord.getSessionID(), overlayID, timeframe, data)) {
+            data = null; // clear from memory
+            return true;
+        }
+        if (!save && data == null) {
+            data = unsafe.storageLoad(lord.getSessionID(), overlayID, timeframe);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -456,7 +485,9 @@ public class GridData extends Grid implements Serializable {
     public long getCount(boolean compressed) {
 
         if (compressed) {
-            if (count <= RESET) {
+            if (data == null) {
+                return 0;
+            } else if (count <= RESET) {
                 count = 0;
                 for (int i = 0; i < data.length; i++) {
                     count += data[i].length;

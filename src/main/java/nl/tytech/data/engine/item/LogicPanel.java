@@ -19,6 +19,7 @@ import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
 import nl.tytech.data.engine.other.LogicItem;
+import nl.tytech.data.engine.serializable.Relation;
 import nl.tytech.util.StringUtils;
 
 /**
@@ -104,6 +105,16 @@ public abstract class LogicPanel extends Panel implements LogicItem {
 
     public Integer getParentID() {
         return parentID;
+    }
+
+    @Override
+    public Item getRelation(Relation relation) {
+        return getItem(relation == Relation.CONTENT ? getContentMapLink() : relation.getMapLink(), getRelationID(relation));
+    }
+
+    @Override
+    public Integer getRelationID(Relation relation) {
+        return relation == Relation.CONTENT ? getContentID() : super.getRelationID(relation);
     }
 
     public String getText() {

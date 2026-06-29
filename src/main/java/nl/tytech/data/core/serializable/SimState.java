@@ -12,6 +12,8 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.core.serializable;
 
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.util.ObjectUtils;
 import nl.tytech.util.StringUtils;
 
 /**
@@ -22,26 +24,29 @@ import nl.tytech.util.StringUtils;
  */
 public enum SimState {
 
-    NOTHING("Waiting on map Selection"),
+    @Description("Waiting on map Selection")
+    NOTHING,
 
-    GEO_WIZARD("Loading Geo Data"),
+    @Description("Loading Geo Data")
+    GEO_WIZARD,
 
-    NORMAL("Base mode"),
+    @Description("Base mode")
+    NORMAL,
 
-    TESTRUN("Running a Scenario"); // XXX: rename to SCENARIO
+    @Description("Running a Scenario")
+    TESTRUN; // XXX: rename to SCENARIO
 
-    private final String text;
+    public final String getText(double wizardPercentage) {
 
-    private SimState(String text) {
-        this.text = StringUtils.capitalizeWithSpacedUnderScores(this) + ": " + text;
-    }
-
-    public String getText(double wizardPercentage) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(StringUtils.capitalizeWithSpacedUnderScores(this));
+        builder.append(": ");
+        builder.append(ObjectUtils.getDescription(this));
 
         if (this == GEO_WIZARD) {
-            return text + ": " + StringUtils.toPercentage(wizardPercentage);
-        } else {
-            return text;
+            builder.append(": ");
+            builder.append(StringUtils.toPercentage(wizardPercentage));
         }
+        return builder.toString();
     }
 }

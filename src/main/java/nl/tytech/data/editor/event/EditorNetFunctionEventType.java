@@ -49,15 +49,15 @@ public enum EditorNetFunctionEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { NET_FUNCTIONS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    @EventParamData(params = { "Functions", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Functions", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { NET_FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Functions", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Functions", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { NET_FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Functions", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Functions", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { NET_FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

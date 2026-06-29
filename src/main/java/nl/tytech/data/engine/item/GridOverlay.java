@@ -12,8 +12,6 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.item;
 
-import static nl.tytech.data.core.serializable.MapType.CURRENT;
-import static nl.tytech.data.core.serializable.MapType.MAQUETTE;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,9 +23,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import cjava.FrameVar;
-import nl.tytech.core.item.annotations.DoNotSaveToInit;
 import nl.tytech.core.item.annotations.ListOfClass;
 import nl.tytech.core.item.annotations.NoDefaultText;
 import nl.tytech.core.item.annotations.XMLValue;
@@ -35,7 +31,6 @@ import nl.tytech.core.net.serializable.GPUJob;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.core.structure.ItemMap;
 import nl.tytech.data.core.item.Item;
-import nl.tytech.data.core.other.LargeCloneItem;
 import nl.tytech.data.core.serializable.MapType;
 import nl.tytech.data.engine.item.InferenceOverlay.InferenceResult;
 import nl.tytech.data.engine.item.Setting.Size;
@@ -61,7 +56,7 @@ import nl.tytech.util.color.TColor;
  *
  * @author Maxim Knepfle
  */
-public abstract class GridOverlay<R extends ResultType, P extends PrequelType> extends Overlay implements LargeCloneItem, ActiveItem {
+public abstract non-sealed class GridOverlay<R extends ResultType, P extends PrequelType> extends GridInnerOverlay implements ActiveItem {
 
     public enum GridModelAttribute implements ReservedAttribute {
 
@@ -293,20 +288,6 @@ public abstract class GridOverlay<R extends ResultType, P extends PrequelType> e
         return Math.max(dimX, dimY) / Math.sqrt(MIN_GRID_CELLS);
     }
 
-    private static final GridData getUnused(MapType mapType, Item unusedItem, int index, int width, int height, int blockSize) {
-
-        if (unusedItem instanceof GridOverlay<?, ?> unusedGrid) {
-            List<GridData> list = mapType == MapType.MAQUETTE ? unusedGrid.maquette : unusedGrid.current;
-            if (list != null && index >= 0 && index < list.size()) {
-                GridData unusedArray = list.get(index);
-                if (MathUtils.isDimension(unusedArray, width, height, blockSize)) {
-                    return unusedArray;
-                }
-            }
-        }
-        return null;
-    }
-
     public static final double[] getVerifiedTimeframeTimes(int timeframes, double start, double end, double[] timeframeTimes) {
 
         double[] result = new double[timeframes];
@@ -341,21 +322,6 @@ public abstract class GridOverlay<R extends ResultType, P extends PrequelType> e
     @XMLValue
     @ListOfClass(LegendEntry.class)
     private ArrayList<LegendEntry> diffLegend = new ArrayList<>();
-
-    /**
-     * 32-bit accurate version, store only on server and save to XML
-     */
-    @JsonIgnore
-    @XMLValue
-    private transient ArrayList<GridData> current = new ArrayList<>();
-
-    /**
-     * 32-bit accurate version, store only on server and save to session XML
-     */
-    @JsonIgnore
-    @XMLValue
-    @DoNotSaveToInit
-    private transient ArrayList<GridData> maquette = new ArrayList<>();
 
     @XMLValue
     private float[] maxValue = new float[] { 0f, 1f, 0f, 1f };
@@ -394,43 +360,6 @@ public abstract class GridOverlay<R extends ResultType, P extends PrequelType> e
     @Override
     protected int calcTimeframes(Map<Integer, Integer> cache) {
         return isActive() || inActiveTimeframes == null ? super.calcTimeframes(cache) : inActiveTimeframes;
-    }
-
-    @Override
-    public GridOverlay<R, P> cloneItem(Item unusedItem) {
-
-        // clone base first: note do not allow clone item method
-        GridOverlay<R, P> cloneOverlay = ObjectUtils.deepCopy(this, false);
-
-        // copy arrays
-        cloneOverlay.current = new ArrayList<>();
-        for (int i = 0; i < current.size(); i++) {
-            GridData original = this.current.get(i);
-            GridData clone = getUnused(CURRENT, unusedItem, i, original.getWidth(), original.getHeight(), original.getBlockSize());
-            if (clone != null) {
-                // recycle old Data Object
-                original.toGridData(clone);
-            } else {
-                // create clone of the original
-                clone = original.toGridData();
-            }
-            cloneOverlay.current.add(clone);
-        }
-
-        cloneOverlay.maquette = new ArrayList<>();
-        for (int i = 0; i < maquette.size(); i++) {
-            GridData original = this.maquette.get(i);
-            GridData clone = getUnused(MAQUETTE, unusedItem, i, original.getWidth(), original.getHeight(), original.getBlockSize());
-            if (clone != null) {
-                // recycle old Data Object
-                original.toGridData(clone);
-            } else {
-                // create clone of the original
-                clone = original.toGridData();
-            }
-            cloneOverlay.maquette.add(clone);
-        }
-        return cloneOverlay;
     }
 
     @Override
@@ -707,20 +636,10 @@ public abstract class GridOverlay<R extends ResultType, P extends PrequelType> e
 
     public abstract P[] getPrequelTypes();
 
+    @Override
     public GridData getRawData(MapType mapType, int timeframe) {
-
         // static overlays have only 1 frame stored internally
-        timeframe = getResultType().isStatic() ? 0 : timeframe;
-
-        if (getLord() != null && !getLord().isServerSide()) {
-            throw new IllegalArgumentException("Only Server is allowed to access the grid data directly!");
-        }
-        List<GridData> dataList = mapType == MapType.MAQUETTE ? maquette : current;
-        if (dataList.size() <= timeframe) {
-            return new GridData.Zero();
-        } else {
-            return dataList.get(Math.max(0, timeframe));
-        }
+        return super.getRawData(mapType, getResultType().isStatic() ? 0 : Math.max(0, timeframe));
     }
 
     protected abstract Class<R> getResultClass();
@@ -765,18 +684,6 @@ public abstract class GridOverlay<R extends ResultType, P extends PrequelType> e
             return "DEPRECATED";
         }
         return super.getStateMessage();
-    }
-
-    public long getTotalByteCount() {
-
-        long total = 0;
-        for (GridData data : current) {
-            total += data.getCount(true);
-        }
-        for (GridData data : maquette) {
-            total += data.getCount(true);
-        }
-        return total * Float.BYTES;
     }
 
     public long getTotalCellCount() {
@@ -980,32 +887,10 @@ public abstract class GridOverlay<R extends ResultType, P extends PrequelType> e
         return false;
     }
 
+    @Override
     public void setRawData(MapType mapType, int timeframe, Size gridSize, GridData data) {
-
         // static overlays have only 1 frame stored internally
-        timeframe = getResultType().isStatic() ? 0 : timeframe;
-
-        List<GridData> dataList = mapType == MapType.MAQUETTE ? maquette : current;
-
-        // multiple threads can read/write data from this object
-        synchronized (dataList) {
-
-            // remove remainder timeframes
-            while (dataList.size() > getTimeframes()) {
-                dataList.removeLast();
-            }
-            // override existing timeframe?
-            if (dataList.size() > timeframe) {
-                dataList.set(timeframe, data);
-                return;
-            }
-            // fill with empty arrays when needed
-            while (dataList.size() < timeframe) {
-                dataList.add(new GridData.Zero(gridSize));
-            }
-            // set frame
-            dataList.add(data);
-        }
+        super.setRawData(mapType, getResultType().isStatic() ? 0 : timeframe, gridSize, data);
     }
 
     public void setResultType(R resultType) {

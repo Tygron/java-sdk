@@ -102,15 +102,15 @@ public enum EditorPanelEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_ATTENTION(Integer.class, Boolean.class),
 
-    @EventParamData(params = { "Panels", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Panels", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { PANELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Panels", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Panels", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { PANELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Panels", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Panels", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { PANELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

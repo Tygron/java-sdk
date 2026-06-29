@@ -12,6 +12,8 @@
  *******************************************************************************************************************************************/
 package nl.tytech.core.net;
 
+import nl.tytech.core.net.serializable.MapLink;
+
 /**
  * Tygron Rest directory def.
  *
@@ -56,17 +58,27 @@ public class Rest {
 
     public static final String GPU = "gpu/";
 
-    public static final String INFO = "info/";
+    public static final String JOBS = "jobs";
+
+    public static final String CLUSTERS = "clusters";
+
+    public static final String INFO = "info";
+
+    public static final String LOCATION = "location";
 
     public static final String TOKEN_TAG = "$TOKEN";
 
     public static final String TQL = "query/";
+
+    public static final String POLL = "poll";
 
     public static final String CODES = "codes/";
 
     public static final String WFS = "wfs";
 
     public static final String WMS = "wms";
+
+    public static final String OVERLAY = "overlay";
 
     public static final String RESET_TIMEOUT = "resettimeout";
 
@@ -82,8 +94,10 @@ public class Rest {
     public static final String CLOSE_PANEL_TAG = "$CLOSE_PANEL";
     public static final String CLOSE_PANEL_WITH_ANSWER_TAG = "$CLOSE_PANEL_WITH_ANSWER_ID_";
 
-    public static final String ATTRIBUTE_KEY = "$ATTRIBUTE_";
-    public static final String GLOBAL_KEY = "$GLOBAL_";
-    public static final String NAME_KEY = "$NAME";
+    /**
+     * MapLink accessible via WFS
+     */
+    public static final MapLink[] WFS_MAPLINKS = new MapLink[] { MapLink.AREAS, MapLink.BUILDINGS, MapLink.NEIGHBORHOODS, MapLink.NET_LINES,
+            MapLink.NET_LOADS, MapLink.TERRAINS, MapLink.ZONES, MapLink.PLOTS, MapLink.MEASURES, MapLink.MEASUREMENTS };
 
 }

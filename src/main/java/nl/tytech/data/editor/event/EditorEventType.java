@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.locationtech.jts.geom.MultiPolygon;
 import nl.tytech.core.event.Event.EventTypeEnum;
-import nl.tytech.core.item.annotations.ClassDescription;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.EventIDField;
 import nl.tytech.core.item.annotations.EventParamData;
 
@@ -25,7 +25,7 @@ import nl.tytech.core.item.annotations.EventParamData;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Generic Editor endpoints for creating a Project and updating.")
+@Description("Generic Editor endpoints for creating a Project and updating.")
 public enum EditorEventType implements EventTypeEnum {
 
     /**

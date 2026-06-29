@@ -12,22 +12,15 @@
  *******************************************************************************************************************************************/
 package nl.tytech.core.item.annotations;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import nl.tytech.util.StringUtils;
 
 /**
- * Description
- *
- * Description of class
+ * Internal: Not part of public API documentation since, used for Tygron Client specific formats and endpoints.
  *
  * @author Maxim Knepfle
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
-public @interface ClassDescription {
+public @interface Internal {
 
-    String value() default StringUtils.EMPTY;
 }

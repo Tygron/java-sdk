@@ -12,6 +12,9 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.serializable;
 
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.util.ObjectUtils;
+
 /**
  * Web basemap types
  * @author Maxim Knepfle
@@ -19,9 +22,19 @@ package nl.tytech.data.engine.serializable;
  */
 public enum WebBaseMap {
 
-    SATELLITE, SATELLITE_ORIGINAL, TOPOGRAPHIC, GRAY;
+    @Description("Default Satellite imagery with function colors overlayed")
+    SATELLITE,
 
-    public static WebBaseMap fromString(String text) {
+    @Description("Orginal Satellite imagery without functions")
+    SATELLITE_ORIGINAL,
+
+    @Description("Topgraphic style using regular function colors")
+    TOPOGRAPHIC,
+
+    @Description("Topgraphic style using gray function colors")
+    GRAY;
+
+    public static final WebBaseMap fromString(String text) {
 
         for (WebBaseMap map : WebBaseMap.values()) {
             if (map.name().equalsIgnoreCase(text)) {
@@ -31,7 +44,11 @@ public enum WebBaseMap {
         return null;
     }
 
-    public static boolean isSatellite(WebBaseMap map) {
+    public static final boolean isSatellite(WebBaseMap map) {
         return map == SATELLITE || map == SATELLITE_ORIGINAL;
+    }
+
+    public final String getDescription() {
+        return ObjectUtils.getDescription(this);
     }
 }

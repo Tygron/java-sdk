@@ -12,6 +12,9 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.serializable;
 
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.util.ObjectUtils;
+
 /**
  * Web style of 3D models
  *
@@ -20,12 +23,18 @@ package nl.tytech.data.engine.serializable;
  */
 public enum WebModelStyle {
 
+    @Description("White colored 3D Models")
     WHITE,
 
+    @Description("Function colored 3D Models")
     COLORED;
 
     public static final String DEFAULT = "WHITE";
 
     // TEXTURED?
+
+    public final String getDescription() {
+        return ObjectUtils.getDescription(this);
+    }
 
 }

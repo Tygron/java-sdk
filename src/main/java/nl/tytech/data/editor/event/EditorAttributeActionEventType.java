@@ -37,15 +37,15 @@ public enum EditorAttributeActionEventType implements EventTypeEnum {
     @EventIDField(links = { ATTRIBUTE_ACTIONS }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(params = { "Actions", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Actions", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { ATTRIBUTE_ACTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Actions", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Actions", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { ATTRIBUTE_ACTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Actions", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Actions", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { ATTRIBUTE_ACTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

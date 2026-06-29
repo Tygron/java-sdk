@@ -24,7 +24,7 @@ import nl.tytech.core.client.concurrent.ParallelUpdatable;
 import nl.tytech.core.client.concurrent.UpdateManager;
 import nl.tytech.core.client.event.EventManager;
 import nl.tytech.core.client.event.EventManager.ItemManipulationEventType;
-import nl.tytech.core.client.net.SessionConnection.Updater;
+import nl.tytech.core.client.net.SessionConnection.Poller;
 import nl.tytech.core.event.Event;
 import nl.tytech.core.net.Lord;
 import nl.tytech.core.net.Network;
@@ -273,14 +273,14 @@ public class Status implements Lord, ParallelUpdatable {
     }
 
     /**
-     * ONLY the Updater thread may call this method! Get the version request with the total version and per list version.
+     * ONLY the Poller thread may call this method! Get the version request with the total version and per list version.
      *
      * @return Version request.
      */
     protected final HashMap<MapLink, Integer> getVersionRequest() {
 
-        if (!(Thread.currentThread() instanceof Updater)) {
-            TLogger.severe("Only the updater thread may call this method!");
+        if (!(Thread.currentThread() instanceof Poller)) {
+            TLogger.severe("Only the poll thread may call this method!");
             return null;
         }
 

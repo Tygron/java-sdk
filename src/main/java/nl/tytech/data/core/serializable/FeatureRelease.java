@@ -10,47 +10,24 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.editor.event;
+package nl.tytech.data.core.serializable;
 
-import java.util.Arrays;
-import java.util.List;
-import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.Description;
 
 /**
- * Empty dummy Event (does nothing)
+ * Feature Release State
+ *
  * @author Maxim Knepfle
  *
  */
+public enum FeatureRelease {
 
-@Description("Empty dummy endpoint.")
-public enum ServerDummyEventType implements EventTypeEnum {
+    @Description("All domains use new feature")
+    ALL,
 
-    NO_DEF();
+    @Description("Only Tygron root domains use new feature")
+    ROOT_DOMAINS,
 
-    private final List<Class<?>> classes;
-
-    private ServerDummyEventType(Class<?>... classes) {
-        this.classes = Arrays.asList(classes);
-    }
-
-    @Override
-    public boolean canBePredefined() {
-        return false;
-    }
-
-    @Override
-    public List<Class<?>> getClasses() {
-        return classes;
-    }
-
-    @Override
-    public Class<?> getResponseClass(Object[] args) {
-        return null;
-    }
-
-    @Override
-    public boolean isServerSide() {
-        return true;
-    }
+    @Description("New feature is disabled")
+    NONE
 }

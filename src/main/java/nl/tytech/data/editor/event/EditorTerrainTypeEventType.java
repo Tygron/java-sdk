@@ -58,11 +58,11 @@ public enum EditorTerrainTypeEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { TERRAIN_TYPES, TERRAIN_TYPES }, params = { 0, 1 })
     REMOVE_AND_REPLACE(Integer[].class, Integer[].class),
 
-    @EventParamData(params = { "Terrain Types", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Terrain Types", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { TERRAIN_TYPES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Terrain Types", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Terrain Types", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { TERRAIN_TYPES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

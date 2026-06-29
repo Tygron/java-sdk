@@ -112,7 +112,7 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     DUPLICATE_BUILDING(Integer[].class),
 
     @EventParamData(desc = "Import Measure Building Collection", params = { "Collection of Building geometries", "Building Names",
-            "Attribute Names", "Attribute Values", "Functions", "Owners (optional)", "Set for existing Measure ID (optional)",
+            "Attribute Names", "Numeric Attribute Values", "Functions", "Owners (optional)", "Set for existing Measure ID (optional)",
             "Buffer for Points and Lines to make Polygons (optional)", "Source (optional)" })
     @EventIDField(links = { FUNCTIONS, STAKEHOLDERS, MEASURES, SOURCES }, params = { 4, 5, 6, 8 }, nullable = { 5, 6, 7, 8 })
     IMPORT_BUILDINGS(GeometryCollection.class, String[].class, String[].class, double[][].class, Integer[].class, Integer[].class,
@@ -120,7 +120,7 @@ public enum EditorMeasureEventType implements EventTypeEnum {
 
     @Deprecated
     @EventParamData(desc = "Use IMPORT_BUILDINGS instead, same event with option to set existing measure.", params = {
-            "Collection of Building Geometries", "Building Names", "Attribute Names", "Attribute Values", "Functions", "Owners",
+            "Collection of Building Geometries", "Building Names", "Attribute Names", "Numeric Attribute Values", "Functions", "Owners",
             "Buffer for Points and Lines to make Polygons (optional)", "Source (optional)" })
     @EventIDField(links = { FUNCTIONS, STAKEHOLDERS, SOURCES }, params = { 4, 5, 7 }, nullable = { 6, 7 })
     IMPORT_BUILDING_MEASURE(GeometryCollection.class, String[].class, String[].class, double[][].class, Integer[].class, Integer[].class,

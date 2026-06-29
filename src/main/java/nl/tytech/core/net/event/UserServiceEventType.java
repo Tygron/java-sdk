@@ -15,7 +15,7 @@ package nl.tytech.core.net.event;
 import static nl.tytech.core.net.event.RemoteServicesEvent.OPTIONAL_DOMAIN_NAME;
 import java.util.Arrays;
 import java.util.List;
-import nl.tytech.core.item.annotations.ClassDescription;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.EventIDField;
 import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.net.event.RemoteServicesEvent.ServiceEventType;
@@ -31,7 +31,7 @@ import nl.tytech.core.net.serializable.User.AccessLevel;
  *
  * @author Maxim Knepfle
  */
-@ClassDescription("Endpoints related to Domain & User management (add, remove, etc).")
+@Description("Endpoints related to Domain & User management (add, remove, etc).")
 public enum UserServiceEventType implements ServiceEventType {
 
     @EventIDField(nullable = { 0 })

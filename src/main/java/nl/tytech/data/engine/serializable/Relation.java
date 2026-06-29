@@ -49,6 +49,8 @@ public enum Relation {
 
     RESULT_PARENT(MapLink.OVERLAYS),
 
+    CONTENT(null), // have variable linkage
+
     ;
 
     public static final Relation[] VALUES = values();

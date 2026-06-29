@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.data.engine.item.AttributeItem.ReservedAttribute;
 import nl.tytech.data.engine.item.ClientWord.ClientTerms;
 import nl.tytech.data.engine.item.Function;
@@ -38,94 +39,58 @@ import nl.tytech.util.StringUtils;
  */
 public enum FunctionValue implements Value, ReservedAttribute {
 
-    /**
-     * Effect on the QOL Environment.
-     */
+    @Description("Effect on the Livability Overlay")
     LIVABILITY_EFFECT(FunctionValueGroup.ENVIRONMENT, ClientTerms.ENVIRONMENT_EFFECT, -10, 10),
 
-    /**
-     * Priority
-     */
+    @Description("Number indicating the critical infrastructure priority of a building in case of calamities")
     CRITICAL_INFRASTRUCTURE(FunctionValueGroup.ENVIRONMENT, ClientTerms.CRITICAL_INFRASTRUCTURE, 0, 10, false),
 
-    /**
-     * Number cars (light vehicles) per hour
-     */
+    @Description("Number Cars (light vehicles) per hour")
     NUM_CARS(FunctionValueGroup.CAR_TRAFFIC, "Cars / hour", ClientTerms.NUM_CARS, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Vans (heavier vehicles) per hour
-     */
+    @Description("Number Vans (heavier vehicles) per hour")
     NUM_VANS(FunctionValueGroup.CAR_TRAFFIC, "Vans / hour", ClientTerms.NUM_VANS, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Trucks (heaviest vehicles) per hour
-     */
+    @Description("Number Trucks (heaviest vehicles) per hour")
     NUM_TRUCKS(FunctionValueGroup.CAR_TRAFFIC, "Trucks / hour", ClientTerms.NUM_TRUCKS, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Buses (heaviest vehicles) per hour
-     */
+    @Description("Number Buses (heaviest vehicles) per hour")
     NUM_BUSES(FunctionValueGroup.CAR_TRAFFIC, "Buses / hour", ClientTerms.NUM_BUSES, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Bicycles per hour
-     */
+    @Description("Number Bicycles per hour")
     NUM_BICYCLES(FunctionValueGroup.OTHER_TRAFFIC, "Bicycles / hour", ClientTerms.NUM_BICYCLES, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Pedestrians per hour
-     */
+    @Description("Number Pedestrians per hour")
     NUM_PEDESTRIANS(FunctionValueGroup.OTHER_TRAFFIC, "Pedestrians / hour", ClientTerms.NUM_PEDESTRIANS, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Trams (light rail vehicles) per hour
-     */
+    @Description("Number Trams (light rail vehicles) per hour")
     NUM_TRAMS(FunctionValueGroup.OTHER_TRAFFIC, "Trams / hour", ClientTerms.NUM_TRAMS, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Trains (heavy rail) per hour
-     */
+    @Description("Number Trains (heavy rail) per hour")
     NUM_TRAINS(FunctionValueGroup.OTHER_TRAFFIC, "Trains / hour", ClientTerms.NUM_TRAINS, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Ships (all types) per hour
-     */
+    @Description("Number Ships (all types) per hour")
     NUM_SHIPS(FunctionValueGroup.OTHER_TRAFFIC, "Ships / hour", ClientTerms.NUM_SHIPS, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Number Airplanes (all types) per hour
-     */
+    @Description("Number Airplanes (all types) per hour")
     NUM_AIRPLANES(FunctionValueGroup.OTHER_TRAFFIC, "Airplanes / hour", ClientTerms.NUM_AIRPLANES, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Jam Factor Cars (light vehicles) 0-1
-     */
+    @Description("Traffic Jam Factor Cars (light vehicles) 0-1")
     JAM_FACTOR_CARS(FunctionValueGroup.CAR_TRAFFIC, "Car Jam Factor (0-1)", ClientTerms.JAM_FACTOR_CARS, 0, 1, false),
 
-    /**
-     * Jam Factor Vans (heavier vehicles) 0-1
-     */
+    @Description("Traffic Jam Factor Vans (heavier vehicles) 0-1")
     JAM_FACTOR_VANS(FunctionValueGroup.CAR_TRAFFIC, "Van Jam Factor (0-1)", ClientTerms.JAM_FACTOR_VANS, 0, 1, false),
 
-    /**
-     * Jam Factor Trucks (heaviest vehicles) 0-1
-     */
+    @Description("Traffic Jam Factor Trucks (heaviest vehicles) 0-1")
     JAM_FACTOR_TRUCKS(FunctionValueGroup.CAR_TRAFFIC, "Truck Jam Factor (0-1)", ClientTerms.JAM_FACTOR_TRUCKS, 0, 1, false),
 
-    /**
-     * Jam Factor Buses (heaviest vehicles) 0-1
-     */
+    @Description("Traffic Jam Factor Buses (heaviest vehicles) 0-1")
     JAM_FACTOR_BUSES(FunctionValueGroup.CAR_TRAFFIC, "Bus Jam Factor (0-1)", ClientTerms.JAM_FACTOR_BUSES, 0, 1, false),
 
-    /**
-     * Traffic speed in kmph
-     */
+    @Description("Traffic speed in kilometers per hour")
     TRAFFIC_SPEED(FunctionValueGroup.CAR_TRAFFIC, "Speedlimit (kmph)", ClientTerms.TRAFFIC_SPEED, 0, Double.MAX_VALUE, false),
 
-    /**
-     * Traffic Lanes
-     */
+    @Description("Traffic Lanes")
     TRAFFIC_LANES(FunctionValueGroup.CAR_TRAFFIC, "Lanes", ClientTerms.TRAFFIC_LANES, -Double.MAX_VALUE, Double.MAX_VALUE, false),
 
     /**

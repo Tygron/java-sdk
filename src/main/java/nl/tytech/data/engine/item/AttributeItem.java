@@ -253,14 +253,18 @@ public abstract class AttributeItem extends UniqueNamedItem implements Attribute
     }
 
     /**
+     * Return related item or null when no relation exits
+     */
+    public Item getRelation(Relation relation) {
+        return getItem(relation.getMapLink(), getRelationID(relation));
+    }
+
+    /**
      * Return attribute of related item, if relation does not exist return NULL
      */
     @Override
     public final AttributeQueryInterface getRelationAttribute(Relation relation) {
-
-        Integer linkID = this.getRelationID(relation);
-        Item item = this.getItem(relation.getMapLink(), linkID);
-        return item instanceof AttributeQueryInterface aqi ? aqi : null;
+        return getRelation(relation) instanceof AttributeQueryInterface aqi ? aqi : null;
     }
 
     /**
@@ -275,15 +279,8 @@ public abstract class AttributeItem extends UniqueNamedItem implements Attribute
     /**
      * Return name of related item, if relation does not exist return ""
      */
-
     public final String getRelationName(Relation relation) {
-
-        Integer linkID = this.getRelationID(relation);
-        Item item = this.getItem(relation.getMapLink(), linkID);
-        if (item instanceof UniqueNamedItem ui) {
-            return ui.getName();
-        }
-        return StringUtils.EMPTY;
+        return getRelation(relation) instanceof UniqueNamedItem ui ? ui.getName() : StringUtils.EMPTY;
     }
 
     public ReservedAttribute getReservedAttribute(String attribute) {

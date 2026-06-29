@@ -66,7 +66,7 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     GENERATE_WATER_AREAS(Double.class),
 
     @EventParamData(desc = "Import Area Collection", params = { "Collection of Area geometries", "Area Names", "Attribute Names",
-            "Attribute Values", "Buffer for Points and Lines to make Polygons (optional)",
+            "Numeric Attribute Values", "Buffer for Points and Lines to make Polygons (optional)",
             "Source (optional)" }, defaults = { "", "", "", "", "" + Setting.DEFAULT_PL_BUFFER, "" }, exampleAmount = { 3, 3, 2, 6 })
     @EventIDField(links = { SOURCES }, params = { 5 }, nullable = { 4, 5 })
     IMPORT(GeometryCollection.class, String[].class, String[].class, double[][].class, Double.class, Integer.class),
@@ -95,15 +95,15 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0 })
     SET_ACTIVE(Integer[].class, Boolean[].class),
 
-    @EventParamData(params = { "Areas", "Attribute Name", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Areas", "Attribute Name", "Numerical Attribute Values", "Source (optional)" })
     @EventIDField(links = { AREAS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Areas", "Attribute Name", "Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Areas", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
     @EventIDField(links = { AREAS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Areas", "Attribute Names", "Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Areas", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { AREAS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 

@@ -14,6 +14,7 @@ package nl.tytech.data.engine.item;
 
 import java.io.Serializable;
 import cjava.FrameVar;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.net.serializable.KeepAlive;
 import nl.tytech.core.net.serializable.SettingType;
 import nl.tytech.core.net.serializable.TLicense;
@@ -212,197 +213,202 @@ public class Setting extends AbstractSetting<Setting.Type> {
     // enumerator-values at the end of this enumerator.
     public enum Type implements SettingType {
 
+        @Description("Group Areas based on these Attribute names in Tygron Client")
         AREA_GROUPS(String.class, ""),
 
-        /**
-         * Currently active scenario.
-         */
+        @Description("Currently active Scenario")
         ACTIVE_SCENARIO(Integer.class, "0"),
 
-        /**
-         * Maximum amount of cells per project
-         */
+        @Description("Maximum amount of Overlay grid cells per Project")
         MAX_TOTAL_GRIDCELLS(Long.class, "0"),
 
-        /**
-         * Minimum cell size in meters
-         */
+        @Description("Minimum Overlay grid cell size in meters")
         MIN_CELL_M(Double.class, "0"),
 
-        /**
-         * License support level
-         */
+        @Description("License support level")
         SUPPORT(String.class, TLicense.Support.PREMIUM.name()),
 
-        /**
-         * Decimal accuracy used in attributes and function values
-         */
+        @Description("Decimal accuracy used in attributes and function values")
         DECIMALS(Integer.class, "6"),
 
-        /** Basic panels that are not triggered by special functionality. */
+        @Description("Basic panels set (that are not triggered by special functionality)")
         BASE_PANELS(PanelEnum.class, "HOVER_PANEL NAVIGATION_PANEL TOPBAR_PANEL LEFT_MENU_PANEL FEEDBACK_PANEL"),
 
-        /**
-         * High detail project
-         */
+        @Description("High resolution project")
         DETAILED(Boolean.class, "true"),
 
-        /** Default Geo Plugins in Wizard */
+        @Description("Default Geo Plugins in new Project Wizard. Stored as pairs of Maplink and Geo Plugin ID, separated by spaces.")
         DEFAULT_GEOPLUGINS(String.class, ""),
 
-        /** Default price in EUR to lower one m3 ground */
+        @Description("Default price to lower one m3 ground")
         DEFAULT_GROUND_LOWER_PRICE_M3(Double.class, "50"),
 
-        /** Default price in EUR to raise one m3 ground */
+        @Description("Default price to raise one m3 ground")
         DEFAULT_GROUND_RAISE_PRICE_M3(Double.class, "50"),
 
-        /** Default price of one m2 ground in euro */
+        @Description("Default price of one m2 ground")
         DEFAULT_GROUNDPRICE_M2(Double.class, "400"),
 
-        /**
-         * Project name
-         */
+        @Description("Project name")
         PROJECT_NAME(String.class, "Project Name"),
 
-        /** When a building is placed an interaction popup needs to be shown. */
+        @Description("When a building is placed an interaction popup needs to be shown")
         SHOW_BUILDING_AND_MEASURE_POPUP(Boolean.class, "false"),
 
-        /**
-         * When a waterway is placed an interaction popup (for the water authority) needs to be shown.
-         */
+        @Description("When a waterway is placed an interaction popup (for the water authority) needs to be shown")
         SHOW_WATER_POPUP(Boolean.class, "false"),
 
-        /**
-         * Name of the sat file
-         */
+        @Description("Name of the satellite background asset files")
         SATELLITE_FILE_NAME(String.class, "default"),
 
-        /**
-         * Grid cell size in meters, default is 2
-         */
+        @Description("Overlay grid cell size in meters")
         GRID_CELL_SIZE_M(Double.class, "2"),
 
-        /**
-         * Map size in X and Y in meters, default 0 (no map)
-         */
+        @Description("Project map size in X (longitude) and Y (latitude) in meters")
         MAP_SIZE_M(Integer[].class, "0 0"),
 
-        /**
-         * Super user message to all clients
-         */
+        @Description("Super user message to all clients")
         SUPER_USER_MESSAGE(String.class, StringUtils.EMPTY),
 
+        @Description("Simulation Time State")
         STATE(SimState.class, "NOTHING"),
 
-        /**
-         * Serverside handled editor setting for auto recalculation of indicators and overlays on data changes.
-         */
+        @Description("When true indicators, panels and overlays are automatically recalculated on data changes")
         AUTO_CALCULATION(Boolean.class, "false"),
 
-        /**
-         * Howto rasterize polygon into the simulation raster
-         */
+        @Description("Selected rasterization method to convert polygon into the Overlay grid raster")
         RASTERIZATION(RasterizationMethod.class, "COMBINED"),
 
-        /**
-         * Serverside handled editor setting for required indicators and overlays recalculation. Only used when not auto recalculating.
-         */
+        @Description("When true this indicates that a recalculation update is needed")
         RECALCULATION_REQUIRED(Boolean.class, "false"),
 
-        /**
-         * Project Region.
-         */
+        @Description("Project Region: used to define the default functions")
         REGION(Region.class, "NORTHWESTERN_EUROPE"),
 
-        /**
-         * Timestamp format for exporting/importing date/time values in e.g. csv files.
-         */
+        @Description("Timestamp format for exporting/importing date/time values in e.g. csv files")
         TIMESTAMP_FORMAT(String.class, "dd/MM HH:mm:ss"),
 
+        @Description("Water visualisation type in Tygron Client")
         WATER_TYPE(String.class, "CANAL"),
 
+        @Description("Sky visualisation type in Tygron Client")
         SKY_TYPE(String.class, "DEFAULT"),
 
+        @Description("Traffic visualisation multiplier in Tygron Client (not used in calculations)")
         TRAFFIC_VISUAL_MULTIPLIER(Double.class, "4.0"),
 
+        @Description("Wind direction angle in degrees")
         WIND_DIRECTION(Integer.class, "135"), // default south-east wind
 
+        @Description("Wind speed in meters per second")
         WIND_SPEED_M_PER_S(Double.class, "5.0"), // default 5 m/s for west NL
 
+        @Description("Project currency")
         CURRENCY(TCurrency.class, TCurrency.EURO.name()),
 
+        @Description("Unit system for Measurements")
         MEASUREMENT_SYSTEM_TYPE(UnitSystemType.class, UnitSystemType.SI.name()),
 
+        @Description("MultiPolygon for reserved land used in sale transations")
         RESERVED_LAND(String.class, "MULTIPOLYGON EMPTY"),
 
+        @Description("Surrounding map extend for visualisation of Sattelite and Elevation around Project map")
         SURROUNDING_MAP_EXTEND_M(Integer[].class, "0 0"),
 
-        /*
-         * Extend of the loaded map
-         */
+        @Description("World reference point (upper left corner) used to convert local coordinates to EPSG 3857 world coordinates")
         WORLD_REFERENCE_POINT(Double[].class, "0 0"),
 
+        @Description("Average water elevation reference point used for visualisation in Tygron Client")
         WATER_HEIGHT(Double.class, "" + NO_WATER_HEIGHT_SET),
 
+        @Description("Model (buildings, bridges, tress, etc) style used for visualisation in Tygron Client")
         MODEL_STYLE(ModelStyle.class, "TEXTURED"),
 
+        @Description("Solar panel positioning used for visualisation in Tygron Client")
         SOLAR_PANEL_POSITION(Double[].class, "0.0 -0.5 -1.0"),
 
+        @Description("Satellite backgrounds can be dark, this values compensates for that in Tygron Client visualisation")
         SATELLITE_BRIGHTNESS(Double.class, "-1"),
 
+        @Description("Instead of Satellite imagery this color (RGBA) can be used for visualisation in Tygron Client")
         SATELLITE_COLOR(Integer[].class, ""),
 
+        @Description("Default export CRS for polygon data in Tygron Client")
         EXPORT_CRS(String.class, "EPSG:3857"),
 
+        @Description("Recently used export CRS values in Tygron Client")
         RECENT_CRSS(String.class, "EPSG:3857 EPSG:4326"),
 
+        @Description("Show Action log panel in Tygron Client")
         SHOW_ACTION_LOG(Boolean.class, "true"),
 
+        @Description("Open Web Viewers with this Panel ID instead of default map")
         WEB_FRONT_PANEL(Integer.class, "-1"),
 
+        @Description("Project map generation time in minutes")
         WIZARD_TIME_MINUTES(Integer.class, "-1"),
 
+        @Description("Panel ID used to retrieve and replace custom content for the 2D and 3D Viewers")
         WEB_MAP_CUSTOM_PANEL(Integer.class, "-1"),
 
+        @Description("Background type used Web Viewers")
         WEB_BASE_MAP(WebBaseMap.class, WebBaseMap.SATELLITE.name()),
 
+        @Description("Allow participant endpoint execution for Web Viewers")
         WEB_ALLOW_PARTICIPANT_EVENT(Boolean.class, "true"),
 
+        @Description("Allow logic endpoint execution for Web Viewers")
         WEB_ALLOW_LOGIC_EVENT(Boolean.class, "true"),
 
+        @Description("Default Web Viewer type (2D or 3D)")
         WEB_DEFAULT_APP(String.class, "2d"), // backwards compatibility, after release 2024 default to 3d
 
+        @Description("Web Viewer Model style (COLORED or WHITE)")
         WEB_MODEL_STYLE(String.class, WebModelStyle.DEFAULT),
 
+        @Description("3D Web Viewer shadow visualisation enabled")
         WEB_MODEL_SHADOW(Boolean.class, "true"),
 
+        @Description("3D Web Viewer texture quality/size (SMALL, MEDIUM, LARGE)")
         WEB_MODEL_TEXTURE(TextureSize.class, TextureSize.MEDIUM.name()),
 
+        @Description("3D Web Viewer model spacing, distance between e.g. trees")
         WEB_MODEL_SPACING(Double.class, "2.0"),
 
         // TODO: implement...
         WEB_ALLOW_QUERIES(Boolean.class, "false"),
 
+        @Description("Scheduled Update moment in millis")
         SCHEDULED_UPDATE(Long.class, ""),
 
+        @Description("When the Scheduled Update has finished email this address")
         SCHEDULED_UPDATE_MAIL(String.class, ""),
 
+        @Description("When the Scheduled Update has finished SMS this phone number")
         SCHEDULED_UPDATE_SMS(String.class, ""),
 
+        @Description("Project timezone offset")
         TIME_ZONE(int.class, ""),
 
+        @Description("Project sun dates used for Sun visualisation in Tygron Client")
         SUN_DATES(long[].class, ""),
 
+        @Description("Height Sector tile size in meters")
         SECTOR_SIZE_M(int.class, "500"), // 500 for backwards compatibility (8th feb 2022)
 
+        @Description("Limits Project map generation and later calculation to this MultiPolygon")
         LIMIT_MAP(String.class, "MULTIPOLYGON EMPTY"),
 
+        @Description("Default import CRS for polygon data in Tygron Client")
         IMPORT_CRS(String.class, ""),
 
+        @Description("Default import CRS (force XY) for polygon data in Tygron Client")
         IMPORT_CRS_FORCE_XY(Boolean.class, "true"),
 
+        @Description("Keep Project alive (active) base on this setting")
         KEEP_ALIVE(KeepAlive.class, "NEVER"),
 
+        @Description("Amount of Iterations during a recalculation update. Min Value: 1 and Max Value: " + MAX_ITERATIONS)
         ITERATIONS(Integer.class, "1"),
 
         ;
