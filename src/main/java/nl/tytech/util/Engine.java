@@ -28,7 +28,7 @@ public class Engine {
     /**
      * Clients using API/SDK are compatible on this version level.
      */
-    public static final String VERSION_API_COMPATIBLE = "2026.1.1";
+    public static final String VERSION_API_COMPATIBLE = "2026.1.2";
 
     /**
      * Minor version updates, no breaking API/SDK changes here.
@@ -58,7 +58,7 @@ public class Engine {
 
     public static String USER_AGENT = EngineNC.PLATFORM_NAME + " (" + VERSION + ")";
 
-    private static final long RELEASE_DATE = Moment.getMillis(2026, 6, 26, 20);
+    private static final long RELEASE_DATE = Moment.getMillis(2026, 7, 10, 20);
 
     public static final long NEXT_RELEASE_DATE = Moment.getMillis(2028, 3, 3, 20);
 

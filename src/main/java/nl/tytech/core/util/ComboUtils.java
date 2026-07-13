@@ -321,7 +321,7 @@ public class ComboUtils {
                     case SUB:
                         result -= value;
                         break;
-                    case MUL:
+                    case MULT:
                         result *= value;
                         break;
                     case DIV:

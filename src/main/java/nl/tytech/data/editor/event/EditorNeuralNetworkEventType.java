@@ -31,7 +31,7 @@ import nl.tytech.naming.GeoNC;
 @Linked(NEURAL_NETWORKS)
 public enum EditorNeuralNetworkEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add new " + GeoNC.ONNX, params = { "Name", "Byte array content",
+    @EventParamData(desc = "Add new RCNN via " + GeoNC.ONNX, params = { "Name", "Byte array content",
             "Uploader Name" }, response = "Neural Network ID")
     ADD(String.class, byte[].class, String.class),
 

@@ -172,7 +172,7 @@ public class ComboOverlay extends RasterizationOverlay<DefaultResult, Input> {
 
         ADD("Add one or more arguments"),
 
-        MUL("MULT", "Multiply one or more arguments"),
+        MULT("MUL", "Multiply one or more arguments"),
 
         DIV("Divide the first argument with one or more other arguments"),
 

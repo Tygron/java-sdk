@@ -44,7 +44,7 @@ import nl.tytech.locale.TLanguage;
 public enum IOServiceEventType implements ServiceEventType {
 
     @EventParamData(desc = "Create a new Project with a given name and language, Returns the new Project´s data.", params = {
-            "Project Name", "Language (NL, EN)", "High Detail (<10m DEM, <5m grid)" }, defaults = { "", "EN", "true" })
+            "Project Name", "Language (NL, EN)", "High Detail level (<10m DEM, <5m grid)" }, defaults = { "", "EN", "true" })
     @EventIDField(nullable = { 1, 2 })
     ADD_PROJECT(ProjectData.class, AccessLevel.EDITOR, String.class, TLanguage.class, Boolean.class),
 

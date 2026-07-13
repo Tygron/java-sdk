@@ -110,7 +110,7 @@ public enum MapLink implements EventTypeEnum {
     @Description("Properties of imported Excel Sheets")
     EXCEL_SHEETS(CURRENT_SITUATION, CALCULATION, false),
 
-    @Description("Properties of imported Neural Networks (ONNX)")
+    @Description("Properties of Neural Networks (RCNN, LLM or EMBEDDING)")
     NEURAL_NETWORKS(CURRENT_SITUATION, CALCULATION, false),
 
     @Description("Stores changes made to properties of a Function")

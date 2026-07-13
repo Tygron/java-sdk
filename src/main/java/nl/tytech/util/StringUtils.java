@@ -918,6 +918,22 @@ public abstract class StringUtils {
     }
 
     /**
+     * Split String into a float array based on whitespace
+     */
+    public static final float[] splitFloat(String value) throws NumberFormatException {
+
+        String[] split = split(value);
+        if (split == null) {
+            return null;
+        }
+        float[] array = new float[split.length];
+        for (int i = 0; i < split.length; i++) {
+            array[i] = (float) Double.parseDouble(split[i]);
+        }
+        return array;
+    }
+
+    /**
      * Split String into a int array based on whitespace
      */
     public static final int[] splitInt(String value) throws NumberFormatException {
@@ -1065,6 +1081,22 @@ public abstract class StringUtils {
             } else {
                 builder.append(Double.toString(array[i]));
             }
+            if (i < array.length - 1) {
+                builder.append(WHITESPACE);
+            }
+        }
+        return builder.toString();
+    }
+
+    public static final String toString(float[] array) {
+
+        if (array == null) {
+            return StringUtils.EMPTY;
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < array.length; i++) {
+            builder.append(Float.toString(array[i]));
             if (i < array.length - 1) {
                 builder.append(WHITESPACE);
             }

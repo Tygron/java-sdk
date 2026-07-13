@@ -10,24 +10,33 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.core.serializable;
+package nl.tytech.data.engine.item;
 
-import nl.tytech.core.item.annotations.Description;
+import nl.tytech.util.StringUtils;
 
 /**
- * Feature Release State
+ * Large Language Model (LLM) for Chat Channels
  *
  * @author Maxim Knepfle
  *
  */
-public enum FeatureRelease {
+public class LLM extends NeuralNetwork {
 
-    @Description("All domains use new feature")
-    ALL,
+    public static final String LLM_EXTENSION = "safetensors";
 
-    @Description("Only Tygron root domains use new feature")
-    ROOT_DOMAINS,
+    private static final long serialVersionUID = 5271401657101259581L;
 
-    @Description("New feature is disabled")
-    NONE
+    public LLM() {
+        super(Type.LLM);
+    }
+
+    @Override
+    public String getExtension() {
+        return LLM_EXTENSION;
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.containsData(getDescription()) ? getDescription() : super.getName();
+    }
 }

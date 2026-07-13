@@ -13,6 +13,7 @@
 package nl.tytech.data.editor.event;
 
 import static nl.tytech.core.net.serializable.MapLink.CHAT_CHANNELS;
+import static nl.tytech.core.net.serializable.MapLink.NEURAL_NETWORKS;
 import static nl.tytech.core.net.serializable.MapLink.SOURCES;
 import java.util.Arrays;
 import java.util.List;
@@ -42,11 +43,16 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
     @EventIDField(sameLength = true, links = { CHAT_CHANNELS }, params = { 0 })
     SET_TOOLS(Integer[].class, Tool[][].class),
 
+    @EventParamData(desc = "Set the LLM Neural Network for the Channel.", params = { "Chat Channels", "LLM Neural Networks" })
+    @EventIDField(links = { CHAT_CHANNELS, NEURAL_NETWORKS }, params = { 0, 1 })
+    SET_NEURAL_NETWORK(Integer[].class, Integer[].class),
+
     @EventParamData(params = { "Chat Channels", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { CHAT_CHANNELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Chat Channels", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Chat Channels", "Attribute Name", "Numeric Attribute Values appended to existing values",
+            "Source (optional)" })
     @EventIDField(links = { CHAT_CHANNELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
@@ -101,7 +107,7 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
             case APPEND_ATTRIBUTE -> Boolean.class;
             case REMOVE_ATTRIBUTE -> Boolean.class;
             case SET_TOOLS -> Boolean.class;
-
+            case SET_NEURAL_NETWORK -> Boolean.class;
         };
     }
 

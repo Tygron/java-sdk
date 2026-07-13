@@ -10,34 +10,27 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.engine.item;
+package nl.tytech.data.core.serializable;
 
-import nl.tytech.data.engine.other.OverrideDataItem;
+import nl.tytech.core.item.annotations.Description;
 
 /**
- * Default Neural Network
+ * Controlled Feature Rollout: Rollout State
+ *
  * @author Maxim Knepfle
  *
  */
-public class DefaultNeuralNetwork extends NeuralNetwork implements OverrideDataItem {
+public enum CFRRollout {
 
-    private static final long serialVersionUID = 3237992814582019098L;
+    @Description("All domains can use new feature")
+    ALL,
 
-    // runtime set variable do not save to XML
-    private boolean override = true;
+    @Description("Only Preview domains can use new feature")
+    PREVIEW_DOMAINS,
 
-    @Override
-    public boolean isDefault() {
-        return true;
-    }
+    @Description("Only Tygron root domains can use new feature")
+    ROOT_DOMAINS,
 
-    @Override
-    public boolean isOverride() {
-        return override;
-    }
-
-    @Override
-    public void setOverride(boolean override) {
-        this.override = override;
-    }
+    @Description("New feature is disabled")
+    NONE
 }

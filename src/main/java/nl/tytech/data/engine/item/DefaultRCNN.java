@@ -10,43 +10,34 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.naming;
+package nl.tytech.data.engine.item;
+
+import nl.tytech.data.engine.other.OverrideDataItem;
 
 /**
- * Naming Convention for Tygron Software
- *
+ * Default Neural Network
  * @author Maxim Knepfle
  *
  */
-public class EngineNC {
+public class DefaultRCNN extends RCNN implements OverrideDataItem {
 
-    public static final String COMPANY = "Tygron";
+    private static final long serialVersionUID = 3237992814582019098L;
 
-    public static final String PLATFORM_NAME = COMPANY + " Platform";
+    // runtime set variable do not save to XML
+    private boolean override = true;
 
-    public static final String SERVER_NAME = COMPANY + " Engine";
+    @Override
+    public boolean isDefault() {
+        return true;
+    }
 
-    public static final String CLIENT_NAME = COMPANY + " Client";
+    @Override
+    public boolean isOverride() {
+        return override;
+    }
 
-    public static final String SUB_TITLE = "Accelerated Simulations for Engineers";
-
-    public static final String SHARE = "GeoShare";
-
-    public static final String SHARE_NAME = COMPANY + " " + SHARE;
-
-    public static final String PUBLIC_SHARE = "Public Share";
-
-    public static final String CERTIFICATE = "Certificate of Authorship";
-
-    private static final String ONELINER = "The " + PLATFORM_NAME
-            + " is a cloud solution that puts you in control. It enables you to integrate and enhance your geospatial data, conduct HPC and AI simulations on a variety of topics, and share the results.";
-
-    public static final String PLATFORM_VIEWER = PLATFORM_NAME + " - " + SUB_TITLE;
-
-    public static final String PLATFORM_DESCRIPTION = PLATFORM_VIEWER + ": " + ONELINER;
-
-    public static final String BETA = "(BETA)";
-
-    public static final String AI_AGENT = "AI Agent";
-
+    @Override
+    public void setOverride(boolean override) {
+        this.override = override;
+    }
 }

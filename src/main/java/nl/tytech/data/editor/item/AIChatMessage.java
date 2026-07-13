@@ -14,9 +14,11 @@ package nl.tytech.data.editor.item;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.tytech.core.item.annotations.ListOfClass;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.data.editor.other.AIToolCall;
+import nl.tytech.util.MathUtils;
 import nl.tytech.util.StringUtils;
 
 /**
@@ -28,7 +30,9 @@ public class AIChatMessage extends ChatMessage {
 
     private static final long serialVersionUID = -5830351765378047529L;
 
-    public static final String QUEUING_TAG = "Queing...";
+    public static final String QUEUING_TAG = "Queuing...";
+
+    public static final String BUSY_THINKING_TAG = "Thinking..";
 
     public static final String THINK_TAG = "Thinking:\n";
 
@@ -46,6 +50,9 @@ public class AIChatMessage extends ChatMessage {
 
     @XMLValue
     private long calcTimeMS = 0;
+
+    @JsonIgnore
+    private transient int thinkCounter = 0;
 
     public AIChatMessage() {
 
@@ -65,14 +72,14 @@ public class AIChatMessage extends ChatMessage {
     }
 
     @Override
-    public String getMessage(boolean includeReasoning) {
+    public String getMessage(boolean showThinking) {
 
         if (getAIState() == AIState.QUEUING) {
             return QUEUING_TAG;
         }
 
         StringBuilder result = new StringBuilder();
-        boolean reasoning = includeReasoning && StringUtils.containsData(thinking);
+        boolean reasoning = showThinking && StringUtils.containsData(thinking);
         if (reasoning) {
             result.append(THINK_TAG);
             result.append(thinking);
@@ -84,7 +91,17 @@ public class AIChatMessage extends ChatMessage {
             result.append(message);
         }
         String r = result.toString();
-        return StringUtils.containsData(r) ? r : "...";
+        if (StringUtils.containsData(r)) {
+            return r;
+        }
+        if (!showThinking && StringUtils.containsData(thinking)) {
+            String txt = BUSY_THINKING_TAG;
+            for (int i = 0; i < MathUtils.randomInt(10); i++) {
+                txt += ".";
+            }
+            return txt;
+        }
+        return "...";
     }
 
     public String getThinking() {

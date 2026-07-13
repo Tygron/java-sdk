@@ -12,8 +12,8 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.item;
 
-import static nl.tytech.data.engine.item.NeuralNetwork.NeuralNetworkAttribute.MAX_CELL_SIZE_M;
-import static nl.tytech.data.engine.item.NeuralNetwork.NeuralNetworkAttribute.MIN_CELL_SIZE_M;
+import static nl.tytech.data.engine.item.RCNN.RCNNAttribute.MAX_CELL_SIZE_M;
+import static nl.tytech.data.engine.item.RCNN.RCNNAttribute.MIN_CELL_SIZE_M;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -189,7 +189,7 @@ public class InferenceOverlay extends ResultParentOverlay<InferenceResult, Infer
         return InferenceResult.LABELS;
     }
 
-    public NeuralNetwork getNeuralNetwork() {
+    public RCNN getNeuralNetwork() {
         return getItem(MapLink.NEURAL_NETWORKS, getNeuralNetworkID());
     }
 
@@ -251,7 +251,7 @@ public class InferenceOverlay extends ResultParentOverlay<InferenceResult, Infer
     @Override
     public String getWarnings() {
 
-        NeuralNetwork nn = this.getNeuralNetwork();
+        RCNN nn = this.getNeuralNetwork();
         if (nn != null && !StringUtils.containsData(super.getWarnings())) {
             if (nn.hasAttribute(MIN_CELL_SIZE_M)) {
                 double min = nn.getAttribute(MIN_CELL_SIZE_M);
@@ -273,7 +273,7 @@ public class InferenceOverlay extends ResultParentOverlay<InferenceResult, Infer
         this.neuralNetworkID = neuralNetworkID;
     }
 
-    public void updateLinks(NeuralNetwork network) {
+    public void updateLinks(RCNN network) {
 
         tensorLinks.removeIf(t -> network.getTensor(t.getTensorName()) == null);
         for (int t = 0; t < tensorLinks.size(); t++) {

@@ -22,17 +22,15 @@ import nl.tytech.data.core.item.Item;
 import nl.tytech.data.core.serializable.MapType;
 import nl.tytech.data.engine.item.AttributeItem.ReservedAttribute;
 import nl.tytech.data.engine.other.AttributeQueryInterface;
-import nl.tytech.data.engine.serializable.LegendEntry;
 import nl.tytech.data.engine.serializable.Relation;
-import nl.tytech.data.engine.serializable.Tensor;
 
 /**
- * Trained Neural Network for Inference
+ * Neural Network
  *
  * @author Maxim Knepfle & Frank Baars
  *
  */
-public class NeuralNetwork extends DataItem implements AttributeQueryInterface {
+public abstract class NeuralNetwork extends DataItem implements AttributeQueryInterface {
 
     public interface Format {
 
@@ -42,45 +40,11 @@ public class NeuralNetwork extends DataItem implements AttributeQueryInterface {
 
     }
 
-    public enum NeuralNetworkAttribute implements ReservedAttribute {
-
-        MIN_CELL_SIZE_M(Double.class, 0.25),
-
-        MAX_CELL_SIZE_M(Double.class, 0.25),
-
-        MAX_GT_INSTANCES(Double.class, 100),
-
-        VERSION(Long.class, 0),
-
-        ;
-
-        private final Class<?> type;
-        private final double[] defaultArray;
-
-        private NeuralNetworkAttribute(Class<?> type, double defaultValue) {
-            this.type = type;
-            this.defaultArray = new double[] { defaultValue };
-        }
-
-        @Override
-        public double[] defaultArray() {
-            return defaultArray;
-        }
-
-        @Override
-        public double defaultValue() {
-            return defaultArray()[0];
-        }
-
-        @Override
-        public Class<?> getType() {
-            return type;
-        }
+    public enum Type {
+        RCNN, LLM, EMBEDDING
     }
 
-    public static final String ONNX_EXTENSION = "onnx";
-
-    private static final long serialVersionUID = 5371401657101259581L;
+    private static final long serialVersionUID = 5381401657101259581L;
 
     @XMLValue
     private String description;
@@ -89,13 +53,13 @@ public class NeuralNetwork extends DataItem implements AttributeQueryInterface {
     private String producer;
 
     @XMLValue
-    private ArrayList<Tensor> tensors = new ArrayList<Tensor>();
-
-    @XMLValue
     private TreeMap<String, double[]> attributes = new TreeMap<>();
 
-    @XMLValue
-    private ArrayList<LegendEntry> legendEntries = new ArrayList<>();
+    protected final Type type;
+
+    protected NeuralNetwork(Type type) {
+        this.type = type;
+    }
 
     @Override
     public double getAttribute(MapType mapType, String key) {
@@ -142,17 +106,7 @@ public class NeuralNetwork extends DataItem implements AttributeQueryInterface {
     }
 
     @Override
-    public String getExtension() {
-        return ONNX_EXTENSION;
-    }
-
-    public List<Tensor> getInputTensors() {
-        return getTensors().stream().filter(t -> t.isInput()).toList();
-    }
-
-    public List<LegendEntry> getLegendEntries() {
-        return legendEntries;
-    }
+    public abstract String getExtension();
 
     @Override
     public List<Item> getLinks() {
@@ -166,10 +120,6 @@ public class NeuralNetwork extends DataItem implements AttributeQueryInterface {
         return links;
     }
 
-    public List<Tensor> getOutputTensors() {
-        return getTensors().stream().filter(t -> t.isOutput()).toList();
-    }
-
     public String getProducer() {
         return producer;
     }
@@ -179,12 +129,8 @@ public class NeuralNetwork extends DataItem implements AttributeQueryInterface {
         return null;
     }
 
-    public Tensor getTensor(String tensorName) {
-        return this.tensors.stream().filter(t -> t.getName().equals(tensorName)).findFirst().orElse(null);
-    }
-
-    public List<Tensor> getTensors() {
-        return tensors;
+    public final Type getType() {
+        return type;
     }
 
     @Override
@@ -215,17 +161,7 @@ public class NeuralNetwork extends DataItem implements AttributeQueryInterface {
         this.description = description;
     }
 
-    public final void setLegendEntries(Collection<LegendEntry> entries) {
-        this.legendEntries.clear();
-        this.legendEntries.addAll(entries);
-    }
-
     public void setProducer(String producer) {
         this.producer = producer;
-    }
-
-    public void setTensors(Collection<Tensor> tensors) {
-        this.tensors.clear();
-        this.tensors.addAll(tensors);
     }
 }
