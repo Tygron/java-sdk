@@ -159,7 +159,7 @@ public class WaterVar {
     public static final double WEIR_THRESHOLD = 0.5;
 
     /**
-     * When weir is submerged use a loss coeffcient between 0.8-1.0
+     * When weir is submerged use a loss coefficient between 0.8-1.0
      */
     public static final float WEIR_SUBMERGED_LOSS = 0.9f;
 
@@ -179,7 +179,7 @@ public class WaterVar {
     public static final float FLOW_THRESHOLD = 0.0005f;
 
     /**
-     * Earths Gravity constant
+     * Earth's Gravity constant
      */
     public static final float GRAVITY = 9.80665f;
 

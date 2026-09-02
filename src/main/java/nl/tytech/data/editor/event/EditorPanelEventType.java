@@ -138,13 +138,15 @@ public enum EditorPanelEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { PANELS }, params = { 0 })
     SET_EXCEL_UPDATE_TIMING(Integer[].class, Timing[].class),
 
+    @Deprecated
+    @EventParamData(desc = "Use SET_ATTRIBUTE with name: POPUP_TYPE for the same result.", params = { "Panel", "Popup Type" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_POPUP_MODEL_TYPE(Integer.class, PopupModelType.class),
 
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_SIZE(Integer.class, Double.class, Double.class),
 
-    @EventParamData(params = { "Template panels", "Apply automatically at start of session" })
+    @EventParamData(params = { "Template Panels", "Apply automatically at start of Session" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_TEMPLATE_APPLY_AUTOMATICALLY(Integer[].class, Boolean.class),
 

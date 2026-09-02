@@ -88,7 +88,7 @@ public enum FunctionValue implements Value, ReservedAttribute {
     JAM_FACTOR_BUSES(FunctionValueGroup.CAR_TRAFFIC, "Bus Jam Factor (0-1)", ClientTerms.JAM_FACTOR_BUSES, 0, 1, false),
 
     @Description("Traffic speed in kilometers per hour")
-    TRAFFIC_SPEED(FunctionValueGroup.CAR_TRAFFIC, "Speedlimit (kmph)", ClientTerms.TRAFFIC_SPEED, 0, Double.MAX_VALUE, false),
+    TRAFFIC_SPEED(FunctionValueGroup.CAR_TRAFFIC, "Speed Limit (km/h)", ClientTerms.TRAFFIC_SPEED, 0, Double.MAX_VALUE, false),
 
     @Description("Traffic Lanes")
     TRAFFIC_LANES(FunctionValueGroup.CAR_TRAFFIC, "Lanes", ClientTerms.TRAFFIC_LANES, -Double.MAX_VALUE, Double.MAX_VALUE, false),
@@ -117,25 +117,25 @@ public enum FunctionValue implements Value, ReservedAttribute {
     HEAT_EFFECT(FunctionValueGroup.ENVIRONMENT, ClientTerms.TILE_HEAT_EFFECT_UNIT, -10, 10, UnitType.TEMPERATURE_RELATIVE),
 
     /**
-     * Amount of meters around this function that is part of safe zone.
+     * Distance in meters around this function designated as a safe zone.
      */
     SAFETY_DISTANCE_M(FunctionValueGroup.ENVIRONMENT, "Safety Distance", ClientTerms.SAFETY_DISTANCE, 0, Double.MAX_VALUE, false,
             UnitType.LENGTH),
 
     /**
-     * Amount of meters around this function that is part of disturbance zone.
+     * Distance in meters around this function designated as a disturbance zone.
      */
     DISTURBANCE_DISTANCE_M(FunctionValueGroup.ENVIRONMENT, "Disturbance Distance", ClientTerms.DISTURBANCE_DISTANCE, 0, Double.MAX_VALUE,
             false, UnitType.LENGTH),
 
     /**
-     * Amount of meters around this function that is part of a self defined zone.
+     * Distance in meters around this function designated as a self-defined zone.
      */
     DISTANCE_ZONE_M(FunctionValueGroup.ENVIRONMENT, "Distance Zone", ClientTerms.DISTANCE_ZONE, 0, Double.MAX_VALUE, false,
             UnitType.LENGTH),
 
     /**
-     * Water storage in M3 on the roof per M2 kavel.
+     * Water storage in m3 on the roof per m2 plot.
      */
     WATER_STORAGE_M2(FunctionValueGroup.WATER, "Water Storage", ClientTerms.FUNCTION_WATER_STORAGE, 0, Double.MAX_VALUE, false,
             UnitType.VOLUME, UnitType.SURFACE),
@@ -172,17 +172,17 @@ public enum FunctionValue implements Value, ReservedAttribute {
     DEFAULT_FLOORS(FunctionValueGroup.CONSTRUCTION, ClientTerms.DEFAULT_FLOORS, Function.MIN_ALLOWED_FLOORS, Function.MAX_ALLOWED_FLOORS),
 
     /**
-     * Align elevantion: 0 flat, 1 floating, 2 surface
+     * Align elevation: 0 flat, 1 floating, 2 surface
      */
     ALIGN_ELEVATION(FunctionValueGroup.CONSTRUCTION, ClientTerms.ALIGN_ELEVATION, Function.ALIGN_FLAT, Function.ALIGN_SURFACE),
 
     /**
-     * Solar panels on the roof?
+     * Indicates if solar panels are on the roof.
      */
     SOLAR_PANELS(FunctionValueGroup.CONSTRUCTION, ClientTerms.SOLAR_PANELS, 0, 1, UnitType.BOOLEAN),
 
     /**
-     * Solid walls? Concrete is solid, bushes not
+     * Indicates if walls are solid (e.g., concrete is solid, bushes are not).
      */
     SOLID(FunctionValueGroup.CONSTRUCTION, ClientTerms.SOLID, 0, 1, UnitType.BOOLEAN),
 
@@ -197,17 +197,17 @@ public enum FunctionValue implements Value, ReservedAttribute {
     DRAINAGE(FunctionValueGroup.WATER, "Drainage (Subsidence)", ClientTerms.DRAINAGE, -10, 10, false, UnitType.LENGTH),
 
     /**
-     * When true function requires a zoning permit to be build
+     * When true, the function requires a zoning permit to be built.
      */
     ZONING_PERMIT_REQUIRED(FunctionValueGroup.CONSTRUCTION, ClientTerms.ZONING_PERMIT_REQUIRED, 0, 1, UnitType.BOOLEAN),
 
     /**
-     * How high is the slanting roof, 0 = flat roof 1m gives a small slanting roof.
+     * Height of the slanting roof; 0 indicates a flat roof.
      */
     SLANTING_ROOF_HEIGHT(FunctionValueGroup.CONSTRUCTION, ClientTerms.SLANTING_ROOF_HEIGHT, 0, 10, UnitType.LENGTH),
 
     /**
-     * When true function allows pipe items to be constructed under it.
+     * When true, the function allows pipe items to be constructed under it.
      */
     PIPES_PERMITTED(FunctionValueGroup.NETWORK, ClientTerms.PIPES_PERMITTED, 0, 1, UnitType.BOOLEAN),
 
@@ -227,7 +227,7 @@ public enum FunctionValue implements Value, ReservedAttribute {
     GROUND_COLOR(FunctionValueGroup.VISUALISATION, ClientTerms.GROUNDCOLOR, Integer.MIN_VALUE, Integer.MAX_VALUE),
 
     /**
-     * Transparency of terrain below 1 == No Terrain Visible
+     * Terrain transparency; values below 1 indicate no visible terrain.
      */
     TERRAIN_MIX(FunctionValueGroup.VISUALISATION, ClientTerms.TERRAIN_MIX, 0, 1),
 
@@ -242,7 +242,7 @@ public enum FunctionValue implements Value, ReservedAttribute {
     TOP_COLOR(FunctionValueGroup.VISUALISATION, ClientTerms.TOPCOLOR, Integer.MIN_VALUE, Integer.MAX_VALUE),
 
     /**
-     * When true function is monumental and will require additional permission
+     * When true, the function is monumental and requires additional permission.
      */
     MONUMENTAL(FunctionValueGroup.CONSTRUCTION, ClientTerms.MONUMENTAL, 0, 1, UnitType.BOOLEAN),
 

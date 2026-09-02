@@ -17,7 +17,7 @@ import nl.tytech.data.core.item.UniqueNamedItem;
 import nl.tytech.util.StringUtils;
 
 /**
- * Particle emitter: This item encapsulates the available models, this are NOT the individual models on the map.
+ * Encapsulates available Particle Emitter models rather than individual instances on the map.
  *
  * @author Christian Paping
  */

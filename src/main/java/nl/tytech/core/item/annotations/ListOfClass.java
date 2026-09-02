@@ -18,7 +18,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ClassList: Only objects of this class are used in this list.
+ * Specifies that only objects of the given class are used in this list.
  *
  * @author Maxim Knepfle
  */
@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 public @interface ListOfClass {
 
     /**
-     * Only objects of this class are used in this list.
+     * The class allowed in the list.
      */
     Class<?> value();
 }

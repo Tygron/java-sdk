@@ -106,54 +106,54 @@ public interface Network {
     public enum ConnectionEvent implements EventTypeEnum {
 
         //
-        NO_INTERNET("Connection failed (Unable to determine Server Address)...", String.class, Exception.class),
+        NO_INTERNET("Connection failed: Unable to determine Server Address.", String.class, Exception.class),
         //
         NULL_POINTER("Null Pointer", String.class, Exception.class),
         //
-        SERVER_DIFFERENT_SESSION_TYPE("Server running different Session Type!"),
+        SERVER_DIFFERENT_SESSION_TYPE("The server is running a different Session Type."),
         //
-        SERVER_EXECUTION("Error during execution server side.", String.class, Exception.class),
+        SERVER_EXECUTION("An error occurred during server-side execution.", String.class, Exception.class),
         //
-        SERVER_NO_SESSION("No project loaded on the server.", String.class, Exception.class),
+        SERVER_NO_SESSION("No Project loaded on the server.", String.class, Exception.class),
         //
         SERVER_FAIR_CAPACITY(TStatus.FAIR_CAPACITY.getDescription(), String.class, Exception.class),
         //
         SERVER_MAX_CAPACITY(TStatus.MAX_CAPACITY.getDescription(), String.class, Exception.class),
         //
         SERVER_UNAVAILABLE(
-                "Disconnected from Server. Please verify your internet connection and try again.\nThe Server might also be down for Maintenance.",
+                "Disconnected from server. Please verify your internet connection or check if the server is under maintenance.",
                 String.class, Exception.class),
         //
-        SERVER_TOKEN("Server running with different token! Please restart.", String.class, Exception.class),
+        SERVER_TOKEN("The server is using a different token. Please restart the application.", String.class, Exception.class),
         //
         THREAD_INTERRUPT("Cannot run client command, thread was interrupted.", String.class, Exception.class),
         //
-        FIRST_UPDATE_STARTED("Client is update is starting."),
+        FIRST_UPDATE_STARTED("Client update is starting."),
         //
         FIRST_UPDATE_DONE("Client is updated for the first time."),
         //
-        FIRST_UPDATE_EVENT_HANDLED("First update event result is handled."),
+        FIRST_UPDATE_EVENT_HANDLED("The first update event has been handled."),
         //
         TIMED_OUT("Connection timed out.", String.class, Exception.class),
         //
         UNKNOWN("Connection failed (Unknown)", String.class, Exception.class),
         //
-        CONNECTION_ATTEMPT_RETRY("Former connection attempt failed, forcing retry.", Integer.class),
+        CONNECTION_ATTEMPT_RETRY("Previous connection attempt failed; retrying.", Integer.class),
 
         CONNECTION_LATENCY("Connection latency.", Long.class),
 
         CONNECTION_FAILURE("Failed to establish a Secure Connection. Please verify your internet connection and try again.", String.class,
                 Exception.class),
 
-        THREAD_EXCECUTION("Failure during execution of thread.", String.class, Exception.class),
+        THREAD_EXECUTION("A failure occurred during thread execution.", String.class, Exception.class),
 
-        RELEASED_FROM_SESSION("Stakeholder was released from the session.", String.class, Exception.class),
+        RELEASED_FROM_SESSION("Stakeholder was released from the Session.", String.class, Exception.class),
 
-        CONNECTION_STATE_CHANGE("Connection changed from state.", Network.ClientConnectionState.class, Boolean.class),
+        CONNECTION_STATE_CHANGE("The connection state has changed.", Network.ClientConnectionState.class, Boolean.class),
 
         AUTHENTICATION_FAIL("Username & Password combination is incorrect.", String.class, Exception.class),
 
-        SERVER_REBOOT("Server rebooted, restart app.", String.class, Exception.class);
+        SERVER_REBOOT("The server has rebooted. Please restart the application.", String.class, Exception.class);
 
         private final String details;
 

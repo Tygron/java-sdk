@@ -39,7 +39,7 @@ import nl.tytech.data.engine.serializable.TimeState;
 import nl.tytech.util.StringUtils;
 
 /**
- * Measure: This class keeps track of the base Measure.
+ * This class represents a base Measure.
  *
  * @author Maxim Knepfle
  */
@@ -140,7 +140,7 @@ sealed public class Measure extends SourcedItem implements Action, TimeStateItem
     }
 
     /**
-     * This method is a intermediate step to creating a timestate based measure event system
+     * This method is an intermediate step in creating a TimeState-based measure event system.
      *
      */
     public List<CodedEvent> getActionEventList(boolean serverSide, ActionType type) {
@@ -224,7 +224,7 @@ sealed public class Measure extends SourcedItem implements Action, TimeStateItem
     }
 
     /**
-     * Return name of related item, if relation does not exist return empty
+     * Returns the name of the related item; returns an empty string if no relation exists.
      */
     public final String getRelationName(Relation relation) {
 
@@ -256,7 +256,7 @@ sealed public class Measure extends SourcedItem implements Action, TimeStateItem
         return false;
     }
 
-    public void setConformationsRequired(boolean confirmation) {
+    public void setConfirmationsRequired(boolean confirmation) {
         this.confirmationsRequired = confirmation;
     }
 

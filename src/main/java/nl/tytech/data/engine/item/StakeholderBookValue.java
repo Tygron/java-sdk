@@ -46,7 +46,7 @@ public abstract class StakeholderBookValue extends BookValue {
         return this.stakeholderID;
     }
 
-    public void setStakeholder(Stakeholder stakeholder) {
+    public void setStakeholder(CoreStakeholder stakeholder) {
         this.stakeholderID = stakeholder.getID();
     }
 }

@@ -33,20 +33,20 @@ import nl.tytech.core.net.serializable.MapLink;
  *
  * @author Maxim Knepfle
  */
-@Description("Endpoints related to answering popups in a testrun/impact Session.")
+@Description("Endpoints related to answering popups in a TestRun or impact Session.")
 public enum AnswerEvent implements SessionEventTypeEnum {
 
-    @EventParamData(desc = "Stakeholder has planned the construction of a particular building for a particular date stored in a popup", params = {
+    @EventParamData(desc = "Stakeholder planned the construction date for a building via a popup.", params = {
             "Stakeholder ID", "Building ID", "Popup ID" })
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS, POPUPS }, params = { 0, 1, 2 })
     BUILDING_ASK_CONSTRUCTION_DATE(Integer.class, Integer.class, Integer.class),
 
-    @EventParamData(desc = "Stakeholder has planned the demolition of a particular building for a particular date stored in a popup", params = {
+    @EventParamData(desc = "Stakeholder planned the demolition date for a building via a popup.", params = {
             "Stakeholder ID", "Building ID", "Popup ID" })
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS, POPUPS }, params = { 0, 1, 2 })
     BUILDING_ASK_DEMOLISH_DATE(Integer.class, Integer.class, Integer.class),
 
-    @EventParamData(desc = "Stakeholder approves construction of building", params = { "Stakeholder ID", "Building ID", "Approves" })
+    @EventParamData(desc = "Stakeholder approves the construction of a building.", params = { "Stakeholder ID", "Building ID", "Approves" })
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS, }, params = { 0, 1 })
     BUILDING_CONSTRUCTION_APPROVAL(Integer.class, Integer.class, Boolean.class),
 
@@ -60,7 +60,7 @@ public enum AnswerEvent implements SessionEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS, }, params = { 0, 1 })
     BUILDING_CONSTRUCTION_DENIED_CONFIRMED(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Stakeholder approves demolition of building", params = { "Stakeholder ID", "Building ID", "Approves" })
+    @EventParamData(desc = "Stakeholder approves the demolition of a building.", params = { "Stakeholder ID", "Building ID", "Approves" })
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS }, params = { 0, 1 })
     BUILDING_DEMOLISH_APPROVAL(Integer.class, Integer.class, Boolean.class),
 
@@ -84,35 +84,35 @@ public enum AnswerEvent implements SessionEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS }, params = { 0, 1 })
     BUILDINGS_DEMOLISH_APPROVAL_CONFIRMED(Integer.class, Integer[].class, Boolean.class),
 
-    @EventParamData(desc = "Deletes a popup (maybe be invalid ID, thus ignored)", params = { "Popup ID" })
+    @EventParamData(desc = "Deletes a popup; if the ID is invalid, it is ignored.", params = { "Popup ID" })
     DELETE_POPUP(Integer[].class),
 
-    @EventParamData(desc = "Selling Stakeholder has accepted to sell the specified land for a given price per square meter to buying Stakeholder", params = {
+    @EventParamData(desc = "Selling Stakeholder accepted selling the specified land at a given price per square meter to Buying Stakeholder.", params = {
             "Buying Stakeholder ID", "Selling Stakeholder ID", "MultiPolygon describing the land contour", "Price per square meter" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     LAND_BUY_APROVED(Integer.class, Integer.class, MultiPolygon.class, Double.class),
 
-    @EventParamData(desc = "Selling Stakeholder has refused to sell the specified land for a given price per square meter to buying Stakeholder", params = {
+    @EventParamData(desc = "Selling Stakeholder refused selling the specified land at a given price per square meter to Buying Stakeholder.", params = {
             "Buying Stakeholder ID", "Selling Stakeholder ID", "MultiPolygon describing the land contour", "Price per square meter" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     LAND_BUY_REFUSED(Integer.class, Integer.class, MultiPolygon.class, Double.class),
 
-    @EventParamData(desc = "Buying Stakeholder has accepted to buy the specified land for a given price per square meter from selling Stakeholder", params = {
+    @EventParamData(desc = "Buying Stakeholder accepted buying the specified land at a given price per square meter from Selling Stakeholder.", params = {
             "Buying Stakeholder ID", "Selling Stakeholder ID", "MultiPolygon describing the land contour", "Price per square meter" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     LAND_SELL_APROVED(Integer.class, Integer.class, MultiPolygon.class, Double.class),
 
-    @EventParamData(desc = "Buying Stakeholder has refused to buy the specified land for a given price per square meter from selling Stakeholder", params = {
+    @EventParamData(desc = "Buying Stakeholder refused buying the specified land at a given price per square meter from Selling Stakeholder.", params = {
             "Buying Stakeholder ID", "Selling Stakeholder ID", "MultiPolygon describing the land contour" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     LAND_SELL_REFUSED(Integer.class, Integer.class, MultiPolygon.class),
 
-    @EventParamData(desc = "Stakeholder has planned the construction of a particular measure for a particular date stored in a popup", params = {
+    @EventParamData(desc = "Stakeholder planned the construction date for a measure via a popup.", params = {
             "Stakeholder ID", "Measure ID", "Popup ID" })
     @EventIDField(links = { STAKEHOLDERS, MEASURES, POPUPS }, params = { 0, 1, 2 })
     MEASURE_ASK_CONSTRUCTION_DATE(Integer.class, Integer.class, Integer.class),
 
-    @EventParamData(desc = "Stakeholder approves construction of measure", params = { "Stakeholder ID", "Measure ID",
+    @EventParamData(desc = "Stakeholder approves the construction of a measure.", params = { "Stakeholder ID", "Measure ID",
             "Approving Stakeholder ID", "Approves" })
     @EventIDField(links = { STAKEHOLDERS, MEASURES, STAKEHOLDERS }, params = { 0, 1, 2 })
     MEASURE_CONSTRUCTION_APPROVAL(Integer.class, Integer.class, Integer.class, Boolean.class),
@@ -127,7 +127,7 @@ public enum AnswerEvent implements SessionEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS, MEASURES, }, params = { 0, 1 })
     MEASURE_CONSTRUCTION_DENIED_CONFIRMED(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Owner confirms zoning permit for measure", params = { "Measure ID" })
+    @EventParamData(desc = "Owner confirms the zoning permit for a measure.", params = { "Measure ID" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     MEASURE_CONSTRUCTION_ZONING_APPROVAL_CONFIRM(Integer.class),
 
@@ -135,27 +135,27 @@ public enum AnswerEvent implements SessionEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS, MEASURES }, params = { 0, 1 })
     MEASURE_ZONING_PERMIT_DENIED(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Accept the connection of a network cluster", params = { "NetCluster ID" })
+    @EventParamData(desc = "Accepts the connection of a network cluster.", params = { "NetCluster ID" })
     @EventIDField(links = { NET_CLUSTERS }, params = { 0 })
     NET_ACCEPT_CONNECT(Integer.class),
 
-    @EventParamData(desc = "Cancel connecting a network cluster", params = { "NetCluster ID" })
+    @EventParamData(desc = "Cancels the connection of a network cluster.", params = { "NetCluster ID" })
     @EventIDField(links = { NET_CLUSTERS }, params = { 0 })
     NET_CANCEL_CONNECT(Integer.class),
 
-    @EventParamData(desc = "Connect a network cluster as a consumer", params = { "NetCluster ID" })
+    @EventParamData(desc = "Connects a network cluster as a consumer.", params = { "NetCluster ID" })
     @EventIDField(links = { NET_CLUSTERS }, params = { 0 })
     NET_CONSUMER_CONNECT(Integer.class),
 
-    @EventParamData(desc = "Connect a network cluster as a producer", params = { "NetCluster ID" })
+    @EventParamData(desc = "Connects a network cluster as a producer.", params = { "NetCluster ID" })
     @EventIDField(links = { NET_CLUSTERS }, params = { 0 })
     NET_PRODUCER_CONNECT(Integer.class),
 
-    @EventParamData(desc = "Reject the connection of a network cluster", params = { "NetCluster ID" })
+    @EventParamData(desc = "Rejects the connection of a network cluster.", params = { "NetCluster ID" })
     @EventIDField(links = { NET_CLUSTERS }, params = { 0 })
     NET_REJECT_CONNECT(Integer.class),
 
-    @EventParamData(desc = "Stakeholder approves upgrade-construction of building", params = { "Stakeholder ID", "Building ID",
+    @EventParamData(desc = "Stakeholder approves the upgrade construction of a building.", params = { "Stakeholder ID", "Building ID",
             "Approves" })
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS, }, params = { 0, 1 })
     UPGRADE_APPROVAL(Integer.class, Integer.class, Boolean.class),
@@ -165,16 +165,16 @@ public enum AnswerEvent implements SessionEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS }, params = { 0, 1 })
     UPGRADE_APPROVAL_CONFIRMED(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(desc = "Stakeholder has planned the upgrade-construction of a particular building for a particular date stored in a popup", params = {
+    @EventParamData(desc = "Stakeholder planned the upgrade date for a building via a popup.", params = {
             "Stakeholder ID", "Building ID", "Popup ID" })
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS, POPUPS }, params = { 0, 1, 2 })
     UPGRADE_ASK_DATE(Integer.class, Integer.class, Integer.class),
 
-    @EventParamData(desc = "Stakeholder's upgrade has received a zoning permit", params = { "Stakeholder ID", "Building ID" })
+    @EventParamData(desc = "Stakeholder's upgrade has received a zoning permit.", params = { "Stakeholder ID", "Building ID" })
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS }, params = { 0, 1 })
     UPGRADE_ZONING_PERMIT_CONFIRMED(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Stakeholder's upgrade is denied based on zoning", params = { "Stakeholder ID", "Building ID" })
+    @EventParamData(desc = "Stakeholder's upgrade is denied based on zoning.", params = { "Stakeholder ID", "Building ID" })
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS }, params = { 0, 1 })
     UPGRADE_ZONING_PERMIT_DENIED(Integer.class, Integer.class),
 

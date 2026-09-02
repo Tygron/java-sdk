@@ -19,7 +19,7 @@ import nl.tytech.data.engine.other.TrafficHourInterface;
 import nl.tytech.util.MathUtils;
 
 /**
- * Traffic Density overlay
+ * Traffic Density Overlay
  *
  * @author Maxim Knepfle
  */

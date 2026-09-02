@@ -36,7 +36,7 @@ import nl.tytech.util.StringUtils;
 
 /**
  *
- * Scenario activates certain functionality, e.g. more zones to work in. New measures.
+ * A Scenario activates specific functionality, such as additional working zones or new measures.
  *
  * @author Maxim Knepfle
  *
@@ -206,13 +206,13 @@ public class Scenario extends AttributeItem {
     public final String getWarnings() {
 
         if (limitType == LimitType.NEIGHBORHOODS && getLimitNeighborhoodIDs().isEmpty()) {
-            return "No Neighborhoods selected!";
+            return "No Neighborhoods selected.";
         }
         if (limitType == LimitType.MEASURE_NEIGHBORHOODS) {
             if (getMeasureIDs().isEmpty()) {
-                return "No Measures selected!";
+                return "No Measures selected.";
             } else if (getLimitNeighborhoodIDs().isEmpty()) {
-                return "No Measure Neighborhood overlap!";
+                return "No overlap between Measures and Neighborhoods.";
             }
         }
         return StringUtils.EMPTY;

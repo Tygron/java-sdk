@@ -65,15 +65,15 @@ public enum EditorParametricEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { PARAMETRIC_DESIGNS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Parametric Design", "Attribute name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Parametric Design", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { PARAMETRIC_DESIGNS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Parametric Design", "Attribute names", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Parametric Design", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
-    @EventParamData(params = { "Parametric Design", "Attribute name" })
+    @EventParamData(params = { "Parametric Design", "Attribute Name" })
     @EventIDField(links = { PARAMETRIC_DESIGNS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
@@ -98,11 +98,11 @@ public enum EditorParametricEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS, FUNCTIONS }, params = { 0, 2 })
     SET_PLOT_FUNCTION(Integer[].class, Integer[].class, Integer[].class),
 
-    @EventParamData(params = { "Parametric Design", "Plot", "Attribute name", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Parametric Design", "Plot", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 }, nullable = { 4 })
     SET_PLOT_ATTRIBUTES(Integer[].class, Integer[].class, String[].class, double[][].class, Integer.class),
 
-    @EventParamData(params = { "Parametric Design", "Plot", "Attribute name" })
+    @EventParamData(params = { "Parametric Design", "Plot", "Attribute Name" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 })
     REMOVE_PLOT_ATTRIBUTES(Integer[].class, Integer[].class, String[].class);
 

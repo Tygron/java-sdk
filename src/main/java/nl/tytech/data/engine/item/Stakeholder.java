@@ -141,13 +141,13 @@ public class Stakeholder extends CoreStakeholder implements TQLItem, ImageItem, 
     private String shortName = StringUtils.EMPTY;
 
     /**
-     * Returns budget based on the finance indicator or NULL when there is no budget in the session (things are free)
+     * Returns the budget based on the finance indicator, or null if no budget is defined for the Session.
      */
     public Double getBudget() {
 
         for (Indicator indicator : getVisibleIndicators()) {
             if (indicator.isFinance()) {
-                // Note: maptype is not relevant for finance indicator values are the same.
+                // Note: MapType is not relevant for finance indicators as the values are identical.
                 Double budget = indicator.getExactNumberValue(MapType.CURRENT);
                 if (budget != null) {
                     return budget.doubleValue();
@@ -171,7 +171,7 @@ public class Stakeholder extends CoreStakeholder implements TQLItem, ImageItem, 
         List<Geometry> geoms = new ArrayList<>();
         ItemMap<Plot> plots = this.getMap(MapLink.PLOTS);
 
-        // add all my plots
+        // Add all associated plots
         for (Plot plot : plots) {
             if (getID().equals(plot.getOwnerID())) {
                 geoms.add(plot.getExportGeometry());
@@ -301,7 +301,7 @@ public class Stakeholder extends CoreStakeholder implements TQLItem, ImageItem, 
     @Override
     public String validated(boolean startProject) {
 
-        // fix missing image name from LTS 2024
+        // Ensure imageName is not empty for compatibility with LTS 2024.
         if (!StringUtils.containsData(imageName)) {
             imageName = "other.png";
         }

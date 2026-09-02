@@ -82,7 +82,7 @@ public class GeometrySerializer<G extends Geometry> extends JsonSerializer<G> {
 
         } else {
             throw new JsonMappingException(
-                    "Geometry type " + value.getClass().getName() + " cannot be serialized as GeoJSON." + "Supported types are: "
+                    "Geometry type " + value.getClass().getName() + " cannot be serialized as GeoJSON. Supported types are: "
                             + Arrays.asList(Point.class.getName(), LineString.class.getName(), Polygon.class.getName(),
                                     MultiPoint.class.getName(), MultiLineString.class.getName(), MultiPolygon.class.getName(),
                                     GeometryCollection.class.getName()));

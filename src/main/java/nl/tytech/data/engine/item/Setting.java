@@ -240,22 +240,22 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Default Geo Plugins in new Project Wizard. Stored as pairs of Maplink and Geo Plugin ID, separated by spaces.")
         DEFAULT_GEOPLUGINS(String.class, ""),
 
-        @Description("Default price to lower one m3 ground")
+        @Description("Default price for lowering 1 m3 of ground")
         DEFAULT_GROUND_LOWER_PRICE_M3(Double.class, "50"),
 
-        @Description("Default price to raise one m3 ground")
+        @Description("Default price for raising 1 m3 of ground")
         DEFAULT_GROUND_RAISE_PRICE_M3(Double.class, "50"),
 
-        @Description("Default price of one m2 ground")
+        @Description("Default price per square meter of ground")
         DEFAULT_GROUNDPRICE_M2(Double.class, "400"),
 
         @Description("Project name")
         PROJECT_NAME(String.class, "Project Name"),
 
-        @Description("When a building is placed an interaction popup needs to be shown")
+        @Description("Show interaction popup when a building is placed")
         SHOW_BUILDING_AND_MEASURE_POPUP(Boolean.class, "false"),
 
-        @Description("When a waterway is placed an interaction popup (for the water authority) needs to be shown")
+        @Description("Show interaction popup for the water authority when a waterway is placed")
         SHOW_WATER_POPUP(Boolean.class, "false"),
 
         @Description("Name of the satellite background asset files")
@@ -273,19 +273,19 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Simulation Time State")
         STATE(SimState.class, "NOTHING"),
 
-        @Description("When true indicators, panels and overlays are automatically recalculated on data changes")
+        @Description("If true, indicators, panels, and overlays are automatically recalculated on data changes")
         AUTO_CALCULATION(Boolean.class, "false"),
 
         @Description("Selected rasterization method to convert polygon into the Overlay grid raster")
         RASTERIZATION(RasterizationMethod.class, "COMBINED"),
 
-        @Description("When true this indicates that a recalculation update is needed")
+        @Description("If true, a manual recalculation update is required")
         RECALCULATION_REQUIRED(Boolean.class, "false"),
 
         @Description("Project Region: used to define the default functions")
         REGION(Region.class, "NORTHWESTERN_EUROPE"),
 
-        @Description("Timestamp format for exporting/importing date/time values in e.g. csv files")
+        @Description("Timestamp format for importing and exporting date/time values, such as in CSV files")
         TIMESTAMP_FORMAT(String.class, "dd/MM HH:mm:ss"),
 
         @Description("Water visualisation type in Tygron Client")
@@ -309,10 +309,10 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Unit system for Measurements")
         MEASUREMENT_SYSTEM_TYPE(UnitSystemType.class, UnitSystemType.SI.name()),
 
-        @Description("MultiPolygon for reserved land used in sale transations")
+        @Description("MultiPolygon for reserved land used in sale transactions")
         RESERVED_LAND(String.class, "MULTIPOLYGON EMPTY"),
 
-        @Description("Surrounding map extend for visualisation of Sattelite and Elevation around Project map")
+        @Description("Surrounding map extent for visualization of Satellite and Elevation around the Project map")
         SURROUNDING_MAP_EXTEND_M(Integer[].class, "0 0"),
 
         @Description("World reference point (upper left corner) used to convert local coordinates to EPSG 3857 world coordinates")
@@ -321,16 +321,16 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Average water elevation reference point used for visualisation in Tygron Client")
         WATER_HEIGHT(Double.class, "" + NO_WATER_HEIGHT_SET),
 
-        @Description("Model (buildings, bridges, tress, etc) style used for visualisation in Tygron Client")
+        @Description("Model (buildings, bridges, trees, etc.) style used for visualization in Tygron Client")
         MODEL_STYLE(ModelStyle.class, "TEXTURED"),
 
         @Description("Solar panel positioning used for visualisation in Tygron Client")
         SOLAR_PANEL_POSITION(Double[].class, "0.0 -0.5 -1.0"),
 
-        @Description("Satellite backgrounds can be dark, this values compensates for that in Tygron Client visualisation")
+        @Description("Compensates for dark satellite backgrounds in Tygron Client visualization")
         SATELLITE_BRIGHTNESS(Double.class, "-1"),
 
-        @Description("Instead of Satellite imagery this color (RGBA) can be used for visualisation in Tygron Client")
+        @Description("RGBA color to use instead of Satellite imagery for visualization in Tygron Client")
         SATELLITE_COLOR(Integer[].class, ""),
 
         @Description("Default export CRS for polygon data in Tygron Client")
@@ -351,7 +351,7 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Panel ID used to retrieve and replace custom content for the 2D and 3D Viewers")
         WEB_MAP_CUSTOM_PANEL(Integer.class, "-1"),
 
-        @Description("Background type used Web Viewers")
+        @Description("Background type used in Web Viewers")
         WEB_BASE_MAP(WebBaseMap.class, WebBaseMap.SATELLITE.name()),
 
         @Description("Allow participant endpoint execution for Web Viewers")
@@ -378,13 +378,13 @@ public class Setting extends AbstractSetting<Setting.Type> {
         // TODO: implement...
         WEB_ALLOW_QUERIES(Boolean.class, "false"),
 
-        @Description("Scheduled Update moment in millis")
+        @Description("Scheduled update timestamp in milliseconds")
         SCHEDULED_UPDATE(Long.class, ""),
 
-        @Description("When the Scheduled Update has finished email this address")
+        @Description("Email address to notify when the Scheduled Update has finished")
         SCHEDULED_UPDATE_MAIL(String.class, ""),
 
-        @Description("When the Scheduled Update has finished SMS this phone number")
+        @Description("Phone number to notify via SMS when the Scheduled Update has finished")
         SCHEDULED_UPDATE_SMS(String.class, ""),
 
         @Description("Project timezone offset")

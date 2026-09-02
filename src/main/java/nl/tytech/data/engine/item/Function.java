@@ -315,7 +315,7 @@ public abstract class Function extends Item implements Action, ValueItem, Attrib
     }
 
     /**
-     * Get the valid allowed floor amount for this function or return -1 when not allowed!
+     * Returns the allowed number of floors for this function, or -1 if not applicable.
      * @param heightM
      * @param flatroofOnly
      * @return
@@ -534,7 +534,7 @@ public abstract class Function extends Item implements Action, ValueItem, Attrib
     }
 
     /**
-     * When true function model has walls (e.g. trees do NOT have walls, houses DO), note a hedge is walled bu not solid
+     * Indicates if the function model has walls (e.g., houses have walls, while trees do not). Hedges are considered walled but not solid.
      */
     public abstract boolean isWalledModel();
 
@@ -563,7 +563,7 @@ public abstract class Function extends Item implements Action, ValueItem, Attrib
         String result = StringUtils.EMPTY;
 
         if (this.getCategories().size() == 0) {
-            result += "\nFunction (" + getID() + ") " + this.getName() + " has no Categories!";
+            result += "\nFunction (" + getID() + ") " + this.getName() + " has no Categories.";
             return result;
         }
 
@@ -598,7 +598,7 @@ public abstract class Function extends Item implements Action, ValueItem, Attrib
             List<ModelData> models = this.getModels();
             for (ModelData model : models) {
                 if (model.getPlacement() != Placement.POINT) {
-                    result += "\nFunction :" + this.getName() + " has a fixed dimension an can only have Furniture Squares.";
+                    result += "\nFunction: " + this.getName() + " has a fixed dimension and can only have Furniture Squares.";
                 }
                 if (model.getDimension() != this.getDefaultDimension()) {
                     result += "\nFunction :" + this.getName() + " has a fixed dimension " + this.getDefaultDimension()

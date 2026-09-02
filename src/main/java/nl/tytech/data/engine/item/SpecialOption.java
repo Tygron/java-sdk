@@ -25,7 +25,7 @@ import nl.tytech.util.StringUtils;
 /**
  * SpecialOption
  *
- * SpecialOption's enum wrapped in an item.
+ * A wrapper for the SpecialOption Type enumeration.
  *
  * @author Maxim Knepfle
  */
@@ -112,7 +112,7 @@ public class SpecialOption extends EnumOrderedItem<SpecialOption.Type> implement
         }
 
         /**
-         * When true this special option demolishes something
+         * Returns true if this special option performs a demolition action.
          * @return
          */
         public boolean isDemolisher() {

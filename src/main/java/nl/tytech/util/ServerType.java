@@ -13,7 +13,7 @@
 package nl.tytech.util;
 
 /**
- * Server types defintion
+ * Server type definitions
  *
  * @author Maxim Knepfle
  *
@@ -21,7 +21,7 @@ package nl.tytech.util;
 public enum ServerType {
 
     /**
-     * For Tygron Team RD purposes only
+     * For Tygron R&D team purposes only
      */
     Development(false),
 
@@ -36,7 +36,7 @@ public enum ServerType {
     Preview(true),
 
     /**
-     * Long Term Supported
+     * Long Term Support
      */
     LTS(true);
 
@@ -47,7 +47,7 @@ public enum ServerType {
                 return server.getType();
             }
         }
-        return ServerType.Development; // default Development
+        return ServerType.Development; 
     }
 
     public static ServerType getTypeForName(String serverTypeName) {
@@ -57,7 +57,7 @@ public enum ServerType {
                 return type;
             }
         }
-        return null; // default null
+        return null; 
     }
 
     private final boolean publicAccess;

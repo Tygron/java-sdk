@@ -84,7 +84,7 @@ public class Area extends PolygonAttributeItem implements ActiveItem, Intersecto
     }
 
     @Override
-    public GeometryCollection getIntersectorGeometies(MapType mapType) {
+    public GeometryCollection getIntersectorGeometries(MapType mapType) {
         return this.getMultiPolygon();
     }
 

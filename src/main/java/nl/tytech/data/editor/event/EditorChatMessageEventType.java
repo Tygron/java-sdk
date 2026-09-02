@@ -29,10 +29,10 @@ import nl.tytech.core.item.annotations.Linked;
 @Linked(CHAT_MESSAGES)
 public enum EditorChatMessageEventType implements EventTypeEnum {
 
-    @EventParamData(desc = "Add a new chat message", params = { "Channel ID",
-            "Message content" }, response = "Return ID of the future reponse message (note: not my own added message)")
-    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
-    ADD(Integer.class, String.class);
+    @EventParamData(desc = "Add a new chat message with optional Image or PDF content", params = { "Channel ID", "Message",
+            "Content Mime Type (optional)", "Content bytes (optional)" }, response = "Returns the ID of the resulting response message.")
+    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 }, nullable = { 2, 3 })
+    ADD(Integer.class, String.class, String.class, byte[].class);
 
     private final List<Class<?>> classes;
 

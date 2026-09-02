@@ -56,7 +56,7 @@ public enum MapLink implements EventTypeEnum {
     @Description("Project configuration Settings")
     SETTINGS(TOOLS, CONFIGURATION), // import load first
 
-    @Description("Group of Actions, available to Stakeholders in a Test Run")
+    @Description("Group of Actions available to Stakeholders in a Test Run")
     ACTION_MENUS(FUTURE_DESIGN, ACTION, false),
 
     @Description("Unique Addresses with properties of units inside a Building")
@@ -83,7 +83,7 @@ public enum MapLink implements EventTypeEnum {
     @Description("Definitions of Chat Channels")
     CHAT_CHANNELS(COMMUNITY, INTERACTION, false),
 
-    @Description("Definitions of automated movement of the viewport-camera in the 3D Visualization along predefined Key Points")
+    @Description("Definitions of automated viewport camera movement in the 3D Visualization along predefined Key Points")
     CINEMATIC_DATAS(TOOLS, VISUALS, false),
 
     @Description("Stored texts in different languages, used in the Tygron Client")
@@ -95,7 +95,7 @@ public enum MapLink implements EventTypeEnum {
     @Description("Uniquely named Global values")
     GLOBALS(CURRENT_SITUATION, CALCULATION, false),
 
-    @Description("Quantity of currency needed by performed Actions in a Test Run")
+    @Description("Currency required for Actions performed in a Test Run")
     COSTS(FUTURE_DESIGN, FINANCIAL, false),
 
     @Description("Stores translations of text parameters used in the creation of other Items")
@@ -119,7 +119,7 @@ public enum MapLink implements EventTypeEnum {
     @Description("Basic properties of blueprints for Buildings")
     FUNCTIONS(CURRENT_SITUATION, CONSTRUCTION, false),
 
-    @Description("A Scenario consists series of Settings, Measures and Events that can be activated in a Test Run")
+    @Description("A Scenario consists of a series of Settings, Measures and Events that can be activated in a Test Run")
     SCENARIOS(MULTI_SCENARIO, CALCULATION, false),
 
     @Description("Mapping and matching configurations for Feature to Item")
@@ -134,16 +134,16 @@ public enum MapLink implements EventTypeEnum {
     @Description("Tiles that create the Digital Terrain Elevation Model (DTM)")
     HEIGHTS(CURRENT_SITUATION, GEOGRAPHY, false),
 
-    @Description("The incoming money flow per Stakeholder ")
+    @Description("The incoming money flow per Stakeholder")
     INCOMES(FUTURE_DESIGN, FINANCIAL, false),
 
-    @Description("Key Performance Indicators, which serve as a means to identify potential improvements and as a metric for the degree to which those improvements have been successful")
+    @Description("Key Performance Indicators used to identify and measure potential improvements")
     INDICATORS(CURRENT_SITUATION, CALCULATION, false),
 
     @Description("Plots of land owned by a particular Stakeholder")
     PLOTS(CURRENT_SITUATION, URBAN_SUBDIVISION, false),
 
-    @Description("Record and inspect Grid Overlay data")
+    @Description("Records and inspections of Grid Overlay data")
     MEASUREMENTS(CURRENT_SITUATION, CALCULATION, false),
 
     @Description("Predefined actions that can be performed by Stakeholders")
@@ -152,13 +152,13 @@ public enum MapLink implements EventTypeEnum {
     @Description("Definition of a 3D Model")
     MODEL_DATAS(CURRENT_SITUATION, CONSTRUCTION, false),
 
-    @Description("Set of Model Datas")
+    @Description("Set of Model Data")
     MODEL_SETS(CURRENT_SITUATION, CONSTRUCTION, false),
 
     @Description("Monetary transactions between Stakeholders")
     MONEY_TRANSFERS(MULTI_SCENARIO, FINANCIAL, false),
 
-    @Description("Mutual exclusive spatial areas that divide a city or village")
+    @Description("Mutually exclusive spatial areas that divide a city or village")
     NEIGHBORHOODS(CURRENT_SITUATION, URBAN_SUBDIVISION, false),
 
     @Description("Shared properties of Net Lines")
@@ -185,16 +185,16 @@ public enum MapLink implements EventTypeEnum {
     @Description("Customizable and calculatable interface Panels")
     PANELS(CURRENT_SITUATION, CALCULATION, false),
 
-    @Description("3D Visual appearances that repeatedly emits particles according to a predefined pattern")
+    @Description("3D Visual appearances that repeatedly emit particles according to a predefined pattern")
     PARTICLE_EMITTERS(TOOLS, VISUALS, false),
 
-    @Description("Spatial definitions of Popup that require Stakeholder attention")
+    @Description("Spatial definitions of Popups that require Stakeholder attention")
     POPUPS(FUTURE_DESIGN, INTERACTION, false),
 
     @Description("History of performed actions")
     ACTION_LOGS(FUTURE_DESIGN, ACTION, false),
 
-    @Description("History of occurred errors")
+    @Description("Error history")
     ERROR_LOGS(TOOLS, API, false),
 
     @Description("Definitions of uploaded assets")
@@ -203,7 +203,7 @@ public enum MapLink implements EventTypeEnum {
     @Description("Configuration for generating spatial plans")
     PARAMETRIC_DESIGNS(FUTURE_DESIGN, CONSTRUCTION),
 
-    @Description("Stored generated patial plans")
+    @Description("Stored generated spatial plans")
     PARAMETRIC_EXAMPLES(null, null, false, false, false),
 
     @Description("Stores the progress made by Geo Plugins during Project creation")
@@ -227,7 +227,7 @@ public enum MapLink implements EventTypeEnum {
     @Description("Definitions of special Actions")
     SPECIAL_OPTIONS(FUTURE_DESIGN, ACTION, false),
 
-    @Description("A stakeholder is any individual or organization that is affected by or can affect the outcome of a Project")
+    @Description("Individuals or organizations that are affected by or can affect the outcome of a Project")
     STAKEHOLDERS(MULTI_SCENARIO, INTERACTION, false),
 
     @Description("Generic definitions of spatial Features with properties")
@@ -263,7 +263,7 @@ public enum MapLink implements EventTypeEnum {
     @Description("Spatial areas that can restrict and provide feedback on actions performed by Stakeholders")
     ZONES(CURRENT_SITUATION, URBAN_SUBDIVISION, false),
 
-    @Description("Spatial areas of Zip Code areas")
+    @Description("Spatial definitions of Zip Code areas")
     ZIP_CODES(CURRENT_SITUATION, URBAN_SUBDIVISION, false),
 
     ;

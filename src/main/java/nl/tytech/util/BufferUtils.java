@@ -21,7 +21,7 @@ package nl.tytech.util;
 public class BufferUtils {
 
     /**
-     * Tweaked optimal size for speed in buffer
+     * Optimal buffer size for performance
      */
     public static final int SIZE = 32 * 1024; // 32K
 

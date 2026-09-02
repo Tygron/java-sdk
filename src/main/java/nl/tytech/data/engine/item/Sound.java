@@ -37,7 +37,7 @@ public class Sound extends Item {
     private String filename = DEFAULT;
 
     @XMLValue
-    private double volume = 1.0; // LOUD!!
+    private double volume = 1.0; // Default maximum volume
 
     @XMLValue
     private boolean loop = false;

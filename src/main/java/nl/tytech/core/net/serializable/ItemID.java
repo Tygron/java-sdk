@@ -20,10 +20,10 @@ import nl.tytech.util.StringUtils;
  * A special type used in the Tools and XML that replaces an Integer when that Integer is actually an Item ID. When ItemID is found in an
  * XML file the Tools will represent the ID as a special ItemIDField.
  *
- * Normal fields can use @ItemIDField, and should use this annotation, however events specified in the XML files can't use this annotation.
+ * Normal fields may use @ItemIDField; however, events specified in XML files cannot use this annotation.
  * For those cases the ItemID type is used instead.
  *
- * ItemID is only used in the Tools and when loaded in the sessions. When an event is made the ItemID is replaced with the Integer
+ * ItemID is only used in the Tools and when loaded in the Sessions. When an event is made the ItemID is replaced with the Integer
  * representing the ID.
  *
  * @author Alexander Hofstede & Marijn van Zanten
@@ -41,7 +41,7 @@ public final class ItemID implements Serializable {
     }
 
     /**
-     * Constructor, requires the linked Item ID and the controller of that Item
+     * Constructs an ItemID with the specified ID and MapLink.
      *
      * @param id
      * @param mapLink
@@ -84,14 +84,14 @@ public final class ItemID implements Serializable {
     }
 
     /**
-     * @return the MapLink associated with this itemID
+     * @return the MapLink associated with this ItemID
      */
     public MapLink getMapLink() {
         return mapLink;
     }
 
     /**
-     * @return the value that the Tools use to put in the XML files
+     * @return the value used by the Tools in XML files
      */
     public String getString() {
         return id + StringUtils.WHITESPACE + mapLink.name();

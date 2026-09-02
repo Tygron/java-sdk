@@ -13,7 +13,7 @@
 package nl.tytech.data.engine.serializable;
 
 /**
- * Outline definition can bed used to draw overlay polygon with a certain stoke
+ * Outline definition can be used to draw an overlay polygon with a certain stroke
  * @author Maxim Knepfle
  *
  */

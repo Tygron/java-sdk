@@ -37,7 +37,7 @@ public enum EditorTerrainTypeEventType implements IndicatorEventTypeEnum {
 
     ADD(Layer.class),
 
-    @EventParamData(params = { "Terrain Type ID", "Geometry", "Adjust heights when changed from Water to non-water and vice versa." })
+    @EventParamData(params = { "Terrain Type ID", "Geometry", "Height adjustment for Water/non-Water transitions" })
     @EventIDField(sameLength = true, links = { TERRAIN_TYPES }, params = { 0 })
     ADD_POLYGONS(Integer[].class, MultiPolygon[].class, Boolean[].class),
 
@@ -45,9 +45,9 @@ public enum EditorTerrainTypeEventType implements IndicatorEventTypeEnum {
     DUPLICATE(Integer[].class),
 
     @EventParamData(desc = "Import Terrain collection", params = { "Collection of Terrain Geometries", "Terrain Type IDs",
-            "Adjust heights when changed from Water to non-water and vice versa.",
-            "Angle of Repose (optional or use negative value in array for default)",
-            "Override Height (optional or use " + HeightSector.INVALID_DATA + " value in array to ignore)",
+            "Height adjustment for Water/non-Water transitions",
+            "Angle of Repose (optional; negative values use default)",
+            "Override Height (optional; use " + HeightSector.INVALID_DATA + " to ignore)",
             "Buffer for Points and Lines to make Polygons (optional)", "Source (optional)" })
     @EventIDField(links = { TERRAIN_TYPES, SOURCES }, params = { 1, 6 }, nullable = { 3, 4, 5, 6 })
     IMPORT(GeometryCollection.class, Integer[].class, Boolean.class, double[].class, double[].class, Double.class, Integer.class),

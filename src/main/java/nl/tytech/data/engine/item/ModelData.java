@@ -15,6 +15,7 @@ package nl.tytech.data.engine.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.ListOfClass;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
@@ -26,7 +27,7 @@ import nl.tytech.data.engine.serializable.Show;
 import nl.tytech.util.StringUtils;
 
 /**
- * ModelData: This item encapsulates the available models, this are NOT the individual models on the map.
+ * ModelData encapsulates the available models, rather than individual model instances on the map.
  *
  * @author Maxim Knepfle
  */
@@ -83,18 +84,14 @@ public class ModelData extends Item implements ModelObject {
     }
 
     public enum Rotation {
-        /**
-         * Rotation is fixed.
-         */
+
+        @Description("Rotation is fixed")
         FIXED,
-        /**
-         * Rotation is randomly choosen from 0, 90, 180 or 360 degrees (quaters)
-         */
+
+        @Description("Rotation is randomly chosen from 0, 90, 180, or 270 degrees (quarters)")
         QUARTER,
 
-        /**
-         * Free rotation is given the model between 0-360 degrees.
-         */
+        @Description("The model is given free rotation between 0 and 360 degrees")
         FREE
     }
 
@@ -365,7 +362,7 @@ public class ModelData extends Item implements ModelObject {
 
         // only odd values allowed for dimension
         if (dimension <= 0) {
-            result += "\nModel: " + this.getName() + " " + this.getID() + " has an invalid dimension!";
+            result += "\nModel: " + this.getName() + " " + this.getID() + " has an invalid dimension.";
         }
 
         for (int i = 0; i < particleEmitters.size(); i++) {

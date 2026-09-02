@@ -73,14 +73,14 @@ public enum GeoFormat {
     }
 
     /**
-     * User Selectable Feature formats, supported all the way
+     * User Selectable Feature formats
      */
     public static GeoFormat[] getSelectableFeatureFormats() {
         return new GeoFormat[] { WFS_JSON, WFS_GML, ESRI_JSON, I3S };
     }
 
     /**
-     * User Selectable values, supported all the way
+     * User Selectable Image formats
      */
     public static GeoFormat[] getSelectableImageFormats() {
         return new GeoFormat[] { WMS_IMAGE, ESRI_IMAGE };

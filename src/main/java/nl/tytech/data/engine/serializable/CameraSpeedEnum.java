@@ -15,7 +15,7 @@ package nl.tytech.data.engine.serializable;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * CameraSpeedEnum: This class defines speed of the camera.
+ * Defines camera speed interpolation times.
  *
  * @author Marijn van Zanten, Frank Baars
  */
@@ -37,7 +37,7 @@ public enum CameraSpeedEnum {
         if (this == CUSTOM) {
             this.interpolationTime = interpolationTime;
         } else {
-            TLogger.severe("You can only override the custom cam speed enum!");
+            TLogger.severe("Only the CUSTOM camera speed interpolation time can be modified.");
         }
     }
 }

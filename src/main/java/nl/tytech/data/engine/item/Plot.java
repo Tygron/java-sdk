@@ -38,7 +38,7 @@ public class Plot extends SourcedItem implements GeometryItem<MultiPolygon>, Int
 
     private static final long serialVersionUID = -1347763356998229249L;
 
-    public static String OWNER = "OWNER";
+    public static final String OWNER = "OWNER";
 
     @XMLValue
     @ItemIDField(MapLink.STAKEHOLDERS)
@@ -74,7 +74,7 @@ public class Plot extends SourcedItem implements GeometryItem<MultiPolygon>, Int
     }
 
     @Override
-    public GeometryCollection getIntersectorGeometies(MapType mapType) {
+    public GeometryCollection getIntersectorGeometries(MapType mapType) {
         return getMultiPolygon();
     }
 

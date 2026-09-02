@@ -62,7 +62,7 @@ import nl.tytech.util.jts.EmptyMultiPolygon;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * ItemNamespace: In the ItemNamespace each class should have a unique name. This named is stored as a String in combination with the full
+ * ItemNamespace: In the ItemNamespace each class should have a unique name. This name is stored as a String in combination with the full
  * class. The XML writer can now store the items with their simple name.
  *
  * @author Maxim Knepfle
@@ -94,16 +94,16 @@ public class ItemNamespace {
     }
 
     /**
-     * Only these classes and ENUMS are allowed for event parameters. Makes it easier for JSON.
+     * Only these classes and enums are allowed for event parameters to ensure JSON compatibility.
      */
     private static final List<Class<?>> supportedServerEventClasses = Arrays.asList(String.class, Boolean.class, Integer.class, Long.class,
             Float.class, Double.class, TColor.class, Point.class, MultiPolygon.class, GeometryCollection.class, CodedEvent.class);
 
     /**
-     * Adds the classes of the given package name to the Itemspace.
+     * Adds the classes of the given package name to the ItemNamespace.
      *
      * @param packageName Name of the package
-     * @return succes
+     * @return success
      */
     protected static final boolean addPackageClasses(final String packageName) {
         return SingletonHolder.INSTANCE._addPackageClasses(packageName);
@@ -120,7 +120,7 @@ public class ItemNamespace {
     }
 
     /**
-     * True when this simplename is in the namespace.
+     * True when this simple name is in the namespace.
      *
      * @param classz
      * @return
@@ -190,7 +190,7 @@ public class ItemNamespace {
     }
 
     /**
-     * True when this is an leaf and has no further fields (branches).
+     * True when this is a leaf and has no further fields (branches).
      *
      * @param classz
      * @return
@@ -302,7 +302,7 @@ public class ItemNamespace {
      * Adds the classes of the given package name to the Itemspace.
      *
      * @param packageName Name of the package
-     * @return succes
+     * @return success
      */
     private final boolean _addPackageClasses(final String packageName) {
 
@@ -380,11 +380,11 @@ public class ItemNamespace {
 
         // skip .class at the end
         if (simpleName.endsWith(".class")) {
-            simpleName = simpleName.replaceAll(".class", "");
+            simpleName = simpleName.replace(".class", "");
         }
 
         /**
-         * No more floats allowed here
+         * Floats are mapped to Doubles for consistency.
          */
         if (Float.class.getSimpleName().equals(simpleName)) {
             return Double.class;
@@ -502,7 +502,7 @@ public class ItemNamespace {
     }
 
     /**
-     * True when this is an leaf and has no further fields (branches).
+     * True when this is a leaf and has no further fields (branches).
      *
      * @param classz
      * @return
@@ -581,7 +581,7 @@ public class ItemNamespace {
             }
         } catch (Exception e) {
             TLogger.exception(e);
-            TLogger.showstopper("Exception in item namespace check! [" + classz.getSimpleName() + "]");
+            TLogger.showstopper("Exception in Item namespace check [" + classz.getSimpleName() + "]");
             return false;
         }
         return true;
@@ -638,7 +638,7 @@ public class ItemNamespace {
             }
         } catch (Exception e) {
             TLogger.exception(e);
-            TLogger.showstopper("Exception in item namespace check! [" + enumerator.getClass().getSimpleName() + "." + enumerator + "]");
+            TLogger.showstopper("Exception in Item namespace check [" + enumerator.getClass().getSimpleName() + "." + enumerator + "]");
             return false;
         }
         return true;
@@ -692,7 +692,7 @@ public class ItemNamespace {
 
         } catch (Exception e) {
             TLogger.exception(e);
-            TLogger.showstopper("Exception in item namespace check! [" + enumerator.getClass().getSimpleName() + "." + enumerator + "]");
+            TLogger.showstopper("Exception in Item namespace check [" + enumerator.getClass().getSimpleName() + "." + enumerator + "]");
             return false;
         }
         return true;
@@ -711,21 +711,21 @@ public class ItemNamespace {
                             && !paramClass.isArray()) {
                         TLogger.showstopper("Failed to add class: " + classz.getSimpleName() + " " + enumerator.toString()
                                 + " to Item namespace. Parameter: " + paramClass.getSimpleName()
-                                + " should be simple for JSON communication.");
+                                + " must be a supported type for JSON communication.");
                         return false;
                     }
                 }
             }
         } catch (Exception e) {
             TLogger.exception(e);
-            TLogger.showstopper("Exception in item namespace check! [" + enumerator.getClass().getSimpleName() + "." + enumerator + "]");
+            TLogger.showstopper("Exception in Item namespace check [" + enumerator.getClass().getSimpleName() + "." + enumerator + "]");
             return false;
         }
         return true;
     }
 
     /**
-     * Helper method. Get the fields of a item. Both it super class and subclass. Only XML fields can be saved to xml.
+     * Helper method to retrieve fields from an item, including its superclass and subclass. Only XML fields are persisted to XML.
      *
      * @param object The object
      * @return The objects fields.
@@ -965,13 +965,13 @@ public class ItemNamespace {
 
             String normalName = mapLink.name().toLowerCase();
             if (normal.contains(normalName)) {
-                TLogger.showstopper("Cannot have double naming: " + normalName + " in MapLink");
+                TLogger.showstopper("Duplicate naming detected: " + normalName + " in MapLink");
             }
             normal.add(normalName);
 
             String humanName = StringUtils.capitalizeUnderScores(mapLink.name()).toLowerCase();
             if (humanNames.contains(humanName)) {
-                TLogger.showstopper("Cannot have double naming: " + humanName + " in MapLink");
+                TLogger.showstopper("Duplicate naming detected: " + humanName + " in MapLink");
             }
             humanNames.add(humanName);
         }

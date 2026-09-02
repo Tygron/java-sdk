@@ -20,7 +20,7 @@ import nl.tytech.util.ChecksumUtil;
 import nl.tytech.util.StringUtils;
 
 /**
- * Asset uploaded to project
+ * Asset uploaded to Project
  *
  * @author Maxim Knepfle
  */

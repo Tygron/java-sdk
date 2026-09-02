@@ -20,7 +20,7 @@ import nl.tytech.locale.TLanguage;
 import nl.tytech.util.StringUtils;
 
 /**
- * Contains info about the session.
+ * Contains information about the Session.
  *
  * @author Maxim Knepfle
  *
@@ -48,12 +48,12 @@ public class SessionInfo implements Serializable {
     private long timeoutMS = 0;
 
     /**
-     * Client App Type for continue session
+     * Client App Type to continue the session
      */
     private AppType appType;
 
     /**
-     * Client Token for continue session
+     * Client Token to continue the session
      */
     private TokenPair tokenPair;
 

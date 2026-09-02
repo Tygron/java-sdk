@@ -19,7 +19,7 @@ import nl.tytech.data.engine.serializable.Category;
 import nl.tytech.data.engine.serializable.CategoryValue;
 
 /**
- * ValueItem Item containing function values
+ * Item containing function values
  *
  * @author Maxim Knepfle
  */

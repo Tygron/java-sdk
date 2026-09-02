@@ -108,7 +108,7 @@ public class Terrain extends SourcedItem implements GeometryItem<MultiPolygon>, 
 
     @Override
     public Point getCenterPoint() {
-        return null; // TODO: Maxim: Not implemented
+        return null; // TODO: Not implemented
     }
 
     public Point getCenterPoint(MapType mapType) {
@@ -140,7 +140,7 @@ public class Terrain extends SourcedItem implements GeometryItem<MultiPolygon>, 
     }
 
     @Override
-    public GeometryCollection getIntersectorGeometies(MapType mapType) {
+    public GeometryCollection getIntersectorGeometries(MapType mapType) {
         return getMultiPolygon(mapType);
     }
 

@@ -56,8 +56,8 @@ public class GridSpatial extends AbstractSpatial implements Serializable {
                 map.put(TerrainSpatial.TERRAIN_TYPE_ID, spatial.getTerrainTypeID());
             }
 
-            map.put(GRID_IDS, StringUtils.arrayToHumanString(spatial.getOverlayIDs(), StringUtils.HUMAN_STRING_SEPERATOR));
-            map.put(GRIDS, StringUtils.arrayToHumanString(spatial.getOverlays(mapMeasure), StringUtils.HUMAN_STRING_SEPERATOR));
+            map.put(GRID_IDS, StringUtils.arrayToHumanString(spatial.getOverlayIDs(), StringUtils.HUMAN_STRING_SEPARATOR));
+            map.put(GRIDS, StringUtils.arrayToHumanString(spatial.getOverlays(mapMeasure), StringUtils.HUMAN_STRING_SEPARATOR));
             map.put(AUTOMP, Boolean.toString(spatial.autoMP));
 
             map.put(SPATIAL_ID, spatial.getID());

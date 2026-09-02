@@ -16,7 +16,7 @@ import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.other.NamedItem;
 
 /**
- * Action: A Stakeholder can select a ActionMenu to build, then he can select an Action.
+ * An action that a Stakeholder can select from an ActionMenu.
  *
  * @author Maxim Knepfle
  */
@@ -51,7 +51,7 @@ public interface Action extends NamedItem {
     public MapLink getMapLink();
 
     /**
-     * Get my name
+     * Gets the name of this action.
      * @return
      */
     @Override
@@ -64,7 +64,7 @@ public interface Action extends NamedItem {
     public boolean isBuildable();
 
     /**
-     * Is the location of the action fixed on a certain location (e.g. a measure) or is the location defined by the user (e.g. a new house).
+     * Indicates whether the action has a fixed location (e.g., a measure) or is user-defined (e.g., a new house).
      * @return
      */
     public boolean isFixedLocation();

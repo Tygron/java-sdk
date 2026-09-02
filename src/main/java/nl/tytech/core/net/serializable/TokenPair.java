@@ -15,7 +15,7 @@ package nl.tytech.core.net.serializable;
 import java.io.Serializable;
 
 /**
- * Token combination, used to check if you are connected to a session.
+ * Token combination used to verify the connection to a Session.
  * @author Maxim Knepfle
  *
  */
@@ -30,8 +30,8 @@ public class TokenPair implements Serializable {
 
     }
 
-    public TokenPair(String serverToken, String clientToken) {
-        this.apiToken = serverToken;
+    public TokenPair(String apiToken, String clientToken) {
+        this.apiToken = apiToken;
         this.clientToken = clientToken;
     }
 }

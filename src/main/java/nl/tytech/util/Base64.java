@@ -13,7 +13,7 @@
 package nl.tytech.util;
 
 /**
- * Base 64 encoder that is faster then the default and does not depend on other packages outside basic java.
+ * Base64 encoder with no external dependencies beyond the Java Standard Library.
  *
  * @author Maxim Knepfle & George K.
  */

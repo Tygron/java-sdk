@@ -23,7 +23,7 @@ import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.core.net.serializable.MapLink;
 
 /**
- * EditorGUICategoryEventType
+ * EditorActionMenuEventType
  *
  * @author Maxim Knepfle
  */

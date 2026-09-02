@@ -17,7 +17,7 @@ import nl.tytech.util.MathUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * Sub Domain contains a collection of Sub Users that share projects an rights.
+ * SubDomain contains a collection of Sub Users that share Projects and rights.
  *
  * @author Maxim Knepfle
  */
@@ -58,7 +58,7 @@ public class SubDomain implements Serializable {
     }
 
     /**
-     * Max available project area M2 within my Sub Domain.
+     * Maximum available Project area (m²) within the SubDomain.
      */
     @Deprecated
     public long getMaxProjectArea(Integer licenseUsedAreaKM2) {
@@ -66,7 +66,7 @@ public class SubDomain implements Serializable {
         if (licenseUsedAreaKM2 == null) {
             return maxProjectArea;
         }
-        long availableM2 = Math.max(0, maxArea * MathUtils.KM2 - licenseUsedAreaKM2 * MathUtils.KM2);
+        long availableM2 = Math.max(0L, (long) maxArea * MathUtils.KM2 - (long) licenseUsedAreaKM2 * MathUtils.KM2);
         return Math.min(availableM2, maxProjectArea);
     }
 

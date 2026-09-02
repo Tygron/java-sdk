@@ -22,15 +22,15 @@ import nl.tytech.core.item.annotations.Description;
  */
 public enum CFRRollout {
 
-    @Description("All domains can use new feature")
+    @Description("All Domains can use the feature")
     ALL,
 
-    @Description("Only Preview domains can use new feature")
+    @Description("Only Preview Domains can use the feature")
     PREVIEW_DOMAINS,
 
-    @Description("Only Tygron root domains can use new feature")
+    @Description("Only Tygron root Domains can use the feature")
     ROOT_DOMAINS,
 
-    @Description("New feature is disabled")
+    @Description("The feature is disabled")
     NONE
 }

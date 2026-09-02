@@ -53,17 +53,17 @@ public class SettingsManager {
     public enum AssetType {
 
         /**
-         * Assets that are packed into the client app. These assets should always be used (e.g. panel xmls and fonts that are always used).
+         * Assets that are packed into the client application, such as panel XMLs and fonts that are always required.
          */
         PACKED,
 
         /**
-         * Assets that are streamed over the Internet. These assets are used in specific project (e.g. models, images).
+         * Assets that are streamed over the Internet. These assets are used in specific projects (e.g., models, images).
          */
         STREAM,
 
         /**
-         * Assets that are only used by the Server app. Thinks like project xmls or geo data.
+         * Assets that are only used by the Server application, such as project XMLs or geo data.
          */
         SERVER,
 
@@ -161,7 +161,7 @@ public class SettingsManager {
                 saveTimeStamp();
                 ThreadUtils.sleepInterruptible(PERIOD);
             }
-            TLogger.info("Stopped saving timestamps!");
+            TLogger.info("Stopped saving timestamps.");
         }
 
         private final void saveTimeStamp() {
@@ -330,7 +330,7 @@ public class SettingsManager {
 
         public static SettingsManager getInstance() {
             if (INSTANCE == null) {
-                TLogger.showstopper("SettingsManager has not been setup yet. Use SettingsManager.setup() before calling any other method.");
+                TLogger.showstopper("SettingsManager has not been set up yet. Use SettingsManager.setup() before calling any other method.");
             }
             return INSTANCE;
         }
@@ -370,7 +370,7 @@ public class SettingsManager {
 
         public String getFileName(String orignalFileName) {
 
-            // XXX: Temp hack for large maps
+            // Temporary implementation for large maps
             TextureSize ts = this;
             if (largeMap) {
                 if (ts == TextureSize.LARGE) {
@@ -811,7 +811,7 @@ public class SettingsManager {
 
         if (SingletonHolder.INSTANCE != null && SingletonHolder.INSTANCE.getClass() == classz
                 && SingletonHolder.INSTANCE._getAppType() == appType) {
-            TLogger.severe(SettingsManager.class.getSimpleName() + " already setup.");
+            TLogger.severe(SettingsManager.class.getSimpleName() + " already set up.");
             return;
         }
 
@@ -827,7 +827,7 @@ public class SettingsManager {
                 // first time init.
                 newInstance.firstTimeInit();
             } else {
-                // second time recyle storage and storageID
+                // second time recycle storage and storageID
                 newInstance.storage.putAll(SingletonHolder.INSTANCE.storage);
                 newInstance.storageID = SingletonHolder.INSTANCE.storageID;
                 newInstance.instanceID = SingletonHolder.INSTANCE.instanceID;
@@ -853,7 +853,7 @@ public class SettingsManager {
             // check run Mode setting for this Run only
             RunMode prefMode = SingletonHolder.getInstance().getProperty(SettingsType.TEMP_RUNMODE, RunMode.class);
             if (prefMode != RunMode.RELEASE) {
-                TLogger.warning("The App is started with Temporay Runmode: " + prefMode + ".");
+                TLogger.warning("The Application has started with a temporary RunMode: " + prefMode + ".");
                 setRunMode(prefMode);
 
                 // set back to RELEASE for next start
@@ -1420,7 +1420,7 @@ public class SettingsManager {
         String key = convertToAppSettingsKey(type, id);
         Object result = getProperty(key, classz);
         if (result == null) {
-            TLogger.info("No Setting for " + key + " (" + key + "), returning default value.");
+            TLogger.info("No setting found for " + key + ", returning default value.");
             // save first
             this.setProperty(type, id, type.getDefaultValue());
             // return default
@@ -1447,7 +1447,7 @@ public class SettingsManager {
             try {
                 return (T) Integer.valueOf(StringUtils.EMPTY + result);
             } catch (Exception exp) {
-                TLogger.severe("Value: " + result + " for _setting type " + key + " is not a " + classz.getSimpleName() + ".");
+                TLogger.severe("Value: " + result + " for setting type " + key + " is not a " + classz.getSimpleName() + ".");
                 return (T) Integer.valueOf(Item.NONE);
             }
         }

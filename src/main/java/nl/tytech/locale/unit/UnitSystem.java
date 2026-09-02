@@ -25,7 +25,7 @@ import nl.tytech.util.StringUtils;
  */
 public abstract class UnitSystem {
 
-    public static final String SEPERATOR = " / ";
+    private static final String SEPARATOR = " / ";
 
     private static final double EPSILON = 1e-10d;
 
@@ -112,7 +112,7 @@ public abstract class UnitSystem {
     public final String getUnitAbbreviation(boolean multi, UnitType... units) {
 
         if (units == null) {
-            throw new IllegalArgumentException("Missing units array!");
+            throw new IllegalArgumentException("Units array is missing");
         }
 
         StringBuilder result = new StringBuilder();
@@ -120,7 +120,7 @@ public abstract class UnitSystem {
             if (i == 0) {
                 result.append(getLocalUnit(units[i]).getPostFix(multi));
             } else {
-                result.append(SEPERATOR + getLocalUnit(units[i]).getPostFix(false));
+                result.append(SEPARATOR + getLocalUnit(units[i]).getPostFix(false));
             }
         }
         return result.toString();
@@ -242,7 +242,7 @@ public abstract class UnitSystem {
     public final double toLocalValue(double siValue, UnitType... units) {
 
         if (units == null) {
-            throw new IllegalArgumentException("Missing units array!");
+            throw new IllegalArgumentException("Units array is missing");
         }
 
         double value = siValue;
@@ -355,7 +355,7 @@ public abstract class UnitSystem {
     public final double toSIValue(double localValue, UnitType... units) {
 
         if (units == null) {
-            throw new IllegalArgumentException("Missing units array!");
+            throw new IllegalArgumentException("Units array is missing");
         }
 
         double newValue = localValue;

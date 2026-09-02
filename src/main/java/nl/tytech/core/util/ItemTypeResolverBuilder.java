@@ -31,7 +31,7 @@ import nl.tytech.core.structure.ItemNamespace;
 
 /**
  *
- * Type resolver that behaves as a normal class resolver except for known Tygron Item. They use the same naming as ItemNameSpace.
+ * Type resolver that behaves as a standard class resolver, except for known Tygron Items which follow the ItemNamespace naming convention.
  *
  * @author Maxim Knepfle
  */
@@ -78,7 +78,7 @@ public class ItemTypeResolverBuilder extends DefaultTypeResolverBuilder {
     private static final long serialVersionUID = -11025605395210958L;
 
     /**
-     * Constructor with custom configuration included
+     * Initializes the builder with a custom configuration.
      */
     public ItemTypeResolverBuilder() {
 

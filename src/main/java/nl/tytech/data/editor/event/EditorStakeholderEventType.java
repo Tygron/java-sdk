@@ -52,7 +52,7 @@ public enum EditorStakeholderEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     RESET_WEB_TOKEN_WITH_LENGTH(Integer[].class, Integer.class),
 
-    @EventParamData(desc = "Select Stakeholder with preferred ID, when not available fallback to next best.", params = {
+    @EventParamData(desc = "Select Stakeholder using the preferred ID; if unavailable, fall back to the next best option.", params = {
             "Preferred Stakeholder ID or empty", "Client Token (from Join Session event)" }, response = "Selected Stakeholder ID")
     SELECT_STAKEHOLDER(Integer.class, String.class),
 
@@ -78,7 +78,7 @@ public enum EditorStakeholderEventType implements IndicatorEventTypeEnum {
     SET_TYPE(Integer.class, Stakeholder.Type.class),
 
     /**
-     * Transfer ownership of plots and buildings. Optionally also the permitter of zones.
+     * Transfer ownership of plots and buildings, and optionally the perimeter of zones.
      */
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     TRANSFER_OWNERSHIP(Integer.class, Integer.class, Boolean.class);

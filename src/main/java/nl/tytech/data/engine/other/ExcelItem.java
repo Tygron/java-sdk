@@ -15,7 +15,7 @@ package nl.tytech.data.engine.other;
 import nl.tytech.data.engine.item.ExcelSheet;
 
 /**
- * Excel Item: is an interface for items that have excel sheets for session calculations.
+ * Interface for items using Excel sheets for Session calculations.
  *
  * @author Frank Baars
  */

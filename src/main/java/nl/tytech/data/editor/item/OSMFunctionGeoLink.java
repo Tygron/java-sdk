@@ -65,7 +65,7 @@ public class OSMFunctionGeoLink extends FunctionGeoLink implements OSMGeoLink {
 
     @Override
     public String toString() {
-        return StringUtils.EMPTY + this.getPriority() + "-OSM) " + getName();
+        return this.getPriority() + "-OSM) " + getName();
     }
 
 }

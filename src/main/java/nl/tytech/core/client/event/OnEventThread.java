@@ -30,7 +30,7 @@ public @interface OnEventThread {
     public enum EventThread {
 
         /**
-         * Execute on orginal calling thread
+         * Execute on original calling thread
          */
         CALLER,
 
@@ -45,7 +45,7 @@ public @interface OnEventThread {
         PARALLEL,
 
         /**
-         * Open GL thread handled by JME3
+         * OpenGL thread handled by JME3
          */
         OPENGL;
     }

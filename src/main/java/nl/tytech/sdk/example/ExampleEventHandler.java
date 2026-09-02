@@ -24,7 +24,7 @@ import nl.tytech.data.engine.item.Stakeholder;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * Dummy example Event handler
+ * Example Event handler
  *
  * @author Maxim Knepfle
  */
@@ -50,7 +50,8 @@ public class ExampleEventHandler implements EventListenerInterface, EventIDListe
 
         if (enhum == Setting.Type.MAP_SIZE_M) {
             Setting setting = EventManager.getItem(MapLink.SETTINGS, Setting.Type.MAP_SIZE_M);
-            TLogger.info("Map Size set to: " + setting.getIntArrayValue()[Item.X] + "x" + setting.getIntArrayValue()[Item.Y]);
+            int[] values = setting.getIntArrayValue();
+            TLogger.info("Map Size set to: " + values[Item.X] + "x" + values[Item.Y]);
             mapUpdate = true;
         }
     }

@@ -17,7 +17,7 @@ import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.util.StringUtils;
 
 /**
- * AIToolCall contains which tool was called by AI
+ * Represents a tool call made by an AI.
  *
  * @author Maxim Knepfle
  */

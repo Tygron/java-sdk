@@ -17,14 +17,14 @@ import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
 
 /**
- * ClientItemMaps containing the item maps and their versions on the client side.
+ * ClientItemMaps contains the item maps and their versions on the client side.
  *
  * @author Maxim Knepfle
  */
 public final class ClientItemMaps {
 
     /**
-     * ItemsMaps per mapLink
+     * Item maps per MapLink
      */
     @SuppressWarnings("unchecked")
     private final ClientItemMap<? extends Item>[] maps = new ClientItemMap[MapLink.VALUES.length];
@@ -43,7 +43,7 @@ public final class ClientItemMaps {
     }
 
     /**
-     * Get the version of the MapLink Map.
+     * Get the version of the map associated with the given MapLink.
      */
     public final int getVersion(MapLink mapLink) {
         Integer version = versions[mapLink.ordinal()];
@@ -51,7 +51,7 @@ public final class ClientItemMaps {
     }
 
     /**
-     * Save the ItemMap using the MapLink.
+     * Store the ItemMap associated with the given MapLink.
      */
     public final <I extends Item> void put(MapLink mapLink, ClientItemMap<I> map) {
         put(mapLink, map, 0);
@@ -65,7 +65,7 @@ public final class ClientItemMaps {
     }
 
     /**
-     * Set the version by MapLink
+     * Set the version for the given MapLink.
      */
     public final void setVersion(MapLink mapLink, int version) {
         versions[mapLink.ordinal()] = version;

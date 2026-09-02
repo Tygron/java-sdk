@@ -30,25 +30,25 @@ import nl.tytech.naming.EngineNC;
 @Description("Endpoints related to the GeoShare.")
 public enum ShareServiceEventType implements ServiceEventType {
 
-    @EventParamData(desc = "Add new Sharable for given path, name and type, returns unique path with primary extension. For files larger than 2GB, use the Stream API.", params = {
+    @EventParamData(desc = "Add new Shareable for given path, name and type; returns a unique path with primary extension. For files larger than 2GB, use the Stream API.", params = {
             Doc.PATH, "Type", "Content Bytes (< 2GB) (optional)" })
     @EventIDField(nullable = { 2 })
     ADD(String.class, AccessLevel.EDITOR, String.class, Shareable.Type.class, byte[].class),
 
-    @EventParamData(desc = "Add new Sharable for given path, name and type, returns unique path with primary extension.", params = {
+    @EventParamData(desc = "Add new Shareable for given path, name and type; returns a unique path with primary extension.", params = {
             Doc.PATH, "Type", "URL with Content (optional)" })
     @EventIDField(nullable = { 2 })
     ADD_URL(String.class, AccessLevel.EDITOR, String.class, Shareable.Type.class, String.class),
 
-    @EventParamData(desc = "Get the all shareables in given path. Only when account is EDITOR+ tokenized shareables are included.", params = {
+    @EventParamData(desc = "Get all shareables in the given path. Tokenized shareables are included only for accounts with EDITOR level or higher.", params = {
             Doc.PATH, "Types (optional)" })
     @EventIDField(nullable = { 1 })
     GET_SHAREABLES(Shareable[].class, AccessLevel.NONE, String.class, Shareable.Type[].class),
 
-    @EventParamData(desc = "Move the Sharable to a new path.", params = { "Old " + Doc.PATH, "New " + Doc.PATH })
+    @EventParamData(desc = "Move the Shareable to a new path.", params = { "Old " + Doc.PATH, "New " + Doc.PATH })
     MOVE(String.class, AccessLevel.EDITOR, String.class, String.class),
 
-    @EventParamData(desc = "Remove Sharable for given paths.", params = { Doc.PATH })
+    @EventParamData(desc = "Remove Shareable for given paths.", params = { Doc.PATH })
     REMOVE(Boolean.class, AccessLevel.EDITOR, String[].class),
 
     @EventParamData(desc = "Set token for given path.", params = { Doc.PATH, "Token" })
@@ -81,7 +81,7 @@ public enum ShareServiceEventType implements ServiceEventType {
     @EventIDField(sameLength = true)
     SET_CERTIFICATE_AUTHOR(Boolean.class, AccessLevel.EDITOR, String[].class, String[].class),
 
-    @EventParamData(desc = "Update Sharable content.", params = { Doc.PATH, "Content Bytes" })
+    @EventParamData(desc = "Update Shareable content.", params = { Doc.PATH, "Content Bytes" })
     UPDATE(String.class, AccessLevel.EDITOR, String.class, byte[].class),
 
     ;

@@ -42,7 +42,6 @@ public abstract class AbstractItemMap<I extends Item> implements ItemMap<I> {
     private final List<I> cache1 = new ArrayList<>();
     private final List<I> cache2 = new ArrayList<>();
 
-    // XXX: replace with it.unimi.dsi.fastutil.ints.Int2ObjectMap?
     protected final TreeMap<Integer, I> map;
 
     public AbstractItemMap() {

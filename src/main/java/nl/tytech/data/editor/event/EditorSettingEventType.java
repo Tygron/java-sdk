@@ -45,8 +45,8 @@ public enum EditorSettingEventType implements IndicatorEventTypeEnum {
     SET_DECIMALS(Integer.class),
 
     @Deprecated
-    @EventParamData(desc = "Deprcated: replaced by editorevent/set_scheduled_update/. Schedule a long-running Update.", params = {
-            "Scheduled time in milliseconds since epoch 1970. Note: use 0 for direct execution or -1 to cancel",
+    @EventParamData(desc = "Deprecated: replaced by editorevent/set_scheduled_update/. Schedule a long-running Update.", params = {
+            "Scheduled time in milliseconds since epoch 1970 (0 for direct execution, -1 to cancel).",
             "Send Email to this address when finished (optional)",
             "Send SMS to this number when finished (optional)" }, defaults = { "0", "", "" })
     @EventIDField(nullable = { 0, 1, 2 })
@@ -77,7 +77,7 @@ public enum EditorSettingEventType implements IndicatorEventTypeEnum {
 
     SET_RASTERIZATION(RasterizationMethod.class),
 
-    @EventParamData(desc = "Set Project setting", params = { "Setting Type", "Value as String (can be a integer, boolean, text, etc.)" })
+    @EventParamData(desc = "Set Project setting", params = { "Setting Type", "Value as String (can be an integer, boolean, text, etc.)" })
     SET_SETTING(Setting.Type.class, String.class),
 
     SET_UNIT_SYSTEM_TYPE(UnitSystemType.class),

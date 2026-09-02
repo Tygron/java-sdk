@@ -129,7 +129,7 @@ public class TNLStreetObjectLink extends FunctionGeoLink {
 
     }
 
-    public List<TNLStreetObjectType> getWaterBuildingTypes() {
+    public List<TNLStreetObjectType> getObjectTypes() {
         return objectTypes;
     }
 

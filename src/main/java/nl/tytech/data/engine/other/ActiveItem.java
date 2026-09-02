@@ -13,7 +13,7 @@
 package nl.tytech.data.engine.other;
 
 /**
- * Interface for Active in Calculation Items
+ * Interface for items that are active during calculations.
  * @author Maxim Knepfle
  *
  */

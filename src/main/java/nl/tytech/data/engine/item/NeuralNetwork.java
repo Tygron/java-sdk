@@ -41,7 +41,7 @@ public abstract class NeuralNetwork extends DataItem implements AttributeQueryIn
     }
 
     public enum Type {
-        RCNN, LLM, EMBEDDING
+        RCNN, LLM, EMBEDDING, DIFFUSION
     }
 
     private static final long serialVersionUID = 5381401657101259581L;

@@ -16,7 +16,7 @@ import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.util.StringUtils;
 
 /**
- * Online Web Source with url and path
+ * Web source with URL
  *
  * @author Frank Baars
  */

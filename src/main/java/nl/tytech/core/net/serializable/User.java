@@ -30,17 +30,17 @@ public class User implements Serializable {
 
     public enum AccessLevel {
 
-        NONE("User can do almost nothing except passwd reset and trial."),
+        NONE("User has limited access, restricted to password reset and trial."),
 
-        JOIN_ONLY("User can only join or get invited to sessions hosted by others."),
+        JOIN_ONLY("User can only join or be invited to Sessions hosted by others."),
 
-        HOST_SESSION("User is allowed to host single or multi user sessions."),
+        HOST_SESSION("User is allowed to host single or multi-user Sessions."),
 
-        EDITOR("User is allowed to host or join a edit sessions."),
+        EDITOR("User is allowed to host or join edit Sessions."),
 
-        DOMAIN_ADMIN("User can manage projects and other users in his/her domain."),
+        DOMAIN_ADMIN("User can manage Projects and other users in his/her Domain."),
 
-        SUPER_USER("Super user can also manage projects and users of other domains.");
+        SUPER_USER("Super user can also manage Projects and users of other Domains.");
 
         private String explaination;
 

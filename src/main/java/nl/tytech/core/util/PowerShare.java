@@ -44,12 +44,12 @@ public final class PowerShare {
     public enum Bound {
 
         /**
-         * Server and Client: the runnable is ONLY limited by the amount of available CPU power (pool 1) and maybe killed.
+         * Server and Client: The runnable is limited by the available CPU power (pool 1) and may be terminated.
          */
         MAX_CPU,
 
         /**
-         * Server side second pool: the runnable is ONLY limited by the amount of available CPU power (pool 2) and maybe killed.
+         * Server-side second pool: The runnable is limited by the available CPU power (pool 2) and may be terminated.
          */
         MAX_CPU2,
 
@@ -60,7 +60,7 @@ public final class PowerShare {
         MAX_PARRALISM,
 
         /**
-         * Max threads dedicated to a special purpose e.g. Geo Sources, Backup, cannot be to much to prevent source server overloading.
+         * Maximum threads dedicated to a specific purpose (e.g., Geo Sources, Backup) to prevent source server overloading.
          */
         MAX_PURPOSE,
 
@@ -163,10 +163,10 @@ public final class PowerShare {
 
             String message = "Unknown Shutdown";
             if (group != null && group.isShutdown()) {
-                message = group.toString() + " Shutdown, remaining are: " + unfinishedTasks.get() + "/" + totalTasks.get() + " tasks.";
+                message = group.toString() + " shutdown. Remaining tasks: " + unfinishedTasks.get() + "/" + totalTasks.get() + " tasks.";
 
             } else if (service.isShutdown()) {
-                message = service.toString() + " Shutdown, remaining are: " + unfinishedTasks.get() + "/" + totalTasks.get() + " tasks.";
+                message = service.toString() + " shutdown. Remaining tasks: " + unfinishedTasks.get() + "/" + totalTasks.get() + " tasks.";
             }
             TLogger.warning(message);
             return message;
@@ -594,16 +594,16 @@ public final class PowerShare {
 
         try {
             if (force) {
-                String log = "Service: " + service.toString() + " was FORCED to shutdown.";
+                String log = "Service: " + service.toString() + " was forced to shut down.";
                 if (service instanceof ThreadPool tp) {
-                    log += " With " + tp.getActiveThreadCount() + " threads still active!";
+                    log += " With " + tp.getActiveThreadCount() + " threads still active.";
                 }
                 TLogger.warning(log);
                 service.shutdownNow();
                 return;
             }
 
-            TLogger.info("Shutdown Service: " + service.toString() + "... (Please wait up to 5 minutes to terminate)");
+            TLogger.info("Shutdown Service: " + service.toString() + ". Waiting up to 5 minutes for termination.");
             long start = System.currentTimeMillis();
             service.shutdown();
             if (service.awaitTermination(5, TimeUnit.MINUTES)) {

@@ -20,7 +20,7 @@ import nl.tytech.data.engine.item.Building.Detail;
 import nl.tytech.data.engine.item.ClientWord.ClientTerms;
 
 /**
- * Book value for Water Balance (both positive or negative)
+ * Book value for Water Balance (positive or negative)
  *
  * @author Frank Baars & Maxim Knepfle
  *
@@ -58,9 +58,9 @@ public class WaterBookValue extends BookValue {
 
         BREACH("Breach"),
 
-        BOTTOM_IN("Bottom in"),
+        BOTTOM_IN("Bottom In"),
 
-        BOTTOM_OUT("Bottom out")
+        BOTTOM_OUT("Bottom Out")
 
         ;
 

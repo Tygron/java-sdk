@@ -808,14 +808,14 @@ public class ComboUtils {
                     return c.getRasterization() + mapLinkName + ": " + c.getKey(key);
                 } else {
                     String d = UnitSystemType.SI.getImpl().formatLocalValue(c.getAttribute(ComboModelAttribute.ATTRIBUTE_DEFAULT_VALUE));
-                    return "Attribute " + key.name() + " is not set, revert to default value: " + d;
+                    return "Attribute " + key.name() + " is not set; reverting to default value: " + d;
                 }
             }
         }
 
         // timeframe
         if (ComboUtils.TIMEFRAME.equals(part)) {
-            return "Run formula per timeframe, creates a multi-timeframe overlay";
+            return "Run formula per Timeframe to create a multi-Timeframe overlay";
         }
 
         // globals
@@ -827,7 +827,7 @@ public class ComboUtils {
                             + UnitSystemType.SI.getImpl().formatLocalValues(global.getActualValue(), Global.DECIMALS);
                 }
             }
-            return "INVALID Global: " + name;
+            return "Invalid Global: " + name;
         }
 
         // match to operator
@@ -867,7 +867,7 @@ public class ComboUtils {
                 if (frame >= 0 && frame < timeframes) {
                     return name + "Timeframe: " + frame;
                 } else {
-                    return name + "INVALID Timeframe: " + frame;
+                    return name + "Invalid Timeframe: " + frame;
                 }
             }
         }

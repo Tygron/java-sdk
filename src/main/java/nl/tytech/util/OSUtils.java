@@ -132,7 +132,7 @@ public class OSUtils {
 
         String fileName = "TyTech";
         if (isLinux()) {
-            // linux stores data is hidden directory
+            // Linux stores data in a hidden directory
             return "." + fileName;
         }
         return fileName;
@@ -151,7 +151,7 @@ public class OSUtils {
                 while (nis.hasMoreElements()) {
                     NetworkInterface ni = nis.nextElement();
 
-                    // interface should not be null and not be a tunnel or something else.
+                    // Interface must not be null, a tunnel, or other virtual types.
                     if (ni != null && !ni.isPointToPoint()) {
                         byte[] mac = ni.getHardwareAddress();
                         if (mac != null) {
@@ -159,7 +159,7 @@ public class OSUtils {
                             for (int i = 0; i < mac.length; i++) {
                                 macAddress.append(String.format("%02X%s", mac[i], i < mac.length - 1 ? "-" : ""));
                             }
-                            // should be more then at least 2 chars.
+                            // Should be longer than 2 characters.
                             if (macAddress.length() > 2) {
                                 macAddresses.add(macAddress.toString());
                             }

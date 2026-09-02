@@ -18,7 +18,7 @@ import nl.tytech.data.engine.other.ResultType;
 import nl.tytech.util.MathUtils;
 
 /**
- * Take terrain and building averages
+ * Calculates terrain and building averages.
  *
  * @author Maxim Knepfle
  */

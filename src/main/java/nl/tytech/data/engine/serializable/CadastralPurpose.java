@@ -21,7 +21,7 @@ import nl.tytech.util.logger.TLogger;
 
 /**
  *
- * General purpose of the residence as registered by the Dutch government, linked to the internal FunctionCategory.
+ * General purpose of the property as registered by the Dutch government, linked to the internal FunctionCategory.
  *
  * @author Jurrian Hartveldt, Frank Baars
  * @specialization GIS
@@ -97,7 +97,7 @@ public enum CadastralPurpose implements IndexedEnum {
                     continue keyloop;
                 }
             }
-            TLogger.warning("Couldn't interpret key: " + dutchCadastralKey + ", passing default.");
+            TLogger.warning("Couldn't interpret key: " + dutchCadastralKey + "; using default value.");
             result[i] = OTHER;
         }
         return result;
@@ -123,7 +123,7 @@ public enum CadastralPurpose implements IndexedEnum {
                     continue keyloop;
                 }
             }
-            TLogger.warning("Couldn't interpret key: " + englishCadastralKey + ", passing default.");
+            TLogger.warning("Couldn't interpret key: " + englishCadastralKey + "; using default value.");
             result[i] = OTHER;
         }
         return result;
@@ -174,7 +174,7 @@ public enum CadastralPurpose implements IndexedEnum {
         } else if (buildingClass.startsWith("Y") || buildingClass.startsWith("Z")) {
             possible.add(CadastralPurpose.OTHER);
         } else {
-            TLogger.severe("Couldn't interpret key: " + buildingClass + ", passing null.");
+            TLogger.severe("Couldn't interpret key: " + buildingClass + "; returning null.");
             return null;
         }
 

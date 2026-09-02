@@ -74,7 +74,7 @@ public class SessionConnection {
     public enum ComEvent implements EventTypeEnum {
 
         /**
-         * Please connect to this server using the settings from settingsmanager
+         * Connect to this server using the SettingsManager settings.
          */
         DIRECT_CONNECT(),
 
@@ -138,11 +138,7 @@ public class SessionConnection {
                 if (state == Network.ClientConnectionState.OFFLINE && !firstConnection) {
                     connect();
                 }
-
-                try {
-                    Thread.sleep(Network.UPDATEFREQ);
-                } catch (InterruptedException e) {
-                }
+                ThreadUtils.sleepInterruptible(Network.UPDATEFREQ);
             }
         }
     }
@@ -173,7 +169,7 @@ public class SessionConnection {
                     waitForUpdate();
                     // feedback
                     EventManager.fire(LoadingEventType.PROGRESS, LoadingStage.DOWNLOAD, 50);
-                    TLogger.info("Finished first item update!");
+                    TLogger.info("Finished first item update.");
 
                     // (Frank) To prevent a racing condition with disconnect,
                     // since firstConnection is used as a control variable...
@@ -193,7 +189,7 @@ public class SessionConnection {
         private final boolean waitForUpdate() {
 
             if (status == null) {
-                TLogger.severe("Cannot perform operation, initconnection is not started!");
+                TLogger.severe("Cannot perform operation; initial connection has not been started.");
                 return false;
             }
             // default false
@@ -452,7 +448,7 @@ public class SessionConnection {
 
         // Only when released the client token is removed (for next time)
         if (Boolean.TRUE.equals(released)) {
-            TLogger.info("Client was released from Session!");
+            TLogger.info("Client was released from Session.");
             SettingsManager.setApiToken(connectionID, StringUtils.randomToken());
             SettingsManager.setClientToken(connectionID, StringUtils.randomToken());
         }
@@ -463,7 +459,7 @@ public class SessionConnection {
         EventManager.setStatus(this.connectionID, status);
 
         setState(Network.ClientConnectionState.OFFLINE, true);
-        TLogger.info("Disconnected!");
+        TLogger.info("Disconnected.");
     }
 
     public final <T> T fireServerEvent(final boolean wait, final Integer timeout, final Format inputFormat, final EventTypeEnum type,
@@ -476,7 +472,7 @@ public class SessionConnection {
             final EventTypeEnum type, final Object... arguments) {
 
         if (status == null) {
-            TLogger.severe("Cannot perform operation, initconnection is not started!");
+            TLogger.severe("Cannot perform operation; initial connection has not been started.");
             return null;
         }
         if (inputFormat.isTyped()) {
@@ -671,11 +667,11 @@ public class SessionConnection {
                     break;
             }
 
-        } else // display a message accroding to the error type.
+        } else // Display a message according to the error type.
         if (exp instanceof InterruptedException) {
             type = ConnectionEvent.THREAD_INTERRUPT;
         } else if (exp instanceof ExecutionException) {
-            type = ConnectionEvent.THREAD_EXCECUTION;
+            type = ConnectionEvent.THREAD_EXECUTION;
         } else if (exp instanceof NullPointerException) {
             type = ConnectionEvent.NULL_POINTER;
             TLogger.exception(exp);
@@ -811,7 +807,7 @@ public class SessionConnection {
     }
 
     private void killUpdater() {
-        // zombiefy old thread
+        // Deactivate old thread
         if (poller != null) {
             Poller zombie = this.poller;
             zombie.setName(zombie.getName() + "-Zombie");

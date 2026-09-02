@@ -30,7 +30,7 @@ import nl.tytech.data.core.serializable.GeoFormat;
 public enum EditorSourceEventType implements EventTypeEnum {
 
     /**
-     * Geo Catalog, Name, Url
+     * Geo Catalog, Name, URL
      */
     ADD_CATALOG(GeoCatalog.class, String.class, String.class),
 
@@ -40,7 +40,7 @@ public enum EditorSourceEventType implements EventTypeEnum {
     ADD_FILE(String.class, String.class),
 
     /**
-     * Geo Format, Name, Url, Owner
+     * Geo Format, Name, URL, Owner
      */
     ADD_SERVICE(GeoFormat.class, String.class, String.class, String.class),
 

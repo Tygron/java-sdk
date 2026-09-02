@@ -126,7 +126,7 @@ public class ComboOverlay extends RasterizationOverlay<DefaultResult, Input> {
 
         ATAN(1, "Arc tangent function"),
 
-        SQRT("ROOT", 1, "The square root function"),
+        SQRT("ROOT", 1, "Square root function"),
 
         ROUND(1, "Round function"),
 
@@ -138,13 +138,13 @@ public class ComboOverlay extends RasterizationOverlay<DefaultResult, Input> {
 
         EXP(1, "Exponential function"),
 
-        LN(1, "The natural logarithm (base e) function"),
+        LN(1, "Natural logarithm (base e) function"),
 
-        LOG("LOG10", 1, "The natural logarithm (base 10) function"),
+        LOG("LOG10", 1, "Natural logarithm (base 10) function"),
 
-        RANDOM("RAND", 1, "The random function, which returns a number greater than or equal to 0 and less than the provided argument"),
+        RANDOM("RAND", 1, "Returns a random number between 0 (inclusive) and the provided argument (exclusive)"),
 
-        ERF(1, "The gauss error function, for probability calculations"),
+        ERF(1, "Gauss error function for probability calculations"),
 
         // two arguments (boolean result)
         GTE(2, "Returns 1 if the first argument is larger than or equal to the second argument, else returns 0"),
@@ -157,7 +157,7 @@ public class ComboOverlay extends RasterizationOverlay<DefaultResult, Input> {
 
         NEQ(2, "Returns 1 if the first argument is not equal to the second argument, else returns 0"),
 
-        EQ("EQUALS", 2, "Returns 1 if the first argument is equal to second argument, else returns 0"),
+        EQ("EQUALS", 2, "Returns 1 if the first argument is equal to the second argument, else returns 0"),
 
         // three arguments
         IF(3, "If first argument is true (numerical value exactly 1), it returns the second argument, else it returns the third argument"),
@@ -168,23 +168,23 @@ public class ComboOverlay extends RasterizationOverlay<DefaultResult, Input> {
         OR("Returns 1 if any argument is not equal to 0"),
 
         // multi arguments
-        SWITCH("Switch first argument is expression, second is default value and the rest are cases (case value and its result)."),
+        SWITCH("First argument is an expression, second is the default value, followed by case-value and result pairs."),
 
-        ADD("Add one or more arguments"),
+        ADD("Adds one or more arguments"),
 
-        MULT("MUL", "Multiply one or more arguments"),
+        MULT("MUL", "Multiplies one or more arguments"),
 
-        DIV("Divide the first argument with one or more other arguments"),
+        DIV("Divides the first argument by one or more subsequent arguments"),
 
-        SUB("Subtract one or more arguments from the first argument"),
+        SUB("Subtracts one or more arguments from the first argument"),
 
-        MAX("Returns the largest of the provided arguments. That is, the result is the argument closest to positive infinity."),
+        MAX("Returns the largest of the provided arguments."),
 
-        MIN("Returns the smallest of the provided arguments. That is, the result is the argument closest to negative infinity."),
+        MIN("Returns the smallest of the provided arguments."),
 
         AVG("AVERAGE", "Returns the arithmetic mean of the provided arguments"),
 
-        POW("Raises the first argument to the power of the consecutive arguments. For example 2 to the power 3 to the power 4."),
+        POW("Raises the first argument to the power of subsequent arguments"),
 
         // percentiles
         PERCENTILE("Calculates the linear interpolated k-th percentile (value between 0 and 1) of the sorted array of provided arguments. "

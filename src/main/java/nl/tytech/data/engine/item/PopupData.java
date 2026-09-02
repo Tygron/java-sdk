@@ -54,23 +54,23 @@ public class PopupData extends UniqueNamedItem implements GeometryItem<Point> {
     public enum Type {
 
         /**
-         * Standard popup witch give the location of a stakeholder
+         * Standard popup which gives the location of a stakeholder
          */
         STAKEHOLDER_STANDARD(false),
         /**
-         * Intractable popup, with 3 buttons for answering
+         * Interactable popup with three buttons for answering
          */
         INTERACTION(true),
         /**
-         * Intractable popup, with 3 buttons for answering and a long time object
+         * Interactable popup with three buttons for answering and a long time object
          */
         INTERACTION_WITH_DATE(true),
         /**
-         * Non-interactable popup, for waiting approval popups
+         * Non-interactable popup used for pending approvals
          */
         INFORMATION(true),
         /**
-         * A LABEL is a simple name time related text like "building houses here".
+         * A LABEL is simple, time-related text, such as "building houses here".
          */
         LABEL(true);
 
@@ -338,7 +338,7 @@ public class PopupData extends UniqueNamedItem implements GeometryItem<Point> {
         } else if (this.getContentMapLink() == MapLink.NET_CLUSTERS) {
             return getClusterBuildingMP((NetCluster) this.getItem(MapLink.NET_CLUSTERS, this.getContentLinkID()));
         }
-        TLogger.warning("This MapLink (" + getContentMapLink() + ") is not implemented yet for PopupData.getCoordinates()!");
+        TLogger.warning("This MapLink (" + getContentMapLink() + ") is not yet implemented for PopupData.getMultiPolygon().");
         setMultiPolygon(JTSUtils.EMPTY);
         return polygons;
     }
@@ -394,7 +394,7 @@ public class PopupData extends UniqueNamedItem implements GeometryItem<Point> {
     }
 
     /**
-     * When true an answer is required to continue the session. when false this popup will disappear automatically.
+     * When true, an answer is required to continue the Session. When false, this popup disappears automatically.
      * @return
      */
     public boolean isAnswerRequired() {

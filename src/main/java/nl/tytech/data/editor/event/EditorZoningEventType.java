@@ -54,7 +54,7 @@ public enum EditorZoningEventType implements IndicatorEventTypeEnum {
     DUPLICATE(Integer[].class),
 
     @EventParamData(desc = "Import Zone Collection", params = { "Collection of Zone geometries", "Zone Names", "Attribute Names",
-            "Numeric Attribute Values", "Permitter", "Import as category zone", "Buffer for Points and Lines to make Polygons (optional)",
+            "Numeric Attribute Values", "Permit Issuer", "Category Zone Import", "Polygon buffer distance for Points and Lines (optional)",
             "Source (optional)" }, defaults = { "", "", "", "", "", "", "" + Setting.DEFAULT_PL_BUFFER,
                     "" }, exampleAmount = { 3, 3, 2, 6, 3 })
     @EventIDField(links = { STAKEHOLDERS, SOURCES }, params = { 4, 7 }, nullable = { 6, 7 })

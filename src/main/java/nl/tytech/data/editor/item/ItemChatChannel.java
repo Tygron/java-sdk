@@ -10,34 +10,47 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.engine.item;
+package nl.tytech.data.editor.item;
 
-import nl.tytech.data.engine.other.OverrideDataItem;
+import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.core.net.serializable.MapLink;
+import nl.tytech.data.core.item.Item;
 
 /**
- * Default provided Excel sheets.
+ *
+ * Chat Channel for a specific item only
  *
  * @author Maxim Knepfle
+ *
  */
-public class DefaultExcelSheet extends ExcelSheet implements OverrideDataItem {
+public class ItemChatChannel extends ChatChannel {
 
-    private static final long serialVersionUID = 3837992814582019098L;
+    private static final long serialVersionUID = -2383027265076879510L;
 
-    // Runtime variable; do not save to XML.
-    private boolean override = true;
+    @XMLValue
+    private Integer itemID = Item.NONE;
 
-    @Override
-    public boolean isDefault() {
-        return true;
+    @XMLValue
+    private MapLink mapLink = null;
+
+    public ItemChatChannel() {
+
     }
 
-    @Override
-    public boolean isOverride() {
-        return override;
+    public ItemChatChannel(MapLink mapLink, Integer itemID) {
+        this.mapLink = mapLink;
+        this.itemID = itemID;
     }
 
-    @Override
-    public void setOverride(boolean override) {
-        this.override = override;
+    public Item getItem() {
+        return getItem(mapLink, itemID);
+    }
+
+    public Integer getItemID() {
+        return itemID;
+    }
+
+    public MapLink getMapLink() {
+        return mapLink;
     }
 }

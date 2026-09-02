@@ -19,7 +19,7 @@ import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
 
 /**
- * UpgradePair: Defines a pair of functions types can be upgraded. FROM (source) -> TO (target)
+ * UpgradePair defines a pair of function types that can be upgraded from source to target.
  *
  * @author Maxim Knepfle, Frank Baars
  */

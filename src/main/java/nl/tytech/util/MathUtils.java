@@ -137,16 +137,16 @@ public class MathUtils {
     /**
      * Value is clamped between the min and max values (inclusive)
      *
-     * Note: when max is smaller then min: min has preference, this different from Math.clamp() where and exception is thrown.
+     * Note: When max is smaller than min, min takes preference; this differs from Math.clamp(), which throws an exception.
      */
     public static final double clamp(double value, double min, double max) {
         return value < min ? min : value > max ? max : value;
     }
 
     /**
-     * Clamp array values and return orginal or new array when needed.
+     * Clamp array values and return the original or a new array when needed.
      *
-     * Note: when max is smaller then min: min has preference, this different from Math.clamp() where and exception is thrown.
+     * Note: When max is smaller than min, min takes preference; this differs from Math.clamp(), which throws an exception.
      */
     public static final double[] clamp(double[] values, double min, double max) {
 
@@ -175,7 +175,7 @@ public class MathUtils {
     /**
      * Value is clamped between the min and max values (inclusive)
      *
-     * Note: when max is smaller then min: min has preference, this different from Math.clamp() where and exception is thrown.
+     * Note: When max is smaller than min, min takes preference; this differs from Math.clamp(), which throws an exception.
      */
     public static final float clamp(float value, float minMax) {
         return value < -minMax ? -minMax : value > minMax ? minMax : value;
@@ -184,7 +184,7 @@ public class MathUtils {
     /**
      * Value is clamped between the min and max values (inclusive)
      *
-     * Note: when max is smaller then min: min has preference, this different from Math.clamp() where and exception is thrown.
+     * Note: When max is smaller than min, min takes preference; this differs from Math.clamp(), which throws an exception.
      */
     public static final float clamp(float value, float min, float max) {
         return value < min ? min : value > max ? max : value;
@@ -193,7 +193,7 @@ public class MathUtils {
     /**
      * Value is clamped between the min and max values (inclusive)
      *
-     * Note: when max is smaller then min: min has preference, this different from Math.clamp() where and exception is thrown.
+     * Note: When max is smaller than min, min takes preference; this differs from Math.clamp(), which throws an exception.
      */
     public static final int clamp(int value, int min, int max) {
         return value < min ? min : value > max ? max : value;
@@ -202,7 +202,7 @@ public class MathUtils {
     /**
      * Value is clamped between the min and max values (inclusive)
      *
-     * Note: when max is smaller then min: min has preference, this different from Math.clamp() where and exception is thrown.
+     * Note: When max is smaller than min, min takes preference; this differs from Math.clamp(), which throws an exception.
      */
     public static final long clamp(long value, long min, long max) {
         return value < min ? min : value > max ? max : value;
@@ -218,14 +218,14 @@ public class MathUtils {
     /**
      * Value is clamped between the min and max values (inclusive)
      *
-     * Note: when max is smaller then min: min has preference, this different from Math.clamp() where and exception is thrown.
+     * Note: When max is smaller than min, min takes preference; this differs from Math.clamp(), which throws an exception.
      */
     public static final int clampInt(long value, long min, long max) {
         return (int) clamp(value, min, max);
     }
 
     /**
-     * Clamp arrays uneven values and return orginal or new array when needed.
+     * Clamp the uneven indices of an array and return the original or a new array when needed.
      */
     public static final double[] clampUneven(final double[] values, final double min, final double max) {
 
@@ -348,7 +348,7 @@ public class MathUtils {
     }
 
     // fractional error in math formula less than 1.2 * 10 ^ -7.
-    // although subject to catastrophic cancellation when z in very close to 0
+    // although subject to catastrophic cancellation when z is very close to 0
     // from Chebyshev fitting formula for erf(z) from Numerical Recipes, 6.2
     // From: https://introcs.cs.princeton.edu/java/21function/ErrorFunction.java.html
     public static final double erf(double z) {
@@ -360,7 +360,7 @@ public class MathUtils {
         return z >= 0 ? ans : -ans;
     }
 
-    // fractional error less than x.xx * 10 ^ -4.
+    // Fractional error is approximately 10^-4.
     // Algorithm 26.2.17 in Abromowitz and Stegun, Handbook of Mathematical.
     // From: https://introcs.cs.princeton.edu/java/21function/ErrorFunction.java.html
     public static final double erf2(double z) {
@@ -376,7 +376,7 @@ public class MathUtils {
     }
 
     /**
-     * Fast but less accurate impl of sqrt
+     * Fast but less accurate implementation of sqrt
      *
      * Source: http://www.lomont.org/Math/Papers/2003/InvSqrt.pdf
      */
@@ -414,7 +414,7 @@ public class MathUtils {
     }
 
     /**
-     * X == length of first row in matrix
+     * Returns the length of the first row in the matrix.
      */
     public static final int getDimX(Object matrix) {
 
@@ -426,7 +426,7 @@ public class MathUtils {
     }
 
     /**
-     * Y == matrix length/column
+     * Returns the number of rows (columns) in the matrix.
      */
     public static final int getDimY(Object matrix) {
         return matrix != null ? Array.getLength(matrix) : 0;
@@ -600,7 +600,7 @@ public class MathUtils {
     }
 
     /**
-     * checks if a value is in the range min..max, min+max are included
+     * Checks if a value is in the range min..max; min and max are included.
      *
      * @param value
      * @param min
@@ -643,7 +643,7 @@ public class MathUtils {
     }
 
     /**
-     * returns true if Double.valueOf does not throw a NumberFormatException
+     * Returns true if Double.valueOf does not throw a NumberFormatException
      *
      * @param d
      * @return
@@ -658,7 +658,7 @@ public class MathUtils {
     }
 
     /**
-     * returns true if Integer.valueOf does not throw a NumberFormatException
+     * Returns true if Integer.valueOf does not throw a NumberFormatException
      *
      * @param d
      * @return
@@ -760,7 +760,7 @@ public class MathUtils {
     }
 
     /**
-     * Returns true when the max distance between values in the array is NOT larger then the given value
+     * Returns true when the maximum distance between values in the array is not larger than the given value
      * @param array
      * @param maxDistance
      * @return
@@ -867,7 +867,7 @@ public class MathUtils {
     /**
      * Normalizes numbers in a collection.
      *
-     * @param c the collection you want the sum from
+     * @param c the collection to normalize
      */
     public static final void normalize(ArrayList<Double> c) {
 
@@ -1084,7 +1084,7 @@ public class MathUtils {
     }
 
     /**
-     * Round a float to a certain number of decimal places, note infinity is converted to max value
+     * Round a float to a certain number of decimal places. Note that infinity is converted to max value.
      *
      * @param value The float to round
      * @param decimalPlaces The number of decimal places to round off to
@@ -1273,7 +1273,7 @@ public class MathUtils {
      * Add all numbers in an array.
      *
      * @param <N>
-     * @param c the collection you want the sum from
+     * @param c the collection to normalize
      * @return the sum of all the entries in the collection (float)
      */
     public static final double sum(float[] c) {
@@ -1292,7 +1292,7 @@ public class MathUtils {
      * Add all numbers in an array.
      *
      * @param <N>
-     * @param c the collection you want the sum from
+     * @param c the collection to normalize
      * @return the sum of all the entries in the collection (int)
      */
     public static final long sum(int[] c) {
@@ -1389,7 +1389,7 @@ public class MathUtils {
         if (exp == 0x7c00) {
             exp = 0x3fc00; // -> NaN/Inf
 
-        } else if (exp != 0) {// normalized valueW
+        } else if (exp != 0) {// normalized value
             exp += 0x1c000; // exp - 15 + 127
             if (mant == 0 && exp > 0x1c400) {
                 return Float.intBitsToFloat((hbits & 0x8000) << 16 | exp << 13); // uncommented: | 0x3ff to be compatible with CUDA

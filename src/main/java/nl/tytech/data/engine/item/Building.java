@@ -606,7 +606,7 @@ public class Building extends AttributeItem implements SourceInterface, TimeStat
     }
 
     @Override
-    public GeometryCollection getIntersectorGeometies(MapType mapType) {
+    public GeometryCollection getIntersectorGeometries(MapType mapType) {
         return this.getPolygons(mapType);
     }
 
@@ -1428,7 +1428,7 @@ public class Building extends AttributeItem implements SourceInterface, TimeStat
     public void setPermitted(Integer stakeholderID, Boolean permitted) {
         if (permitReceived == null) {
             if (permitted != null) {
-                TLogger.warning("Initializing a permit with an answer: " + permitted + " is not allowed!");
+                TLogger.warning("Initializing a permit with a predefined value (" + permitted + ") is not allowed.");
                 return;
             }
             permitReceived = new HashMap<>();
@@ -1558,7 +1558,7 @@ public class Building extends AttributeItem implements SourceInterface, TimeStat
         String result = super.validated(startSession);
 
         if (this.getFunction() == null) {
-            return result + "\nBuilding " + this + " has no Function!";
+            return result + "\nBuilding " + this + " has no Function.";
         }
 
         for (Section section : sections) {

@@ -19,7 +19,7 @@ import nl.tytech.util.JTSUtils;
 
 /**
  *
- * Prepared Geometry for Collections...
+ * Prepared Geometry for GeometryCollections.
  *
  * @author Maxim Knepfle
  *

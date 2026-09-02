@@ -22,7 +22,7 @@ import nl.tytech.data.core.serializable.GeoFormat;
 import nl.tytech.data.editor.serializable.GeoLinkType;
 
 /**
- * GeoPlugin
+ * HeightPlugin
  * @author Frank Baars
  */
 public class HeightPlugin extends AbstractGeoPlugin implements SourceInterface {

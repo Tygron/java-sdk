@@ -36,7 +36,7 @@ public class WebUtils {
             return text;
         }
 
-        // convert to clean
+        // decode the text
         try {
             // (Frank): We currently do not use MediaType: application/x-www-form-urlencoded
             // Therefore use this method, instead of URLDecoder
@@ -55,7 +55,7 @@ public class WebUtils {
             return text;
         }
 
-        // convert to default
+        // encode the text
         try {
             // We currently do not use MediaType: application/x-www-form-urlencoded
             // Therefore use this method, instead of URLEncoder

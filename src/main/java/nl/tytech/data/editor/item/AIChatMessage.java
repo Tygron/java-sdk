@@ -17,12 +17,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.tytech.core.item.annotations.ListOfClass;
 import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.core.net.serializable.GPUJob;
 import nl.tytech.data.editor.other.AIToolCall;
 import nl.tytech.util.MathUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * AIChatMessage that contains the thinking of the LLM
+ * An AIChatMessage that contains the reasoning process of the LLM
  *
  * @author Maxim Knepfle
  */
@@ -32,7 +33,9 @@ public class AIChatMessage extends ChatMessage {
 
     public static final String QUEUING_TAG = "Queuing...";
 
-    public static final String BUSY_THINKING_TAG = "Thinking..";
+    public static final String READING_TAG = "Reading...";
+
+    public static final String BUSY_THINKING_TAG = "Thinking...";
 
     public static final String THINK_TAG = "Thinking:\n";
 
@@ -77,6 +80,9 @@ public class AIChatMessage extends ChatMessage {
         if (getAIState() == AIState.QUEUING) {
             return QUEUING_TAG;
         }
+        if (getAIState() == AIState.READING) {
+            return READING_TAG;
+        }
 
         StringBuilder result = new StringBuilder();
         boolean reasoning = showThinking && StringUtils.containsData(thinking);
@@ -95,13 +101,9 @@ public class AIChatMessage extends ChatMessage {
             return r;
         }
         if (!showThinking && StringUtils.containsData(thinking)) {
-            String txt = BUSY_THINKING_TAG;
-            for (int i = 0; i < MathUtils.randomInt(10); i++) {
-                txt += ".";
-            }
-            return txt;
+            return randomDots(BUSY_THINKING_TAG);
         }
-        return "...";
+        return randomDots(".");
     }
 
     public String getThinking() {
@@ -110,6 +112,20 @@ public class AIChatMessage extends ChatMessage {
 
     public List<AIToolCall> getToolCalls() {
         return toolCalls;
+    }
+
+    @Override
+    public boolean isError() {
+        return calcTimeMS == GPUJob.ERROR;
+    }
+
+    private final String randomDots(String base) {
+
+        StringBuilder builder = new StringBuilder(base);
+        for (int i = 0; i < MathUtils.randomInt(10); i++) {
+            builder.append(".");
+        }
+        return builder.toString();
     }
 
     @Override

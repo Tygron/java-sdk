@@ -145,7 +145,7 @@ public class Shareable implements Serializable, Comparable<Shareable> {
         public final boolean isZipStore() {
             // geotiff cannot be zipped due to reading issues when streaming
             // geopackage is needed for stream contents from disk
-            // zip not usefull
+            // ZIP is not useful here
             return this != Type.GEOTIFF && this != Type.GEOPACKAGE && this != Type.ZIP;
         }
 
@@ -214,7 +214,7 @@ public class Shareable implements Serializable, Comparable<Shareable> {
         }
 
         String valid = name.toLowerCase().trim();
-        valid = valid.replaceAll("[^\\/a-z0-9_-]+", "_"); // replace funcky chars
+        valid = valid.replaceAll("[^\\/a-z0-9_-]+", "_"); // replace special characters
         valid = valid.replaceAll("(\\/)+", "/"); // cleanup multiple slashes
 
         if (valid.startsWith("/")) {

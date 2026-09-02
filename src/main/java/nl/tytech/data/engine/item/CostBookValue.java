@@ -28,7 +28,7 @@ public class CostBookValue extends StakeholderBookValue {
     public enum Cost implements Type {
 
         /**
-         * Default cost type when now state is relevant.
+         * Default cost type when no state is relevant.
          */
         DEFAULT(ClientTerms.COST_DEFAULT),
 
@@ -48,7 +48,7 @@ public class CostBookValue extends StakeholderBookValue {
         CONSTRUCTION(ClientTerms.COST_CONSTRUCTION, Detail.CONSTRUCTION_COST),
 
         /**
-         * Money that is reserved to construct something.
+         * Money that is reserved to demolish something.
          */
         RESERVED_DEMOLISH(ClientTerms.COST_RESERVED_DEMOLISH, Detail.DEMOLISH_COST),
 

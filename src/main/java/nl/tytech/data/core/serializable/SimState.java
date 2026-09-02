@@ -24,7 +24,7 @@ import nl.tytech.util.StringUtils;
  */
 public enum SimState {
 
-    @Description("Waiting on map Selection")
+    @Description("Waiting for Map Selection")
     NOTHING,
 
     @Description("Loading Geo Data")

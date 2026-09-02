@@ -35,7 +35,7 @@ import nl.tytech.util.JTSUtils;
 public class GeometryDeserializer<T extends Geometry> extends JsonDeserializer<T> {
 
     /**
-     * Use simple empty own mapper to prevent tying issues from default mapper.
+     * Use a dedicated ObjectMapper to avoid coupling with the default mapper.
      */
     private static final ObjectMapper MAPPER = new ObjectMapper();
 

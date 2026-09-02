@@ -16,7 +16,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import nl.tytech.util.StringUtils;
 
 /**
  * AssetDirectory
@@ -32,7 +31,7 @@ public @interface AssetDirectory {
     /**
      * Returns the default Asset Directory
      *
-     * @return
+     * @return the default Asset Directory
      */
-    String value() default StringUtils.EMPTY;
+    String value() default "";
 }

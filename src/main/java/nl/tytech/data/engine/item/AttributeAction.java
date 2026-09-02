@@ -20,7 +20,7 @@ import nl.tytech.data.engine.other.ImageItem;
 import nl.tytech.util.StringUtils;
 
 /**
- * AttributeAction: This class keeps track of the attribute actions.
+ * Represents an attribute action.
  *
  * @author Frank Baars
  */

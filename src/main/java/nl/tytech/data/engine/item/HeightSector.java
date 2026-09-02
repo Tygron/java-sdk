@@ -102,7 +102,7 @@ public class HeightSector extends SourcedItem implements GeometryItem<MultiPolyg
     }
 
     /**
-     * Surrounding area is lower on detail (DEM, Sat images) by this factor
+     * Factor by which the surrounding area has lower detail (e.g., DEM, satellite images).
      */
     public static final double SURROUNDING_DETAIL_FACTOR = 4.0;
 
@@ -110,10 +110,10 @@ public class HeightSector extends SourcedItem implements GeometryItem<MultiPolyg
 
     private static final long serialVersionUID = -4253782210241563588L;
 
-    public static final double INVALID_DATA = -1_000_000d; // below this is unrealistic
+    public static final double INVALID_DATA = -1_000_000d; // values below this threshold are considered invalid
 
     /**
-     * Decimals used to store the actual data that is used in e.g. calc models
+     * Number of decimals used for storing data in calculation models.
      */
     public static final int DATA_DECIMALS = 3;
 
@@ -183,7 +183,7 @@ public class HeightSector extends SourcedItem implements GeometryItem<MultiPolyg
     @Override
     public Item cloneItem(Item unusedItem) {
 
-        // clone base first: note do not allow clone item method
+        // Clone the base object; avoid using the clone item method here.
         HeightSector clone = ObjectUtils.deepCopy(this, false);
 
         // copy square matrices: note this.currentData.length == dimX == dimY
@@ -243,12 +243,12 @@ public class HeightSector extends SourcedItem implements GeometryItem<MultiPolyg
             return buildingData;
         }
 
-        // current return current
+        // Return current data if mapType is CURRENT
         if (mapType == null || mapType == MapType.CURRENT) {
             return currentData;
         }
 
-        // this works because its square dimX == dimY
+        // Valid since the matrix is square (dimX == dimY)
         return maquetteData.length == currentData.length ? maquetteData : currentData;
     }
 
@@ -265,7 +265,7 @@ public class HeightSector extends SourcedItem implements GeometryItem<MultiPolyg
      * Get the approximate interpolated value at world coordinates X,Y
      * @param wx
      * @param wy
-     * @return aprox value
+     * @return approximate value
      */
     public Double getHeight(MapType mapType, double wx, double wy) {
 
@@ -474,7 +474,7 @@ public class HeightSector extends SourcedItem implements GeometryItem<MultiPolyg
     }
 
     /**
-     * Check client side only if there is a difference between the CURRENT and MAQUETTE maps
+     * Checks whether the CURRENT and MAQUETTE maps differ on the client side.
      * @return
      */
     public boolean isClientSideChanged() {
@@ -507,7 +507,7 @@ public class HeightSector extends SourcedItem implements GeometryItem<MultiPolyg
     }
 
     /**
-     * Only use for setting data once at start
+     * Sets the base height data during initialization.
      * @param mapType
      * @param data
      */
@@ -526,7 +526,7 @@ public class HeightSector extends SourcedItem implements GeometryItem<MultiPolyg
     }
 
     /**
-     * Set value and round it off to DECIMALS place
+     * Sets the value, rounded to DATA_DECIMALS.
      * @param mapType
      * @param x
      * @param y

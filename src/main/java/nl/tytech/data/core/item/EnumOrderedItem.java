@@ -13,7 +13,7 @@
 package nl.tytech.data.core.item;
 
 /**
- * EnumOrderedItem: This Item is has a enum as key/location in the map/list.
+ * EnumOrderedItem: This item uses an enum as a key or location in the map/list.
  *
  * @author Maxim Knepfle
  */

@@ -26,8 +26,8 @@ import nl.tytech.util.StringUtils;
 /**
  * Event
  *
- * Basic event object. It has a source, priority (used by server to facilitate the important clients) and contents. The contents can be one
- * or multiple objects. The event takes a EventType to identify itself.
+ * Basic event object containing a source, priority (used by the server to prioritize specific clients), and contents. The contents can be
+ * one or multiple objects. The event takes an EventType to identify itself.
  *
  * @author Jeroen Warmerdam & Maxim Knepfle
  */
@@ -53,14 +53,14 @@ public class Event implements Serializable {
         public List<Class<?>> getClasses();
 
         /**
-         * When not NULL we expect this class type back
+         * Returns the expected response class type, or null if no response is expected.
          * @return
          */
 
         public Class<?> getResponseClass(Object[] args);
 
         /**
-         * When true this event must be fired server side, false means it's an client event, that must be fired clientside.
+         * Returns true if the event must be fired on the server side; otherwise, it is a client-side event.
          * @return
          */
         public boolean isServerSide();
@@ -73,12 +73,12 @@ public class Event implements Serializable {
     }
 
     /**
-     * These events can trigger an Indicator Update
+     * These events can trigger an Indicator Update.
      */
     public interface IndicatorEventTypeEnum extends EventTypeEnum {
 
         /**
-         * When true this event triggers a indicator update for this MapLink
+         * Returns true if the event triggers an indicator update for this MapLink.
          * @return
          */
         public MapLink triggerUpdate(Event event);
@@ -108,9 +108,6 @@ public class Event implements Serializable {
 
     public static final String NOT_ALLOWED = "Not allowed to execute event: ";
 
-    /**
-     * Serial
-     */
     private static final long serialVersionUID = -2306024519680983784L;
 
     private static final String[] EXTS = new String[] { "ServiceEventType", "EventType", "Event" };
@@ -118,7 +115,7 @@ public class Event implements Serializable {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final Object getDefault(EventTypeEnum type, int index) {
 
-        EventParamData eventParamData = ObjectUtils.getEnumAnnotation((Enum<?>) type, EventParamData.class);
+        EventParamData eventParamData = ObjectUtils.getEnumAnnotation(type, EventParamData.class);
         if (eventParamData != null && eventParamData.defaults().length > index
                 && StringUtils.containsData(eventParamData.defaults()[index])) {
 
@@ -170,7 +167,7 @@ public class Event implements Serializable {
 
     public static final boolean isDim3(EventTypeEnum type, int index) {
 
-        EventParamData eventParamData = ObjectUtils.getEnumAnnotation((Enum<?>) type, EventParamData.class);
+        EventParamData eventParamData = ObjectUtils.getEnumAnnotation(type, EventParamData.class);
         if (eventParamData != null) {
             for (int i = 0; i < eventParamData.dim3().length; i++) {
                 if (eventParamData.dim3()[i] == index) {
@@ -258,7 +255,7 @@ public class Event implements Serializable {
                 if (arg instanceof ItemID item) {
                     contents.add(item.getID()); // convert ItemID to Integer
                 } else if (arg instanceof Float f && classz.equals(Double.class)) {
-                    contents.add(f.floatValue()); // convert float to double
+                    contents.add(f.doubleValue()); // convert float to double
                 } else if (arg instanceof Double d && classz.equals(double[].class)) {
                     contents.add(ObjectUtils.toPrimitiveArray(d)); // convert Double to double[]
                 } else if (arg != null && !arg.getClass().isArray() && classz.isArray()) {

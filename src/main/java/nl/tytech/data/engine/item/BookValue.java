@@ -23,7 +23,7 @@ import nl.tytech.data.engine.item.ClientWord.ClientTerms;
 public abstract class BookValue extends Item {
 
     public enum ChangeType {
-        OVERRIDE, ADD, SUBSTRACT;
+        OVERRIDE, ADD, SUBTRACT;
     }
 
     public interface Type {

@@ -173,13 +173,13 @@ public enum TLicense {
                 case MAX_NEW_PROJECTS:
                     return Usage.NEW.getTitle(lang);
                 case MAX_PROJECT_CELLS:
-                    return lang == TLanguage.NL ? "Max project cellen" : "Max project cells";
+                    return lang == TLanguage.NL ? "Max Project cellen" : "Max Project cells";
                 case MIN_PROJECT_CELLS:
-                    return lang == TLanguage.NL ? "Min project cellen" : "Min project cells";
+                    return lang == TLanguage.NL ? "Min Project cellen" : "Min Project cells";
                 case MAX_PROJECT_DIM_M:
-                    return lang == TLanguage.NL ? "Max project grootte (km2)" : "Max Project Area (km2)";
+                    return lang == TLanguage.NL ? "Max Project grootte (km2)" : "Max Project Area (km2)";
                 case MAX_PROJECT_VERSIONS:
-                    return lang == TLanguage.NL ? "Max project versies" : "Max Project Versions";
+                    return lang == TLanguage.NL ? "Max Project versies" : "Max Project Versions";
                 case SUPPORT:
                     return lang == TLanguage.NL ? "Support" : "Support";
                 case PRICE_EUR:
@@ -222,7 +222,7 @@ public enum TLicense {
         ACTIVE_TYPES = types.toArray(new TLicense[types.size()]);
     }
 
-    public static final String LIMIT = "Limit reached: %s You can contact Tygron Support for an upgrade of your license.";
+    public static final String LIMIT = "Limit reached: %s Contact Tygron Support to upgrade your license.";
 
     public static final String getTypeTitle(TLanguage lang) {
         return lang == TLanguage.NL ? "Type LTS licentie" : "Type LTS license";

@@ -13,29 +13,29 @@
 package nl.tytech.util.concurrent;
 
 /**
- * Thread prio (e.g. for PriorityLock)
+ * Thread priority (e.g., for PriorityLock)
  *
  * @author Maxim Knepfle
  */
 public class ThreadPriorities {
 
     /**
-     * Low prio threads like daemons or power sharing
+     * Low priority threads, such as daemons or power sharing.
      */
     public static final int LOW = 1;
 
     /**
-     * Avg, user feedback
+     * Medium priority for user feedback.
      */
     public static final int MEDIUM = 5;
 
     /**
-     * High, user actions
+     * High priority for user actions.
      */
     public static final int HIGH = 9;
 
     /**
-     * Top
+     * Highest priority for immediate execution.
      */
     public static final int IMMEDIATE_EXECUTION = 10;
 

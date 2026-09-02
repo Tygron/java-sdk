@@ -300,7 +300,7 @@ public class GridData extends Grid implements Serializable {
     }
 
     /**
-     * Call to trigger compression, note: faster to to this at the end then on the fly
+     * Triggers compression; more efficient when performed at the end rather than incrementally.
      *
      * WARNING: You may read from multiple threads, but never set or compress data from multiple threads simultaneously (use synchronized)
      */
@@ -344,7 +344,7 @@ public class GridData extends Grid implements Serializable {
                         unsafe.putShort(data[b], i, toShort(array[i]));
                     }
                     if (hasNaN(data[b])) {
-                        data[b] = array; // flip back, NaN is evil
+                        data[b] = array; // revert to original array; NaN values are not supported for compression
                     } else {
                         array = data[b]; // set and maybe compress more
                     }
@@ -373,7 +373,7 @@ public class GridData extends Grid implements Serializable {
                         unsafe.putByte(data[b], i, toByte(toFloat(unsafe.getShort(array, i))));
                     }
                     if (hasNaN(data[b])) {
-                        data[b] = array; // flip back, NaN is evil
+                        data[b] = array; // revert to original array; NaN values are not supported for compression
                     } else {
                         array = data[b]; // set and maybe compress more
                     }
@@ -387,7 +387,7 @@ public class GridData extends Grid implements Serializable {
                         continue loop;
                     }
                 }
-                // indentical: compress to single value
+                // identical: compress to single value
                 data[b] = createArray(first);
             }
         }
@@ -454,7 +454,7 @@ public class GridData extends Grid implements Serializable {
             return array[index];
 
         } else {
-            if (logError) { // single log to prevent over doing it
+            if (logError) { // log once to avoid excessive output
                 TLogger.severe("ERROR getting block index: " + index + " from array length: " + array.length);
                 logError = false;
             }
@@ -604,7 +604,7 @@ public class GridData extends Grid implements Serializable {
             int cellID = cy * blockSize + cx;
             array[cellID] = value;
 
-        } else if (logError) { // single log to prevent over doing it
+        } else if (logError) { // log once to avoid excessive output
             TLogger.severe("ERROR setting: " + x + " " + y + " value: " + value + " block array length: " + array.length);
             logError = false;
         }

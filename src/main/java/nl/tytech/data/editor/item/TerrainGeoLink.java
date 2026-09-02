@@ -33,7 +33,7 @@ public class TerrainGeoLink extends GeoLink {
     @Override
     public Stakeholder.Type getDefaultStakeholderType() {
         /**
-         * Empty space is almost certainly owned by the municipality (both water and land).
+         * Empty space is assigned to the municipality by default (including water and land).
          */
         return Stakeholder.Type.MUNICIPALITY;
     }

@@ -97,7 +97,7 @@ public class JsonMapper {
         }
 
         /**
-         * For typed format (linked to JAVA types) ignore default values. These are already set by the Java Object
+         * For typed formats (linked to Java types), ignore default values as they are handled by the Java object.
          */
         if (format.isTyped()) {
             JacksonAnnotationIntrospector jsonIntrospector = new JacksonAnnotationIntrospector() {

@@ -18,7 +18,7 @@ import nl.tytech.data.core.item.Item;
 import nl.tytech.util.StringUtils;
 
 /**
- * Log of an (user/editor) error
+ * Log of a user or editor error
  * @author Maxim Knepfle
  */
 public class ErrorLog extends Item {

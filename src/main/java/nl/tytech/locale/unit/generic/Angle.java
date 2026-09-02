@@ -13,7 +13,6 @@
 package nl.tytech.locale.unit.generic;
 
 import nl.tytech.locale.unit.LocalUnit;
-import nl.tytech.locale.unit.si.TemperatureSI;
 import nl.tytech.util.StringUtils;
 
 /**
@@ -25,7 +24,7 @@ public enum Angle implements LocalUnit {
 
     DEGREES("\u00B0", 1, Double.MAX_VALUE);
 
-    public static final TemperatureSI[] VALUES = TemperatureSI.values();
+    public static final Angle[] VALUES = Angle.values();
 
     private String postFix = StringUtils.EMPTY;
     private double relativeSingleUnitValue;

@@ -31,7 +31,7 @@ import nl.tytech.core.net.serializable.User.AccessLevel;
  *
  * @author Maxim Knepfle
  */
-@Description("Endpoints related to Domain & User management (add, remove, etc).")
+@Description("Endpoints related to Domain and User management.")
 public enum UserServiceEventType implements ServiceEventType {
 
     @EventIDField(nullable = { 0 })
@@ -43,7 +43,7 @@ public enum UserServiceEventType implements ServiceEventType {
     GET_DOMAIN(Domain.class, AccessLevel.JOIN_ONLY, String.class),
 
     @EventIDField(nullable = { 0 })
-    @EventParamData(desc = "Get the domain logo. Returns a .png file.", params = { OPTIONAL_DOMAIN_NAME }, hidden = 0)
+    @EventParamData(desc = "Get the Domain icon. Returns a .png file.", params = { OPTIONAL_DOMAIN_NAME }, hidden = 0)
     GET_DOMAIN_ICON(byte[].class, AccessLevel.JOIN_ONLY, String.class),
 
     @EventIDField(nullable = { 0 })
@@ -52,21 +52,21 @@ public enum UserServiceEventType implements ServiceEventType {
     GET_DOMAIN_NEW_PROJECTS_FOR_LICENSE_YEAR(Creation[].class, AccessLevel.HOST_SESSION, String.class),
 
     @EventIDField(nullable = { 0 })
-    @EventParamData(desc = "Get the names of users in the Domain. Returns just the names of the users.", params = {
+    @EventParamData(desc = "Get the names of users in the Domain.", params = {
             OPTIONAL_DOMAIN_NAME }, hidden = 0)
     GET_DOMAIN_USER_NAMES(String[].class, AccessLevel.DOMAIN_ADMIN, String.class),
 
     @EventIDField(nullable = { 0 })
-    @EventParamData(desc = "Get all users in the Domain. Returns both names and additional data of the users.", params = {
+    @EventParamData(desc = "Get all users in the Domain, including detailed user data.", params = {
             OPTIONAL_DOMAIN_NAME }, hidden = 0)
     GET_DOMAIN_USERS(User[].class, AccessLevel.DOMAIN_ADMIN, String.class),
 
     @EventIDField(nullable = { 0 })
-    @EventParamData(desc = "Get specific log.", params = { OPTIONAL_DOMAIN_NAME, "Type", "Log Token" }, defaults = { "", "SESSIONS", "" })
+    @EventParamData(desc = "Get a specific log.", params = { OPTIONAL_DOMAIN_NAME, "Type", "Log Token" }, defaults = { "", "SESSIONS", "" })
     GET_LOG(Log.class, AccessLevel.DOMAIN_ADMIN, String.class, Log.Type.class, String.class),
 
     @EventIDField(nullable = { 0 })
-    @EventParamData(desc = "Get logs since a date.", params = { OPTIONAL_DOMAIN_NAME, "Type", "Date in millis" }, defaults = { "",
+    @EventParamData(desc = "Get logs since a date.", params = { OPTIONAL_DOMAIN_NAME, "Type", "Date in milliseconds" }, defaults = { "",
             "SESSIONS", "0" })
     GET_LOGS(Log[].class, AccessLevel.DOMAIN_ADMIN, String.class, Log.Type.class, Long.class),
 
@@ -92,7 +92,7 @@ public enum UserServiceEventType implements ServiceEventType {
             "Country" })
     SET_DOMAIN_ADRESS_INFO(Boolean.class, AccessLevel.DOMAIN_ADMIN, String.class, String.class, String.class, String.class, String.class),
 
-    @EventParamData(desc = "Set Domain Security Policy.", params = { "Two Factor Level", "Min password length",
+    @EventParamData(desc = "Set the Domain security policy.", params = { "Two Factor Level", "Min password length",
             "Login Key Expiration (in milliseconds)", "Support access to GeoShare" })
     SET_DOMAIN_SECURITY_POLICY(Boolean.class, AccessLevel.DOMAIN_ADMIN, AccessLevel.class, Integer.class, Long.class, Boolean.class),
 

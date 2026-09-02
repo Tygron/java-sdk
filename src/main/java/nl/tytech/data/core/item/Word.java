@@ -16,7 +16,7 @@ import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.util.StringUtils;
 
 /**
- * Word: This class keeps track of a translated word.
+ * This class represents a translated word.
  *
  * @author Maxim Knepfle
  */

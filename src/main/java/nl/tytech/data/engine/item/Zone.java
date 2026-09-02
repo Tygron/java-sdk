@@ -23,7 +23,7 @@ import nl.tytech.data.engine.serializable.Outline;
 import nl.tytech.data.engine.serializable.Relation;
 
 /**
- * Zone: Maintains the functions allocated to the zone.
+ * Maintains the functions allocated to the Zone.
  *
  * @author Maxim Knepfle
  */
@@ -91,7 +91,7 @@ public class Zone extends PolygonAttributeItem implements ExcelItem {
     @ItemIDField(MapLink.STAKEHOLDERS)
     private Integer permitterID = Item.NONE;
 
-    // runtime setting do not save to XML
+    // Runtime setting; not saved to XML
     private transient boolean excelUpdated = true;
 
     public Zone() {
@@ -176,7 +176,7 @@ public class Zone extends PolygonAttributeItem implements ExcelItem {
     }
 
     /**
-     * Check if the category contains functions that require a permit to be build.
+     * Checks if the zone contains functions of the specified category that require a permit to be built.
      * @param category
      * @return
      */

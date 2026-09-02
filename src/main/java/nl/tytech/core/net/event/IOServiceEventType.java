@@ -43,7 +43,7 @@ import nl.tytech.locale.TLanguage;
 @Description("Endpoints related to Project & Session management (start, close, etc).")
 public enum IOServiceEventType implements ServiceEventType {
 
-    @EventParamData(desc = "Create a new Project with a given name and language, Returns the new Project´s data.", params = {
+    @EventParamData(desc = "Create a new Project with a given name and language. Returns the new Project's data.", params = {
             "Project Name", "Language (NL, EN)", "High Detail level (<10m DEM, <5m grid)" }, defaults = { "", "EN", "true" })
     @EventIDField(nullable = { 1, 2 })
     ADD_PROJECT(ProjectData.class, AccessLevel.EDITOR, String.class, TLanguage.class, Boolean.class),
@@ -51,7 +51,7 @@ public enum IOServiceEventType implements ServiceEventType {
     @EventParamData(desc = "Create a new version for this Project.", params = { "Session ID", "Version Name" })
     ADD_PROJECT_VERSION(AccessLevel.EDITOR, Integer.class, String.class),
 
-    @EventParamData(desc = "Disconnect your Application from a running Session, optionally closing the Session if your Application was the last connected application.", params = {
+    @EventParamData(desc = "Disconnect the Application from a running Session, optionally closing it if this was the last connected application.", params = {
             "Session ID", "Client Session token", "Keep Session running, even if this was the last client" })
     CLOSE(Boolean.class, AccessLevel.JOIN_ONLY, Integer.class, String.class, Boolean.class),
 
@@ -114,7 +114,7 @@ public enum IOServiceEventType implements ServiceEventType {
     @EventParamData(desc = "Get all saved Domain Sessions for a specified Project.", params = { OPTIONAL_DOMAIN_NAME, "Project Name", })
     GET_PROJECT_SAVED_SESSIONS(SaveData[].class, AccessLevel.HOST_SESSION, String.class, String.class),
 
-    @EventParamData(desc = "Get the current server time in millisecond, useful for synchronizing client-server clocks.", params = {}, response = "Current server time in millisecond since epoch 1970")
+    @EventParamData(desc = "Get the current server time in milliseconds, useful for synchronizing client-server clocks.", params = {}, response = "Current server time in milliseconds since epoch 1970")
     GET_SERVER_TIME(Long.class, AccessLevel.JOIN_ONLY),
 
     @EventParamData(desc = "Get all Domain Projects that you are allowed to manage.", params = {})
@@ -153,17 +153,17 @@ public enum IOServiceEventType implements ServiceEventType {
     @EventParamData(desc = "Delete a Sub Domain.", params = { OPTIONAL_DOMAIN_NAME, "Sub Domain Name" })
     REMOVE_SUB_DOMAIN(Boolean.class, AccessLevel.DOMAIN_ADMIN, String.class, String.class),
 
-    @EventParamData(desc = "Save the current state of an EDITOR Session as the current version of the running Project. This kind of save changes the initial state of a Project for future times that the Project is started as a Session.", params = {
+    @EventParamData(desc = "Save the current state of an EDITOR Session as the current version of the running Project, updating its initial state for future Sessions.", params = {
             "Session ID" })
     SAVE_PROJECT(Boolean.class, AccessLevel.EDITOR, Integer.class),
 
     @EventIDField(nullable = { 1 })
-    @EventParamData(desc = "Save the current state of an EDITOR Session as a new, separate Project. This kind of save sets the initial state of a Project for future times that that Project is started as a Session. The currnetly running Session will continue as a Session working with the newly created Project.", params = {
+    @EventParamData(desc = "Save the current state of an EDITOR Session as a new Project. This sets the initial state for future Sessions; the current Session continues using the new Project.", params = {
             "Session ID", OPTIONAL_DOMAIN_NAME, "New Project Name",
             "Save all data (set to false if you want to use the running Session as a template for a new Project)" })
     SAVE_PROJECT_AS(Boolean.class, AccessLevel.EDITOR, Integer.class, String.class, String.class, Boolean.class),
 
-    @EventParamData(desc = "Save the current state of a SINGLE or MULTI as a Session save. This kind of save does not change the data of the Project, and allows you to reload the current state of the Session at a later time.", params = {
+    @EventParamData(desc = "Save the current state of a SINGLE or MULTI Session. This does not change Project data and allows reloading the Session state later.", params = {
             "Session ID", "Randomly generated save token" })
     SAVE_SESSION(Boolean.class, AccessLevel.HOST_SESSION, Integer.class, String.class),
 
@@ -200,7 +200,7 @@ public enum IOServiceEventType implements ServiceEventType {
             "New version description", })
     SET_PROJECT_VERSION_DESCRIPTION(Boolean.class, AccessLevel.EDITOR, Integer.class, Integer.class, String.class),
 
-    @EventParamData(desc = "Set Keep Alive on or off for a running Session, meaning the Session should or should not keep running when no clients are connected.", params = {
+    @EventParamData(desc = "Enable or disable Keep Alive for a running Session to determine if it persists without connected clients.", params = {
             "Session ID", "How long the Session must be kept alive", })
     SET_SESSION_KEEP_ALIVE(Boolean.class, AccessLevel.HOST_SESSION, Integer.class, KeepAlive.class),
 

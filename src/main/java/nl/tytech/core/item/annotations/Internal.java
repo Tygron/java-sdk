@@ -16,7 +16,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Internal: Not part of public API documentation since, used for Tygron Client specific formats and endpoints.
+ * Internal: Not part of public API documentation; used for Tygron Client specific formats and endpoints.
  *
  * @author Maxim Knepfle
  */

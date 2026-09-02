@@ -13,7 +13,7 @@
 package nl.tytech.data.engine.other;
 
 /**
- * Interface that can only be implemented by Enums that store the different result overlays.
+ * Interface intended for Enums that store different result overlays.
  *
  * @author Maxim Knepfle
  *

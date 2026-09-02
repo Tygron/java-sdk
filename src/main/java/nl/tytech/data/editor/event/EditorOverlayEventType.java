@@ -53,7 +53,7 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 }, nullable = { 2, 3, 4 })
     ADD_LEGEND_ENTRY(Integer[].class, Boolean[].class, String[].class, TColor[].class, Float[].class),
 
-    @EventParamData(desc = "Add a function to highlight to a specified FUNCTION Overlay.", params = {
+    @EventParamData(desc = "Add a highlighted Function to a specified FUNCTION Overlay.", params = {
             "Overlay ID (must relate to a FUNCTION Overlay)", "Function IDs" })
     @EventIDField(links = { OVERLAYS, FUNCTIONS }, params = { 0, 1 })
     ADD_OVERLAY_FUNCTION(Integer.class, Integer[].class),
@@ -92,7 +92,7 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_LEGEND_ENTRY(Integer.class, Boolean.class, Integer[].class),
 
-    @EventParamData(desc = "Remove a specified function to highlight from a specified FUNCTION_HIGHLIGHT Overlay.", params = {
+    @EventParamData(desc = "Remove a highlighted Function from a specified FUNCTION_HIGHLIGHT Overlay.", params = {
             "Overlay ID (must relate to a FUNCTION_HIGHLIGHT Overlay)", "Function IDs" })
     @EventIDField(links = { OVERLAYS, FUNCTIONS }, params = { 0, 1 })
     REMOVE_OVERLAY_FUNCTION(Integer.class, Integer[].class),
@@ -135,7 +135,7 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_AVG_DISTANCE(Integer.class, Double.class),
 
-    @EventParamData(desc = "Set the type of rasterization a specified Average, Combo or Distance Overlay should do.", params = {
+    @EventParamData(desc = "Set the type of rasterization a specified Average, Combo or Distance Overlay should perform.", params = {
             "Overlay ID (must relate to an Average, Combo or Distance Overlay)", "Rasterization type: FIRST, MIN, MAX, SINGLE_LAYER, GRID",
             "MapLink (will only affect the SINGLE_LAYER rasterization type): BUILDINGS, TERRAINS, AREAS, NEIGHBORHOODS" })
     @EventIDField(links = { OVERLAYS }, params = { 0 }, nullable = { 2 })
@@ -176,7 +176,7 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
 
     @EventParamData(desc = "Activates or deactivates an Overlay. Only active Overlays are recalculated by the simulation.", params = {
             "Overlay ID", "Activated" })
-    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_GRID_ACTIVE(Integer[].class, Boolean[].class),
 
     @EventParamData(desc = "Change the image displayed by a specified IMAGE Overlay. The image must be uploaded in the \"Overlays\" directory.", params = {
@@ -193,7 +193,7 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_VISIBLE(Integer[].class, Boolean[].class),
 
-    @EventParamData(desc = "Change a key for a specified Overlay. The Overlay must be an Overlay which makes use of keys to read attributes of geographical items, as input for its calculation.", params = {
+    @EventParamData(desc = "Change a key for a specified Overlay. The Overlay must use keys to read geographical item attributes as calculation input.", params = {
             "Overlay ID (must relate to a grid Overlay). Note: to change attribute values use set_attribute instead.", "Key name",
             "Attribute name to look for" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
@@ -243,7 +243,7 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 0, 1 })
     SET_OVERLAY_SOURCE(Integer.class, Integer[].class, Boolean.class),
 
-    @EventParamData(desc = "Set a parent Overlay for a specified Overlay. This will cause the specified Overlay to be a subselectable Overlay of the parent. It is not possible to set an Overlay which has a parent itself as a parent of another Overlay.", params = {
+    @EventParamData(desc = "Set a parent Overlay for a specified Overlay, making it a subselectable child. An Overlay with a parent cannot be assigned as a parent to another Overlay.", params = {
             "Overlay ID", "Overlay ID of parent (overlays without a parent should have their parent Overlay ID set to -1)" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_PARENT(Integer.class, Integer.class),
@@ -251,7 +251,7 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventParamData(desc = "Set the result type of a specified grid Overlay. The same calculation will be performed, but a different aspect of the calculation will be tracked and output.", params = {
             "Overlay ID (must relate to a grid Overlay with result types)",
             "Result type for the Overlay (must be a valid result type of the Overlay type)" })
-    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_RESULT_TYPE(Integer[].class, String[].class),
 
     @EventParamData(desc = "Set whether a specified grid Overlay has a difference option. If an Overlay has a difference option, an addition output is available computed from the difference between the CURRENT and MAQUETTE outputs.", params = {
@@ -303,12 +303,12 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 0, 1 })
     SET_SERVICE_SOURCE(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Set the prefered CRS for the Service source of a specified Service Overlay.", params = { "Service Overlay ID ",
+    @EventParamData(desc = "Set the preferred CRS for the Service source of a specified Service Overlay.", params = { "Service Overlay ID ",
             "CRS name" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_SERVICE_CRS(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Set the prefered option to force the CRS order to longitude/latitude for the Service source of a specified Service Overlay.", params = {
+    @EventParamData(desc = "Set the preferred option to force the CRS order to longitude/latitude for the Service source of a specified Service Overlay.", params = {
             "Service Overlay ID ", "Longitude first (force XY)" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_SERVICE_FORCE_XY(Integer[].class, Boolean[].class),

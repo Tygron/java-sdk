@@ -188,7 +188,7 @@ public class TemplateExcelPanel extends ExcelPanel implements TemplatePanel {
 
     @Override
     public void setPoint(Point point) {
-        throw new UnsupportedOperationException("Template panels are not allow to have a Map Point!");
+        throw new UnsupportedOperationException("Template panels are not allowed to have a Map Point.");
     }
 
     @Override

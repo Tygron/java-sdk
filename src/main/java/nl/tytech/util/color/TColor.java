@@ -18,9 +18,9 @@ import nl.tytech.util.MathUtils;
 import nl.tytech.util.SkipObfuscation;
 
 /**
- * Generic Tygron Color (TColor) optimized for our usage and the default to store data.
+ * Generic Tygron Color (TColor) optimized for internal use and serves as the default representation for color data.
  *
- * Client apps can have there own color, e.g. ColorRGBA AWT Color Android Color or FX Color, etc...
+ * Client applications may use their own color representations, such as ColorRGBA, AWT Color, Android Color, or FX Color.
  *
  * @author Maxim Knepfle
  */
@@ -92,7 +92,7 @@ public class TColor implements Serializable, SkipObfuscation {
     }
 
     /**
-     * Java Hex parsing terrible, see:
+     * Note on Java hexadecimal parsing limitations; see:
      * https://stackoverflow.com/questions/11377944/parsing-a-hexadecimal-string-to-an-integer-throws-a-numberformatexception
      */
     public static final int parseInteger(String hex) {
@@ -173,6 +173,10 @@ public class TColor implements Serializable, SkipObfuscation {
         this(color.argb);
     }
 
+    public TColor(TColor color, double a) {
+        this(color, (int) (a * 255d));
+    }
+
     public TColor(TColor color, int a) {
         this(color.getRed(), color.getGreen(), color.getBlue(), a);
     }
@@ -249,14 +253,14 @@ public class TColor implements Serializable, SkipObfuscation {
     }
 
     /**
-     * CCS is almost identical to FX, however alpha is 0-1.
+     * CSS is similar to FX, but the alpha value ranges from 0 to 1.
      */
     public String toCSS() {
         return toCSS(true);
     }
 
     /**
-     * CCS is almost identical to FX, however optional alpha is 0-1.
+     * CSS is similar to FX, but the optional alpha value ranges from 0 to 1.
      */
     public String toCSS(boolean alpha) {
 

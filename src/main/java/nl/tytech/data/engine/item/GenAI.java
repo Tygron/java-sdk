@@ -12,32 +12,31 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.item;
 
-import nl.tytech.data.engine.other.OverrideDataItem;
+import nl.tytech.util.StringUtils;
 
 /**
- * Default provided Excel sheets.
+ * Generative AI models for Chat Channels
  *
  * @author Maxim Knepfle
+ *
  */
-public class DefaultExcelSheet extends ExcelSheet implements OverrideDataItem {
+public abstract class GenAI extends NeuralNetwork {
 
-    private static final long serialVersionUID = 3837992814582019098L;
+    public static final String EXTENSION = "gguf";
 
-    // Runtime variable; do not save to XML.
-    private boolean override = true;
+    private static final long serialVersionUID = 5271401657101259381L;
 
-    @Override
-    public boolean isDefault() {
-        return true;
+    public GenAI(Type type) {
+        super(type);
     }
 
     @Override
-    public boolean isOverride() {
-        return override;
+    public final String getExtension() {
+        return EXTENSION;
     }
 
     @Override
-    public void setOverride(boolean override) {
-        this.override = override;
+    public final String toString() {
+        return StringUtils.containsData(getDescription()) ? getDescription() : super.getName();
     }
 }

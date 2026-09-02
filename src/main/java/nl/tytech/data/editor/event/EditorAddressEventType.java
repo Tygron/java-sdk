@@ -33,7 +33,7 @@ import nl.tytech.core.net.serializable.MapLink;
 @Linked(ADDRESSES)
 public enum EditorAddressEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Building address belong to", params = { "Building", "Street name" })
+    @EventParamData(desc = "Assign building address", params = { "Building", "Street name" })
     @EventIDField(sameLength = true, links = { BUILDINGS }, params = { 0 })
     ADD(Integer[].class, String[].class),
 

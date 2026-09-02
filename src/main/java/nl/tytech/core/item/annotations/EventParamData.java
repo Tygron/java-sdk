@@ -25,17 +25,17 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD })
 public @interface EventParamData {
 
-    String[] defaults() default {}; // Default values
+    String[] defaults() default {}; 
 
     String desc() default "";
 
-    int[] dim3() default {}; // geometry has 3 dimensions (X,Y,Z)
+    int[] dim3() default {}; // Geometry dimensions (X, Y, Z)
 
     boolean editor() default false;
 
-    int[] exampleAmount() default {}; // amount of example values in arrays
+    int[] exampleAmount() default {}; // Number of example values in arrays
 
-    int hidden() default -1; // Allow NULL values
+    int hidden() default -1; // Allow null values
 
     String[] params() default {};
 

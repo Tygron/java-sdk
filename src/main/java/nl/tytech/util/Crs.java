@@ -23,14 +23,14 @@ public class Crs {
     public static class Json extends Crs {
 
         /**
-         * JSON spec is always longitude latitude
+         * The JSON specification requires longitude and latitude order.
          */
         public Json(Crs crs) {
             super(crs, true);
         }
 
         /**
-         * JSON spec is always longitude latitude
+         * The JSON specification requires longitude and latitude order.
          */
         public Json(String urn) {
             super(urn, true);

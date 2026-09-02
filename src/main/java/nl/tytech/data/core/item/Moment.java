@@ -17,7 +17,7 @@ import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.util.StringUtils;
 
 /**
- * Moment: This class keeps track of simulation time moments.
+ * This class keeps track of simulation time moments.
  *
  * @author Maxim Knepfle
  */
@@ -49,22 +49,22 @@ public class Moment extends Item {
     public static final long WEEK = 7L * Moment.DAY;
 
     /**
-     * Year in milliseconds. (~365.24219 days around the sun)
+     * Year in milliseconds (approximately 365.24219 days).
      */
     public static final long YEAR_AVG = 365l * Moment.DAY + 5l * Moment.HOUR + 48l * Moment.MINUTE + 45l * Moment.SECOND;
 
     /**
-     * Month in milliseconds (avg approximation)
+     * Average month duration in milliseconds.
      */
     public static final long MONTH_AVG = YEAR_AVG / 12L;
 
     /**
-     * Current sim time.
+     * Current simulation time.
      */
     public static final Integer CURRENT_POSTION = 0;
 
     /**
-     * The session is started with this sim time moment.
+     * The Session starts at this simulation time moment.
      */
     public static final Integer SIMULATION_START_POSTION = 1;
 

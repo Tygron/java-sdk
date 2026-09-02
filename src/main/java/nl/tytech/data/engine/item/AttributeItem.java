@@ -230,7 +230,7 @@ public abstract class AttributeItem extends UniqueNamedItem implements Attribute
     }
 
     /**
-     * Return maquette override attributes, NOTE: may return NULL when emtpy
+     * Returns Maquette override attributes; may return null if empty.
      */
     public Collection<String> getMaquetteAttributes() {
         return maquetteOverride == null ? null : maquetteOverride.keySet();
@@ -253,14 +253,14 @@ public abstract class AttributeItem extends UniqueNamedItem implements Attribute
     }
 
     /**
-     * Return related item or null when no relation exits
+     * Returns the related Item, or null if no relation exists.
      */
     public Item getRelation(Relation relation) {
         return getItem(relation.getMapLink(), getRelationID(relation));
     }
 
     /**
-     * Return attribute of related item, if relation does not exist return NULL
+     * Returns the attribute of the related Item; returns null if no relation exists.
      */
     @Override
     public final AttributeQueryInterface getRelationAttribute(Relation relation) {
@@ -277,7 +277,7 @@ public abstract class AttributeItem extends UniqueNamedItem implements Attribute
     }
 
     /**
-     * Return name of related item, if relation does not exist return ""
+     * Returns the name of the related Item; returns an empty string if no relation exists.
      */
     public final String getRelationName(Relation relation) {
         return getRelation(relation) instanceof UniqueNamedItem ui ? ui.getName() : StringUtils.EMPTY;
@@ -380,7 +380,7 @@ public abstract class AttributeItem extends UniqueNamedItem implements Attribute
 
         if (maquetteOverride != null) {
             if (!allowMaqRemoval) {
-                TLogger.severe("Removing Attribute: " + key + " from Maquette in Item: " + this.toString() + ", should not be possible!");
+                TLogger.severe("Unexpected removal of Attribute: " + key + " from Maquette in Item: " + this.toString());
             }
             return key != null && this.maquetteOverride.remove(key) != null;
         }

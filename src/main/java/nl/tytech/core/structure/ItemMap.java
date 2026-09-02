@@ -29,13 +29,13 @@ public interface ItemMap<I extends Item> extends Iterable<I> {
     public boolean containsKey(Integer id);
 
     /**
-     * Get an item from the map using the ID
+     * Returns an item from the map using its ID.
      *
      */
     public I get(Integer id);
 
     /**
-     * Get an item from the map using the enum ordinal ID
+     * Returns an item from the map using the enum ordinal ID.
      *
      */
     public <IE extends EnumOrderedItem<T>, T extends Enum<T>> I get(T e);
@@ -47,22 +47,22 @@ public interface ItemMap<I extends Item> extends Iterable<I> {
     public List<I> getItems(List<Integer> requestIDs);
 
     /**
-     * Overall version of map.
+     * Returns the overall version of the map.
      */
     public int getVersion();
 
     /**
-     * Put an Item in the map using the ID for key.
+     * Adds or updates an item in the map using the provided ID as the key.
      */
     public I put(Integer id, I item);
 
     /**
-     * Remove an item from the map using the ID as key.
+     * Removes an item from the map using the provided ID as the key.
      */
     public I remove(Integer id);
 
     /**
-     * Returns an Sequenced Collection of the items contained in the map.
+     * Returns a SequencedCollection of the items contained in the map.
      */
     public SequencedCollection<I> sequencedValues();
 
@@ -78,7 +78,7 @@ public interface ItemMap<I extends Item> extends Iterable<I> {
     public List<I> toList(int fromIndex);
 
     /**
-     * Returns an Collection of the items contained in the map.
+     * Returns a Collection of the items contained in the map.
      */
     public Collection<I> values();
 }

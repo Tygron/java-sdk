@@ -16,20 +16,20 @@ import nl.tytech.core.item.annotations.Description;
 import nl.tytech.util.ObjectUtils;
 
 /**
- * MapType: defines the map you are playing in. e.g. current or maquette.
+ * MapType: defines the active map, such as CURRENT or MAQUETTE.
  *
  * @author Maxim Knepfle
  */
 public enum MapType {
 
-    @Description("This map show the actual situation at this moment in the simulation")
+    @Description("This map shows the current situation of the project.")
     CURRENT,
 
-    @Description("This map shows a future Scenario (measures, buildings, terrain adjustements, etc) that are not yet in the actual/current map")
+    @Description("This map shows a future Scenario (measures, buildings, terrain adjustments, etc.) not present in the current map.")
     MAQUETTE;
 
     /**
-     * Static reference to prevent creating new value arrays each time called. Best Practice
+     * Static reference to avoid recreating the values array on every call.
      */
     public static final MapType[] VALUES = MapType.values();
 

@@ -100,14 +100,14 @@ public class ClientItemMap<I extends Item> extends AbstractItemMap<I> implements
             }
         }
 
-        // map must be empty! or key is empty
+        // Map may be empty or the enumerator is null
         if (enumOrdered == null || enumerator == null) {
             return null;
         }
 
         // when not enum based, return
         if (!enumOrdered) {
-            TLogger.severe("Trying to get an item based on the enum ordinal value, however map is not enum ordered.");
+            TLogger.severe("Cannot retrieve item by enum ordinal; map is not enum ordered.");
             return null;
         }
 
@@ -117,7 +117,7 @@ public class ClientItemMap<I extends Item> extends AbstractItemMap<I> implements
                     + ", however this does not match map enum type: " + enumType.getSimpleName() + ".");
             return null;
         }
-        // okay get item
+        // Retrieve the item
         return this.get(enumerator.ordinal());
     }
 

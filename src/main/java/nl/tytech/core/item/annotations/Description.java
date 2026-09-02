@@ -14,7 +14,6 @@ package nl.tytech.core.item.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import nl.tytech.util.StringUtils;
 
 /**
  * Description
@@ -26,5 +25,5 @@ import nl.tytech.util.StringUtils;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Description {
 
-    String value() default StringUtils.EMPTY;
+    String value() default "";
 }

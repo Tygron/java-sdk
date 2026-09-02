@@ -15,7 +15,7 @@ package nl.tytech.core.client.event;
 import nl.tytech.core.event.Event;
 
 /**
- * Event is returned on same caller thread as it originated. Needed for reponses.
+ * This event is dispatched on the originating caller thread and used for response handling.
  * 
  * @author Maxim Knepfle
  */

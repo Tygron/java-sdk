@@ -35,11 +35,11 @@ import nl.tytech.data.engine.item.NetLine;
 @Linked(NET_LINES)
 public enum EditorNetLineEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add a Net Line with the provided Net Function ", params = { "Net Function ID" }, response = "Net Line ID")
+    @EventParamData(desc = "Add a Net Line with the provided Net Function", params = { "Net Function ID" }, response = "Net Line ID")
     @EventIDField(links = { NET_FUNCTIONS }, params = { 0 })
     ADD(Integer.class),
 
-    @EventParamData(desc = "Connect start and end point with one (or more) Net Line(s) of a specified Net Function. Nodes are created for start and end point. Optionally connection the two points using the road system. Also specify at what distance the new Nodes are merged with existing Nodes.", params = {
+    @EventParamData(desc = "Connect start and end points with one or more Net Lines of a specified Net Function. Nodes are created for both points. Optionally connect the points using the road system and specify the merge distance for existing Nodes.", params = {
             "Net Function ID", "Start Point", "End Point", "Connect via Roads (false = connect direct between points)",
             "Node merge distance (optional, default: " + NetLine.DEFAULT_MERGE_M + "m)" }, defaults = { "", "", "", "false",
                     "" + NetLine.DEFAULT_MERGE_M }, dim3 = { 1, 2 })
@@ -63,7 +63,7 @@ public enum EditorNetLineEventType implements IndicatorEventTypeEnum {
     INSERT_POINT(Integer.class, Point.class, Double.class),
 
     @EventParamData(desc = "Place an existing Node at a new location and insert it in an existing Net Line, potentially splitting the Net Line into two parts. Also specify at what distance the new Nodes are merged with existing Nodes.", params = {
-            "Net Node ID ", "Net Line ID", "New Node Point",
+            "Net Node ID", "Net Line ID", "New Node Point",
             "Node merge distance (optional, default: " + NetLine.DEFAULT_MERGE_M + "m)" }, defaults = { "", "", "",
                     "" + NetLine.DEFAULT_MERGE_M }, dim3 = { 2 })
     @EventIDField(links = { NET_NODES, NET_LINES }, params = { 0, 1 }, nullable = { 3 })
@@ -81,7 +81,7 @@ public enum EditorNetLineEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { NET_LINES }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Remove the Net Lines, and optionally continue removing for Net Nodes that are connected the removed Net Line and that are only connected to one other Net Line of the same Net Type of the specified Net Line.", params = {
+    @EventParamData(desc = "Remove Net Lines and optionally remove connected Net Nodes linked to only one other Net Line of the same Net Type.", params = {
             "Net Line IDs", "Is repeated removal" })
     @EventIDField(links = { NET_LINES }, params = { 0 })
     REMOVE_REPEATED(Integer[].class, Boolean.class),

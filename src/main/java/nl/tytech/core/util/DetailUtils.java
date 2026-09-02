@@ -56,7 +56,9 @@ public class DetailUtils {
                 for (Category cat : valueItem.getCategories()) {
                     if (cat.isResidential()) {
                         double unitSizeM2 = valueItem.getValue(cat, CategoryValue.UNIT_SIZE_M2);
-                        houses += floorSizeM2 * valueItem.getCategoryFraction(cat) / unitSizeM2;
+                        if (unitSizeM2 != 0) {
+                            houses += floorSizeM2 * valueItem.getCategoryFraction(cat) / unitSizeM2;
+                        }
                     }
                 }
                 return houses;
@@ -81,7 +83,7 @@ public class DetailUtils {
     public static final double getCategoryUnits(ValueItem item, Category cat, double surfaceArea, double floors) {
 
         /**
-         * NOTE: only houses are counted per unit size, other all go for 1 as unit size
+         * NOTE: Only residential units are counted by unit size; others use a default unit size of 1.
          */
         double unitSizeM2 = cat.isResidential() ? item.getValue(cat, CategoryValue.UNIT_SIZE_M2) : 1;
         double floorSizeM2 = surfaceArea * floors;

@@ -28,7 +28,7 @@ import nl.tytech.util.color.TColor;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * Setting: This Item can be used to save settings. These setting can differ in type and thus are all stored as Strings.
+ * Setting: This Item can be used to save settings. These settings can differ in type and thus are all stored as Strings.
  *
  * @author Maxim Knepfle
  */
@@ -172,14 +172,7 @@ public abstract class AbstractSetting<E extends Enum<E>> extends EnumOrderedItem
 
     public long[] getLongArrayValue() {
         try {
-            final String[] split = StringUtils.split(getValue());
-            final long[] array = new long[split.length];
-            for (int i = 0; i < split.length; i++) {
-                if (split[i].length() > 0) {
-                    array[i] = Long.parseLong(split[i]);
-                }
-            }
-            return array;
+            return StringUtils.splitLong(getValue());
         } catch (Exception exp) {
             TLogger.exception(exp);
             return null;

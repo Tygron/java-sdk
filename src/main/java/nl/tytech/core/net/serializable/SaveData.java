@@ -27,7 +27,7 @@ public class SaveData implements Comparable<SaveData>, Serializable {
 
     private String projectDomain;
 
-    // Note: NOT project domain but session domain, e.g. customer domain saving universal project
+    // Represents the Session Domain rather than the Project Domain; e.g., a customer Domain saving a universal Project.
     private String sessionDomain;
 
     private String projectName;

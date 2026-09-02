@@ -18,7 +18,7 @@ import org.locationtech.jts.geom.Point;
 import nl.tytech.data.core.item.Source;
 
 /**
- * Item that has a GEO Geometry (e.g. point, line, polygon, etc.)
+ * Item containing a Geometry (e.g., Point, LineString, Polygon).
  *
  * @author Maxim Knepfle
  *

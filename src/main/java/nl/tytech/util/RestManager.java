@@ -71,12 +71,12 @@ public class RestManager {
         /**
          * Speech Synthesis Markup Language based on XML
          */
-        SSML("application/ssml+xml"),
+        SSML(TMediaType.APPLICATION_SSML),
 
         /**
          * GML, almost similar to XML, but can contain suptypes
          */
-        GML(MediaType.APPLICATION_XML),
+        GML(TMediaType.APPLICATION_GML),
 
         /**
          * Plain text JSON
@@ -91,22 +91,22 @@ public class RestManager {
         /**
          * GeoJSON
          */
-        GEOJSON(MediaType.APPLICATION_JSON, GeoNC.GEOJSON),
+        GEOJSON(TMediaType.APPLICATION_GEOJSON, GeoNC.GEOJSON),
 
         /**
          * GeoPackage
          */
-        GPKG(MediaType.APPLICATION_OCTET_STREAM, GeoNC.GEOPACKAGE),
+        GPKG(TMediaType.APPLICATION_GEOPACKAGE, GeoNC.GEOPACKAGE),
 
         /**
          * CityGML
          */
-        CITYGML(MediaType.APPLICATION_XML, "CityGML"),
+        CITYGML(TMediaType.APPLICATION_CITYGML, "CityGML"),
 
         /**
          * CityJSON
          */
-        CITYJSON(MediaType.APPLICATION_JSON, "CityJSON"),
+        CITYJSON(TMediaType.APPLICATION_CITYJSON, "CityJSON"),
 
         /**
          * glTF
@@ -168,6 +168,8 @@ public class RestManager {
          */
         ZIPBINARY(MediaType.APPLICATION_OCTET_STREAM, "Zipped Binary");
 
+        public static final Format[] VALUES = values();
+
         public static final String QUERY = "f";
 
         public static final String API_VERSION = "api-version";
@@ -189,6 +191,19 @@ public class RestManager {
          * Default output format for large typed items (compressed typed smile)
          */
         public static final Format DEFAULT_ITEMS = Format.ZIPTSMILE;
+
+        /**
+         * Return Format for given text or return null.
+         */
+        public static final Format fromTxt(String text) {
+
+            for (int i = 0; i < VALUES.length; i++) {
+                if (VALUES[i].name().equalsIgnoreCase(text)) {
+                    return VALUES[i];
+                }
+            }
+            return null;
+        }
 
         private final String mediaType, mediaResponse;
 
@@ -550,7 +565,7 @@ public class RestManager {
 
         // validate format
         if (outputFormat != Format.JSON && outputFormat != Format.TJSON) {
-            throw new TWebApplicationException(TStatus.BAD_REQUEST, "Invalid query fomat: " + outputFormat);
+            throw new TWebApplicationException(TStatus.BAD_REQUEST, "Invalid query format: " + outputFormat);
         }
 
         // Create target

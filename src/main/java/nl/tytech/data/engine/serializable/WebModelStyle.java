@@ -23,10 +23,10 @@ import nl.tytech.util.ObjectUtils;
  */
 public enum WebModelStyle {
 
-    @Description("White colored 3D Models")
+    @Description("White 3D Models")
     WHITE,
 
-    @Description("Function colored 3D Models")
+    @Description("Function-colored 3D Models")
     COLORED;
 
     public static final String DEFAULT = "WHITE";

@@ -26,32 +26,34 @@ import org.locationtech.jts.operation.predicate.RectangleIntersects;
  */
 public final class PreparedRectangle extends PreparedPolygon {
 
-    private final Polygon rectangle;
+    private final RectangleContains rectangleContains;
+    private final RectangleIntersects rectangleIntersects;
 
     public PreparedRectangle(Polygon polygon) {
 
         super(polygon);
         if (!polygon.isRectangle()) {
-            throw new IllegalArgumentException("Input polygon (" + polygon + ") is not a rectangle!");
+            throw new IllegalArgumentException("Input polygon (" + polygon + ") is not a rectangle.");
         }
-        this.rectangle = polygon;
+        this.rectangleContains = new RectangleContains(polygon);
+        this.rectangleIntersects = new RectangleIntersects(polygon);
     }
 
     @Override
     public final boolean contains(Geometry g) {
         // short-circuit test with covers optimization for rectangles
-        return envelopeCovers(g) && new RectangleContains(rectangle).contains(g);
+        return envelopeCovers(g) && rectangleContains.contains(g);
     }
 
     @Override
     public final boolean covers(Geometry g) {
-        // short-circuit test, rectangle always covers
+        // short-circuit test; envelope coverage is sufficient for rectangles
         return envelopeCovers(g);
     }
 
     @Override
     public final boolean intersects(Geometry g) {
         // short-circuit test with intersect optimization for rectangles
-        return envelopesIntersect(g) && new RectangleIntersects(rectangle).intersects(g);
+        return envelopesIntersect(g) && rectangleIntersects.intersects(g);
     }
 }

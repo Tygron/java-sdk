@@ -79,7 +79,7 @@ public class Weather extends AttributeItem {
         DROUGHT(false),
 
         /**
-         * High water level, flooding areas are flooded.
+         * High water level; affected areas are flooded.
          */
         FLOODING(true);
 

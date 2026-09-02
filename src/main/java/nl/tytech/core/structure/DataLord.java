@@ -28,7 +28,7 @@ import nl.tytech.util.PackageUtils;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * OverLord defines the controllers, events, file locations etc of the session.
+ * DataLord defines the controllers, events, and file locations of the Session.
  *
  * @author Maxim Knepfle
  */
@@ -65,7 +65,7 @@ public class DataLord {
     public static final String PLATFORM_EVENT_LOCATION = "nl.tytech.data.SPACE.event";
 
     /**
-     * Used for internal network synchronization only. Do not call unless you know what you are doing.
+     * Used for internal network synchronization only. Use with caution.
      * @return
      */
     public static final List<MapLink> getAllLinks() {
@@ -120,7 +120,7 @@ public class DataLord {
     private boolean setupNamespace = false;
 
     /**
-     * Do not try to setup the Lord simultaneous you plebs!
+     * Prevents simultaneous initialization of the DataLord.
      */
     private final Object setupLock = new Object();
 
@@ -140,7 +140,7 @@ public class DataLord {
     private final MapLink[] _getAppLinks(SessionType sessionType, AppType appType) {
 
         if (sessionType == null || appType == null) {
-            TLogger.severe("Missing info for requesting MapLinks!");
+            TLogger.severe("Missing information for requesting MapLinks.");
             return null;
         }
         return appLinkMap.get(sessionType).get(appType);
@@ -149,7 +149,7 @@ public class DataLord {
     private final MapLink[] _getSessionLinks(SessionType sessionType) {
 
         if (sessionType == null) {
-            TLogger.severe("Missing info for requesting MapLinks!");
+            TLogger.severe("Missing information for requesting MapLinks.");
             return null;
         }
         return sessionLinkMap.get(sessionType);
@@ -162,10 +162,10 @@ public class DataLord {
             // get session type mapLinks
             for (Entry<Network.SessionType, MapLink[]> entry : mapLinks.entrySet()) {
 
-                // only add when sessionType when it is unknown to me
+                // Only add if the SessionType is not already present
                 if (!sessionLinkMap.containsKey(entry.getKey())) {
 
-                    // (Frank) sort on maplink ordinal for dependencies
+                    // Sort by MapLink ordinal to handle dependencies
                     Arrays.sort(entry.getValue());
 
                     // store in sessions

@@ -23,7 +23,7 @@ import nl.tytech.util.JTSUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * Address: Address info of addresses in a building
+ * Address information for locations within a building
  *
  * @author Frank Baars
  */

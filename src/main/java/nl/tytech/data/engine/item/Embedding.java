@@ -18,16 +18,11 @@ package nl.tytech.data.engine.item;
  * @author Maxim Knepfle
  *
  */
-public class Embedding extends NeuralNetwork {
+public class Embedding extends GenAI {
 
-    private static final long serialVersionUID = 5171401657101259581L;
+    private static final long serialVersionUID = 5171301657101259581L;
 
     public Embedding() {
         super(Type.EMBEDDING);
-    }
-
-    @Override
-    public String getExtension() {
-        return LLM.LLM_EXTENSION;
     }
 }

@@ -29,7 +29,7 @@ import nl.tytech.util.ServerType;
 import nl.tytech.util.StringUtils;
 
 /**
- * Domain contains a collection of Users that share projects an rights.
+ * Domain contains a collection of Users that share projects and rights.
  * @author Maxim Knepfle
  *
  */
@@ -72,9 +72,9 @@ public class Domain implements Serializable {
 
         PROJECT_COUNT("Project count", "Aantal projecten"),
 
-        DOMAIN_AREA("Total Area (km2)", "Totaal aantal (km2)"),
+        DOMAIN_AREA("Total Area (km2)", "Totale oppervlakte (km2)"),
 
-        SUBDOMAIN_AREA("Total Area (km2)", "Totaal aantal (km2)"),
+        SUBDOMAIN_AREA("Total Area (km2)", "Totale oppervlakte (km2)"),
 
         SHARE_MB(EngineNC.SHARE + " Storage (MB)", EngineNC.SHARE + " opslag (MB)"),
 
@@ -346,7 +346,7 @@ public class Domain implements Serializable {
 
     public double getLicenseVariablePrice(Variable variable, long months) {
 
-        // less then a year is 200% on the price
+        // Less than a year is 200% of the price
         double yearPrice = getLicenseVariablePrice(variable);
         return months >= 12 ? yearPrice / 12.0 * months : yearPrice / 6.0 * months;
     }

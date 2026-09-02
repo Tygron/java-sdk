@@ -142,7 +142,7 @@ public class ColorUtils {
                 return new TColor(r, g, b);
             }
         }
-        TLogger.warning("Create non-unique color, because we've already tried " + MAX_RANDOM_TRIES + " random generations.");
+        TLogger.warning("Generating a non-unique color after " + MAX_RANDOM_TRIES + " unsuccessful attempts.");
         return new TColor(MathUtils.randomInt(254) + 1, MathUtils.randomInt(254) + 1, MathUtils.randomInt(254) + 1, alpha);
     }
 
@@ -190,7 +190,7 @@ public class ColorUtils {
     }
 
     public static final float toFloatRGB(int rgb) {
-        return toFloat(rgb & 0xFFFFFF + (254 << 24)); // 254 due to float restrictions?
+        return toFloat(rgb & 0xFFFFFF + (254 << 24)); // 254 used due to float restrictions.
     }
 
     public static final int toInt(float value) {

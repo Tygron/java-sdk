@@ -29,16 +29,16 @@ public class ShutdownException extends RuntimeException {
     }
 
     /**
-     * Always throws a WebApplicationException exception
+     * Returns a TWebApplicationException
      */
     public TWebApplicationException throwWeb() throws TWebApplicationException {
-        return new TWebApplicationException(TStatus.NO_SESSION, "Session is not active anymore.");
+        return new TWebApplicationException(TStatus.NO_SESSION, "Session is no longer active.");
     }
 
     /**
-     * Always throws a WebApplicationException exception
+     * Returns a TWebApplicationException
      */
     public <T> T throwWeb(Integer sessionID) throws TWebApplicationException {
-        throw new TWebApplicationException(TStatus.NO_SESSION, "Session with ID: " + sessionID + " is not active anymore.");
+        throw new TWebApplicationException(TStatus.NO_SESSION, "Session with ID " + sessionID + " is no longer active.");
     }
 }

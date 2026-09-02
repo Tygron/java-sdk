@@ -23,7 +23,7 @@ import jakarta.ws.rs.core.MediaType;
 public class TMediaType extends MediaType {
 
     /**
-     * Default content type encoding for non binary formats -> UTF-8
+     * Default content type encoding for non-binary formats (UTF-8).
      */
     public static final String CHARSET_UTF8 = "; charset=utf-8";
 
@@ -48,7 +48,7 @@ public class TMediaType extends MediaType {
     public static final String IMAGE_TIFF = "image/tiff";
 
     /**
-     * Mime Type for Autocad DXF image
+     * Mime Type for AutoCAD DXF images.
      */
     public static final String IMAGE_DXF = "image/vnd.dxf";
 
@@ -58,7 +58,7 @@ public class TMediaType extends MediaType {
     public static final String MODEL_GLTF = "model/gltf+json";
 
     /**
-     * Mime Type for ico images
+     * Mime Type for ICO images.
      */
     public static final String IMAGE_ICO = "image/vnd.microsoft.icon";
 
@@ -68,9 +68,40 @@ public class TMediaType extends MediaType {
     public static final String APPLICATION_JAR = "application/java-archive";
 
     /**
-     * Mime Type for Zip Archives.
+     * Mime Type for ZIP archives.
      */
     public static final String APPLICATION_ZIP = "application/zip";
+
+    /**
+     * Mime Sub Type for GML (https://file-extensions.com/docs/gml)
+     */
+    public static final String APPLICATION_GML = "application/gml+xml";
+
+    /**
+     * Mime Type for GeoJSON.
+     */
+    public static final String APPLICATION_GEOJSON = "application/geo+json";
+
+    /**
+     * Mime Type for GeoPackage.
+     */
+    public static final String APPLICATION_GEOPACKAGE = "application/geopackage+sqlite3";
+
+    /**
+     * Mime Type for CityJSON (https://www.cityjson.org/news/2022/01/17/media-type/)
+     */
+    public static final String APPLICATION_CITYJSON = "application/city+json";
+
+    /**
+     * Mime Type for CityGML, N/A, (application/gml+xml) might be used source:
+     * https://github.com/digital-preservation/PRONOM_Research/issues/60
+     */
+    public static final String APPLICATION_CITYGML = APPLICATION_GML;
+
+    /**
+     * Mime Type for Speech Synthesis Markup Language based on XML.
+     */
+    public static final String APPLICATION_SSML = "application/ssml+xml";
 
     /**
      * Mime Type for CSV files.
@@ -103,7 +134,7 @@ public class TMediaType extends MediaType {
     public static final String APPLICATION_PDF = "application/pdf";
 
     /**
-     * Mime Type for Java script libs in UTF-8 encoding.
+     * Mime Type for JavaScript libraries in UTF-8 encoding.
      */
     public static final String APPLICATION_JAVASCRIPT_UTF8 = "application/javascript" + CHARSET_UTF8;
 

@@ -129,7 +129,7 @@ public class ExampleItemsTest {
         User user = apiConnection.fireServerEvent(UserServiceEventType.GET_MY_USER);
         assertNotNull(user);
 
-        assertTrue("You need to be at least EDITOR to run these tests!",
+        assertTrue("User access level must be at least EDITOR to run these tests.",
                 user.getMaxAccessLevel().ordinal() >= AccessLevel.EDITOR.ordinal());
     }
 
@@ -156,7 +156,7 @@ public class ExampleItemsTest {
 
         assertTrue(sessionConnection.connect());
 
-        // add event handler to receive updates on
+        // Add event handler to receive updates
         eventHandler = new ExampleEventHandler();
     }
 
@@ -173,7 +173,7 @@ public class ExampleItemsTest {
         sessionConnection.fireServerEvent(true, null, Format.DEFAULT_EVENT, EditorStakeholderEventType.ADD_WITH_TYPE_AND_ACTIVE,
                 Stakeholder.Type.CIVILIAN, true);
 
-        // wait on first updates (seperate thread)
+        // Wait for initial updates (separate thread)
         boolean updated = false;
         for (int i = 0; i < 60; i++) {
             if (eventHandler.isMapUpdated() && eventHandler.isStakeholderUpdated()) {

@@ -55,14 +55,14 @@ public class CoreStakeholder extends UniqueNamedItem {
     private ClientData client;
 
     /**
-     * Empty constructor.
+     * Default constructor.
      */
     public CoreStakeholder() {
 
     }
 
     /**
-     * @return the session
+     * @return the client data
      */
     public final ClientData getClient() {
         return this.client;
@@ -96,7 +96,7 @@ public class CoreStakeholder extends UniqueNamedItem {
     }
 
     /**
-     * @return the state of the connection with the client playing this stakeholder.
+     * @return the connection state of the client associated with this stakeholder.
      */
     public final ConnectionState getConnectionState() {
         return client != null ? client.getConnectionState() : ConnectionState.RELEASED;

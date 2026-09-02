@@ -107,7 +107,7 @@ public class BaseFunction extends Function {
             }
         }
 
-        // try my Function next, NOTE: FUNCTION DOES NOT HAVE MAQUETTE VALUES!!!
+        // Try the function next; note that functions do not have Maquette values.
         double[] value = attributes.get(key);
         if (value != null) {
             return value;
@@ -173,12 +173,7 @@ public class BaseFunction extends Function {
         } else {
             result = description;
         }
-
-        if (result == null || result.equals(StringUtils.EMPTY)) {
-            return "<p>" + getName() + "</p>";
-        } else {
-            return result;
-        }
+        return StringUtils.containsData(result) ? result : getName();
     }
 
     @Override
@@ -306,7 +301,7 @@ public class BaseFunction extends Function {
             }
         }
 
-        // try my Function next, NOTE: FUNCTION DOES NOT HAVE MAQUETTE VALUES!!!
+        // Try the function next; note that functions do not have Maquette values.
         if (attributes.containsKey(key)) {
             return true;
         }
@@ -354,7 +349,7 @@ public class BaseFunction extends Function {
     public void removeDefaultValue(FunctionValue functionValue) {
 
         if (this.getLord() != null) {
-            throw new IllegalArgumentException("Only allowed to remove default value when not in normal simulation!");
+            throw new IllegalArgumentException("Removing default values is only permitted outside of a normal simulation.");
         }
         attributes.remove(functionValue.name());
     }
@@ -362,7 +357,7 @@ public class BaseFunction extends Function {
     public void setDefaultValue(FunctionValue functionValue, double[] value) {
 
         if (this.getLord() != null) {
-            throw new IllegalArgumentException("Only allowed to set default value when not in normal simulation!");
+            throw new IllegalArgumentException("Setting default values is only permitted outside of a normal simulation.");
         }
         attributes.put(functionValue.name(), value);
     }

@@ -22,16 +22,16 @@ import nl.tytech.util.ObjectUtils;
  */
 public enum WebBaseMap {
 
-    @Description("Default Satellite imagery with function colors overlayed")
+    @Description("Default Satellite imagery with function colors overlaid")
     SATELLITE,
 
-    @Description("Orginal Satellite imagery without functions")
+    @Description("Original Satellite imagery without function colors")
     SATELLITE_ORIGINAL,
 
-    @Description("Topgraphic style using regular function colors")
+    @Description("Topographic style using regular function colors")
     TOPOGRAPHIC,
 
-    @Description("Topgraphic style using gray function colors")
+    @Description("Topographic style using gray function colors")
     GRAY;
 
     public static final WebBaseMap fromString(String text) {

@@ -40,7 +40,7 @@ import nl.tytech.util.StringUtils;
 import nl.tytech.util.color.TColor;
 
 /**
- * ModelData: This item encapsulates the available models, this are NOT the individual models on the map.
+ * This item encapsulates the available models; these are not the individual models on the map.
  *
  * @author Maxim Knepfle
  */
@@ -166,7 +166,7 @@ public class UnitData extends Item implements ModelObject, ActiveItem {
 
     public ArrayList<TColor> getColors() {
         /**
-         * Try override first
+         * Check for override first
          */
         UnitDataOverride unitDataOverride = this.getItem(MapLink.UNIT_DATA_OVERRIDES, this.getID());
         if (unitDataOverride != null && unitDataOverride.hasColors()) {
@@ -188,7 +188,7 @@ public class UnitData extends Item implements ModelObject, ActiveItem {
     public String getName() {
 
         /**
-         * Try override first
+         * Check for override first
          */
         UnitDataOverride unitDataOverride = getUnitDataOverride();
         if (unitDataOverride != null && StringUtils.containsData(unitDataOverride.getName())) {
@@ -208,13 +208,13 @@ public class UnitData extends Item implements ModelObject, ActiveItem {
 
     @Override
     public ParticleEmitterCoordinatePair getPair(Integer id) {
-        // disabled particle emitters, units are instanced thus can not have particles flying around
+        // Disabled particle emitters; units are instanced and cannot have active particles.
         return null;
     }
 
     @Override
     public List<ParticleEmitterCoordinatePair> getPairs() {
-        // disabled particle emitters, units are instanced thus can not have particles flying around
+        // Disabled particle emitters; units are instanced and cannot have active particles.
         return new ArrayList<>();// particleEmitters;
     }
 
@@ -257,7 +257,7 @@ public class UnitData extends Item implements ModelObject, ActiveItem {
     }
 
     /**
-     * When true this unit is either region or part of given region.
+     * Returns true if this unit is a region or part of the given region.
      * @param region
      * @return
      */

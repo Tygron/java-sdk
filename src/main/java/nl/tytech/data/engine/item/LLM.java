@@ -12,31 +12,19 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.item;
 
-import nl.tytech.util.StringUtils;
-
 /**
  * Large Language Model (LLM) for Chat Channels
  *
  * @author Maxim Knepfle
  *
  */
-public class LLM extends NeuralNetwork {
+public class LLM extends GenAI {
 
     public static final String LLM_EXTENSION = "safetensors";
 
-    private static final long serialVersionUID = 5271401657101259581L;
+    private static final long serialVersionUID = 5221401657101259581L;
 
     public LLM() {
         super(Type.LLM);
-    }
-
-    @Override
-    public String getExtension() {
-        return LLM_EXTENSION;
-    }
-
-    @Override
-    public String toString() {
-        return StringUtils.containsData(getDescription()) ? getDescription() : super.getName();
     }
 }

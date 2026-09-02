@@ -15,7 +15,7 @@ package nl.tytech.data.engine.item;
 import nl.tytech.data.engine.other.OverrideDataItem;
 
 /**
- * Default, provided geo tiffs
+ * Default provided GeoTiff files.
  *
  * @author Maxim Knepfle
  */
@@ -27,7 +27,7 @@ public class DefaultGeoTiff extends GeoTiff implements OverrideDataItem {
     public static final Integer GLG = 1;
     public static final Integer GVG = 2;
 
-    // runtime set variable do not save to XML
+    // Runtime-set variable; do not save to XML.
     private boolean override = true;
 
     @Override

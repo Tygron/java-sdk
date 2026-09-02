@@ -223,7 +223,7 @@ public abstract class CustomGeoLink extends GeoLink implements NamedItem {
             mappings = mapping;
             mapping = null;
             if (mappings.size() > 0) {
-                TLogger.warning(getName() + ": converted " + mappings.size() + " mapping to mappings.");
+                TLogger.warning(getName() + ": converted " + mappings.size() + " entries from mapping to mappings.");
             }
         }
         return result;

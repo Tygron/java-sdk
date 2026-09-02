@@ -55,7 +55,7 @@ public class FunctionGeoLink extends GeoLink {
             }
         }
         /**
-         * All other is by default owned by the municipality
+         * Others are owned by the municipality by default.
          */
         return Stakeholder.Type.MUNICIPALITY;
     }

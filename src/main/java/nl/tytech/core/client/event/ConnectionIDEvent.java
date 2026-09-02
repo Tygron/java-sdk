@@ -15,7 +15,7 @@ package nl.tytech.core.client.event;
 import nl.tytech.core.event.Event;
 
 /**
- * ConnectionIDEvent allow events to be fired for specific sessions. This is only usefull when running multiple sessions on one system.
+ * ConnectionIDEvent allows events to be fired for specific Sessions. This is useful when running multiple Sessions on one system.
  *
  * @author William van Velzen
  */
@@ -24,7 +24,7 @@ public class ConnectionIDEvent extends Event {
     private static final long serialVersionUID = -1934512728855774874L;
 
     /**
-     * When true this event is related to the given connectionID.
+     * Determines if the event is related to the specified connectionID.
      * @param event
      * @param filterConnectionID
      * @return
@@ -34,7 +34,7 @@ public class ConnectionIDEvent extends Event {
     }
 
     /**
-     * Extra var indicating the connection ID with the server. Note: not to be confused with the server's session ID.
+     * The connection ID with the server, distinct from the server's Session ID.
      */
     private final Integer connectionID;
 

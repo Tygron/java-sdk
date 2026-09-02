@@ -258,7 +258,7 @@ public class NetCluster extends Item implements NetItem, GeometryItem<Point>, Na
     }
 
     /**
-     * Return name of related item, if relation does not exist return empty
+     * Returns the name of the related item; returns an empty string if no relation exists.
      */
     public String getRelationName(Relation relation, NetType netType) {
 

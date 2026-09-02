@@ -26,7 +26,7 @@ import nl.tytech.data.engine.serializable.UpgradePair;
 import nl.tytech.util.StringUtils;
 
 /**
- * UpgradeType: This class keeps track of the upgrades per model.
+ * Keeps track of the upgrades per model.
  *
  * @author Alexander Hofstede & Maxim Knepfle, Frank Baars
  */

@@ -35,7 +35,7 @@ import nl.tytech.util.StringUtils;
 public enum CategoryValue implements Value {
 
     /**
-     * Size of a house in m2, all other use 1m
+     * Weight category value.
      */
     CATEGORY_WEIGHT(FunctionValueGroup.CONSTRUCTION, ClientTerms.CATEGORY_WEIGHT, Double.MIN_VALUE, Double.MAX_VALUE, false, UnitType.NONE),
 
@@ -69,13 +69,13 @@ public enum CategoryValue implements Value {
             -Double.MAX_VALUE, Double.MAX_VALUE, false, UnitType.NONE),
 
     /**
-     * Park lots per m2 floorspace
+     * Parking lots per m2 floorspace
      */
     PARKING_LOTS_PER_M2(FunctionValueGroup.CAR_TRAFFIC, "Parking Lots", ClientTerms.DETAIL_PARKING_SPACES, 0, 1, false, UnitType.NONE,
             UnitType.SURFACE),
 
     /**
-     * Park lots demand per m2 floorspace
+     * Parking lots demand per m2 floorspace
      */
     PARKING_LOTS_DEMAND_PER_M2(FunctionValueGroup.CAR_TRAFFIC, "Parking Lots Demand", ClientTerms.DETAIL_PARKING_SPACES_DEMAND, 0, 2, false,
             UnitType.NONE, UnitType.SURFACE),
@@ -87,7 +87,7 @@ public enum CategoryValue implements Value {
             UnitType.NONE, UnitType.SURFACE),
 
     /**
-     * Demolish cost in euro per M2 floorspace.
+     * Demolition cost in euro per M2 floorspace.
      */
     DEMOLISH_COST_M2(FunctionValueGroup.FINANCIAL, "Demolition Cost", ClientTerms.DETAIL_DEMOLISH_COST, 0, Double.MAX_VALUE, true,
             UnitType.NONE, UnitType.SURFACE),
@@ -99,7 +99,7 @@ public enum CategoryValue implements Value {
             UnitType.SURFACE),
 
     /**
-     * Sell price in euro per M2 floorspace.
+     * Selling price in euro per M2 floorspace.
      */
     SELL_PRICE_M2(FunctionValueGroup.FINANCIAL, "Sell Price", ClientTerms.DETAIL_SELL_PRICE, 0, Double.MAX_VALUE, true, UnitType.NONE,
             UnitType.SURFACE);

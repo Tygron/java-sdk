@@ -16,7 +16,7 @@ import nl.tytech.core.net.Network.SessionType;
 import nl.tytech.locale.TLanguage;
 
 /**
- * Wrapper class that handles all parameters as a answer from the server to the session request.
+ * Wrapper class that handles all parameters as an answer from the server to the session request.
  *
  * @author Maxim Knepfle
  */

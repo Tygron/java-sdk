@@ -27,7 +27,7 @@ import nl.tytech.util.MathUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * Global variable
+ * Represents a global variable.
  *
  * @author Maxim Knepfle
  */
@@ -85,7 +85,7 @@ public class Global extends UniqueNamedItem implements GeometryItem<Point> {
     }
 
     /**
-     * Return value at index or last valid index value
+     * Returns the value at the specified index or the last valid index.
      */
     public double getActualValue(int index) {
         return actualValue[MathUtils.clamp(index, 0, actualValue.length - 1)];

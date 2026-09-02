@@ -17,7 +17,7 @@ import nl.tytech.util.DateUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * Logging of security noticeable incidents
+ * Logs noteworthy security incidents
  *
  * @author Maxim Knepfle
  *

@@ -17,7 +17,7 @@ import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * Vector3d: Stores the vector as 3 double values
+ * Represents a three-dimensional vector using double precision values.
  *
  * @author Maxim Knepfle
  */
@@ -26,19 +26,19 @@ public class Vector3d implements Serializable {
     private static final long serialVersionUID = -1205148417639450780L;
 
     /**
-     * the x value of the vector.
+     * The X coordinate of the vector.
      */
     @XMLValue
     public double x = 0;
 
     /**
-     * the y value of the vector.
+     * The Y coordinate of the vector.
      */
     @XMLValue
     public double y = 0;
 
     /**
-     * the z value of the vector.
+     * The Z coordinate of the vector.
      */
     @XMLValue
     public double z = 0;
@@ -188,7 +188,7 @@ public class Vector3d implements Serializable {
 
         if (array.length != 3) {
             TLogger.severe(
-                    "Cannot convert " + this.getClass().getSimpleName() + " to an array of size " + array.length + ". Only 3 is allowed.");
+                    "Cannot convert " + this.getClass().getSimpleName() + " to an array of size " + array.length + ". Expected size: 3.");
             return array;
         }
 
@@ -206,7 +206,7 @@ public class Vector3d implements Serializable {
 
         if (array.length != 3) {
             TLogger.severe(
-                    "Cannot convert " + this.getClass().getSimpleName() + " to an array of size " + array.length + ". Only 3 is allowed.");
+                    "Cannot convert " + this.getClass().getSimpleName() + " to an array of size " + array.length + ". Expected size: 3.");
             return array;
         }
 

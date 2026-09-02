@@ -82,7 +82,7 @@ public class SessionLog extends Log {
     public Network.SessionType getSessionTypeEnum() {
 
         if (!StringUtils.containsData(sessionType)) {
-            TLogger.severe("SessionType cannot be null in session log of project " + projectName + " in domain " + getDomainName());
+            TLogger.severe("SessionType is missing in session log of project " + projectName + " in domain " + getDomainName());
             return null;
         }
         for (Network.SessionType aSessionType : Network.SessionType.values()) {
@@ -90,7 +90,7 @@ public class SessionLog extends Log {
                 return aSessionType;
             }
         }
-        TLogger.severe("SessionType cannot be null in session log");
+        TLogger.severe("Unrecognized SessionType in session log");
         return null;
     }
 

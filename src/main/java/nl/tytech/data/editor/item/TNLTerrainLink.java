@@ -29,13 +29,13 @@ public abstract class TNLTerrainLink extends GeoLink {
         AKKERLAND("akkerland"), //
         BEBOUWD_GEBIED("bebouwd gebied"), //
         BOOMGAARD("boomgaard"), //
-        BOOMKWEKERIJ("boomkrekerij"), //
+        BOOMKWEKERIJ("boomkwekerij"), //
         BOS_GEMENGD_BOS("bos: gemengd bos"), //
         BOS_GRIEND("bos: griend"), //
         BOS_LOOFBOS("bos: loofbos"), //
         BOS_NAALDBOS("bos: naaldbos"), //
         DODENAKKER("dodenakker"), //
-        DODENAKKER_MET_BOS("donenakker met bos"), //
+        DODENAKKER_MET_BOS("dodenakker met bos"), //
         FRUITKWEKERIJ("fruitkwekerij"), //
         GRASLAND("grasland"), //
         HEIDE("heide"), //

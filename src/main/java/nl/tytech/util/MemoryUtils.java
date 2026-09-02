@@ -13,7 +13,7 @@
 package nl.tytech.util;
 
 /**
- * This Util class for memory printing
+ * Utility class for formatting memory sizes into human-readable strings.
  *
  * @author Maxim Knepfle
  */

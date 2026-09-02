@@ -12,10 +12,10 @@
  *******************************************************************************************************************************************/
 package nl.tytech.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.StringBufferInputStream;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,14 +23,14 @@ import nl.tytech.util.FileUtils.BufferedFileInputStream;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * MD5 Checksum utils, partly based on code from various web sources.
+ * MD5 checksum utilities.
  *
  * @author Maxim Knepfle
  */
 public class ChecksumUtil {
 
     /**
-     * Tweaked optimal size for speed in buffer
+     * Optimized buffer size for performance
      */
     private static final int BUFFER_SIZE = 16 * 1024;
 
@@ -55,13 +55,12 @@ public class ChecksumUtil {
 
     public static final String getMD5Checksum(final InputStream fis, final byte[] buffer) {
 
-        try {
+        try (InputStream is = fis) {
             MessageDigest digest = MessageDigest.getInstance(MD5);
             int numRead;
-            while ((numRead = fis.read(buffer)) != -1) {
+            while ((numRead = is.read(buffer)) != -1) {
                 digest.update(buffer, 0, numRead);
             }
-            fis.close();
             byte[] b = digest.digest();
 
             StringBuilder result = new StringBuilder();
@@ -94,7 +93,7 @@ public class ChecksumUtil {
 
     public static final String getMD5ChecksumOfString(String data) {
         try {
-            return getMD5Checksum(new StringBufferInputStream(data));
+            return getMD5Checksum(new ByteArrayInputStream(data.getBytes()));
         } catch (Exception e) {
             TLogger.exception(e);
             return null;

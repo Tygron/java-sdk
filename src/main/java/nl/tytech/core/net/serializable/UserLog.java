@@ -44,7 +44,7 @@ public class UserLog extends Log {
         this.userName = userName;
         this.level = level;
         this.description = description;
-    };
+    }
 
     public String getDescription() {
         return description;

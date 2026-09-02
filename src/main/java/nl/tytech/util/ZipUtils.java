@@ -34,7 +34,7 @@ import nl.tytech.util.FileUtils.BufferedFileInputStream;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * ZipUtils can compress and decompress objects into an byte[]
+ * ZipUtils can compress and decompress objects into a byte array
  *
  * @author Maxim Knepfle
  */
@@ -43,7 +43,7 @@ public class ZipUtils {
     /**
      * Level for compression, between 0 and 9
      *
-     * Level 3 seems to give optimal speed at only slightly less compression
+     * Level 3 provides optimal speed with minimal impact on compression.
      *
      * Source: https://java-performance.info/performance-general-compression/
      */
@@ -65,7 +65,7 @@ public class ZipUtils {
         File d = new File(rootDirectoryName + fileName);
 
         if (!d.exists()) {
-            TLogger.warning("File: " + d.getPath() + " does not exists, skip zipping it!");
+            TLogger.warning("File: " + d.getPath() + " does not exist; skipping.");
 
         } else if (d.isDirectory()) {
 
@@ -171,7 +171,7 @@ public class ZipUtils {
 
         try {
             byte[] bytes = Base64.decode(data);
-            // call normal byte decompres
+            // Call normal byte decompression
             return decompressJavaObjectByteArray(bytes);
         } catch (Exception e) {
             TLogger.exception(e);

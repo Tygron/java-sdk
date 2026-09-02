@@ -32,7 +32,7 @@ import nl.tytech.core.net.serializable.MapLink;
 public enum EditorGeoTiffEventType implements IndicatorEventTypeEnum {
 
     @EventParamData(desc = "Add new GeoTIFF Item with provided file. For files larger than 2GB, use the Stream API or Web URL.", params = {
-            "GeoTIFF Name", "File bytes (< 2GB)", "Uploader", "CRS Override (optional) " }, response = "GeoTIFF ID")
+            "GeoTIFF Name", "File bytes (< 2GB)", "Uploader", "CRS Override (optional)" }, response = "GeoTIFF ID")
     @EventIDField(nullable = { 3 })
     ADD(String.class, byte[].class, String.class, String.class),
 

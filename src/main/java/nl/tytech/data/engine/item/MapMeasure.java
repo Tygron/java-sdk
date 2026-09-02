@@ -88,7 +88,7 @@ public final class MapMeasure extends Measure {
     @XMLValue
     private Double actualHeightChangeM3 = null;
 
-    // (Frank) no need to save this, only used at runtime. Remove when popups support list of items
+    // Only used at runtime; remove once popups support lists of items.
     private Set<Integer> buildingPermitProcessed = null;
 
     @JsonIgnore
@@ -645,7 +645,7 @@ public final class MapMeasure extends Measure {
     }
 
     public boolean hasTerrainSpatial(Integer terrainSpatialID) {
-        return getTerrainSpatial(terrainSpatialID) == null;
+        return getTerrainSpatial(terrainSpatialID) != null;
     }
 
     public boolean hasTerrainSpatialForEditType(MeasureEditType editType) {
@@ -795,7 +795,7 @@ public final class MapMeasure extends Measure {
         getCenterPoint();
 
         /**
-         * Validate building linkage and timestate.
+         * Validate building linkage.
          */
         for (Building building : this.getBuildings()) {
             if (!building.getMeasureID().equals(this.getID())) {

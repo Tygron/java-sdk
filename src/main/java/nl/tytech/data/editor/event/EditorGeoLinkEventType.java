@@ -41,12 +41,12 @@ public enum EditorGeoLinkEventType implements EventTypeEnum {
     @EventIDField(links = { GEO_LINKS }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(desc = "Map orginal Attribute name to a new name in the created feature.", params = { "CustomGeoLink IDs",
-            "Orginal Attribute Names", "New Attribute Names" })
+    @EventParamData(desc = "Map original Attribute name to a new name in the created feature.", params = { "CustomGeoLink IDs",
+            "Original Attribute Names", "New Attribute Names" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     SET_MAPPING(Integer[].class, String[].class, String[].class),
 
-    @EventParamData(desc = "Remove map orginal Attribute name to a new name in the created feature.", params = { "CustomGeoLink IDs",
+    @EventParamData(desc = "Remove mapping of original Attribute name to a new name in the created feature.", params = { "CustomGeoLink IDs",
             "Attribute Names" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     REMOVE_MAPPING(Integer[].class, String[].class),
@@ -56,7 +56,7 @@ public enum EditorGeoLinkEventType implements EventTypeEnum {
     @EventIDField(sameLength = true, links = { GEO_LINKS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_MATCHING(Integer[].class, String[].class, String[][].class, Integer.class),
 
-    @EventParamData(desc = "Remove matching incoming features against Attribute.", params = { "CustomGeoLink IDs", "Attribute Names" })
+    @EventParamData(desc = "Remove matching of incoming features against Attributes.", params = { "CustomGeoLink IDs", "Attribute Names" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     REMOVE_MATCHING(Integer[].class, String[].class),
 

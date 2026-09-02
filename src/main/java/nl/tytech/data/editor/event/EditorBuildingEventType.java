@@ -41,7 +41,7 @@ import nl.tytech.data.engine.serializable.FunctionValue;
 @Linked(BUILDINGS)
 public enum EditorBuildingEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add polygons for Building Section. In case the building is empty, optionally set ownership to largest Plot Owner of provided MultiPolygon", params = {
+    @EventParamData(desc = "Add polygons for Building Section. If the building is empty, optionally set ownership to the largest Plot Owner of the provided MultiPolygon", params = {
             "Building ID", "Section ID", "MultiPolygon", "Use largest Owner" }, defaults = { "", "", "", "false" })
     @EventIDField(sameLength = true, links = { BUILDINGS }, params = { 0 })
     ADD_POLYGONS(Integer[].class, Integer[].class, MultiPolygon[].class, Boolean.class),
@@ -73,14 +73,14 @@ public enum EditorBuildingEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { BUILDINGS }, params = { 0 })
     DUPLICATE_SECTIONS(Integer[].class, Integer[].class),
 
-    @EventParamData(desc = "Calculation a rotation angle for buildings having the identifying attribute polygons, optionally only for specified buildings.", params = {
+    @EventParamData(desc = "Calculate a rotation angle for buildings with polygons for the identifying attribute, optionally only for specified buildings.", params = {
             "Identifying attribute", "Rotation attribute", "Specific buildingIDs only (optional)" }, defaults = { "", "", "" })
     @EventIDField(links = { BUILDINGS }, params = { 2 }, nullable = { 2 })
     GENERATE_ROTATION_ANGLES(String.class, String.class, Integer[].class),
 
     @EventParamData(desc = "Generate Water Connection.", params = { "Function", "Area", "Min Length", "Max Length", "Width",
             "Large Road Area", "Straight Distance", "Max Height Difference", "Ignore Upstream",
-            "Include Water Bodies" }, response = "Amount of generated Objects")
+            "Include Water Bodies" }, response = "Number of generated objects")
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     GENERATE_WATER_CONNECTION(Integer.class, MultiPolygon.class, Double.class, Double.class, Double.class, Double.class, Double.class,
             Double.class, Double.class, Boolean.class),
@@ -96,7 +96,7 @@ public enum EditorBuildingEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { FUNCTIONS, BUILDINGS }, params = { 0, 3 })
     MULTI_SELECT(Integer.class, Integer.class, Boolean.class, Integer[].class),
 
-    @EventParamData(desc = "Executes a single TQL query. Note: you can also use the session/query endpoint to execute multiple statements and get additional information on API usage.", params = {
+    @EventParamData(desc = "Execute a single TQL query. Use the Session/query endpoint for multiple statements or detailed API usage information.", params = {
             "TQL Query Statement", "Value for update queries (optional)" })
     @EventIDField(nullable = { 1 })
     QUERY(String.class, double[].class),
@@ -142,7 +142,7 @@ public enum EditorBuildingEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { BUILDINGS }, params = { 0 }, nullable = { 2 })
     SET_DECALS(Integer.class, FaceType.class, float[].class),
 
-    @EventParamData(desc = "Change amount of floors", params = { "Building ID", "Section ID", "Number of floors", })
+    @EventParamData(desc = "Change number of floors", params = { "Building ID", "Section ID", "Number of floors", })
     @EventIDField(sameLength = true, links = { BUILDINGS }, params = { 0 })
     SET_FLOORS(Integer[].class, Integer[].class, Integer[].class),
 

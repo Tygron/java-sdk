@@ -56,7 +56,7 @@ public abstract class CustomFunctionGeoLink extends CustomGeoLink {
             }
         }
         /**
-         * All other is by default owned by the municipality
+         * All others are by default owned by the municipality
          */
         return Stakeholder.Type.MUNICIPALITY;
     }

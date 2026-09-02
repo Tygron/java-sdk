@@ -16,7 +16,7 @@ import nl.tytech.core.net.serializable.MapLink;
 
 /**
  *
- * Generic relation between objects, lines, stakleholders, areas, etc.
+ * Generic relation between objects, lines, stakeholders, areas, etc.
  *
  * @author Frank Baars & Maxim Knepfle
  *

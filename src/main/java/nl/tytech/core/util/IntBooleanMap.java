@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Similar to a {@link Map} except that ints are used as keys and booleans for values.
  *
- * Taken via JME3 IntMap from <a href="http://code.google.com/p/skorpios/">http://code.google.com/p/skorpios/</a>
+ * Adapted from the JME3 IntMap at <a href="http://code.google.com/p/skorpios/">http://code.google.com/p/skorpios/</a>
  *
  * @author Maxim Knepfle & skorpios
  */

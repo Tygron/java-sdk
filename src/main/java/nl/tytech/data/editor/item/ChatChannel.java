@@ -14,6 +14,7 @@ package nl.tytech.data.editor.item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,7 +28,7 @@ import nl.tytech.data.core.item.Item;
 import nl.tytech.data.core.serializable.MapType;
 import nl.tytech.data.editor.item.ChatMessage.AIState;
 import nl.tytech.data.engine.item.AttributeItem;
-import nl.tytech.data.engine.item.LLM;
+import nl.tytech.data.engine.item.GenAI;
 import nl.tytech.util.ObjectUtils;
 import nl.tytech.util.StringUtils;
 
@@ -48,17 +49,30 @@ public class ChatChannel extends AttributeItem {
 
         TOP_K(Integer.class, 64, 1024),
 
-        NUM_PREDICT(Integer.class, 5000, Integer.MAX_VALUE), // https://openllmbridge.com/blog/why-gemma-4-overthinks
+        MAX_TOKENS(Integer.class, 5_000, Integer.MAX_VALUE), // https://openllmbridge.com/blog/why-gemma-4-overthinks
+
+        THINKING_BUDGET_TOKENS(Integer.class, 1_000, Integer.MAX_VALUE),
 
         TIMEOUT_SEC(Integer.class, 10 * 60, 20 * 60), // default 10min timeout
 
         THINK_MODE(Boolean.class, 1, 1),
 
-        SHOW_THINKING(Boolean.class, 1, 1),
+        SHOW_THINKING(Boolean.class, 0, 1),
 
         CACHEABLE(Boolean.class, 1, 1), // when > 0 WIKI queries will be cached for faster tool execution
 
         PROJECT_INFO(Boolean.class, 0, 1);
+
+        public static final LLMAttribute fromText(String text) {
+
+            text = text.toUpperCase();
+            for (LLMAttribute a : LLMAttribute.values()) {
+                if (a.name().equals(text)) {
+                    return a;
+                }
+            }
+            return null;
+        }
 
         private final Class<?> type;
         private final double[] defaultArray;
@@ -122,7 +136,13 @@ public class ChatChannel extends AttributeItem {
         EXECUTE_QUERY,
 
         @Description("Execute Tygron API Endpoint")
-        EXECUTE_ENDPOINT;
+        EXECUTE_ENDPOINT,
+
+        @Description("Get screenshot of user interface")
+        GET_SCREEN,
+
+        @Description("Open a panel in user interface")
+        OPEN_PANEL;
 
         public static final Tool fromText(String text) {
             return Arrays.stream(values()).filter(t -> t.toString().equals(text) || t.name().equals(text)).findAny().orElse(null);
@@ -139,6 +159,13 @@ public class ChatChannel extends AttributeItem {
             };
         }
 
+        public final boolean isSee() {
+            return switch (this) {
+                case GET_SCREEN -> true;
+                default -> false;
+            };
+        }
+
         public final boolean isWrite() {
             return switch (this) {
                 case EXECUTE_ENDPOINT -> true;
@@ -151,6 +178,10 @@ public class ChatChannel extends AttributeItem {
             return name().toLowerCase().replace("_", "-");
         }
     }
+
+    public static final String CHANNEL = "channelid";
+
+    public static final String STAKEHOLDER = "stakeholderid";
 
     public static final Integer DOMAIN_CHANNEL = 0;
 
@@ -172,8 +203,23 @@ public class ChatChannel extends AttributeItem {
     @XMLValue
     private ArrayList<Tool> tools = new ArrayList<>();
 
+    @NoDefaultText
+    private HashMap<Integer, String> agentTasks = new HashMap<>();
+
+    @JsonIgnore
+    @NoDefaultText
+    private HashMap<Integer, String> agentResults = new HashMap<>();
+
     public ChatChannel() {
 
+    }
+
+    public HashMap<Integer, String> getAgentResults() {
+        return agentResults;
+    }
+
+    public HashMap<Integer, String> getAgentTasks() {
+        return agentTasks;
     }
 
     public final AIState getAIState() {
@@ -189,9 +235,9 @@ public class ChatChannel extends AttributeItem {
             return super.getAttributeArray(mapType, key);
         }
 
-        // optional fallback to original LLM attribute
-        if (getNeuralNetwork() instanceof LLM llm && llm.hasAttribute(key)) {
-            return llm.getAttributeArray(mapType, key);
+        // optional fallback to original GenAI attribute
+        if (getNeuralNetwork() instanceof GenAI genAI && genAI.hasAttribute(key)) {
+            return genAI.getAttributeArray(mapType, key);
         }
 
         // default to empty
@@ -219,7 +265,7 @@ public class ChatChannel extends AttributeItem {
         return this.<ChatMessage> getMap(MapLink.CHAT_MESSAGES).stream().filter(m -> getID().equals(m.getChannelID()));
     }
 
-    public LLM getNeuralNetwork() {
+    public GenAI getNeuralNetwork() {
         return getItem(MapLink.NEURAL_NETWORKS, getNeuralNetworkID());
     }
 
@@ -235,9 +281,9 @@ public class ChatChannel extends AttributeItem {
             return super.getAttributeArray(mapType, attribute);
         }
 
-        // optional fallback to original LLM attribute
-        if (getNeuralNetwork() instanceof LLM llm && llm.hasAttribute(attribute)) {
-            return llm.getAttributeArray(mapType, attribute.name());
+        // optional fallback to original GenAI attribute
+        if (getNeuralNetwork() instanceof GenAI genAI && genAI.hasAttribute(attribute)) {
+            return genAI.getAttributeArray(mapType, attribute.name());
         }
 
         // default
@@ -258,6 +304,10 @@ public class ChatChannel extends AttributeItem {
 
     public final boolean isRead() {
         return getAttribute(LLMAttribute.PROJECT_INFO) > 0 || tools.stream().anyMatch(t -> t != null && t.isRead());
+    }
+
+    public final boolean isSee() {
+        return tools.stream().anyMatch(t -> t != null && t.isSee());
     }
 
     public final boolean isWrite() {

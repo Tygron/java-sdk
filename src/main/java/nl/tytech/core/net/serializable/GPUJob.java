@@ -21,7 +21,7 @@ import nl.tytech.util.StringUtils;
 
 /**
  *
- * Current state of a GPU Job executing
+ * Represents the current state of an executing GPU Job.
  *
  * @author Maxim Knepfle
  */
@@ -40,7 +40,7 @@ public class GPUJob implements Serializable, Comparable<GPUJob> {
     private static final long serialVersionUID = -1715752299974456885L;
 
     /**
-     * When Job is finished for more then this fraction it cannot timeout
+     * If the Job progress exceeds this fraction, it will not time out.
      */
     public static final double TIMEOUT_FRACTION = 0.75;
 
@@ -51,19 +51,19 @@ public class GPUJob implements Serializable, Comparable<GPUJob> {
     public static final String getWarningMessage(long code) {
 
         if (ERROR == code) {
-            return "Error in Calculation!";
+            return "Calculation error";
         }
         if (CANCELED == code) {
-            return "Calculation was Canceled!";
+            return "Calculation canceled";
         }
         if (TIMEOUT == code) {
-            return "Calc too long forced Timeout!";
+            return "Calculation timed out";
         }
         if (INSUFFICIENT_MEMORY == code) {
-            return "Insufficient memory!";
+            return "Insufficient memory";
         }
         if (INVALID_CLUSTER == code) {
-            return "Invalid cluster index!";
+            return "Invalid cluster index";
         }
         return null;
     }
@@ -79,7 +79,7 @@ public class GPUJob implements Serializable, Comparable<GPUJob> {
     private boolean cancel = false;
 
     /**
-     * Variables below are not set on RMI GPU cluster (transient) only in client API (json)
+     * The following variables are not set on the RMI GPU cluster (transient), but only in the client API (JSON).
      */
 
     @JsonSerialize

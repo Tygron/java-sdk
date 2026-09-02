@@ -38,7 +38,7 @@ public abstract class UniqueNamedItem extends Item implements NamedItem {
     public static final String NAME = "NAME";
 
     @XMLValue
-    private String name = StringUtils.EMPTY;// default is NO name
+    private String name = StringUtils.EMPTY;// defaults to an empty string
 
     @Override
     public Map<String, Object> getExportAttributes(boolean inherited) {

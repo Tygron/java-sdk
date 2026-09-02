@@ -25,7 +25,7 @@ import nl.tytech.data.engine.other.AbstractSpatial;
 import nl.tytech.util.JTSUtils;
 
 /**
- * UpgradeSpatial: contains info about upgrades in measures.
+ * Contains information about upgrades in measures.
  *
  * @author Frank Baars
  */

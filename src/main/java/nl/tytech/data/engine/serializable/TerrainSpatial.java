@@ -32,7 +32,7 @@ import nl.tytech.util.JTSUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * Terrain spatial party of measure
+ * Terrain spatial part of a measure
  *
  * @author Frank Baars
  */

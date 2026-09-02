@@ -15,7 +15,7 @@ package nl.tytech.core.client.net;
 import nl.tytech.core.net.event.RemoteServicesEvent.ServiceEventType;
 
 /**
- * Interface to class handling the root Services events.
+ * Interface for handling root Services events.
  *
  * @author Maxim Knepfle
  */

@@ -23,7 +23,7 @@ import nl.tytech.data.engine.serializable.Relation;
 import nl.tytech.util.StringUtils;
 
 /**
- * Panel that contains calculation logic, e.g. an excelheet or javascript/tql
+ * Panel that contains calculation logic, e.g. an Excel sheet or JavaScript/TQL
  *
  * @author Maxim Knepfle
  */
@@ -37,7 +37,7 @@ public abstract class LogicPanel extends Panel implements LogicItem {
 
     private static final Pattern BODY = Pattern.compile("<body>", Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern APP_TOKEN = Pattern.compile("app.token\\(\\)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern APP_TOKEN = Pattern.compile("app\\.token\\(\\)", Pattern.CASE_INSENSITIVE);
 
     private static final long serialVersionUID = -526843113040439637L;
 

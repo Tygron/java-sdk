@@ -31,7 +31,7 @@ public enum SoundEventType implements EventTypeEnum {
     @EventIDField(links = { SOUNDS }, params = { 0 })
     PAUSE(Integer.class),
 
-    @EventParamData(editor = true, desc = "Start a particular sound for a particular Stakeholder", params = { "Start for Stakeholder",
+    @EventParamData(editor = true, desc = "Start a sound for a specific Stakeholder", params = { "Stakeholder",
             "Sound" })
     @EventIDField(links = { STAKEHOLDERS, SOUNDS }, params = { 0, 1 })
     START(Integer.class, Integer.class),
@@ -39,7 +39,7 @@ public enum SoundEventType implements EventTypeEnum {
     @EventIDField(links = { SOUNDS }, params = { 0 })
     STARTED(Integer.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Stop a particular sound for a particular Stakeholder", params = { "Stop for Stakeholder",
+    @EventParamData(editor = true, desc = "Stop a sound for a specific Stakeholder", params = { "Stakeholder",
             "Sound" })
     @EventIDField(links = { STAKEHOLDERS, SOUNDS }, params = { 0, 1 })
     STOP(Integer.class, Integer.class),

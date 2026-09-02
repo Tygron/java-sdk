@@ -22,7 +22,7 @@ import nl.tytech.locale.unit.UnitType;
 import nl.tytech.util.StringUtils;
 
 /**
- * WatershedOverlay: watershedding algorithm overlay
+ * Watershed algorithm overlay
  *
  * @author Frank Baars
  */
@@ -30,7 +30,7 @@ public class WatershedOverlay extends ResultParentOverlay<WatershedResult, Water
 
     public enum DischargeMethod {
 
-        HEIGHT_MINIMA("Height minima", 0),
+        HEIGHT_MINIMA("Height Minima", 0),
 
         WATER_TERRAINS("Water Terrains", 1),
 

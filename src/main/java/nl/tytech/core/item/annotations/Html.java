@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 /**
  * Html
  *
- * This interface defines that a field contains html values.
+ * Indicates that a field contains HTML values.
  *
  * @author Maxim Knepfle
  */

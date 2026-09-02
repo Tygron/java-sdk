@@ -94,7 +94,7 @@ sealed public class GridInnerOverlay extends Overlay implements LargeCloneItem p
     private final void _validateLord() {
 
         if (getLord() != null && !getLord().isServerSide()) {
-            throw new IllegalArgumentException("Only Server contains grid data!");
+            throw new IllegalArgumentException("Only the Server contains grid data.");
         }
     }
 

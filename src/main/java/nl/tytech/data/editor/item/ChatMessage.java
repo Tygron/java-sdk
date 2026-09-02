@@ -33,17 +33,20 @@ public class ChatMessage extends Item {
 
     public enum AIState {
 
-        @Description("Message has not been processed jet")
+        @Description("Message has not been processed yet")
         NONE(0),
 
         @Description("Message queued for processing by " + EngineNC.AI_AGENT)
         QUEUING(1),
 
+        @Description(EngineNC.AI_AGENT + " is reading the message prompt")
+        READING(2),
+
         @Description(EngineNC.AI_AGENT + " is generating the message contents")
-        GENERATING(2),
+        GENERATING(3),
 
         @Description(EngineNC.AI_AGENT + " has finished")
-        FINISHED(3);
+        FINISHED(4);
 
         public static final AIState fromStep(int step) {
 
@@ -66,7 +69,7 @@ public class ChatMessage extends Item {
         }
 
         public final boolean isBusy() {
-            return this == QUEUING || this == GENERATING;
+            return this == QUEUING || this == READING || this == GENERATING;
         }
 
         @Override
@@ -77,7 +80,7 @@ public class ChatMessage extends Item {
 
     public enum Role {
 
-        @Description("System role is used to provide the " + EngineNC.AI_AGENT + " instructions, in the first message")
+        @Description("System role provides instructions to the " + EngineNC.AI_AGENT + " in the first message")
         SYSTEM,
 
         @Description("Intro or welcome message, not processed by the " + EngineNC.AI_AGENT)
@@ -140,7 +143,7 @@ public class ChatMessage extends Item {
         if (date > 0) {
             calendar.setTimeInMillis(date);
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss ");
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
         return sdf.format(calendar.getTime());
     }
 
@@ -154,6 +157,10 @@ public class ChatMessage extends Item {
 
     public Role getRole() {
         return role;
+    }
+
+    public boolean isError() {
+        return false;
     }
 
     public void setChannelID(Integer channelID) {

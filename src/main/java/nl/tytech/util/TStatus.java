@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.Response.Status;
 import nl.tytech.util.RestManager.TWebApplicationException;
 
 /**
- * Used HTML codes, most are default HTML codes, some Tygron Extensions
+ * Used HTTP codes, most are default HTTP codes, some Tygron Extensions
  *
  * @author Maxim Knepfle
  *
@@ -49,7 +49,7 @@ public enum TStatus {
     UNAUTHORIZED(Status.UNAUTHORIZED),
 
     /**
-     * Authentication is success, invalid rights for your role
+     * Authentication is successful, invalid rights for your role
      */
     FORBIDDEN(Status.FORBIDDEN),
 
@@ -73,9 +73,9 @@ public enum TStatus {
 
     GATEWAY_TIMEOUT(Status.GATEWAY_TIMEOUT),
 
-    SSL_HANDSHAKE_FAILED(525, "Failed to do a correct SSL Handshake"), // identical to Cloudflare error code
+    SSL_HANDSHAKE_FAILED(525, "SSL handshake failed"), // identical to Cloudflare error code
 
-    CONNECTION_FAILED(526, "Cannot establish a connection to Server"), // tygron unique
+    CONNECTION_FAILED(526, "Cannot establish a connection to the Server"), // tygron unique
 
     FAIR_CAPACITY(598,
             "Fair Usage Limit: The Server is almost at full capacity and therefore only two sessions are allowed per domain.\nIf possible close (keep-alive) sessions or try again later."), // unique
@@ -94,7 +94,7 @@ public enum TStatus {
             }
         }
 
-        // unknown to me
+        // status code not recognized
         return null;
     }
 

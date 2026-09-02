@@ -32,7 +32,7 @@ import nl.tytech.util.color.TColor;
  */
 public enum Category {
 
-    @Description("Affordable housing: Flats (various types), Social housing (various types), etc")
+    @Description("Includes various types of flats and social housing.")
     SOCIAL(ClientTerms.FUNCTION_CATEGORY_SOCIAL,
             // type is housing and is part of AllocationPlan
             true, true,
@@ -49,7 +49,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Mid-range homes and apartments, etc")
+    @Description("Includes various types of housing, apartments and shops with houses.")
     NORMAL(ClientTerms.FUNCTION_CATEGORY_NORMAL,
             // type is housing and is part of AllocationPlan
             true, true,
@@ -66,7 +66,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Luxurious villa's and penthouses, etc")
+    @Description("Includes luxury apartments, modern villas, old villas and monumental houses.")
     LUXE(ClientTerms.FUNCTION_CATEGORY_LUXE,
             // type is housing and is part of AllocationPlan
             true, true,
@@ -83,7 +83,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Asphalt roads (various types), Bicycle paths, Cobblestone roads, Train tracks, etc")
+    @Description("Includes asphalt roads (various types), bicycle paths, cobblestone roads and train tracks.")
     ROAD(ClientTerms.FUNCTION_CATEGORY_ROAD,
             // type is housing and is part of AllocationPlan
             false, false,
@@ -100,7 +100,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Paved areas like squares, playground, parking lots, etc")
+    @Description("Includes parking spaces, playgrounds, watersquares and skate parks.")
     PAVED_AREA(ClientTerms.FUNCTION_CATEGORY_PAVED_AREA,
             // type is housing and is part of AllocationPlan
             false, false,
@@ -117,7 +117,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Educational buildings, emergency classrooms, labs, primary schools, etc")
+    @Description("Includes basic educational buildings, emergency classrooms, labs and primary schools.")
     EDUCATION(ClientTerms.FUNCTION_CATEGORY_EDUCATION,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -134,7 +134,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 30),
 
-    @Description("Hospitals, Healthcare farms, Healthcare hotels, etc")
+    @Description("Includes hospitals, clinics, healthcare farms and healthcare hotels.")
     HEALTHCARE(ClientTerms.FUNCTION_CATEGORY_HEALTHCARE,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -151,7 +151,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 30),
 
-    @Description("Public cultivated Parks, Fountains, Vegetable gardens, etc")
+    @Description("Includes city parks, fountains, pocket parks and vegetable gardens.")
     PARK(ClientTerms.FUNCTION_CATEGORY_PARK,
             // type is housing and is part of AllocationPlan
             false, false,
@@ -168,7 +168,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Raw nature (mostly trees), Orchards, Reeds, etc")
+    @Description("Includes trees, orchards and reeds.")
     NATURE(ClientTerms.FUNCTION_CATEGORY_NATURE,
             // type is housing and is part of AllocationPlan
             false, false,
@@ -185,7 +185,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Industry (both heavy and normal), Silo's, Warehouses, Chimney, etc")
+    @Description("Includes small and heavy industry, bio-refineries, silos, warehouses and chimneys.")
     INDUSTRY(ClientTerms.FUNCTION_CATEGORY_INDUSTRY,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -202,7 +202,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 30),
 
-    @Description("Classic Offices, Luxurious Offices, Old Offices, Offices with shops, etc")
+    @Description("Includes classic, luxurious, old offices and offices with shops.")
     OFFICES(ClientTerms.FUNCTION_CATEGORY_OFFICES,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -219,7 +219,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 10),
 
-    @Description("Other funstions like a Cemetery, Trash bins, Windmills, etc")
+    @Description("Includes miscellaneous items such as cemeteries, trash bins, and windmills.")
     OTHER(ClientTerms.FUNCTION_CATEGORY_OTHER,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -236,7 +236,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Senior/Elderly people housing")
+    @Description("Includes standard and luxurious senior housing.")
     SENIOR(ClientTerms.FUNCTION_CATEGORY_SENIOR,
             // type is housing and is part of AllocationPlan
             true, true,
@@ -253,7 +253,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Underground buildings, including water objects: Drains, Culverts and Pumps, etc")
+    @Description("Includes culverts, pumps and inlets.")
     UNDERGROUND(ClientTerms.FUNCTION_CATEGORY_UNDERGROUND,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -270,7 +270,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Shops and restaurants: Convenience store, Office with shops, Houses with Shops, etc")
+    @Description("Includes convenience stores, offices with shops and houses with shops.")
     SHOPPING(ClientTerms.FUNCTION_CATEGORY_SHOPPING,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -287,7 +287,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 10),
 
-    @Description("Farm houses, barns but also (floating) crop fields, etc")
+    @Description("Includes farmhouses, barns, and floating crop fields.")
     AGRICULTURE(ClientTerms.FUNCTION_CATEGORY_AGRICULTURE,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -304,7 +304,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 30),
 
-    @Description("Sports center, Swimming Pool, Theatre, Tennis Court, etc")
+    @Description("Includes sports centers, swimming pools, theatres and tennis courts.")
     LEISURE(ClientTerms.FUNCTION_CATEGORY_LEISURE,
             // type is housing and is part of AllocationPlan
             false, true,
@@ -321,7 +321,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 50),
 
-    @Description("Affordable housing for Students")
+    @Description("Includes affordable student housing, various other student housing types, and student containers.")
     STUDENT(ClientTerms.FUNCTION_CATEGORY_STUDENT,
             // type is housing and is part of AllocationPlan
             true, true,
@@ -338,7 +338,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Gardens around houses")
+    @Description("Includes standard and fenced gardens.")
     GARDEN(ClientTerms.FUNCTION_CATEGORY_GARDEN,
             // type is housing and is part of AllocationPlan
             false, false,
@@ -355,7 +355,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Intersections for the road category")
+    @Description("Includes intersections of asphalt roads (various types), bicycle paths, cobblestone roads and train tracks.")
     INTERSECTION(ClientTerms.FUNCTION_CATEGORY_INTERSECTION,
             // type is housing and is part of AllocationPlan
             false, false,
@@ -372,7 +372,7 @@ public enum Category {
             // safety and disturbance distance m
             0, 0),
 
-    @Description("Bridges for the road category")
+    @Description("Includes bridges of asphalt roads (various types), bicycle paths, cobblestone roads and train tracks.")
     BRIDGE(ClientTerms.FUNCTION_CATEGORY_BRIDGE,
             // type is housing and is part of AllocationPlan
             false, false,

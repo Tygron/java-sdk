@@ -48,12 +48,12 @@ public abstract class Item implements Serializable, Comparable<Item> {
     }
 
     /**
-     * Comporator to sort items on ID.
+     * Comparator to sort items by ID.
      */
     public static final Comparator<Item> ID_SORT = (i1, i2) -> i1.id.compareTo(i2.id);
 
     /**
-     * Comporator to sort items on ID inverse.
+     * Comparator to sort items by ID in reverse order.
      */
     public static final Comparator<Item> INVERSE_ID_SORT = (i1, i2) -> i2.id.compareTo(i1.id);
 
@@ -70,7 +70,7 @@ public abstract class Item implements Serializable, Comparable<Item> {
     };
 
     /**
-     * Item with an ID larger or equal to this one are session specific.
+     * Items with an ID greater than or equal to this value are Session specific.
      */
     public static final int SPECIFIC_START_ID = 1000000;
 
@@ -115,13 +115,13 @@ public abstract class Item implements Serializable, Comparable<Item> {
     private Integer id = NONE;
 
     /**
-     * The lord is the master containing all lists. With the Lord an items can ask for another item in another list.
+     * The Lord is the master containing all lists. Using the Lord, an Item can request another Item from a different list.
      */
     @JsonIgnore
     private transient Lord lord = null;
 
     /**
-     * Version number in the session. Each time the items is changed the items gets a new version number.
+     * Version number in the Session. Each time the Item is changed, it receives a new version number.
      */
     private int version = 0;
 
@@ -294,7 +294,7 @@ public abstract class Item implements Serializable, Comparable<Item> {
         if (item == null) {
             return new ArrayList<>();
         }
-        // filter IDs lower then me (previous) and sort them in reverse
+        // Filter IDs lower than the current ID and sort them in reverse order
         return this.<I> getMap(mapLink).stream().filter(i -> i.getID().intValue() < itemID.intValue()).sorted(INVERSE_ID_SORT)
                 .collect(Collectors.toList());
     }
@@ -379,7 +379,7 @@ public abstract class Item implements Serializable, Comparable<Item> {
     }
 
     /**
-     * Check for correct asset names, not strange signs are allowed.
+     * Validate asset names; only permitted characters are allowed.
      */
     private String validAssetName(Object object, Field field) {
 

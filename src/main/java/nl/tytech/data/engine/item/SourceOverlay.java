@@ -20,7 +20,7 @@ import nl.tytech.data.core.item.Source;
 import nl.tytech.util.color.TColor;
 
 /**
- * Special overlay that can highlight (geo) sources
+ * Overlay for highlighting geographic sources
  *
  * @author Maxim Knepfle
  */
@@ -50,7 +50,7 @@ public class SourceOverlay extends Overlay {
     public TColor getSourceColor(Integer id) {
 
         Integer color = sources.get(id);
-        return color == null ? TColor.RED : new TColor(color);
+        return color == null ? restColor : new TColor(color);
     }
 
     public Collection<Integer> getSourceIDs() {

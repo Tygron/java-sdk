@@ -17,7 +17,7 @@ import nl.tytech.data.core.item.Item;
 import nl.tytech.util.StringUtils;
 
 /**
- * Hardware defintion
+ * Hardware definition
  *
  * @author Maxim Knepfle
  *

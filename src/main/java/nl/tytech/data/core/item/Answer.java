@@ -22,7 +22,7 @@ import nl.tytech.core.net.serializable.ItemID;
 import nl.tytech.core.net.serializable.MapLink;
 
 /**
- * Answer: This class keeps track of the popup answer
+ * This class keeps track of the popup answer.
  *
  * @author Maxim Knepfle
  */

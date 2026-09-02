@@ -15,7 +15,7 @@ package nl.tytech.data.engine.other;
 import nl.tytech.core.net.serializable.MapLink;
 
 /**
- * Logic Item: An Item that contains calculation logic (e.g. an excelsheet)
+ * An Item containing calculation logic (e.g., an Excel sheet).
  *
  * @author Maxim Knepfle
  */

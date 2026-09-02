@@ -33,6 +33,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.Internal;
 import nl.tytech.data.core.item.Item;
@@ -59,7 +60,7 @@ public class ObjectUtils {
     }
 
     /**
-     * Single instance, seems thread safe to call compare() on
+     * Single instance; thread-safe for compare() calls.
      */
     private static final AlphanumericComparator ALPHANUMERICAL_COMPARATOR = new AlphanumericComparator(new Collator() {
 
@@ -86,7 +87,7 @@ public class ObjectUtils {
             .compare(o1.toString() != null ? o1.toString() : StringUtils.EMPTY, o2.toString() != null ? o2.toString() : StringUtils.EMPTY);
 
     /**
-     * Constructs am object from a class with given parameters and values.
+     * Constructs an object from a class with given parameters and values.
      *
      * @param <T> Class/Object type
      * @param classz Class of the to be created object
@@ -135,7 +136,7 @@ public class ObjectUtils {
 
     /**
      * Create a clone of the object. The objects are serialized and de-serialized. During this process a deep copy is created of the object.
-     * This procedure is time consuming but takes time away from the programmer.
+     * This approach uses serialization to perform a deep copy.
      *
      * @param orginal Orginal object to be cloned
      * @return deep-copy clone of orginal.
@@ -146,7 +147,7 @@ public class ObjectUtils {
 
     /**
      * Create a clone of the object. The objects are serialized and de-serialized. During this process a deep copy is created of the object.
-     * This procedure is time consuming but takes time away from the programmer.
+     * This approach uses serialization to perform a deep copy.
      *
      * @param orginal Orginal object to be cloned
      * @param allowCloneItem allow manual cloning
@@ -155,7 +156,7 @@ public class ObjectUtils {
     @SuppressWarnings("unchecked")
     public static final <T> T deepCopy(final T original, boolean allowCloneItem) {
 
-        // null's are directly returned.
+        // Null values are returned directly.
         if (original == null) {
             return null;
         }
@@ -181,7 +182,7 @@ public class ObjectUtils {
             final ByteArrayInputStream bin = new ByteArrayInputStream(byteArrayStream.toByteArray());
             final ObjectInputStream inStream = new ObjectInputStream(bin);
 
-            // read cloned object, and cast it to T, this is unsafe!
+            // Read cloned object and cast to T; this cast is unchecked.
             clone = (T) inStream.readObject();
 
             // close streams
@@ -202,7 +203,7 @@ public class ObjectUtils {
 
     public static final Item[] deepCopyItems(final Item[] input, final Item[] unusedItems) {
 
-        // null's are directly returned.
+        // Null values are returned directly.
         if (input == null) {
             return null;
         }
@@ -213,7 +214,7 @@ public class ObjectUtils {
 
         try {
 
-            // recycle byte array (reduces memory usage?)
+            // Recycle byte array to reduce memory usage.
             byte[] bytes = new byte[BufferUtils.SIZE];
             Item[] clone = new Item[input.length];
 
@@ -234,7 +235,7 @@ public class ObjectUtils {
                 outStream.writeObject(input[i]);
                 outStream.flush();
 
-                // upgrade to byte array?
+                // Update reference to the internal buffer.
                 if (bytes != byteArrayStream.getBuf()) {
                     bytes = byteArrayStream.getBuf();
                 }
@@ -243,7 +244,7 @@ public class ObjectUtils {
                 final ByteArrayInputStream bin = new ByteArrayInputStream(bytes, 0, byteArrayStream.size());
                 final ObjectInputStream inStream = new ObjectInputStream(bin);
 
-                // read cloned object, and cast it to T, this is unsafe!
+                // Read cloned object and cast to T; this cast is unchecked.
                 clone[i] = (Item) inStream.readObject();
 
                 // close
@@ -253,7 +254,7 @@ public class ObjectUtils {
             return clone;
 
         } catch (NotSerializableException exp) {
-            TLogger.exception(exp, "Cannot clone collection, it must be serializable!");
+            TLogger.exception(exp, "Cannot clone collection; it must be serializable.");
         } catch (IOException exp) {
             TLogger.exception(exp, "Clone operation failed due to a Stream IO error.");
         } catch (ClassNotFoundException exp) {
@@ -279,7 +280,7 @@ public class ObjectUtils {
     }
 
     /**
-     * Returns the enum value or NULL when none found
+     * Returns the enum value, or null if none is found.
      */
     @SuppressWarnings("unchecked")
     public static final <T extends Enum<T>> T getEnum(String name, Class<?>... enumClasses) {
@@ -296,19 +297,27 @@ public class ObjectUtils {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static final <T> T getEnumAnnotation(Enum enumm, Class clasz) {
-
-        String fieldName = enumm.name();
+    public static final <T> T getEnumAnnotation(Enum enhum, Class clasz) {
         try {
-            return (T) enumm.getClass().getField(fieldName).getAnnotation(clasz);
+            return (T) enhum.getClass().getField(enhum.name()).getAnnotation(clasz);
         } catch (Exception e) {
             TLogger.exception(e);
+            return null;
         }
-        return null;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static final <T> T getEnumAnnotation(EventTypeEnum type, Class clasz) {
+        try {
+            return (T) type.getClass().getField(type.name()).getAnnotation(clasz);
+        } catch (Exception e) {
+            TLogger.exception(e);
+            return null;
+        }
     }
 
     /**
-     * Returns all interfaces of this class and its super's. If the class is an interface itself this is also returned.
+     * Returns all interfaces of this class and its superclasses. If the class is an interface, it is also included.
      *
      * @param type Class to check
      * @return List of interfaces
@@ -337,7 +346,7 @@ public class ObjectUtils {
     }
 
     /**
-     * Checks if the enum or class is public and does NOT have a Internal annotation
+     * Checks if the enum or class is public and does not have an Internal annotation.
      */
     public static boolean isPublic(Object object) {
 
@@ -351,7 +360,7 @@ public class ObjectUtils {
     }
 
     /**
-     * When true e.g. Double is single variant of both Double[] and double[]
+     * Returns true if the array class corresponds to the provided single class.
      */
     public static final boolean isSingleValueOfArray(final Class<?> arrayClass, final Class<?> singleClass) {
         return arrayClass.getSimpleName().equalsIgnoreCase(singleClass.getSimpleName() + "[]");
@@ -377,7 +386,7 @@ public class ObjectUtils {
             newClass = newClass.getSuperclass();
         }
 
-        // Here we go
+        // Begin field mapping process.
         try {
             final T newItem = targetClass.getDeclaredConstructor().newInstance();
             for (Field oldField : oldFields) {
@@ -459,7 +468,7 @@ public class ObjectUtils {
     }
 
     /**
-     * Check if this is an array list otherwise create one.
+     * Returns the list as an ArrayList, creating a new one if necessary.
      * @param list
      * @return
      */
@@ -480,7 +489,7 @@ public class ObjectUtils {
         HashMap<Object, Object> map = new HashMap<>();
         if (array != null) {
             if (array.length % 2 != 0) {
-                throw new IllegalArgumentException("Array cannot be uneven!");
+                throw new IllegalArgumentException("Array must have an even number of elements.");
             }
             for (int i = 0; i < array.length; i += 2) {
                 map.put(array[i], array[i + 1]);

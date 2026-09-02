@@ -184,7 +184,7 @@ public class EventValidationUtils {
          * Check for (allowed) NULL values and array length for server events
          */
         if (type.isServerSide()) {
-            EventIDField eventIDField = ObjectUtils.getEnumAnnotation((Enum<?>) type, EventIDField.class);
+            EventIDField eventIDField = ObjectUtils.getEnumAnnotation(type, EventIDField.class);
             int arrayLength = -1;
             loop: for (int index = 0; index < event.getContents().length; index++) {
                 Object content = event.getContent(index);

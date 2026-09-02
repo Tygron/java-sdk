@@ -167,7 +167,7 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
 
     public enum Type implements SettingType {
 
-        @Description("BGT (provides more details in roads, water, streetobjects, trees)")
+        @Description("BGT (provides more detail for roads, water, street objects, and trees)")
         NL_BGT(DEFAULT, Boolean.class, "true", Source.BGT),
 
         @Description("DEM Resolution")
@@ -177,7 +177,7 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
         SATELLITE_RESOLUTION(DEM, SatOption.class, SatOption.HIGH.name()),
 
         @Description("Risk Assessment (detect e.g. dangerous objects like LPG stations)")
-        @Deprecated(since = "Not available anymore since Dec 2023")
+        @Deprecated(since = "Unavailable since Dec 2023")
         RISK_ASSESSMENT(DEFAULT, Boolean.class, "false", Source.RISICOKAART),
 
         @Description("Agriculture (crop fields, grassland, etc)")
@@ -192,8 +192,8 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
         @Description("Water (rivers, canals, etc)")
         WATER(Group.WATER, Boolean.class, "true"),
 
-        @Description("Zoningplan (limitations to buildings)")
-        @Deprecated(since = "Not available anymore since June 2024")
+        @Description("Zoning plan (limitations to buildings)")
+        @Deprecated(since = "Unavailable since June 2024")
         ZONING(DEFAULT, Boolean.class, "false", Source.RUIMTELIJKE_PLANNEN),
 
         @Description("Dutch AHN elevation model version")
@@ -208,7 +208,7 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
         @Description("Apply DSM to DTM Thresholds for Land, Roads and Other.")
         DTM_DSM_THRESHOLDS(DEM, double[].class, "0.0 0.0 0.0", Source.NONE, "https://support.tygron.com/wiki/Terrain_height"),
 
-        @Description("Water (rivers, canals, etc)")
+        @Description("World water source (rivers, canals, etc)")
         WORLD_WATER(Group.WATER, WorldWaterOption.class, WorldWaterOption.OSM.name()),
 
         @Description("Use OpenStreetMap for Roads")
@@ -229,7 +229,7 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
         @Description("Use 3D BAG by tudelft3d for Building Geometries")
         BAG3D_GEOMETRIES(DEFAULT, Boolean.class, "false", Source.BAG3D),
 
-        @Description("Use I3S Scenelayer for Building Geometries " + EngineNC.BETA)
+        @Description("Use I3S Scenelayer for Building Geometries" + EngineNC.BETA)
         I3S_GEOMETRIES(DEFAULT, Boolean.class, "false", Item.NONE, "https://www.opengeospatial.org/standards/i3s"),
 
         @Description("INWEVA 24h Traffic Data")
@@ -326,7 +326,7 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
 
     public enum WorldWaterOption {
 
-        OSM("OpenStreetMap"), TOPO("Topograhic Map"), NONE("None");
+        OSM("OpenStreetMap"), TOPO("Topographic Map"), NONE("None");
 
         private final String dislayName;
 

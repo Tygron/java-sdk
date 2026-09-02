@@ -26,7 +26,7 @@ public class FGRTerrainLink extends TerrainGeoLink {
 
     public static final String UNDERGROUND_TYPE = "fgr";
 
-    public static final String ABREVIATION = "afk";
+    public static final String ABBREVIATION = "afk";
 
     @XMLValue
     private String fgrName = StringUtils.EMPTY;

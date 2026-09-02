@@ -20,7 +20,9 @@ import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
 import nl.tytech.core.item.annotations.EventParamData;
+import nl.tytech.core.item.annotations.Internal;
 import nl.tytech.core.item.annotations.Linked;
+import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.editor.item.ChatChannel.Tool;
 
 /**
@@ -33,6 +35,10 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
 
     @EventParamData(response = "ChatChannel ID")
     ADD(),
+
+    @EventParamData(desc = "Add ChatChannel related to specfic Item", params = { "Item MapLink", "Item ID" }, response = "ChatChannel IDs")
+    @EventIDField(sameLength = true)
+    ADD_ITEM_CHANNEL(MapLink[].class, Integer[].class),
 
     @EventIDField(sameLength = true, links = { CHAT_CHANNELS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
@@ -61,7 +67,7 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
     @EventParamData(desc = "Reset chat channel contents", params = {
-            "Channel ID" }, response = "Found channel and removed messages returns true otherwise false")
+            "Channel ID" }, response = "Returns true if the channel was found and messages were removed, otherwise false.")
     @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
     RESET(Integer[].class),
 
@@ -74,7 +80,24 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
     @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    ;
+    /**
+     * Internal events
+     */
+
+    @Internal
+    @EventParamData(desc = "Internal event used by AI Agents", params = { "Chat Channels", "Task content" })
+    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
+    ADD_AGENT_TASK(Integer.class, String.class),
+
+    @Internal
+    @EventParamData(desc = "Internal event used by AI Agents", params = { "Chat Channels", "Task ID", "Result" })
+    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
+    SET_AGENT_RESULT(Integer.class, Integer.class, String.class),
+
+    @Internal
+    @EventParamData(desc = "Internal event used by AI Agents", params = { "Chat Channels", "Task ID" })
+    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
+    REMOVE_AGENT_RESULT(Integer.class, Integer.class);
 
     private final List<Class<?>> classes;
 
@@ -97,7 +120,11 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
 
         return switch (this) {
             case ADD -> Integer.class;
+            case ADD_ITEM_CHANNEL -> Integer[].class;
             case SET_NAME -> Boolean.class;
+            case ADD_AGENT_TASK -> Boolean.class;
+            case SET_AGENT_RESULT -> Boolean.class;
+            case REMOVE_AGENT_RESULT -> String.class;
             case SET_INSTRUCTIONS -> Boolean.class;
             case RESET -> Boolean.class;
             case DUPLICATE -> Integer[].class;

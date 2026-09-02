@@ -40,6 +40,7 @@ import nl.tytech.data.core.item.EnumOrderedItem;
 import nl.tytech.data.core.item.Item;
 import nl.tytech.data.core.item.UniqueNamedItem;
 import nl.tytech.data.core.item.Word;
+import nl.tytech.data.editor.item.ChatChannel;
 import nl.tytech.util.StringUtils;
 import nl.tytech.util.concurrent.LocalThreadList;
 import nl.tytech.util.logger.TLogger;
@@ -207,6 +208,12 @@ public class EventManager {
         return SingletonHolder.INSTANCE._getVersion(getActiveConnectionID(), mapLink);
     }
 
+    public static final boolean hasAIChat() {
+
+        ClientItemMap<ChatChannel> map = getItemMap(MapLink.CHAT_CHANNELS);
+        return map.stream().anyMatch(c -> !c.isDomain());
+    }
+
     public static final boolean isFirstUpdateFinished() {
 
         Status status = SingletonHolder.INSTANCE._getActiveStatus();
@@ -265,11 +272,11 @@ public class EventManager {
         SingletonHolder.INSTANCE._setStatus(connectionID, status);
     }
 
-    private EventExecuter openglExecutor = runnable -> TLogger.warning("No OpenGL Event Executer is defined, Skip runnable!");
+    private EventExecuter openglExecutor = runnable -> TLogger.warning("No OpenGL Event Executer is defined; skipping runnable.");
 
     private Thread openglThread = null;
 
-    private EventExecuter fxExecutor = runnable -> TLogger.warning("No FX Executer is defined, Skip runnable!");
+    private EventExecuter fxExecutor = runnable -> TLogger.warning("No FX Executer is defined; skipping runnable.");
 
     private Thread fxThread = null;
 
@@ -333,7 +340,7 @@ public class EventManager {
     private final Network.SessionType _getActiveSessionType() {
         Status activeStatus = _getActiveStatus();
         if (activeStatus == null) {
-            TLogger.severe("Trying to access SessionType, however no status is available, please connect first.");
+            TLogger.severe("Unable to access SessionType because no status is available. Please establish a connection first.");
             return null;
         }
         return activeStatus.getSessionType();
@@ -458,7 +465,7 @@ public class EventManager {
         synchronized (listMap) {
             WeakList<EventListenerInterface> list = listMap.get(type);
             if (list == null) {
-                TLogger.warning("Attempting to remove listener from non existing type");
+                TLogger.warning("Attempting to remove listener from a non-existing type");
                 return;
             }
             list.remove(listener);
@@ -493,7 +500,7 @@ public class EventManager {
     private final void _setActiveConnection(Integer connectionID) {
 
         if (!this.activeConnectionID.equals(connectionID)) {
-            TLogger.info("Changing active connection id from: " + this.activeConnectionID + " to " + connectionID);
+            TLogger.info("Changing active connection ID from: " + this.activeConnectionID + " to " + connectionID);
             this.activeConnectionID = connectionID;
             Status status = _getStatus(this.activeConnectionID);
             EventManager.fire(ComEvent.MAPLINKS_INITIALIZED, status.getSessionType(), status.getProjectName(), status.getAppType(),
@@ -784,7 +791,7 @@ public class EventManager {
 
         switch (threadType) {
             case CALLER:
-                TLogger.severe("Execute me direct, no need to push!");
+                TLogger.severe("Direct execution performed; thread pushing skipped.");
                 runnable.run();
                 return;
             case PARALLEL:

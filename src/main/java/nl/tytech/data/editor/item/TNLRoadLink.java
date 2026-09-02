@@ -27,7 +27,7 @@ public class TNLRoadLink extends FunctionGeoLink {
     public enum TNLRoadHardnessType {
 
         /**
-         * Note: Maxim: order is IMPORTANT, first check longer names then smaller when using contains!
+         * Order is important; check longer names before shorter ones when using contains.
          */
         HALFVERHARD("half verhard"), //
         ONVERHARD("onverhard"), //
@@ -117,7 +117,7 @@ public class TNLRoadLink extends FunctionGeoLink {
 
     public enum TNLRoadUsageType {
 
-        // GEMENGD_VERKEER("gemengd verkeer"), // not usefull to detect! can be everything!
+        // GEMENGD_VERKEER("gemengd verkeer"), // Not useful for detection as it is too generic.
         SNELVERKEER("snelverkeer"), //
         VLIEGVERKEER("vliegverkeer"), //
         BUSVERKEER("busverkeer"), //

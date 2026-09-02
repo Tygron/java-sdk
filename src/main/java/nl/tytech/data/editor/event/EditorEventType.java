@@ -25,13 +25,13 @@ import nl.tytech.core.item.annotations.EventParamData;
  *
  * @author Maxim Knepfle
  */
-@Description("Generic Editor endpoints for creating a Project and updating.")
+@Description("Generic Editor endpoints for creating and updating a Project.")
 public enum EditorEventType implements EventTypeEnum {
 
     /**
      * When true activate the testrun and when false restore to previous point.
      */
-    @EventParamData(desc = "Start or stop a Scenario Testrun.", params = { "Start the Scenario Testrun (false means stop)",
+    @EventParamData(desc = "Start or stop a Scenario Testrun.", params = { "True to start the Scenario Testrun, false to stop.",
             "DEPRECATED (history graph)" }, hidden = 1)
     @EventIDField(nullable = { 1 })
     ACTIVATE_TESTRUN(Boolean.class, Boolean.class),
@@ -40,7 +40,7 @@ public enum EditorEventType implements EventTypeEnum {
      * Delete entire map set true to delete all (e.g. dimensions and do not fire events)
      */
     @EventParamData(desc = "Remove all geospatial data of the Project, such as buildings, areas, etc.", params = {
-            "Delete the map size and georeference too (false means deleting only the geodata)", })
+            "True to delete map size and georeference; false to delete only geospatial data.", })
     CLEAR_MAP(Boolean.class),
 
     /**
@@ -49,7 +49,7 @@ public enum EditorEventType implements EventTypeEnum {
     @EventParamData(desc = "Set the size of the map. This can only be done once.", params = { "Width of the map", "Height of the map", })
     SET_INITIAL_MAP_SIZE(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Set the Project's georeference center point to the provided coordinates and begin the process of automatically load in available data.", params = {
+    @EventParamData(desc = "Set the Project's georeference center point to the provided coordinates and begin automatically loading available data.", params = {
             "Center point (Longitude or X coordinate)", "Center point (Latitude or Y coordinate)",
             "Optional: Limit data loading to this Polygon", "Optional: Area of Interest Polygons" })
     @EventIDField(nullable = { 2, 3 })
@@ -67,7 +67,7 @@ public enum EditorEventType implements EventTypeEnum {
     UPDATE_WITH_ID(Boolean.class, Long.class),
 
     @EventParamData(desc = "Schedule a long-running update of all active overlays, indicators, panels and triggers.", params = {
-            "Scheduled time in milliseconds since epoch 1970. Note: use 0 for direct execution or -1 to cancel",
+            "Scheduled time in milliseconds since the Unix epoch. Use 0 for direct execution or -1 to cancel.",
             "Send Email to this address when finished (optional)",
             "Send SMS to this number when finished (optional)" }, defaults = { "0", "", "" })
     @EventIDField(nullable = { 0, 1, 2 })

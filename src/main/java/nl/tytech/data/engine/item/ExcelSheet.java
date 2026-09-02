@@ -30,7 +30,7 @@ public class ExcelSheet extends CertifiedDataItem {
 
     public static final String EXCEL_EXTENSION = "xlsx";
 
-    @JsonIgnore // keep on cloning for test run, dont send over web to client and dont save to xml
+    @JsonIgnore // Retain during cloning for test runs; do not transmit to the client or save to XML.
     private byte[] cachedBytes = null;
 
     public byte[] getCachedBytes() {

@@ -56,8 +56,8 @@ public class GeoTiffSpatial extends AbstractSpatial {
                 map.put(TerrainSpatial.TERRAIN_TYPE_ID, spatial.getTerrainTypeID());
             }
 
-            map.put(GEOTIFF_IDS, StringUtils.arrayToHumanString(spatial.getGeoTiffIDs(), StringUtils.HUMAN_STRING_SEPERATOR));
-            map.put(GEOTIFFS, StringUtils.arrayToHumanString(spatial.getGeoTiffs(mapMeasure), StringUtils.HUMAN_STRING_SEPERATOR));
+            map.put(GEOTIFF_IDS, StringUtils.arrayToHumanString(spatial.getGeoTiffIDs(), StringUtils.HUMAN_STRING_SEPARATOR));
+            map.put(GEOTIFFS, StringUtils.arrayToHumanString(spatial.getGeoTiffs(mapMeasure), StringUtils.HUMAN_STRING_SEPARATOR));
             map.put(AUTOMP, Boolean.toString(spatial.autoMP));
 
             map.put(SPATIAL_ID, spatial.getID());

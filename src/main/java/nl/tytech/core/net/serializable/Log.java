@@ -44,7 +44,7 @@ public abstract class Log implements Serializable, Comparable<Log> {
         SECURITY,
 
         /**
-         * Backup Logs
+         * Backup logs
          */
         BACKUP;
 
@@ -92,7 +92,7 @@ public abstract class Log implements Serializable, Comparable<Log> {
                 case SESSIONS:
                     return "Session related logging, e.g. startup time, session type.";
                 case BACKUP:
-                    return "Backup related logging, e.g. succesful or failed backup of GeoShare and Projects.";
+                    return "Backup related logging, e.g. successful or failed backup of GeoShare and Projects.";
                 default:
                     TLogger.severe("Unknown log type: " + this);
                     return null;
@@ -104,7 +104,7 @@ public abstract class Log implements Serializable, Comparable<Log> {
         }
     }
 
-    private static final String LOGS_DIR = "Logs" + File.separator;;
+    private static final String LOGS_DIR = "Logs" + File.separator;
 
     public static final String EXTENSION = ".def";
 

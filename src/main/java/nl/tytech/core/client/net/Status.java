@@ -48,7 +48,7 @@ import nl.tytech.data.engine.item.Setting;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * Status is a lord containing a lists on the client side. Status fires events when new updates of lists are received. Status is Thread safe
+ * Status is a Lord containing lists on the client side. It fires events when list updates are received and is thread-safe
  * using the Priority lock.
  *
  * @author Maxim Knepfle
@@ -139,11 +139,11 @@ public class Status implements Lord, ParallelUpdatable {
     private <I extends Item> void fireListDeleteEvent(final MapLink mapLink, final I[] argDeletedList) {
 
         if (mapLink == null) {
-            TLogger.severe("Cannot fire event for controller, no event enum constant is defined, maybe a server only control?");
+            TLogger.severe("Cannot fire event for controller; no event enum constant is defined.");
             return;
         }
 
-        // Retrieve the ID's and fire event, skip map reset item
+        // Retrieve the IDs and fire event, skipping map reset items
         final List<Integer> deletedIDs = new ArrayList<>();
         for (Item item : argDeletedList) {
             if (item.getID().equals(DeletedItem.MAP_RESET)) {
@@ -164,7 +164,7 @@ public class Status implements Lord, ParallelUpdatable {
     private <I extends Item> void fireListUpdateEvent(final MapLink type, final I[] argUpdatedList) {
 
         if (type == null) {
-            TLogger.severe("Cannot fire event for controller no event enum constant is defined, maybe a server only control?");
+            TLogger.severe("Cannot fire event for controller; no event enum constant is defined.");
             return;
         }
 
@@ -209,7 +209,7 @@ public class Status implements Lord, ParallelUpdatable {
 
         // check for null's
         if (type == null) {
-            TLogger.severe("Status does not contain a item map named NULL.");
+            TLogger.severe("Status does not contain an item map named NULL.");
             return null;
         }
 
@@ -219,7 +219,7 @@ public class Status implements Lord, ParallelUpdatable {
                 map = appType == AppType.LAUNCHER ? new ClientItemMap<>() : new StreamingClientItemMap<>(type, connection);
                 maps.put(type, map);
             } else {
-                TLogger.warning("Status does not (yet) contain a item map named " + type.name() + ".");
+                TLogger.warning("Status does not yet contain an item map named " + type.name() + ".");
             }
         }
         return map;
@@ -247,7 +247,7 @@ public class Status implements Lord, ParallelUpdatable {
     @Override
     public Network.SessionType getSessionType() {
         if (sessionType == null) {
-            TLogger.warning("Trying to access status SessionType, however no connection was made, please connect first.");
+            TLogger.warning("SessionType accessed before connection was established.");
             return null;
         }
         return sessionType;
@@ -280,7 +280,7 @@ public class Status implements Lord, ParallelUpdatable {
     protected final HashMap<MapLink, Integer> getVersionRequest() {
 
         if (!(Thread.currentThread() instanceof Poller)) {
-            TLogger.severe("Only the poll thread may call this method!");
+            TLogger.severe("Only the poll thread may call this method.");
             return null;
         }
 
@@ -298,7 +298,7 @@ public class Status implements Lord, ParallelUpdatable {
     private void interpolateSimTime() {
 
         synchronized (Status.this) {
-            // interpolate the old simtime.
+            // Interpolate the previous simulation time.
             this.simTimeMillis += System.currentTimeMillis() - lastTimeUpdate;
             this.lastTimeUpdate = System.currentTimeMillis();
         }
@@ -345,7 +345,7 @@ public class Status implements Lord, ParallelUpdatable {
         this.sessionType = sessionType;
         this.projectName = projectName;
 
-        // read in maps.
+        // Initialize maps.
         for (MapLink mapLink : DataLord.getAppLinks(sessionType, appType)) {
             this.maps.put(mapLink, new ClientItemMap());
         }
@@ -395,7 +395,7 @@ public class Status implements Lord, ParallelUpdatable {
             ClientItemMap<Item> map = new ClientItemMap<>(maps.get(type));
             int version = 0;
             for (Item item : update) {
-                // add status
+                // Assign this Status instance as the Lord of the item
                 item.setLord(this);
                 map.put(item.getID(), item);
 
@@ -432,7 +432,7 @@ public class Status implements Lord, ParallelUpdatable {
             if (serverVersion != null) {
                 updated = true;
 
-                // dump cached objects
+                // Clear cached objects
                 maps.stream().forEach(m -> m.clearCache());
 
                 // update maps
@@ -445,7 +445,7 @@ public class Status implements Lord, ParallelUpdatable {
                     removeFromMap(MapLink.valueOf(entry.getKey()), entry.getValue());
                 }
 
-                // set my stakeholder and time first!
+                // Initialize stakeholder and simulation time first
                 for (Entry<String, Item[]> entry : serverVersion.getItems().entrySet()) {
                     MapLink mapLink = MapLink.valueOf(entry.getKey());
                     if (mapLink.equals(MapLink.STAKEHOLDERS)) {

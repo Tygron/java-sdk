@@ -135,7 +135,7 @@ public enum PanelEnum implements PanelType {
     }
 
     /**
-     * Back panels are placed on the back of the ui.
+     * Back panels are placed at the back of the UI.
      * @return
      */
     public boolean isBackPanel() {
@@ -143,7 +143,7 @@ public enum PanelEnum implements PanelType {
     }
 
     /**
-     * Base panels are always visible and not related to special functionality like e.e. a message triggers a message panel.
+     * Base panels are always visible and not related to special functionality (e.g., a message triggering a message panel).
      * @return
      */
     public boolean isBasePanel() {
@@ -154,7 +154,7 @@ public enum PanelEnum implements PanelType {
     }
 
     /**
-     * Helper panels are base panels or not special functionality related
+     * Helper panels are base panels or those not related to special functionality.
      */
     public boolean isHelper() {
         return isBasePanel() || this == OVERLAY_LEGEND_PANEL || this == SELECTION_LEGEND_PANEL || this == ACTION_LOG_PANEL

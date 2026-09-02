@@ -52,7 +52,7 @@ import nl.tytech.data.engine.serializable.TimeState;
  *
  * @author Maxim Knepfle
  */
-@Description("Endpoints for user actions (e.g. build building) in a testrun/impact Session.")
+@Description("Endpoints for user actions (e.g., building construction) in a test run/impact Session.")
 public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMyStakeholderEvent {
 
     @EventParamData(editor = true, desc = "Set a category active for a stakeholder.", params = { "Stakeholder ID", "ActionMenu ID",
@@ -78,7 +78,7 @@ public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMySta
     @EventIDField(links = { STAKEHOLDERS, BUILDINGS }, params = { 0, 1 })
     BUILDING_PLAN_DEMOLISH(ClientTerms.ACTION_LOG_DEMOLISH, Integer.class, Integer.class),
 
-    @EventParamData(desc = "Plan the demolition of a buildings in the given polygon in the MAQUETTE map.", params = { "Stakeholder ID",
+    @EventParamData(desc = "Plan the demolition of buildings in the given polygon in the MAQUETTE map.", params = { "Stakeholder ID",
             "Multipolygon describing the demolition area", "Ground type: SURFACE or UNDERGROUND" }, response = "Action Log ID")
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     BUILDING_PLAN_DEMOLISH_POLYGON(ClientTerms.ACTION_LOG_DEMOLISH, Integer.class, MultiPolygon.class, Building.Layer.class),
@@ -88,17 +88,17 @@ public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMySta
     @EventIDField(links = { STAKEHOLDERS, UPGRADE_TYPES }, params = { 0, 1 })
     BUILDING_PLAN_UPGRADE(ClientTerms.ACTION_LOG_UPGRADE, Integer.class, Integer.class, MultiPolygon.class),
 
-    @EventParamData(desc = "Revert polygon to orginal CURRENT map situation.", params = { "Stakeholder ID",
+    @EventParamData(desc = "Revert the polygon to the original state of the current map.", params = { "Stakeholder ID",
             "Multipolygon describing the to be reverted area" }, response = "Action Log ID")
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     BUILDING_REVERT_POLYGON(ClientTerms.ACTION_LOG_REVERT, Integer.class, MultiPolygon.class),
 
-    @EventParamData(desc = "Apply a bundle of events on the serverside for a particular stakeholder.", params = { "Stakeholder ID",
+    @EventParamData(desc = "Apply a bundle of events on the server side for a particular stakeholder.", params = { "Stakeholder ID",
             "Eventbundle ID" }, response = "Action Log ID")
     @EventIDField(links = { STAKEHOLDERS, EVENT_BUNDLES }, params = { 0, 1 })
     EVENT_BUNDLE_APPLY_SERVER_EVENTS(ClientTerms.ACTION_LOG_APPLIED, Integer.class, Integer.class),
 
-    @EventParamData(desc = "Buy the land definied by the polygon for given price.", params = { "Stakeholder ID",
+    @EventParamData(desc = "Buy the land defined by the polygon for a given price.", params = { "Stakeholder ID",
             "Multipolygon describing the area to be bought", "Price per square meter" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     MAP_BUY_LAND(Integer.class, MultiPolygon.class, Double.class),
@@ -119,17 +119,17 @@ public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMySta
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     MAP_RAISE_LAND(ClientTerms.ACTION_LOG_RAISE_LAND, Integer.class, MultiPolygon.class),
 
-    @EventParamData(desc = "Buy the land definied by the polygon for given price.", params = { "Land owner", "Proposed buyer of the land",
+    @EventParamData(desc = "Sell the land defined by the polygon for a given price.", params = { "Land owner", "Proposed buyer of the land",
             "Multipolygon describing the area to be sold", "Price per square meter" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     MAP_SELL_LAND(Integer.class, Integer.class, MultiPolygon.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Cancel a measure planned by an Stakeholder while in pre-construction phase.", params = {
+    @EventParamData(editor = true, desc = "Cancel a measure planned by a Stakeholder while in pre-construction phase.", params = {
             "Stakeholder ID", "Measure ID" }, response = "Action Log ID")
     @EventIDField(links = { STAKEHOLDERS, MEASURES }, params = { 0, 1 })
     MEASURE_CANCEL_CONSTRUCTION(ClientTerms.ACTION_LOG_MEASURE_CANCEL, Integer.class, Integer.class),
 
-    @EventParamData(editor = true, desc = "Plan construction of a measure by an Stakeholder that is not yet planned.", params = {
+    @EventParamData(editor = true, desc = "Plan construction of a measure by a Stakeholder that is not yet planned.", params = {
             "Stakeholder ID", "Measure ID" }, response = "Action Log ID")
     @EventIDField(links = { STAKEHOLDERS, MEASURES }, params = { 0, 1 })
     MEASURE_PLAN_CONSTRUCTION(ClientTerms.ACTION_LOG_MEASURE_BUILD, Integer.class, Integer.class),
@@ -144,23 +144,23 @@ public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMySta
     @EventIDField(links = { STAKEHOLDERS, NET_CLUSTERS, }, params = { 0, 1 })
     NET_CLUSTER_SET_LOAD_ATTRIBUTE(Integer.class, Integer.class, String.class, Double.class),
 
-    @EventParamData(editor = true, desc = "For each NetLoad of a NetCluster, set the value of the attribute.", params = {
-            "Initiating Stakeholder ID", "NetCluster ID", "Attribute name", "Value" })
+    @EventParamData(editor = true, desc = "For each NetLoad of a NetCluster, set the value of the attributes.", params = {
+            "Initiating Stakeholder ID", "NetCluster ID", "Attribute names", "Value arrays" })
     @EventIDField(links = { STAKEHOLDERS, NET_CLUSTERS, }, params = { 0, 1 })
     NET_CLUSTER_SET_LOAD_ATTRIBUTES(Integer.class, Integer.class, String[].class, double[][].class),
 
-    @EventParamData(editor = true, desc = "Set TimeState for all Net Loads of Net Cluster.", params = { "Initiating Stakeholder ID",
+    @EventParamData(editor = true, desc = "Set the TimeState for all Net Loads of a NetCluster.", params = { "Initiating Stakeholder ID",
             "NetCluster ID", "Time State (NOTHING, REQUEST_CONSTRUCTION_APPROVAL, REQUEST_ZONING_APPROVAL, READY)" })
     @EventIDField(links = { STAKEHOLDERS, NET_CLUSTERS }, params = { 0, 1 })
     NET_CLUSTER_SET_STATE(Integer.class, Integer.class, TimeState.class),
 
-    @EventParamData(editor = true, desc = "Set TimeState for Net Loads of Net Cluster, based on NetType.", params = {
+    @EventParamData(editor = true, desc = "Set the TimeState for Net Loads of a NetCluster, based on NetType.", params = {
             "Initiating Stakeholder ID", "NetCluster ID", "Net Type",
             "TimeState (NOTHING, REQUEST_CONSTRUCTION_APPROVAL, REQUEST_ZONING_APPROVAL, READY)" })
     @EventIDField(links = { STAKEHOLDERS, NET_CLUSTERS }, params = { 0, 1 })
     NET_CLUSTER_SET_STATE_FOR_NET_TYPE(Integer.class, Integer.class, NetType.class, TimeState.class),
 
-    @EventParamData(editor = true, desc = "Set TimeState for all Net Loads of Net Cluster.", params = { "Initiating Stakeholder ID",
+    @EventParamData(editor = true, desc = "Set the TimeState for all Net Loads of a NetCluster.", params = { "Initiating Stakeholder ID",
             "NetCluster ID", "NetType Array", "Time State Array (NOTHING, REQUEST_CONSTRUCTION_APPROVAL, REQUEST_ZONING_APPROVAL, READY)" })
     @EventIDField(links = { STAKEHOLDERS, NET_CLUSTERS }, params = { 0, 1 })
     NET_CLUSTER_SET_STATES(Integer.class, Integer.class, NetType[].class, TimeState[].class),
@@ -178,7 +178,7 @@ public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMySta
     @EventIDField(links = { STAKEHOLDERS, POPUPS }, params = { 0, 1 })
     POPUP_ANSWER_WITH_DATE(Integer.class, Integer.class, Integer.class, Long.class),
 
-    @EventParamData(desc = "Stakeholder restores land back to orginal state.", params = { "Stakeholder ID",
+    @EventParamData(desc = "Stakeholder restores land to its original state.", params = { "Stakeholder ID",
             "Area to be restored" }, response = "Action Log ID")
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     RESTORE_LAND(ClientTerms.ACTION_LOG_RESTORED_LAND, Integer.class, MultiPolygon.class),
@@ -193,7 +193,7 @@ public enum ParticipantEventType implements SessionEventTypeEnum, StartWithMySta
     @EventIDField(links = { STAKEHOLDERS, ZONES, }, params = { 0, 1 })
     ZONE_ADD_FUNCTION_CATEGORY(Integer.class, Integer.class, Category.class),
 
-    @EventParamData(desc = "Remove a FunctionCategory so it cannot be build within the zone.", params = { "Stakeholder ID", "Zone ID",
+    @EventParamData(desc = "Remove a FunctionCategory so it cannot be built within the zone.", params = { "Stakeholder ID", "Zone ID",
             "FunctionCategory" })
     @EventIDField(links = { STAKEHOLDERS, ZONES, }, params = { 0, 1 })
     ZONE_REMOVE_FUNCTION_CATEGORY(Integer.class, Integer.class, Category.class),

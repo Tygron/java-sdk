@@ -16,7 +16,7 @@ import java.util.List;
 import nl.tytech.data.engine.serializable.LegendEntry;
 
 /**
- * Utils that convert grid values to legend colors
+ * Utility class for converting grid values to legend colors.
  *
  * @author Maxim Knepfle
  *

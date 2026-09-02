@@ -44,7 +44,7 @@ public enum EditorNeighborhoodEventType implements IndicatorEventTypeEnum {
     DUPLICATE(Integer[].class),
 
     @EventParamData(desc = "Import Neighborhood Collection", params = { "Collection of Neighborhood geometries", "Neighborhood Names",
-            "Attribute Names", "Numeric Attribute Values", "Buffer for Points and Lines to make Polygons (optional)",
+            "Attribute Names", "Numeric Attribute Values", "Buffer for creating Polygons from Points and Lines (optional)",
             "Source (optional)" }, defaults = { "", "", "", "", "" + Setting.DEFAULT_PL_BUFFER, "" }, exampleAmount = { 3, 3, 2, 6 })
     @EventIDField(links = { SOURCES }, params = { 5 }, nullable = { 4, 5 })
     IMPORT(GeometryCollection.class, String[].class, String[].class, double[][].class, Double.class, Integer.class),

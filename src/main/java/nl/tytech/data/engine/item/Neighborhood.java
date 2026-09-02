@@ -21,7 +21,6 @@ import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
 import nl.tytech.data.core.serializable.MapType;
-import nl.tytech.data.engine.item.Area.AreaAttribute;
 import nl.tytech.data.engine.other.ActiveItem;
 import nl.tytech.util.ItemIntersector;
 import nl.tytech.util.ItemIntersector.IntersectorItem;
@@ -83,7 +82,7 @@ public class Neighborhood extends PolygonAttributeItem implements ActiveItem, In
     }
 
     @Override
-    public GeometryCollection getIntersectorGeometies(MapType mapType) {
+    public GeometryCollection getIntersectorGeometries(MapType mapType) {
         return this.getMultiPolygon();
     }
 
@@ -101,7 +100,7 @@ public class Neighborhood extends PolygonAttributeItem implements ActiveItem, In
 
     @Override
     public boolean isActive() {
-        return this.getAttribute(AreaAttribute.ACTIVE) > 0.0;
+        return this.getAttribute(NeighborhoodAttribute.ACTIVE) > 0.0;
     }
 
     public final boolean isCovers(MapType mapType, int rasterID, int rasters, double cellM, Geometry superCell, int cacheID) {

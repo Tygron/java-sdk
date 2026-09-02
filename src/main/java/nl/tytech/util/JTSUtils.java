@@ -140,7 +140,7 @@ public class JTSUtils {
 
     public static final Geometry bufferSimple(Geometry geometry, double distance, BufferParameters params) {
 
-        // buffer zero for everything smaller the precision
+        // Buffer to zero for values smaller than the precision
         if (distance == 0.0 || Math.abs(distance) < PRECISION) {
             return BufferOp.bufferOp(geometry, 0.0, params);
         }
@@ -164,7 +164,7 @@ public class JTSUtils {
             return;
         }
 
-        // clear myself
+        // Clear user data for this geometry
         geometry.setUserData(null);
 
         // clear children
@@ -240,7 +240,7 @@ public class JTSUtils {
          * Fall back scenario adding border margin
          */
 
-        // point cannot to negative margin test, thus must be contained in geom 1
+        // Point cannot undergo negative margin testing; it must be contained in geometry 1
         if (geometry2 instanceof Point) {
             // both are points, skip overlap test (unlikely)
             if (preparedGeometry1.getGeometry() instanceof Point) {
@@ -405,7 +405,7 @@ public class JTSUtils {
         // check validity
         Geometry result = validate(geometry);
 
-        // clone to make sure its unique
+        // Clone to ensure it is unique
         if (result == geometry) {
             result = clone(result);
         }
@@ -429,11 +429,11 @@ public class JTSUtils {
      */
     public static final MultiPolygon createMP(SequencedCollection<? extends Geometry> geometries) {
 
-        // no polys is empty
+        // Return EMPTY if no polygons are provided
         if (geometries == null || geometries.isEmpty()) {
             return EMPTY;
         }
-        // when only single polygonal then validate and clone
+        // Validate and clone if there is only a single polygonal geometry
         if (geometries.size() == 1) {
             Geometry g = geometries.getFirst();
             if (!isGeometryCollection(g)) {
@@ -445,11 +445,11 @@ public class JTSUtils {
         for (Geometry geometry : geometries) {
             // validate and or fix it first
             geometry = validate(geometry);
-            // extract polygons to list validPolyons
+            // Extract polygons to the validPolygons list
             PolygonExtracter.getPolygons(geometry, validPolyons);
         }
 
-        // tricky bit, geom precision must be applied here to prevent Topology Exceptions
+        // Apply geometry precision to prevent TopologyExceptions
         Polygon[] pa = new Polygon[validPolyons.size()];
         GeometryCollection gc = new GeometryCollection(validPolyons.toArray(pa), overlayOperationFactory);
         Geometry result = toLocalPrecision(gc); // reduce and do buffer here
@@ -722,7 +722,7 @@ public class JTSUtils {
 
         Geometry result = differenceOperation(base, remove);
 
-        // maybe also do an erode dilate
+        // Apply erosion and dilation if requested
         if (erodeAndDilate) {
             result = erodeAndDilate(result, ERODE_DILATE_MARGIN);
         }
@@ -754,7 +754,7 @@ public class JTSUtils {
                 }
             }
         } else if (!isEmpty(geometry1) && !isEmpty(geometry2)) {
-            // BOTH geometries MUST contain something or be a point/line
+            // Both geometries must contain data or be a point/line
             double distance = geometry1.distance(geometry2);
             if (distance < closest) {
                 closest = distance;
@@ -1077,7 +1077,7 @@ public class JTSUtils {
                 Envelope envelope = polygon.getEnvelopeInternal();
 
                 if (envelope.getArea() > maxArea) {
-                    // note: dividing into quarts and then again is faster than direct division into many
+                    // Note: dividing into quarters recursively is faster than a single large division
                     for (Envelope qenv : subdivideEnvelope(envelope)) {
                         MultiPolygon envMP = intersection(childGeometry, createRectangle(qenv));
                         if (hasArea(envMP)) { // maybe empty intersection
@@ -1144,13 +1144,13 @@ public class JTSUtils {
                 }
                 Geometry geom = createPolygon(coordinates);
 
-                // Note: Sometimes the algorithm above freaks out, reduce roof polygons orginal Poly
+                // Note: The algorithm may produce unstable results; clip against original polygon
                 result.addAll(getPolygons(intersectionOperation(geom, originalPolygon)));
                 remainder = differenceOperation(remainder, geom);
             }
         }
 
-        // Note: add large remaining polygons the skeleton algorithm migth have missed
+        // Note: Add large remaining polygons that the skeleton algorithm might have missed
         for (Polygon p : getPolygons(remainder)) {
             if (p.getArea() > 5.0) {
                 result.add(p);
@@ -1192,7 +1192,7 @@ public class JTSUtils {
             for (Loop<SharedEdge> edgeLoop : face.edges) {
                 for (SharedEdge edge : edgeLoop) {
 
-                    // add only edges that to not intersect with outer polygon contour
+                    // Add only edges that do not intersect with the outer polygon contour
                     if (!bottomPoints.contains(edge.start) && !bottomPoints.contains(edge.end)) {
 
                         Coordinate start = new Coordinate(edge.start.x, edge.start.y);
@@ -1466,7 +1466,7 @@ public class JTSUtils {
             // TLogger.warning("Intersect fail on: " + preparedGeometry1.getGeometry().toString() + " and " + geometry2.toString());
         }
 
-        // point cannot to negative margin test, thus must be contained in geom 1
+        // Point cannot undergo negative margin testing; it must be contained in geometry 1
         if (geometry2 instanceof Point) {
 
             // both are points, skip overlap test

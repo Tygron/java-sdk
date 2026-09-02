@@ -74,7 +74,7 @@ public class ExampleTest {
         User user = apiConnection.fireServerEvent(UserServiceEventType.GET_MY_USER);
         assertNotNull(user);
 
-        assertTrue("You need to be at least EDITOR to run these tests!",
+        assertTrue("User access level must be at least EDITOR to run these tests.",
                 user.getMaxAccessLevel().ordinal() >= AccessLevel.EDITOR.ordinal());
     }
 
@@ -101,7 +101,7 @@ public class ExampleTest {
 
         assertTrue(sessionConnection.connect());
 
-        // add event handler to receive updates on
+        // Add event handler to receive updates
         eventHandler = new ExampleEventHandler();
     }
 
@@ -118,7 +118,7 @@ public class ExampleTest {
         sessionConnection.fireServerEvent(true, null, Format.DEFAULT_EVENT, EditorStakeholderEventType.ADD_WITH_TYPE_AND_ACTIVE,
                 Stakeholder.Type.CIVILIAN, true);
 
-        // wait on first updates (seperate thread)
+        // wait on first updates (separate thread)
         boolean updated = false;
         for (int i = 0; i < 60; i++) {
             if (eventHandler.isMapUpdated() && eventHandler.isStakeholderUpdated()) {
@@ -159,7 +159,7 @@ public class ExampleTest {
 
         assertTrue(sessionConnection.connect());
 
-        // add event handler to receive updates on
+        // Add event handler to receive updates
         eventHandler = new ExampleEventHandler();
     }
 
@@ -170,7 +170,7 @@ public class ExampleTest {
         ItemMap<Stakeholder> stakeholders = EventManager.getItemMap(MapLink.STAKEHOLDERS);
         for (Stakeholder stakeholder : stakeholders) {
             stakeholderID = stakeholder.getID();
-            TLogger.info("Selecting first stakeholder: " + stakeholder.getName() + " to play!");
+            TLogger.info("Selecting stakeholder: " + stakeholder.getName());
             break;
         }
         sessionConnection.fireServerEvent(true, null, Format.DEFAULT_EVENT, LogicEventType.STAKEHOLDER_SELECT, stakeholderID,
@@ -189,7 +189,7 @@ public class ExampleTest {
         for (Function function : functions) {
             if (function.getCategories().contains(Category.ROAD)) {
                 functionID = function.getID();
-                TLogger.info("Selecting first road function: " + function.getName() + " to build!");
+                TLogger.info("Selecting road function: " + function.getName());
                 break;
             }
         }

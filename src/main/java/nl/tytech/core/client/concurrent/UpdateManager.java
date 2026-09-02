@@ -21,16 +21,16 @@ import nl.tytech.util.ThreadUtils;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * You can add random objects to this class that need to updated and do not belong in the OpenGL thread. Update freq is 60FPS by default.
+ * Adds objects that require updates outside of the OpenGL thread. The default update frequency is 60 FPS.
  *
- * Note objects are weak referenced, thus removed when no one links!
+ * Objects are weakly referenced and will be removed when no longer strongly referenced.
  *
  * @author Maxim Knepfle
  */
 public class UpdateManager {
 
     /**
-     * Internal class that counts the frame rate for each thread (can be improved).
+     * Internal class that counts the frame rate for each thread.
      */
     public static class FPSCounter implements OpenGLUpdatable, ParallelUpdatable, Updatable {
 
@@ -76,7 +76,7 @@ public class UpdateManager {
     private class ParallelUpdater extends Thread {
 
         /**
-         * Max fps in MS at 30 fps
+         * Maximum time per frame in milliseconds for 30 FPS
          */
         private static final float MAX_TPF = 1000f / 30f;
 
@@ -97,7 +97,7 @@ public class UpdateManager {
             // extra time to make up for the delay of a slow previous frame.
             float bonusTime = 0;
 
-            // keep looping until the app dies (thread is daemon)
+            // loop until the application terminates (thread is daemon)
             while (active) {
                 tpf = System.currentTimeMillis() - start;
                 start = System.currentTimeMillis();
@@ -111,11 +111,11 @@ public class UpdateManager {
                     System.gc();
                 }
 
-                // Limit the sleep time to max FPS and min 0.
+                // Limit the sleep time between 0 and the target frame time.
                 executionTime = System.currentTimeMillis() - start;
                 sleepTime = MAX_TPF - executionTime + bonusTime;
 
-                // when this frame was way too slow, add a bonus time to the next frame.
+                // If the current frame exceeded the target time, compensate in the next frame.
                 bonusTime = sleepTime < 0 ? sleepTime : 0;
 
                 if (sleepTime > 0) {
@@ -149,7 +149,7 @@ public class UpdateManager {
     }
 
     /**
-     * Execute the Runnable in the Parallel thread
+     * Executes the Runnable in the Parallel thread.
      *
      * @param runnable
      */
@@ -178,7 +178,7 @@ public class UpdateManager {
     }
 
     /**
-     * Do not call this method except from main OpenGL loop update method.
+     * This method should only be called from the main OpenGL loop update method.
      * @param tpf
      */
     public static void updateOpenGL(float tpf) {
@@ -236,33 +236,21 @@ public class UpdateManager {
                 TLogger.exception(exp);
             }
         } else {
-            // Add the parallel thread
+            // Queue the runnable for execution by the Parallel thread
             fifo.addLast(runnable);
         }
     }
 
     private void _removeOpenGL(Object updatable) {
         synchronized (tweakOpenGLUpdatables) {
-            for (WeakReference<OpenGLUpdatable> updatableReference : tweakOpenGLUpdatables) {
-                // check for both objects!
-                if (updatableReference.get() == updatable || updatableReference == updatable) {
-                    tweakOpenGLUpdatables.remove(updatableReference);
-                    break;
-                }
-            }
+            tweakOpenGLUpdatables.removeIf(ref -> ref.get() == updatable || ref == updatable);
             openGLUpdatables = new ArrayList<WeakReference<OpenGLUpdatable>>(tweakOpenGLUpdatables);
         }
     }
 
     private void _removeParallel(Object updatable) {
         synchronized (tweakParallelUpdatables) {
-            for (WeakReference<ParallelUpdatable> updatableReference : tweakParallelUpdatables) {
-                // check for both objects!
-                if (updatableReference.get() == updatable || updatableReference == updatable) {
-                    tweakParallelUpdatables.remove(updatableReference);
-                    break;
-                }
-            }
+            tweakParallelUpdatables.removeIf(ref -> ref.get() == updatable || ref == updatable);
             parallelUpdatables = new ArrayList<>(tweakParallelUpdatables);
         }
     }
@@ -270,12 +258,12 @@ public class UpdateManager {
     private final boolean _shutdown(long waitMS) {
 
         long start = System.currentTimeMillis();
-        // first wait 1 minute for jobs to finish
+        // Wait for jobs to finish within the specified timeout.
         while (!fifo.isEmpty() && System.currentTimeMillis() - start < waitMS) {
             Thread.yield();
         }
         parallelUpdater.stopThread();
-        // second wait 1 minute for thread to die
+        // Wait for the thread to terminate within the specified timeout.
         while (parallelUpdater.isAlive() && System.currentTimeMillis() - start < waitMS) {
             Thread.yield();
         }
@@ -290,7 +278,7 @@ public class UpdateManager {
             if (updatable != null) {
                 updatable.updateOpenGL(tpf);
             } else {
-                // remove and break, no problem skipping one frame
+                // Remove reference and stop processing for this frame.
                 _removeOpenGL(updatable);
                 break;
             }
@@ -299,7 +287,7 @@ public class UpdateManager {
 
     private void updateParallel(float tpf) {
 
-        // execute runners
+        // Execute queued Runnables
         Runnable runnable = fifo.pollFirst();
         while (runnable != null) {
             try {
@@ -316,7 +304,7 @@ public class UpdateManager {
             if (updatable != null) {
                 updatable.updateParallel(tpf);
             } else {
-                // remove and break, no problem skipping one frame
+                // Remove reference and stop processing for this frame.
                 _removeParallel(updatable);
                 break;
             }

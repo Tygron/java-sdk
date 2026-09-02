@@ -20,7 +20,7 @@ import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.util.MathUtils;
 
 /**
- * Special overlay overlaying a given image
+ * Overlay applied to a given image
  *
  * @author Maxim Knepfle
  */
@@ -103,7 +103,7 @@ public class ImageOverlay extends Overlay {
 
     public void setOverlayImageName(int i, String imageName) {
 
-        if (i < getNumOverlayImages() && !this.imageNames.get(i).equals(imageName)) {
+        if (i >= 0 && i < getNumOverlayImages() && !this.imageNames.get(i).equals(imageName)) {
             this.imageNames.set(i, imageName);
             this.incrementImageVersion();
         }

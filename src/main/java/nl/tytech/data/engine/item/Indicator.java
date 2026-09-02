@@ -32,7 +32,7 @@ import nl.tytech.util.ObjectUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * Indicator that shows a Stakeholder how he/she is doing.
+ * Indicator that displays the performance or status of a Stakeholder.
  * @author Maxim Knepfle
  *
  */
@@ -292,7 +292,7 @@ public class Indicator extends AttributeItem implements ExcelItem, ActiveItem, I
     }
 
     /**
-     * @return The indicator s short name
+     * @return The indicator's short name
      */
     public String getShortName() {
         return shortName == null || StringUtils.EMPTY.equals(shortName) ? getName() : shortName;

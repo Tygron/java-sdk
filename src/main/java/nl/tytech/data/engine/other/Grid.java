@@ -55,14 +55,14 @@ public abstract class Grid {
     }
 
     /**
-     * Fill a copy of this matrix with clamped values
+     * Fill a copy of this matrix with clamped values using a multiplier
      */
     public float[][] toMatrix(float min, float max) {
         return toMatrix(1f, min, max);
     }
 
     /**
-     * Fill a copy of this matrix with clamped values
+     * Fill a copy of this matrix with clamped values using a multiplier
      */
     public float[][] toMatrix(float multiplier, float min, float max) {
         return toMatrix(new float[getHeight()][getWidth()], multiplier, min, max);
@@ -76,7 +76,7 @@ public abstract class Grid {
     }
 
     /**
-     * Fill target matrix with multiplier in clamped values
+     * Fill target matrix with clamped values using a multiplier
      */
     public final float[][] toMatrix(float[][] target, float multiplier, float min, float max) {
 
@@ -92,7 +92,7 @@ public abstract class Grid {
     }
 
     /**
-     * Fill target matrix with multiplier in clamped matrix values
+     * Fill target matrix with values clamped by a minimum and a maximum matrix
      */
     public final float[][] toMatrix(float[][] target, float min, float[][] max) {
 
@@ -116,7 +116,7 @@ public abstract class Grid {
     }
 
     /**
-     * Fill target matrix with multiplier in clamped values
+     * Fill target matrix with clamped values using a multiplier
      */
     public final short[][] toMatrix(short[][] target, float multiplier, float min, float max) {
 

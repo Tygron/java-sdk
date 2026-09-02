@@ -18,7 +18,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * EventList: This interface defines that a field contains a list of events.
+ * Indicates that a field contains a list of events.
  *
  * @author Maxim Knepfle
  */

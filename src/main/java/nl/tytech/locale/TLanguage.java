@@ -13,7 +13,7 @@
 package nl.tytech.locale;
 
 /**
- * Our supported languages
+ * Supported languages
  * @author Maxim Knepfle
  *
  */

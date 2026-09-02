@@ -12,32 +12,17 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.item;
 
-import nl.tytech.data.engine.other.OverrideDataItem;
-
 /**
- * Default provided Excel sheets.
+ * Diffusion for Image gen
  *
  * @author Maxim Knepfle
+ *
  */
-public class DefaultExcelSheet extends ExcelSheet implements OverrideDataItem {
+public class Diffusion extends GenAI {
 
-    private static final long serialVersionUID = 3837992814582019098L;
+    private static final long serialVersionUID = 5171411657101259531L;
 
-    // Runtime variable; do not save to XML.
-    private boolean override = true;
-
-    @Override
-    public boolean isDefault() {
-        return true;
-    }
-
-    @Override
-    public boolean isOverride() {
-        return override;
-    }
-
-    @Override
-    public void setOverride(boolean override) {
-        this.override = override;
+    public Diffusion() {
+        super(Type.DIFFUSION);
     }
 }

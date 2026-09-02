@@ -100,7 +100,7 @@ public class DuplicateFunction extends Function {
          * Try override first
          */
         FunctionOverride functionOverride = this.getItem(MapLink.FUNCTION_OVERRIDES, this.getID());
-        if (functionOverride != null && StringUtils.containsData(functionOverride.getImageName())) {
+        if (functionOverride != null && StringUtils.containsData(functionOverride.getImageLocation())) {
             return functionOverride.getImageLocation();
         }
         return getOriginal().getImageLocation();

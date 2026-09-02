@@ -130,7 +130,7 @@ public abstract non-sealed class GridOverlay<R extends ResultType, P extends Pre
 
         COMBINED("Combined: Center for large and Outline for small polygons (default)"),
 
-        OUTLINE("Outline: Overshoot results in more cells then polygon area"),
+        OUTLINE("Outline: Overshoot results in more cells than the polygon area"),
 
         CENTER("Center: WARNING: fastest but missing small polygons"),
 

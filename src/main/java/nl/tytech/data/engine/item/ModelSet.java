@@ -21,7 +21,7 @@ import nl.tytech.data.core.item.Item;
 
 /**
  *
- * A collection of 3D models that belong together
+ * A collection of related 3D models
  *
  * @author Maxim Knepfle
  *

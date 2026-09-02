@@ -13,7 +13,7 @@
 package nl.tytech.data.engine.other;
 
 /**
- * TextItem: Text Items always have a getText() method
+ * Represents an item that provides text content.
  *
  * @author Maxim Knepfle
  */

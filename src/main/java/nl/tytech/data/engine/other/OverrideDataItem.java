@@ -13,7 +13,7 @@
 package nl.tytech.data.engine.other;
 
 /**
- * Interface to detect overrides in excels, geotiffs
+ * Interface to detect overrides in Excel and GeoTiff files
  * @author Maxim Knepfle
  *
  */

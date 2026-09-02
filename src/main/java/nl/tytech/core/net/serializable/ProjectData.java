@@ -277,7 +277,7 @@ public class ProjectData implements Comparable<ProjectData>, Serializable {
     public boolean isDeleteable(User user) {
 
         if (user == null) {
-            TLogger.severe("Checking deleteable for NULL user!");
+            TLogger.severe("Null user provided during Project deletability check");
             return false;
         }
 
@@ -308,7 +308,7 @@ public class ProjectData implements Comparable<ProjectData>, Serializable {
     public boolean isPermissionable(User user) {
 
         if (user == null) {
-            TLogger.severe("Checking writable for NULL user!");
+            TLogger.severe("Null user provided during Project permission check");
             return false;
         }
 
@@ -341,7 +341,7 @@ public class ProjectData implements Comparable<ProjectData>, Serializable {
     public boolean isReadable(User user) {
 
         if (user == null) {
-            TLogger.severe("Checking readbility for NULL user!");
+            TLogger.severe("Null user provided during Project readability check");
             return false;
         }
         // universal template project (shared with all)
@@ -401,7 +401,7 @@ public class ProjectData implements Comparable<ProjectData>, Serializable {
     public boolean isVisible(User user) {
 
         if (user == null) {
-            TLogger.severe("Checking visbility for NULL user!");
+            TLogger.severe("Null user provided during Project visibility check");
             return false;
         }
         // universals, superusers and owners may always see it
@@ -425,7 +425,7 @@ public class ProjectData implements Comparable<ProjectData>, Serializable {
     public boolean isWritable(User user) {
 
         if (user == null) {
-            TLogger.severe("Checking writable for NULL user!");
+            TLogger.severe("Null user provided during Project writability check");
             return false;
         }
         // universal template project (shared with all) not writable

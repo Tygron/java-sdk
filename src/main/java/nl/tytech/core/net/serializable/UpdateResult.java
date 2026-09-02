@@ -12,17 +12,20 @@
  *******************************************************************************************************************************************/
 package nl.tytech.core.net.serializable;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import nl.tytech.data.core.item.Item;
 
 /**
- * Returns the result of an update version call
+ * Represents the result of an update version call.
  *
  * @author Maxim Knepfle
  *
  */
-public class UpdateResult {
+public class UpdateResult implements Serializable {
+
+    private static final long serialVersionUID = -3016629481877041984L;
 
     private HashMap<String, Item[]> items = new HashMap<>();
 

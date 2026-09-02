@@ -31,7 +31,7 @@ public enum LoadingStage {
 
     FAILED("Failed to start Session in " + EngineNC.SERVER_NAME),
 
-    OCUCLUS_MODE("Activate Oculus in 3D-World using CTRL-SHIFT-O"),
+    OCULUS_MODE("Activate Oculus in 3D-World using CTRL+SHIFT+O"),
 
     ;
 

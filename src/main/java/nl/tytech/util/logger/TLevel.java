@@ -24,7 +24,7 @@ public class TLevel extends Level {
     private static final long serialVersionUID = 7727487931637590482L;
 
     /**
-     * SHOWSTOPPER is a message level indicating a serious failure. Inmidiate stop of program.
+     * SHOWSTOPPER indicates a serious failure requiring an immediate program stop.
      *
      * In general SHOWSTOPPER messages should describe events that are of considerable importance and which will prevent normal program
      * execution. They should be reasonably intelligible to end users and to system administrators. This level is initialized to
@@ -40,14 +40,14 @@ public class TLevel extends Level {
     public static final TLevel CRITICAL = new TLevel("CRITICAL", 1090);
 
     /**
-     * SECURITY_NOTIFICATION means that it will be emailed/notified to RD, but is not a bug, e.g. security breach attempts
+     * SECURITY_NOTIFICATION indicates security-related events, such as breach attempts, that require notification.
      *
      * <CODE>1050</CODE>.
      */
     public static final TLevel SECURITY_NOTIFICATION = new TLevel("SECURITY_NOTIFICATION", 1050);
 
     /**
-     * NETWORK_NOTIFICATION means that it will be emailed/notified to RD, but is not a bug, e.g. network failure
+     * NETWORK_NOTIFICATION indicates network-related events, such as failures, that require notification.
      *
      * <CODE>1040</CODE>.
      */
@@ -61,7 +61,7 @@ public class TLevel extends Level {
     public static final TLevel NOTICE = new TLevel("NOTICE", 850);
 
     /**
-     * DEBUG only logged in NOT release mode
+     * DEBUG is used for logging in non-release modes.
      *
      * <CODE>750</CODE>.
      */

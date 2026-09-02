@@ -24,7 +24,7 @@ import java.util.EventListener;
 public interface EventListenerInterface extends EventListener {
 
     /**
-     * Handle the updated event
+     * Handles the received event.
      *
      * @param event
      */

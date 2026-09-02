@@ -39,7 +39,7 @@ public enum EditorScenarioEventType implements IndicatorEventTypeEnum {
     @EventParamData(desc = "Add new Scenario.", response = "Scenario ID")
     ADD,
 
-    @EventParamData(desc = "Add empty dummy event that is triggered on Scenario activation.", params = { "Scenario ID" })
+    @EventParamData(desc = "Add a placeholder event that is triggered on Scenario activation.", params = { "Scenario ID" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     ADD_EVENT(Integer.class),
 
@@ -65,7 +65,7 @@ public enum EditorScenarioEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Activate Scenario, when testrun is active the Scenerio can restart it.", params = { "Scenario ID" })
+    @EventParamData(desc = "Activate Scenario. If a test run is active, the Scenario can restart it.", params = { "Scenario ID" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     SET_ACTIVE(Integer.class),
 
@@ -87,7 +87,7 @@ public enum EditorScenarioEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { SCENARIOS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
-    @EventParamData(desc = "When true test run is restarted on Scenario activation. This option will be deprecated in the future and replaced by multiple maps.", params = {
+    @EventParamData(desc = "If true, the test run is restarted on Scenario activation. Deprecated in favor of multiple maps.", params = {
             "Scenario ID", "Restart required" })
     @EventIDField(sameLength = true, links = { SCENARIOS }, params = { 0 })
     SET_RESTART_TESTRUN(Integer[].class, Boolean[].class),

@@ -17,7 +17,7 @@ import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 
 /**
- * Empty Dummy event (does nothing)
+ * Dummy event type.
  * @author Maxim Knepfle
  *
  */

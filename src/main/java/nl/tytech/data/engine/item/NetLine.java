@@ -258,7 +258,7 @@ public class NetLine extends SourcedAttributeItem implements GeometryItem<MultiP
     }
 
     @Override
-    public GeometryCollection getIntersectorGeometies(MapType mapType) {
+    public GeometryCollection getIntersectorGeometries(MapType mapType) {
         return this.getLineMP();
     }
 
@@ -452,7 +452,7 @@ public class NetLine extends SourcedAttributeItem implements GeometryItem<MultiP
     public String validated(boolean startNewSession) {
 
         if (Item.NONE.equals(this.getStartNodeID()) || Item.NONE.equals(this.getEndNodeID())) {
-            return "\nNetLine: " + this + " must have a valid start and end node!";
+            return "\nNetLine: " + this + " must have a valid start and end node.";
         }
         return StringUtils.EMPTY;
     }

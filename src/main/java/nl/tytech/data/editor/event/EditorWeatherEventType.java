@@ -36,7 +36,7 @@ public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
     @EventParamData(desc = "Add a new weather of a specified type.", params = { "Weather Type Effect" }, response = "Weather ID")
     ADD(WeatherTypeEffect.class),
 
-    @EventParamData(desc = "Create a copy of each specified weather. The copies will have the same settings and attributes, but can be edited independently of the originals.", params = {
+    @EventParamData(desc = "Duplicate the specified weathers as independent copies.", params = {
             "Weather IDs" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     DUPLICATE(Integer[].class),
@@ -45,12 +45,12 @@ public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { WEATHERS }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(desc = "Remove the specified attributes of the specified weather. The attributes, including attributes which are added to a weather by default, are removed entirely.", params = {
+    @EventParamData(desc = "Remove specified attributes from the specified weather, including default attributes.", params = {
             "Weather ID", "Attributes to remove" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Remove the specified visualization overlay from specified weather.", params = { "Weather ID" })
+    @EventParamData(desc = "Remove the specified visualization overlay from the specified weather.", params = { "Weather ID" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     REMOVE_FLOOD_OVERLAY(Integer[].class),
 
@@ -58,7 +58,7 @@ public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { WEATHERS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Weathers", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Weathers", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { WEATHERS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
@@ -66,12 +66,12 @@ public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { WEATHERS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
-    @EventParamData(desc = "Set how long the specified weather's visualization lasts when it is triggered.", params = { "Weather ID",
+    @EventParamData(desc = "Set the duration of the specified weather's visualization.", params = { "Weather ID",
             "Duration of visualization in seconds" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     SET_DURATION(Integer.class, Double.class),
 
-    @EventParamData(desc = "Set what kind of weather the specified weather is.", params = { "Weather ID", "Weather Type Effect" })
+    @EventParamData(desc = "Set the type of the specified weather.", params = { "Weather ID", "Weather Type Effect" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     SET_EFFECT(Integer.class, WeatherTypeEffect.class),
 
@@ -80,12 +80,12 @@ public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
     SET_NAME(Integer[].class, String[].class),
 
     @EventParamData(desc = "Set a specific visualization overlay for a specified weather.", params = { "Weather ID",
-            "Overlay ID allowed for weather visualization input" })
+            "Visualization Overlay ID" })
     @EventIDField(sameLength = true, links = { WEATHERS, OVERLAYS }, params = { 0, 1 })
     SET_FLOOD_OVERLAY(Integer[].class, Integer[].class),
 
-    @EventParamData(desc = "Set whether the specified weather's visualization triggers automatically.", params = { "Weather ID",
-            "Auto-trigger (false means the weather's visualization does not trigger automatically)" })
+    @EventParamData(desc = "Set the trigger time for the specified weather's visualization.", params = { "Weather ID",
+            "Auto-trigger" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     SET_TRIGGER_SEC(Integer.class, Double.class);
 

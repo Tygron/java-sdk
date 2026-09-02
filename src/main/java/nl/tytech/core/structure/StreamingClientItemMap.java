@@ -25,7 +25,7 @@ import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
 
 /**
- * StreamingClientItemMap: Retrieves Items directly from server. Caches same Item request, cache always cleared on any update.
+ * Retrieves Items directly from the server and caches requested Items; the cache is cleared upon updates.
  *
  * @author Maxim Knepfle
  */

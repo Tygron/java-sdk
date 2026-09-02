@@ -198,8 +198,8 @@ public class CinematicData extends Item {
     }
 
     /**
-     * When true play cinematic localy, no server events or server reporting
-     * @return
+     * If true, plays the cinematic locally without server events or server reporting.
+     * @return true if local client only
      */
     public boolean isLocalClientOnly() {
         return localClientOnly;
@@ -216,9 +216,8 @@ public class CinematicData extends Item {
     }
 
     /**
-     * Reset cinamatic's stakeholder, point, etc.
+     * Resets the cinematic's current point index and active status.
      */
-
     public void resetCinematic() {
         this.keyIndex = 0;
         this.active = false;
@@ -285,7 +284,7 @@ public class CinematicData extends Item {
         }
 
         if (startNewSession && active) {
-            result += "\nCinematic data should not be active at the start. This should be triggerd through the "
+            result += "\nCinematic data must not be active at start; it should be triggered via "
                     + Scenario.class.getSimpleName() + ". Invalid data in " + CinematicData.class.getSimpleName() + " [" + getID() + "]";
         }
         return result;

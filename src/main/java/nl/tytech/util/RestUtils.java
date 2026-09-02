@@ -31,7 +31,7 @@ import nl.tytech.util.RestManager.Format;
 import nl.tytech.util.RestManager.TWebApplicationException;
 
 /**
- * Util function to correctly format json, xml stuff for REST calls, also added special serializer to handle JTS classes like polygons
+ * Utility functions to format JSON and XML for REST calls, including a special serializer for JTS classes such as polygons.
  *
  * @author Maxim Knepfle
  *
@@ -46,6 +46,9 @@ public final class RestUtils {
 
     private static final int OBJECT_SIZE = BufferUtils.SIZE;
 
+    public static final Format[] REST_FORMATS = new Format[] { Format.HTML, Format.JSON, Format.TJSON, Format.SMILE, Format.TSMILE,
+            Format.ZIPJSON, Format.ZIPTJSON, Format.ZIPSMILE, Format.ZIPTSMILE, Format.BINARY, Format.ZIPBINARY };
+
     public static final JsonParser createParser(Format format, InputStream inputStream) throws IOException {
 
         // handle zipped or plain
@@ -54,7 +57,7 @@ public final class RestUtils {
         // wait for the stream to become available
         for (int i = 0; i < INPUTSTREAM_ATTEMPTS; i++) {
             if (pis.available() == 0) {
-                // check is stream is empty (e.g. no arguments in event) in that case it already ended with code -1
+                // Check if the stream is empty (e.g., no arguments in event); in that case, it ended with -1.
                 int firstByte = pis.read();
                 if (firstByte != -1) {
                     pis.unread(firstByte);
@@ -93,7 +96,7 @@ public final class RestUtils {
             // handle zipped or plain
             InputStream is = format.isZipped() ? new GZIPInputStream(inputStream) : inputStream;
 
-            // wait for the stream to become available, note: this may never happen
+            // Wait for the stream to become available
             for (int i = 0; i < INPUTSTREAM_ATTEMPTS; i++) {
                 if (is.available() == 0) {
                     ThreadUtils.sleepInterruptible(INPUTSTREAM_SLEEP_MS);
@@ -104,7 +107,7 @@ public final class RestUtils {
             return JsonMapper.getLocalMapper(format).readValue(is, responseClass);
 
         } finally {
-            // always close int the end
+            // Always close at the end
             inputStream.close();
         }
     }
@@ -123,7 +126,7 @@ public final class RestUtils {
 
             String contentType = (String) response.getHeaders().getFirst("Content-Type");
             if (isSupportedGML(contentType)) {
-                // (Frank) Override that header, because it is (probably) invalid
+                // Override the header as it may be invalid.
                 // https://www.w3.org/Protocols/rfc1341/4_Content-Type.html
                 response.getHeaders().get("Content-Type").set(0, Format.GML.getMediaType());
             }
@@ -137,7 +140,7 @@ public final class RestUtils {
             case JSON, TJSON, SMILE, TSMILE, ZIPJSON, ZIPTJSON, ZIPSMILE, ZIPTSMILE -> readJsonStream(format, inputStream, responseClass);
             case BINARY -> readByteStream(inputStream, responseClass, false);
             case ZIPBINARY -> readByteStream(inputStream, responseClass, true);
-            default -> throw new UnsupportedOperationException("Format: " + format + " is not implemented!");
+            default -> throw new UnsupportedOperationException("Format: " + format + " is not implemented");
         };
     }
 

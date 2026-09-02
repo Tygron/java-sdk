@@ -29,9 +29,9 @@ import nl.tytech.core.net.serializable.MapLink;
 public @interface ItemIDField {
 
     /**
-     * Returns the Control this item is linking to.
+     * Specifies the MapLink of the Control that this item references.
      *
-     * @return
+     * @return the associated MapLink
      */
     MapLink value();
 }

@@ -119,7 +119,7 @@ public enum EditorMeasureEventType implements EventTypeEnum {
             Integer.class, Double.class, Integer.class),
 
     @Deprecated
-    @EventParamData(desc = "Use IMPORT_BUILDINGS instead, same event with option to set existing measure.", params = {
+    @EventParamData(desc = "Use IMPORT_BUILDINGS, which provides the option to specify an existing Measure.", params = {
             "Collection of Building Geometries", "Building Names", "Attribute Names", "Numeric Attribute Values", "Functions", "Owners",
             "Buffer for Points and Lines to make Polygons (optional)", "Source (optional)" })
     @EventIDField(links = { FUNCTIONS, STAKEHOLDERS, SOURCES }, params = { 4, 5, 7 }, nullable = { 6, 7 })
@@ -163,7 +163,7 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     @EventIDField(links = { MEASURES }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(desc = "Add a specific event of a Measure for a specific Action Type.", params = { "Measure ID",
+    @EventParamData(desc = "Remove a specific event of a Measure for a specific Action Type.", params = { "Measure ID",
             "Server Side (false = Client Side)", "Action Type", "Event ID" })
     @EventIDField(sameLength = true, links = { MEASURES }, params = { 0 })
     REMOVE_EVENT(Integer[].class, Boolean[].class, ActionType[].class, Integer[].class),
@@ -173,8 +173,8 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     @EventIDField(links = { MEASURES }, params = { 0 })
     REMOVE_GEOTIFF(Integer.class, Integer[].class),
 
-    @EventParamData(desc = "Remove polygons from existing polygons of a " + GeoNC.GEOTIFFS + " Spatial of a Measure.", params = {
-            "Measure ID", GeoNC.GEOTIFFS + " Spatial ID", "MultiPolygon" })
+    @EventParamData(desc = "Remove polygons from existing polygons of a " + GeoNC.GEOTIFF + " Spatial of a Measure.", params = {
+            "Measure ID", GeoNC.GEOTIFF + " Spatial ID", "MultiPolygon" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     REMOVE_GEOTIFF_POLYGONS(Integer.class, Integer.class, MultiPolygon.class),
 
@@ -218,12 +218,12 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     @EventIDField(links = { MEASURES }, params = { 0 })
     REMOVE_UPGRADE(Integer.class, Integer[].class),
 
-    @EventParamData(desc = "Remove polygons from existing polygons of a Upgrade Spatial of a Measure.", params = { "Measure ID",
-            "Upgrade Spatial ID", "MultiPolygon" })
+    @EventParamData(desc = "Remove polygons from an Upgrade Spatial of a Measure.", params = { "Measure ID", "Upgrade Spatial ID",
+            "MultiPolygon" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     REMOVE_UPGRADE_POLYGONS(Integer.class, Integer.class, MultiPolygon.class),
 
-    @EventParamData(desc = "Set the costs of a Measure of a particular cost type (construction, demolition) and wether it is fixed or cost per cubic meter.", params = {
+    @EventParamData(desc = "Set the cost of a Measure for a specific cost type (construction, demolition) and whether it is fixed or per cubic meter.", params = {
             "Measure ID", "Cost Type", "Cost in valuata", "Fixed (if false, cost per cubic meter)" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     SET_COST(Integer.class, CostType.class, Double.class, Boolean.class),
@@ -256,7 +256,7 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     @EventIDField(links = { MEASURES, OVERLAYS }, params = { 0, 2 })
     SET_GRID(Integer.class, Integer.class, Integer[].class),
 
-    @EventParamData(desc = "Let the polygons be calculated automatically based on the Overlay specified in the Grid spatial of a Measure.", params = {
+    @EventParamData(desc = "Automatically calculate polygons based on the Overlay specified in the Grid spatial of a Measure.", params = {
             "Measure ID", "Grid Spatial ID", "Automatic calculation" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     SET_GRID_AUTOMATIC_POLYGONS(Integer.class, Integer.class, Boolean.class),
@@ -270,7 +270,7 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     @EventIDField(sameLength = true, links = { MEASURES }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Set the angle of Levee Spatial of a Measure.", params = { "Measure IDs", "Levee Spatial ID", "Angle" })
+    @EventParamData(desc = "Set the angle of a Levee Spatial of a Measure.", params = { "Measure IDs", "Levee Spatial ID", "Angle" })
     @EventIDField(links = { MEASURES }, params = { 0 }, nullable = { 2 })
     SET_LEVEE_ANGLE(Integer.class, Integer.class, Double.class),
 
@@ -279,12 +279,12 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     @EventIDField(links = { MEASURES, LEVEES }, params = { 0, 2 })
     SET_LEVEE_TYPE(Integer.class, Integer.class, Integer.class),
 
-    @EventParamData(desc = "Set the inner height of Levee Spatial of a Measure.", params = { "Measure IDs", "Levee Spatial ID",
+    @EventParamData(desc = "Set the inner height of a Levee Spatial of a Measure.", params = { "Measure IDs", "Levee Spatial ID",
             "Height value" })
     @EventIDField(links = { MEASURES }, params = { 0 }, nullable = { 2 })
     SET_LEVEE_HEIGHT(Integer.class, Integer.class, Double.class),
 
-    @EventParamData(desc = "Set whether the inner height of Levee Spatial of a Measure is considered relative.", params = { "Measure IDs",
+    @EventParamData(desc = "Set whether the inner height of a Levee Spatial of a Measure is considered relative.", params = { "Measure IDs",
             "Levee Spatial ID", "Boolean" })
     @EventIDField(links = { MEASURES }, params = { 0 }, nullable = { 2 })
     SET_LEVEE_HEIGHT_RELATIVE(Integer.class, Integer.class, Boolean.class),
@@ -298,7 +298,7 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     SET_OWNER(Integer.class, Integer.class),
 
     @EventParamData(desc = "Set whether the Measure should be confirmed by other Stakeholders.", params = { "Measure ID",
-            "Confirmation Required Boolean " })
+            "Confirmation Required Boolean" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     SET_REQUIRES_CONFIRMATION(Integer.class, Boolean.class),
 
@@ -307,13 +307,13 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     @EventIDField(links = { MEASURES }, params = { 0 })
     SET_TERRAIN_EDIT_TYPE(Integer.class, Integer.class, MeasureEditType.class),
 
-    @EventParamData(desc = "Set the inner height of Terrain Spatial of a Measure.", params = { "Measure IDs", "Terrain Spatial ID",
+    @EventParamData(desc = "Set the inner height of a Terrain Spatial of a Measure.", params = { "Measure IDs", "Terrain Spatial ID",
             "Height value" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     SET_TERRAIN_HEIGHT(Integer.class, Integer.class, Double.class),
 
-    @EventParamData(desc = "Set whether the inner height of Terrain Spatial of a Measure is considered relative.", params = { "Measure IDs",
-            "Terrain Spatial ID", "Boolean" })
+    @EventParamData(desc = "Set whether the inner height of a Terrain Spatial of a Measure is considered relative.", params = {
+            "Measure IDs", "Terrain Spatial ID", "Boolean" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     SET_TERRAIN_HEIGHT_RELATIVE(Integer.class, Integer.class, Boolean.class),
 

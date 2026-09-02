@@ -34,7 +34,7 @@ public final class ItemIntersector {
 
     public interface IntersectorItem {
 
-        public GeometryCollection getIntersectorGeometies(MapType mapType);
+        public GeometryCollection getIntersectorGeometries(MapType mapType);
 
         public int getVersion();
     }
@@ -45,7 +45,7 @@ public final class ItemIntersector {
     private static final double DIAMOND_MARGIN = 1.01;
 
     /**
-     * Simple helper method with less overhead then JTSUtils.createSquare()
+     * Simple helper method with less overhead than JTSUtils.createSquare()
      */
     private static final Polygon createSquare(Point center, double cellSizeM) {
 
@@ -70,7 +70,7 @@ public final class ItemIntersector {
                     return true;
                 }
             } else if (!child.isEmpty()) {
-                // catch smaller then cell objects
+                // catch objects smaller than the cell
                 Envelope env = child.getEnvelopeInternal();
                 if (env.getWidth() <= cellSizeM || env.getHeight() <= cellSizeM) {
                     return true;
@@ -123,13 +123,13 @@ public final class ItemIntersector {
                 cacheMaps[mapType.ordinal()][r] = new IntBooleanMap(8);
             }
         }
-        GeometryCollection gc = item.getIntersectorGeometies(mapType);
+        GeometryCollection gc = item.getIntersectorGeometries(mapType);
         prepGeometry[mapType.ordinal()] = JTSUtils.prepare(gc);
 
         // check if any of the object geometries might fall between cell center points
         small[mapType.ordinal()] = thresholdM >= Double.MAX_VALUE || hasSmallPolygon(gc, thresholdM * DIAMOND_MARGIN);
 
-        // check is this is a solid surface building (relative expensive)
+        // check if this is a solid surface building (relatively expensive)
         if (item instanceof Building b) {
             surface[mapType.ordinal()] = b.getLayer() != Layer.UNDERGROUND && b.isSolid();
         }
@@ -194,11 +194,11 @@ public final class ItemIntersector {
     }
 
     /**
-     * True when object envelope is smaller then thresholdM
+     * True when object envelope is smaller than thresholdM
      */
     public final boolean isSmall(final MapType mapType, final double thresholdM) {
 
-        // other thread maybe in init(), thus sync first
+        // another thread may be in init(), so synchronize first
         sync(mapType, thresholdM);
         return small[mapType.ordinal()];
     }
@@ -208,7 +208,7 @@ public final class ItemIntersector {
      */
     public final boolean isSurface(final MapType mapType, final double thresholdM) {
 
-        // other thread maybe in init(), thus sync first
+        // another thread may be in init(), so synchronize first
         sync(mapType, thresholdM);
         return surface[mapType.ordinal()];
     }

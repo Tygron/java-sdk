@@ -38,7 +38,7 @@ import nl.tytech.util.MathUtils;
 import straightskeleton.Skeleton;
 
 /**
- * Section: is part of a building
+ * Represents a section that is part of a Building.
  *
  * @author Maxim Knepfle
  */
@@ -64,7 +64,7 @@ public class Section implements Serializable {
     private static final long serialVersionUID = -3060395347540498878L;
 
     /**
-     * Simply polygons with this factor, when sketonizing, to make it easier/faster
+     * Simplifies polygons by this factor during skeletonization to improve performance.
      */
     public static final double SKELETON_SIMPLIFY_FACTOR = 100d;
 
@@ -96,7 +96,7 @@ public class Section implements Serializable {
     @XMLValue
     private Integer id = Item.NONE;
 
-    // only used in GIS reading, temp var
+    // Used temporarily during GIS reading.
     private transient Double roofHeightM = null;
 
     private transient Point skeletonStart = null, skeletonEnd = null;
@@ -121,7 +121,7 @@ public class Section implements Serializable {
     }
 
     /**
-     * only used in GIS reading, temp var
+     * Used temporarily during GIS reading.
      */
     public Double getGISFloorHeightM() {
 
@@ -313,7 +313,7 @@ public class Section implements Serializable {
                     }
                 }
                 this.outerLines = JTSUtils.createMultiLineString(outerLines);
-                roofMP = JTSUtils.createMP(roofMP, neighborRoofMP); // add neighbors to my roof
+                roofMP = JTSUtils.createMP(roofMP, neighborRoofMP); // Add neighboring roofs to the current roof.
             }
         }
 

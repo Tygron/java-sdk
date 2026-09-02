@@ -30,7 +30,7 @@ import nl.tytech.core.net.serializable.MapLink;
 @Linked(EXCEL_SHEETS)
 public enum EditorExcelSheetEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add new Excelsheet", params = { "Name", "Byte array content", "Uploader Name" }, response = "Excel ID")
+    @EventParamData(desc = "Add new Excel sheet", params = { "Name", "Byte array content", "Uploader Name" }, response = "Excel ID")
     ADD(String.class, byte[].class, String.class),
 
     @EventIDField(links = { EXCEL_SHEETS }, params = { 0 })

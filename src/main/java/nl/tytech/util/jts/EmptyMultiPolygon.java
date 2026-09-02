@@ -20,7 +20,7 @@ import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
 
 /**
- * Not modifiable (?) Empty MP
+ * An immutable empty MultiPolygon.
  *
  * @author Maxim Knepfle
  */
@@ -36,7 +36,7 @@ public class EmptyMultiPolygon extends MultiPolygon {
 
     public EmptyMultiPolygon(GeometryFactory factory) {
         super(new Polygon[0], factory);
-        BOUNDARY = new MultiLineString(null, factory);
+        BOUNDARY = factory.createMultiLineString();
     }
 
     @Override

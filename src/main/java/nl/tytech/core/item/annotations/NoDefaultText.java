@@ -18,7 +18,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * NoDefaultText: Do not give this field a default text
+ * Indicates that this field should not have a default text.
  *
  * @author Maxim Knepfle
  */

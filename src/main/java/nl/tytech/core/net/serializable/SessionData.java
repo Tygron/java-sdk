@@ -20,7 +20,7 @@ import nl.tytech.core.net.serializable.ClientData.ConnectionState;
 import nl.tytech.util.ObjectUtils;
 
 /**
- * Stores general data about the running Session. Can be used in e.g. the launch menu.
+ * Stores general data about the running Session. For example, it can be used in the launch menu.
  *
  * @author Maxim Knepfle
  */

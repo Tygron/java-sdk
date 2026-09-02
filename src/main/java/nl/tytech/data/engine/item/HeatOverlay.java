@@ -42,7 +42,7 @@ public class HeatOverlay extends ResultParentOverlay<HeatResult, HeatPrequel> {
         DATES(Long.class, 1375444800000d),
 
         /**
-         * Avg daily radionation in W m2
+         * Avg daily radiation in W m2
          */
         DAILY_AVG_RADIATION(Double.class, 340),
 
@@ -84,7 +84,7 @@ public class HeatOverlay extends ResultParentOverlay<HeatResult, HeatPrequel> {
         HOURLY_TEMPERATURE(Double.class, 33),
 
         /**
-         * Hourly Humidty 0-100%
+         * Hourly Humidity 0-100%
          */
         HOURLY_HUMIDITY(Double.class, 60),
 
@@ -108,12 +108,12 @@ public class HeatOverlay extends ResultParentOverlay<HeatResult, HeatPrequel> {
         WIND_DIRECTION(Integer.class, 0),
 
         /**
-         * Wind speed a 10 meter
+         * Wind speed at 10 meters
          */
         WIND_SPEED(Double.class, 3.0), // default: 2013-08-02
 
         /**
-         * Avg daily wind speed a 10 meter
+         * Avg daily wind speed at 10 meters
          */
         DAILY_AVG_WIND_SPEED(Double.class, 3.0),
 

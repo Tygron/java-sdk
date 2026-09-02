@@ -27,17 +27,17 @@ public class IncomeBookValue extends StakeholderBookValue {
     public enum Income implements Type {
 
         /**
-         * Default cost type when now state is relevant.
+         * Default income type when no specific state is relevant.
          */
         DEFAULT(ClientTerms.INCOME_DEFAULT),
 
         /**
-         * Budget at start of session
+         * Budget at start of Session
          */
         START_BUDGET(ClientTerms.BUDGET),
 
         /**
-         * Money that received by selling a building.
+         * Money received from selling a building.
          */
         BUILDING_SALE(ClientTerms.INCOME_SALES, Detail.SELL_PRICE),
 

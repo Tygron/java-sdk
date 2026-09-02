@@ -54,7 +54,7 @@ public class PackageUtils {
 
             TLogger.info("Added " + url.getFile() + " to classpath");
         } catch (Exception e) {
-            TLogger.exception(e, "Failed to add" + url.getFile() + " to classpath.");
+            TLogger.exception(e, "Failed to add " + url.getFile() + " to classpath.");
         }
     }
 
@@ -65,7 +65,7 @@ public class PackageUtils {
         try {
             return f.exists();
         } catch (SecurityException e) {
-            // we can ignore this, if there is a security exception, then we can't read it can we?
+            // Ignore SecurityException as the file cannot be accessed.
         }
         return false;
     }
@@ -78,7 +78,7 @@ public class PackageUtils {
      */
     public static final String fixFileName(String filePath) {
 
-        // return when empty string when null
+        // Return an empty string if filePath is null
         if (filePath == null) {
             TLogger.warning("File path is null, this might be incorrect.");
             filePath = StringUtils.EMPTY;
@@ -118,7 +118,7 @@ public class PackageUtils {
             return outputStream.toByteArray();
 
         } catch (Exception e) {
-            TLogger.exception(e, "Failed to bytes for resource: " + resourceLocation);
+            TLogger.exception(e, "Failed to retrieve bytes for resource: " + resourceLocation);
             return null;
         }
     }
@@ -260,7 +260,7 @@ public class PackageUtils {
      */
     private static final List<String> getPackageContents(String packageName) {
 
-        // This will hold a list of directories matching the pckgname.
+        // This will hold a list of directories matching the package name.
         // There may be more than one if a package is split over multiple
         // jars/paths
         List<String> candidates = new ArrayList<>();
@@ -269,7 +269,7 @@ public class PackageUtils {
 
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             if (classLoader == null) {
-                TLogger.severe("Cannot get class loader, return empty list!");
+                TLogger.severe("Cannot get class loader; returning empty list.");
                 return candidates;
             }
 
@@ -329,7 +329,7 @@ public class PackageUtils {
                 splits = name.split("/", 2);
                 if (splits.length > 0) {
                     name = splits[0];
-                    // add to classes, when unique and not hidden (.)
+                    // Add to candidates if unique and not hidden (.)
                     if (!candidates.contains(name) && !name.equals(StringUtils.EMPTY) && !name.startsWith(".")) {
                         candidates.add(name);
                     }
@@ -360,9 +360,13 @@ public class PackageUtils {
             return new StringBuilder(url).reverse().toString();
 
         } catch (Exception e) {
-            TLogger.warning("unable to convert url");
+            TLogger.warning("Unable to convert URL");
             return null;
         }
+    }
+
+    public static final String getStringFromResource(String resourceLocation) {
+        return getStringFromResource(resourceLocation, true);
     }
 
     /**
@@ -370,7 +374,7 @@ public class PackageUtils {
      * @param resourceLocation
      * @return
      */
-    public static final String getStringFromResource(String resourceLocation) {
+    public static final String getStringFromResource(String resourceLocation, boolean trim) {
 
         InputStream stream = null;
         boolean web = false;
@@ -401,7 +405,7 @@ public class PackageUtils {
                 builder.append(record);
                 builder.append(newLine);
             }
-            return builder.toString().trim();
+            return trim ? builder.toString().trim() : builder.toString();
 
         } catch (FileNotFoundException fe) {
             return null; // return empty
@@ -410,10 +414,10 @@ public class PackageUtils {
             if (web) {
                 TLogger.networkNotification(new TWebApplicationException(TStatus.CONNECTION_FAILED, e.getMessage(), resourceLocation));
             } else {
-                TLogger.exception(e); // must be a serious bug
+                TLogger.exception(e);
             }
         } catch (Exception e) {
-            TLogger.exception(e); // must be a serious bug
+            TLogger.exception(e);
 
         } finally {
             if (stream != null) {
@@ -430,7 +434,7 @@ public class PackageUtils {
     }
 
     /**
-     * Get the URI for a given path string. When the method returns NULL, the path does not exist.
+     * Get the URI for a given path string. When the method returns null, the path does not exist.
      *
      * @param path
      * @return
@@ -445,7 +449,7 @@ public class PackageUtils {
     }
 
     /**
-     * Get the URL for a given path string. When the method returns NULL, the path does not exist.
+     * Get the URL for a given path string. When the method returns null, the path does not exist.
      *
      * @param path
      * @return
@@ -501,7 +505,7 @@ public class PackageUtils {
         try {
             return f.isDirectory();
         } catch (SecurityException e) {
-            // we can ignore this, if there is a security exception, then we can't read it can we?
+            // Ignore SecurityException as the file cannot be accessed.
         }
         return false;
     }

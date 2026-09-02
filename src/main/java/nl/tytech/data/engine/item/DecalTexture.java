@@ -17,7 +17,7 @@ import nl.tytech.data.core.item.Item;
 
 /**
  *
- * Decal texture e.g. window or door
+ * Represents a decal texture, such as a window or door.
  *
  * @author Maxim Knepfle
  *

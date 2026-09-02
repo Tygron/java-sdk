@@ -13,7 +13,7 @@
 package nl.tytech.core.client.concurrent;
 
 /**
- * Updatable
+ * Interface for objects that can be updated.
  *
  * @author Maxim Knepfle
  */

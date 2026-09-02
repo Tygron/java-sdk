@@ -53,7 +53,7 @@ public enum ClientEventType implements EventTypeEnum {
     @EventParamData(editor = true, desc = "Stop all blinking Indicators and ActionMenus", params = {})
     BLINK_STOP_ALL(),
 
-    @EventParamData(editor = true, desc = "Change a zoning permit for a building, providing the function of the building and the permission feedback", params = {
+    @EventParamData(editor = true, desc = "Change a building's zoning permit by specifying its function and permission feedback", params = {
             "Zone ID", "Function ID", "Permission feedback" })
     @EventIDField(links = { ZONES, FUNCTIONS }, params = { 0, 1 })
     CHANGE_ZONING_PERMIT(Integer[].class, Integer.class, String[].class),
@@ -67,7 +67,7 @@ public enum ClientEventType implements EventTypeEnum {
     @EventParamData(editor = true, desc = "Warning to show", params = { "Warning" })
     FEEDBACK_PANEL_SHOW_WARNING(String.class),
 
-    @EventParamData(editor = false, desc = "Goto start location", params = {})
+    @EventParamData(editor = false, desc = "Go to start location", params = {})
     @Deprecated
     GOTO_START_LOCATION(),
 
@@ -75,7 +75,7 @@ public enum ClientEventType implements EventTypeEnum {
     @EventIDField(links = { PANELS }, params = { 0 })
     PANEL_ANSWER(Integer.class, Integer.class),
 
-    @EventParamData(editor = true, desc = "Respond to a popup with a given change with the first answer of that popup", params = {
+    @EventParamData(editor = true, desc = "Respond to a popup using its first answer based on a specified probability", params = {
             "Chance to respond between 0 and 1" })
     RANDOM_ACTIVATE_POPUP_PERCENTAGE(Double.class),
 
@@ -94,14 +94,14 @@ public enum ClientEventType implements EventTypeEnum {
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SHOW_OVERLAY(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Set a particular panel visible/invisible", params = { "Particular panel", "Visible" })
+    @EventParamData(editor = true, desc = "Set a specific panel visible/invisible", params = { "Panel", "Visible" })
     SHOW_PANEL(PanelEnum.class, Boolean.class),
 
     @EventParamData(editor = true, desc = "Stop any weather that is visually active on a client", params = {})
     STOP_WEATHER(),
 
-    @EventParamData(editor = true, desc = "Gives visual attention for a given point and amount of seconds", params = { "Point in the city",
-            "Amount of seconds" })
+    @EventParamData(editor = true, desc = "Draw visual attention to a specific point for a specified duration", params = { "Point in the city",
+            "Duration (seconds)" })
     TILE_ATTENTION(Point.class, Double.class);
 
     private final List<Class<?>> classes;

@@ -54,7 +54,7 @@ public class PrequelLink implements Serializable {
     }
 
     /**
-     * Timeframe is optional maybe NULL
+     * The timeframe is optional and may be null.
      */
     public Integer getTimeframe() {
         return timeframe;

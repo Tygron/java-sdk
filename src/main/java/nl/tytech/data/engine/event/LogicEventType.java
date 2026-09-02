@@ -55,7 +55,7 @@ import nl.tytech.data.engine.serializable.TimeState;
  *
  * @author Maxim Knepfle
  */
-@Description("Endpoints changing functionality in a testrun/impact Session.")
+@Description("Endpoints that change functionality in a testrun or impact Session.")
 public enum LogicEventType implements SessionEventTypeEnum {
 
     @EventParamData(editor = true, desc = "Export history of actions taken by participants.", params = {})
@@ -76,11 +76,11 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(links = { ACTION_MENUS, UPGRADE_TYPES }, params = { 0, 1 })
     ACTION_MENU_SET_UPGRADE_AVAILABLE(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Activate/deactivate a Area.", params = { "Area ID", "Activated" })
+    @EventParamData(editor = true, desc = "Activate/deactivate an Area.", params = { "Area ID", "Activated" })
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0, })
     AREA_SET_ACTIVE(Integer[].class, Boolean[].class),
 
-    @EventParamData(editor = true, desc = "Set Area Attribute to given number Value.", params = { "Area ID", "Attribute Name", "Value",
+    @EventParamData(editor = true, desc = "Set the Area attribute to the specified numeric value.", params = { "Area ID", "Attribute Name", "Value",
             "Update Indicators (optional)" }, defaults = { "", "", "", "true" })
     @EventIDField(links = { AREAS }, params = { 0 }, nullable = { 3 })
     AREA_SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Boolean.class),
@@ -90,7 +90,7 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(sameLength = true, links = { AREAS, }, params = { 0 }, nullable = { 3 })
     AREAS_SET_ATTRIBUTES(Integer[].class, String[].class, double[].class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Set Building Attribute to given number Value.", params = { "Building ID", "Attribute Name",
+    @EventParamData(editor = true, desc = "Set the Building attribute to the specified numeric value.", params = { "Building ID", "Attribute Name",
             "Value" })
     @EventIDField(links = { BUILDINGS }, params = { 0 })
     BUILDING_SET_ATTRIBUTE(Integer.class, String.class, Double.class),
@@ -119,11 +119,11 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(links = { ERROR_LOGS }, params = { 0 })
     DISMISS_ERROR(Integer[].class),
 
-    @EventParamData(editor = true, desc = "Set Global Variable to given number Value.", params = { "Global ID", "Value" })
+    @EventParamData(editor = true, desc = "Set the Global variable to the specified numeric value.", params = { "Global ID", "Value" })
     @EventIDField(links = { GLOBALS }, params = { 0 })
     GLOBAL_SET_VALUE(Integer[].class, double[].class),
 
-    @EventParamData(editor = true, desc = "Set Global Variable to given number Values.", params = { "Global ID", "Values" })
+    @EventParamData(editor = true, desc = "Set the Global variable to the specified numeric values.", params = { "Global ID", "Values" })
     @EventIDField(sameLength = true, links = { GLOBALS }, params = { 0 })
     GLOBAL_SET_VALUES(Integer[].class, double[][].class),
 
@@ -131,12 +131,12 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     SCENARIO_SET_ACTIVE(Integer.class),
 
-    @EventParamData(editor = true, desc = "Set Scenario Attribute to given number Value.", params = { "Scenario ID", "Attribute Name",
+    @EventParamData(editor = true, desc = "Set the Scenario attribute to the specified numeric value.", params = { "Scenario ID", "Attribute Name",
             "Value", "Update Indicators (optional)" }, defaults = { "", "", "", "true" })
     @EventIDField(links = { SCENARIOS }, params = { 0 }, nullable = { 3 })
     SCENARIO_SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Boolean.class),
 
-    @EventParamData(desc = "Direct sale of land, no approval asked.", params = { "Selling Stakeholder ID", "Buying Stakeholder ID",
+    @EventParamData(desc = "Direct sale of land without requiring approval.", params = { "Selling Stakeholder ID", "Buying Stakeholder ID",
             "Area of land being sold", "Price per square meter" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     MAP_DIRECT_SELL_LAND(Integer.class, Integer.class, MultiPolygon.class, Double.class),
@@ -152,7 +152,7 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     MEASUREMENT_POINT_ADD(Integer[].class, Point.class, String.class, Boolean.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Add a ItemMeasurement for an Overlay.", //
+    @EventParamData(editor = true, desc = "Add an ItemMeasurement for an Overlay.", //
             params = { "Overlay ID", "MapLink ID", "Item ID", "Identifying Key", "Name", "Save Measurement" }, //
             defaults = { "", "", "", "", "Item measurement", "true" }, response = "Measurement ID")
     @EventIDField(links = { OVERLAYS }, params = { 0 })
@@ -181,7 +181,7 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     MONEY_TRANSFER_ADD(Integer.class, Integer.class, MoneyTransfer.Type.class, String.class, Double.class),
 
-    @EventParamData(desc = "Approve a money transfer", params = { "Money transfer ID", "Approved" })
+    @EventParamData(desc = "Approve a money transfer.", params = { "Money transfer ID", "Approved" })
     @EventIDField(links = { MONEY_TRANSFERS }, params = { 0 })
     MONEY_TRANSFERS_SET_APPROVED(Integer.class, Boolean.class),
 
@@ -211,7 +211,7 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(sameLength = true, links = { NET_CLUSTERS }, params = { 0 })
     NET_CLUSTERS_SET_STATE(Integer[].class, NetType[].class, TimeState[].class),
 
-    @EventParamData(editor = true, desc = "Per NetCluster, for each NetLoad of that NetCluster, set the values of the provided attributes.", params = {
+    @EventParamData(editor = true, desc = "Set the provided attribute values for each NetLoad within the specified NetClusters.", params = {
             "NetCluster IDs", "Array with attribute names", "Array with values" })
     @EventIDField(sameLength = true, links = { NET_CLUSTERS, }, params = { 0 })
     NET_CLUSTERS_SET_LOAD_ATTRIBUTES(Integer[].class, String[].class, double[][].class),
@@ -230,7 +230,7 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(links = { NET_LINES, }, params = { 0 })
     NET_LINES_SET_ATTRIBUTE(Integer[].class, String.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Per entry in the array, set the value of the attribute for the Netline.", params = {
+    @EventParamData(editor = true, desc = "Per entry in the array, set the value of the attribute for the NetLine.", params = {
             "Array of NetLine IDs", "Array of Attributes", "Array of Values" })
     @EventIDField(sameLength = true, links = { NET_LINES, }, params = { 0 })
     NET_LINES_SET_ATTRIBUTES(Integer[].class, String[].class, double[].class),
@@ -241,11 +241,11 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventParamData(desc = "Release a client from a session using its client token.", params = { "ClientToken" })
     SESSION_RELEASE(String.class),
 
-    @EventParamData(editor = true, desc = "For boolean valued NetSettings (ELECTRICITY_ACTIVE, GAS_ACTIVE, HEAT_ACTIVE, INTERNET_ACTIVE, SEWER_ACTIVE, REQUIRE_UTILITY_CORPORATION_APPROVAL, CLUSTER_MODELS_ENABLED, LOAD_TO_NODE_LINES_ENABLED, FIRST_CONNECT_ACCEPT, RESTRICT_TO_NET_OVERLAY), set the value to true or false.", params = {
+    @EventParamData(editor = true, desc = "Set a boolean value for the specified NetSetting.", params = {
             "NetSetting Type", "True or false" })
     SET_NET_SETTING_BOOLEAN(NetSetting.Type[].class, Boolean[].class),
 
-    @EventParamData(editor = true, desc = "Multiply visual (only) traffic density with this factor.", params = { "Factor, default 4.0" })
+    @EventParamData(editor = true, desc = "Multiply the visual traffic density by this factor.", params = { "Factor, default 4.0" })
     SET_TRAFFIC_MULTIPLIER(Double.class),
 
     @EventParamData(editor = true, desc = "Activate/deactivate a special effect.", params = { "Special Effect ID", "Activated" })
@@ -256,7 +256,7 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     STAKEHOLDER_RELEASE(Integer.class),
 
-    @EventParamData(desc = "Select Stakeholder with preferred ID, when not available fallback to next best.", params = {
+    @EventParamData(desc = "Select the preferred Stakeholder or the next available option if unavailable.", params = {
             "Preferred Stakeholder ID or empty", "Client Token (from Join Session event)" }, response = "Selected Stakeholder ID")
     STAKEHOLDER_SELECT(Integer.class, String.class),
 
@@ -272,7 +272,7 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @EventIDField(links = { ZONES }, params = { 0 })
     ZONE_SET_ATTRIBUTE(Integer.class, String.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Set attributes to values for zones.", params = { "Zone IDs", "Valid attribute names",
+    @EventParamData(editor = true, desc = "Set attribute values for zones.", params = { "Zone IDs", "Valid attribute names",
             "Attribute values" })
     @EventIDField(sameLength = true, links = { ZONES }, params = { 0 })
     ZONES_SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class);

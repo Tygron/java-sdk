@@ -157,7 +157,7 @@ public abstract class StringUtils {
         }
     }
 
-    public static final String HUMAN_STRING_SEPERATOR = ", ";
+    public static final String HUMAN_STRING_SEPARATOR = ", ";
 
     public static final String PHONE_DONT_CALL = "PLEASE DONT CALL ME";
 
@@ -369,12 +369,12 @@ public abstract class StringUtils {
         for (int i = 0; i < length; ++i) {
             result.append(Array.get(array, i));
             if (i < length - 2) {
-                result.append(HUMAN_STRING_SEPERATOR);
+                result.append(HUMAN_STRING_SEPARATOR);
             } else if (i < length - 1) {
                 if (StringUtils.containsData(andWord)) {
                     result.append(WHITESPACE).append(andWord).append(WHITESPACE);
                 } else {
-                    result.append(HUMAN_STRING_SEPERATOR);
+                    result.append(HUMAN_STRING_SEPARATOR);
                 }
             }
         }
@@ -385,9 +385,11 @@ public abstract class StringUtils {
 
         StringBuilder result = new StringBuilder();
         result.append("{ ");
-        for (String data : array) {
-            result.append(data);
-            result.append(", ");
+        for (int i = 0; i < array.length; i++) {
+            result.append(array[i]);
+            if (i < array.length - 1) {
+                result.append(", ");
+            }
         }
         result.append(" }");
         return result.toString();
@@ -408,7 +410,7 @@ public abstract class StringUtils {
     }
 
     /**
-     * Make a String?s first letter upper case.
+     * Make a String's first letter upper case.
      *
      * @param s The String to manipulate
      * @return The modified String
@@ -422,7 +424,7 @@ public abstract class StringUtils {
     }
 
     /**
-     * Make a String?s first and all letters after the underscore(_) upper case and the rest lower case.
+     * Make a String's first and all letters after the underscore(_) upper case and the rest lower case.
      *
      * @param text The String to manipulate
      * @return The modified String
@@ -516,14 +518,14 @@ public abstract class StringUtils {
 
     /**
      * Test is the given String is not NULL and if it contains more then one character.
-     *
-     * @param string
-     * @return
      */
     public static final boolean containsData(String string) {
         return string != null && string.length() > 0;
     }
 
+    /**
+     * Test is the given String is not NULL and if it contains more then one number.
+     */
     public static final boolean containsNumbers(String string) {
         return containsData(string) && REGEX_CONTAINS_NUMBERS.matcher(string.trim()).matches();
     }
@@ -558,7 +560,7 @@ public abstract class StringUtils {
     public static final String formatEnumString(String data, Enum<?> term, Object... args) {
 
         if (term == null) {
-            TLogger.severe("Cannot get empty term.");
+            TLogger.severe("The provided term is null or empty.");
             return null;
         }
 
@@ -757,6 +759,13 @@ public abstract class StringUtils {
         }
     }
 
+    /**
+     * Test is the given String is not NULL and if it contains more then one not whitespace character.
+     */
+    public static final boolean notBlank(String string) {
+        return string != null && !string.isBlank();
+    }
+
     public static final int parseHex(String value) {
         return (int) Long.parseLong(value, 16);
     }
@@ -822,7 +831,7 @@ public abstract class StringUtils {
     public static final String randomTimeHex() {
 
         String time = Long.toHexString(System.currentTimeMillis());
-        return time + StringUtils.randomString(16 - time.length(), true);
+        return time + StringUtils.randomString(Math.max(0, 16 - time.length()), true);
     }
 
     /**
@@ -858,6 +867,7 @@ public abstract class StringUtils {
             html = html.replaceAll("&#60;", "<");
             html = html.replaceAll("&#62;", ">");
             html = html.replaceAll("&#38;", "&");
+            html = html.replaceAll("&#39;", "'");
             html = html.replaceAll("&#34;", "\"");
             html = html.replaceAll("&#8220;", "\"");
             html = html.replaceAll("&#8221;", "\"");
@@ -945,6 +955,22 @@ public abstract class StringUtils {
         int[] array = new int[split.length];
         for (int i = 0; i < split.length; i++) {
             array[i] = Integer.parseInt(split[i]);
+        }
+        return array;
+    }
+
+    /**
+     * Split String into a long array based on whitespace
+     */
+    public static final long[] splitLong(String value) throws NumberFormatException {
+
+        String[] split = split(value);
+        if (split == null) {
+            return null;
+        }
+        long[] array = new long[split.length];
+        for (int i = 0; i < split.length; i++) {
+            array[i] = Long.parseLong(split[i]);
         }
         return array;
     }

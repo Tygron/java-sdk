@@ -46,12 +46,12 @@ public class TextPanel extends LogicPanel implements TextItem {
     @Override
     public String getText() {
 
-        // custom own text
+        // custom text
         if (StringUtils.containsData(text)) {
             return text;
         }
 
-        // get text form parent
+        // get text from parent
         Panel parent = getParent();
         if (parent instanceof TemplateTextPanel ttp) {
             return ttp.getText();
@@ -76,10 +76,10 @@ public class TextPanel extends LogicPanel implements TextItem {
 
     public final String updateTags(String text) {
 
-        // filter empty values and sort results by longest tag first, to prevent replacing large queries by smaller sub versions
+        // Filter null values and sort tags by length descending to avoid partial replacements.
         for (Entry<String, String> entry : tags.entrySet().stream().filter(e -> e.getValue() != null)
                 .sorted((e1, e2) -> Integer.compare(e2.getKey().length(), e1.getKey().length())).toList()) {
-            text = text.replaceAll("\\" + entry.getKey(), entry.getValue());
+            text = text.replace(entry.getKey(), entry.getValue());
         }
         return text;
     }

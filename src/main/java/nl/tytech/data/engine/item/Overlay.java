@@ -98,7 +98,7 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
 
         SCENARIO(OverlayCategory.ADMINISTRATIVE, Overlay.class),
 
-        @Deprecated(since = "To be non functional in LTS 2028, for LTS 2026 mark as deprecated")
+        @Deprecated(since = "Scheduled for removal in LTS 2028.")
         VACANCY(OverlayCategory.ADMINISTRATIVE, Overlay.class),
 
         /**
@@ -117,7 +117,7 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
 
         LIVABILITY(OverlayCategory.ENVIRONMENTAL, AvgOverlay.class, FunctionValue.LIVABILITY_EFFECT),
 
-        @Deprecated(since = "Non functional, only keep reference for conversion to deprecated overlay")
+        @Deprecated(since = "No longer functional; retained for backward compatibility.")
         AERIUS(OverlayCategory.ENVIRONMENTAL, AeriusOverlay.class),
 
         /**
@@ -132,10 +132,10 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
 
         WATERSHED(OverlayCategory.WATER, WatershedOverlay.class, (FunctionValue) null),
 
-        @Deprecated(since = "To be non functional in LTS 2028, for LTS 2026 mark as deprecated")
+        @Deprecated(since = "Scheduled for removal in LTS 2028.")
         SUBSIDENCE(OverlayCategory.WATER, SubsidenceOverlay.class, (FunctionValue) null),
 
-        @Deprecated(since = "Non functional, only keep reference for conversion to deprecated overlay")
+        @Deprecated(since = "No longer functional; retained for backward compatibility.")
         WATERWIJZER(OverlayCategory.WATER, WWOverlay.class),
 
         /**
@@ -204,10 +204,10 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
 
         TEST(null, DefaultOverlay.class, (FunctionValue) null),
 
-        @Deprecated(since = "To be non functional in LTS 2028, for LTS 2026 mark as deprecated")
+        @Deprecated(since = "Scheduled for removal in LTS 2028.")
         DISTURBANCE_DISTANCE(OverlayCategory.GRID_CALCULATION, DistanceOverlay.class, FunctionValue.DISTURBANCE_DISTANCE_M),
 
-        @Deprecated(since = "To be non functional in LTS 2028, for LTS 2026 mark as deprecated")
+        @Deprecated(since = "Scheduled for removal in LTS 2028.")
         SAFETY_DISTANCE(OverlayCategory.GRID_CALCULATION, DistanceOverlay.class, FunctionValue.SAFETY_DISTANCE_M),
 
         @Deprecated
@@ -566,7 +566,7 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
 
     public final String getTimeframeText(int timeframe) {
 
-        // lord maybe null for e.g. ShareOverlay
+        // getLord() may be null, e.g., for ShareOverlay
         String format = getLord() == null ? Type.TIMESTAMP_FORMAT.getDefaultValue()
                 : ((Setting) getItem(MapLink.SETTINGS, Type.TIMESTAMP_FORMAT)).getValue();
         return getTimeframeText(timeframe, format);
@@ -643,7 +643,7 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
         if (!(this instanceof GridOverlay) || parent instanceof ResultChildOverlay<?, ?>) {
             return false;
         }
-        // sometimes I can prequel myself or my children, except with timeframe calculation (e.g. combo, avg and (travel) distance)
+        // An overlay may act as a prequel to itself or its children, except during timeframe calculations...
         if (parent.getID().equals(getID()) || parent instanceof ResultParentOverlay<?, ?> rp && rp.hasResultChild(getID())) {
             return parent.calcSelfPrequel();
         }

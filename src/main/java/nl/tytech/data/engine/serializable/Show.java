@@ -13,7 +13,7 @@
 package nl.tytech.data.engine.serializable;
 
 /**
- * Show distance
+ * Represents the distance levels for visibility.
  *
  * @author Maxim Knepfle
  */

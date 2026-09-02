@@ -20,7 +20,7 @@ import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.util.color.TColor;
 
 /**
- * Special overlay that can highlight functions
+ * Overlay used to highlight functions
  *
  * @author Maxim Knepfle
  */

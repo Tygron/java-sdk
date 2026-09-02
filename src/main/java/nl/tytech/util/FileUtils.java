@@ -145,7 +145,7 @@ public class FileUtils {
             }
 
             if (source.isDirectory()) {
-                // do the walker for Trees!
+                // Walk the file tree
                 Files.walkFileTree(source.toPath(), EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
                         new CopyDirVisitor(source.toPath(), target.toPath()));
             } else {
@@ -169,7 +169,7 @@ public class FileUtils {
             if (dir.mkdirs()) {
                 return true;
             } else {
-                TLogger.warning("Failed to create missing filedir: " + dir.getAbsolutePath());
+                TLogger.warning("Failed to create directory: " + dir.getAbsolutePath());
                 return false;
             }
         }
@@ -351,7 +351,7 @@ public class FileUtils {
     /**
      * Checks the location of the file. Creates the directory when it's missing.
      * @param file name and location of the file.
-     * @return the newly optionally incremented file as a File instance (or null when it fails)
+     * @return the incremented File instance, if applicable, or null on failure
      */
     public static final File validateLocation(String file) {
         return validateLocation(file, false);
@@ -361,8 +361,8 @@ public class FileUtils {
      * Checks the location of the file. Creates the directory when it's missing and optionally increment the file name number if it already
      * exists.
      * @param file name and location of the file.
-     * @param boolean whether to increment the filename or not
-     * @return the newly optionally incremented file as a File instance (or null when it fails)
+     * @param true to increment the filename if it already exists
+     * @return the incremented File instance, if applicable, or null on failure
      */
     public static final File validateLocation(String file, boolean increment) {
 
@@ -390,7 +390,7 @@ public class FileUtils {
 
     public static final void writeByteArray(File file, byte[] byteArray) {
 
-        // store the bytes Array to the given file
+        // Store the byte array to the specified file
         try (BufferedOutputStream bos = new BufferedFileOutputStream(file)) {
             bos.write(byteArray);
         } catch (Exception e) {

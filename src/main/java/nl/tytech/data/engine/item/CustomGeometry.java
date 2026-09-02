@@ -53,7 +53,7 @@ public class CustomGeometry extends Item {
 
     private static final long serialVersionUID = 6607007330802054677L;
 
-    // small values against round offs
+    // Minimum value to prevent rounding errors
     private static final double MIN_TRIANGLE_AREA = 0.0001;
 
     @XMLValue
@@ -72,7 +72,7 @@ public class CustomGeometry extends Item {
     private boolean absoluteHeight = false;
 
     @XMLValue
-    private boolean backFaceCulling = false; // default false to be backward compatible with pre 2024 model with bad normals
+    private boolean backFaceCulling = false; // default false for backward compatibility with pre-2024 models with incorrect normals
 
     public boolean clearCache() {
 
@@ -84,7 +84,7 @@ public class CustomGeometry extends Item {
     }
 
     /**
-     * Approximation of data byte size, when cached count it twice.
+     * Approximate data byte size; doubled if cached.
      */
     public long getByteSize() {
 
@@ -144,7 +144,7 @@ public class CustomGeometry extends Item {
                 coords[2] = new Coordinate(data[i + 10], data[i + 12], data[i + 11]);
                 coords[3] = coords[0]; // first is also last
 
-                // create polygon direct to speed up
+                // Create polygon directly for improved performance
                 Polygon triangle = JTSUtils.sourceFactory.createPolygon(coords);
                 if (triangle != null && triangle.getArea() > MIN_TRIANGLE_AREA) {
                     qt.insert(triangle.getEnvelopeInternal(), triangle);

@@ -164,7 +164,7 @@ public class CodedEvent implements Serializable {
         parameters.add(type);
 
         // Prefill with defaults
-        EventIDField eventIDField = ObjectUtils.getEnumAnnotation((Enum<?>) type, EventIDField.class);
+        EventIDField eventIDField = ObjectUtils.getEnumAnnotation(type, EventIDField.class);
         List<Integer> paramsList = new ArrayList<>();
         if (eventIDField != null) {
             int[] params = eventIDField.params();

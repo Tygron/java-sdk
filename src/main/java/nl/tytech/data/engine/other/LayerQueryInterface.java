@@ -16,7 +16,7 @@ import nl.tytech.data.engine.item.Building;
 
 /**
  *
- * Interface to get layer type of item
+ * Interface for retrieving the layer type of an item.
  *
  * @author Maxim Knepfle
  *

@@ -66,7 +66,7 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     GENERATE_WATER_AREAS(Double.class),
 
     @EventParamData(desc = "Import Area Collection", params = { "Collection of Area geometries", "Area Names", "Attribute Names",
-            "Numeric Attribute Values", "Buffer for Points and Lines to make Polygons (optional)",
+            "Numeric Attribute Values", "Polygon Buffer for points and lines (optional)",
             "Source (optional)" }, defaults = { "", "", "", "", "" + Setting.DEFAULT_PL_BUFFER, "" }, exampleAmount = { 3, 3, 2, 6 })
     @EventIDField(links = { SOURCES }, params = { 5 }, nullable = { 4, 5 })
     IMPORT(GeometryCollection.class, String[].class, String[].class, double[][].class, Double.class, Integer.class),
@@ -84,7 +84,7 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
     @Deprecated
-    @EventParamData(desc = "Use REMOVE_GROUP instead for identical result.", params = { "Group name" })
+    @EventParamData(desc = "Use REMOVE_GROUP for the same result.", params = { "Group name" })
     REMOVE_FILTER(String[].class),
 
     REMOVE_GROUP(String[].class),
@@ -95,11 +95,11 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0 })
     SET_ACTIVE(Integer[].class, Boolean[].class),
 
-    @EventParamData(params = { "Areas", "Attribute Name", "Numerical Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Areas", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { AREAS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Areas", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Areas", "Attribute Name", "Additional Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { AREAS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 

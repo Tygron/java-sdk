@@ -34,7 +34,7 @@ public class ClientData implements Serializable {
 
         /** normal heartbeat received */
         CONNECTED(TColor.GREEN, "Connected", 0),
-        /** if the heartbeat is longer than failing but less then lost */
+        /** if the heartbeat is longer than failing but less than lost */
         FAILING(TColor.YELLOW, "Failing...", Network.UPDATEFREQ * 40),
         /** client heartbeat took longer than timeout */
         LOST(TColor.RED, "Lost Connection!", Network.UPDATEFREQ * 60),
@@ -265,7 +265,7 @@ public class ClientData implements Serializable {
             if (!receivedUserAgent.equals(userAgent)) {
                 TLogger.warning(
                         "User Agent change from " + this.userAgent + " to " + receivedUserAgent + " for client " + getClientToken() + ".");
-                this.computerName = receivedName;
+                this.userAgent = receivedUserAgent;
             }
             this.connectionState = ConnectionState.CONNECTED;
         }

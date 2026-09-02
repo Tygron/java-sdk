@@ -23,7 +23,7 @@ public class DefaultRCNN extends RCNN implements OverrideDataItem {
 
     private static final long serialVersionUID = 3237992814582019098L;
 
-    // runtime set variable do not save to XML
+    // Runtime variable; do not save to XML.
     private boolean override = true;
 
     @Override

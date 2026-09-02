@@ -17,7 +17,7 @@ import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 
 /**
- * LoadingEventType: Event related to the loading proces.
+ * Event related to the loading process.
  *
  * @author Maxim Knepfle
  */

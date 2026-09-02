@@ -35,6 +35,11 @@ import nl.tytech.util.ThreadUtils;
  */
 public final class TLogger {
 
+    public static interface SimpleLogger {
+
+        public void log(Level level, String log);
+    }
+
     private static final class SingletonHolder {
 
         private static final TLogger INSTANCE = new TLogger();
@@ -91,7 +96,7 @@ public final class TLogger {
     private static final Object LOCK = new Object();
 
     /**
-     * Max amount a identical log maybe repeated
+     * Max amount an identical log may be repeated
      */
     private static final int MAX_REPEAT = 10;
 
@@ -208,9 +213,9 @@ public final class TLogger {
         }
     }
 
-    public static final void setSimpleLogger(boolean simpleLogging) {
+    public static final void setSimpleLogging(boolean simple, SimpleLogger logger) {
         synchronized (LOCK) {
-            SingletonHolder.INSTANCE._setSimpleLogger(simpleLogging);
+            SingletonHolder.INSTANCE._setSimpleLogging(simple, logger);
         }
     }
 
@@ -245,9 +250,10 @@ public final class TLogger {
     private int lastLogCounter = 0;
 
     /**
-     * Simple logging has no handler , just system out, handlers seem to create an issue with JET in combination with Runtime.Exe()
+     * Simple logger during shutdown
      */
     private boolean simpleLogging = false;
+    private SimpleLogger simpleLogger = null;
 
     /**
      * Private constructor for singleton pattern
@@ -285,7 +291,7 @@ public final class TLogger {
         }
 
         // ignore all below my level
-        if (logger.getLevel() != null && logger.getLevel().intValue() > Level.WARNING.intValue()) {
+        if (logger.getLevel() != null && level.intValue() < logger.getLevel().intValue()) {
             return;
         }
 
@@ -307,6 +313,10 @@ public final class TLogger {
         if (simpleLogging) {
             System.out.println("[" + Thread.currentThread().getName() + ": id:" + Thread.currentThread().threadId() + " p:"
                     + Thread.currentThread().getPriority() + "]\t" + log);
+            // do simple logger
+            if (simpleLogger != null) {
+                simpleLogger.log(level, log);
+            }
         } else {
             logger.log(level, "[" + Thread.currentThread().getName() + ": id:" + Thread.currentThread().threadId() + " p:"
                     + Thread.currentThread().getPriority() + "]\t" + log);
@@ -330,8 +340,9 @@ public final class TLogger {
         logger.removeHandler(handler);
     }
 
-    private final void _setSimpleLogger(boolean simpleLogging) {
-        this.simpleLogging = simpleLogging;
+    private final void _setSimpleLogging(boolean simple, SimpleLogger logger) {
+        this.simpleLogging = simple;
+        this.simpleLogger = logger;
     }
 
     /**
@@ -430,7 +441,6 @@ public final class TLogger {
                     File file = new File(WORK_DIRECTORY);
                     if (!file.exists()) {
                         file.mkdirs();
-                        file.createNewFile();
                     }
                     fileHandler = new FileHandler(WORK_DIRECTORY + "log-" + getDate() + ".txt", true);
                     fileHandler.setFormatter(new SimpleFormatter());

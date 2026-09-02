@@ -42,7 +42,7 @@ public enum EditorIndicatorEventType implements IndicatorEventTypeEnum {
     DUPLICATE(Integer[].class),
 
     @Deprecated
-    @EventParamData(desc = "Use DUPLICATE instead for alsmost (no stakeholder option) identical result.", params = { "Indicator",
+    @EventParamData(desc = "Use DUPLICATE for similar functionality without the Stakeholder option.", params = { "Indicator",
             "Stakeholder" })
     @EventIDField(links = { INDICATORS }, params = { 0 })
     DUPLICATE_INDICATOR(Integer.class, Integer.class),
@@ -110,8 +110,8 @@ public enum EditorIndicatorEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { INDICATORS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Set a parent Indicator for a specified Indicator. This will cause the specified Indicator to be a subselectable Indicator of the parent. It is not possible to set an Indicator which has a parent itself as a parent of another Indicator.", params = {
-            "Indicator ID", "Indicator ID of parent (indicators without a parent should have their parent Indicator ID set to -1)" })
+    @EventParamData(desc = "Set a parent Indicator for a specified Indicator, making it a subselectable Indicator. An Indicator that already has a parent cannot be assigned as a parent to another Indicator.", params = {
+            "Indicator ID", "Parent Indicator ID (use -1 if no parent exists)" })
     @EventIDField(links = { INDICATORS }, params = { 0 })
     SET_PARENT(Integer.class, Integer.class),
 
@@ -121,7 +121,7 @@ public enum EditorIndicatorEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { INDICATORS, STAKEHOLDERS }, params = { 0, 1 })
     SET_STAKEHOLDER(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Set a target value of an Indicator for a Sceanrio. A target index value is required.", params = { "Scenario ID",
+    @EventParamData(desc = "Set a target value of an Indicator for a Scenario. A target index value is required.", params = { "Scenario ID",
             "Indicator ID", "Target index", "Target value" })
     @EventIDField(links = { SCENARIOS, INDICATORS }, params = { 0, 1 })
     SET_TARGET(Integer.class, Integer.class, Integer.class, Double.class),

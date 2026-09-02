@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Returns a cleared local list when get() is called for each thread. *
+ * Returns a cleared local list when get() is called for each thread.
  *
  * @author Maxim Knepfle
  */
