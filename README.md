@@ -9,7 +9,7 @@ Additional licensing information about libraries used in this Tygron-SDK can be 
 1. Download and install the "Java Development Kit (JDK)" version 21+ from [Oracle](https://www.oracle.com/java/technologies/downloads/)
 2. Download and install a Java IDE. In this example we will install and use the [Eclipse IDE for Java Developers](https://www.eclipse.org/downloads/)
 3. Start the Eclipse IDE
-4. Import the Tygron Java-SDK into project following [Import using Git](#import-using-git) or [Import manually](import-manually)
+4. Import the Tygron Java-SDK into project following [Import using Git](#import-using-git) or [Import manually](#import-manually)
 5. Run [ExampleTest](src/main/java/nl/tytech/sdk/example/ExampleTest.java) via Junit to test the SDK functionality and server connection.
 6. Read the [Overview](#overview) below and Start coding your apps!
 
