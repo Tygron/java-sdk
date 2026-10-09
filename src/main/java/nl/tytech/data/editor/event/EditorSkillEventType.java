@@ -12,8 +12,7 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.editor.event;
 
-import static nl.tytech.core.net.serializable.MapLink.CHAT_CHANNELS;
-import static nl.tytech.core.net.serializable.MapLink.CHAT_MESSAGES;
+import static nl.tytech.core.net.serializable.MapLink.SKILLS;
 import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
@@ -26,17 +25,35 @@ import nl.tytech.core.item.annotations.Linked;
  * @author Maxim Knepfle
  *
  */
-@Linked(CHAT_MESSAGES)
-public enum EditorChatMessageEventType implements EventTypeEnum {
+@Linked(SKILLS)
+public enum EditorSkillEventType implements EventTypeEnum {
 
-    @EventParamData(desc = "Add a new chat message with optional Image or PDF content", params = { "Channel ID", "Message",
-            "Content Mime Type (optional)", "Content bytes (optional)" }, response = "Returns the ID of the resulting response message.")
-    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 }, nullable = { 2, 3 })
-    ADD(Integer.class, String.class, String.class, byte[].class);
+    @EventParamData(desc = "Add a new AI Skill file item", response = "Returns the ID of new Skill file item.")
+    ADD(),
+
+    @EventIDField(sameLength = true, links = { SKILLS }, params = { 0 })
+    SET_ACTIVE(Integer[].class, Boolean[].class),
+
+    @EventIDField(sameLength = true, links = { SKILLS }, params = { 0 })
+    SET_NAME(Integer[].class, String[].class),
+
+    @EventIDField(sameLength = true, links = { SKILLS }, params = { 0 })
+    SET_DESCRIPTION(Integer[].class, String[].class),
+
+    @EventIDField(sameLength = true, links = { SKILLS }, params = { 0 })
+    SET_CONTENT(Integer[].class, String[].class),
+
+    @EventIDField(links = { SKILLS }, params = { 0 })
+    DUPLICATE(Integer[].class),
+
+    @EventIDField(links = { SKILLS }, params = { 0 })
+    REMOVE(Integer[].class),
+
+    ;
 
     private final List<Class<?>> classes;
 
-    private EditorChatMessageEventType(Class<?>... classes) {
+    private EditorSkillEventType(Class<?>... classes) {
         this.classes = Arrays.asList(classes);
     }
 
@@ -55,6 +72,8 @@ public enum EditorChatMessageEventType implements EventTypeEnum {
 
         return switch (this) {
             case ADD -> Integer.class;
+            case DUPLICATE -> Integer[].class;
+            default -> Boolean.class;
         };
     }
 

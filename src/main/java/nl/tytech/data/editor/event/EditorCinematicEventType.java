@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 
 /**
@@ -60,6 +61,8 @@ public enum EditorCinematicEventType implements EventTypeEnum {
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     SET_KEYPOINT_DESCRIPTION(Integer.class, Integer.class, String.class),
 
+    @EventParamData(desc = "Set the camera location, orientation and lookat of a Keypoint in 3D Visualization coordinates (Y is up).", params = {
+            "Cinematic Data ID", "Keypoint ID", "Camera Location", "Up Vector", "Lookat location" }, defaults = { "", "", "", "", "" })
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     SET_KEYPOINT_ORIENTATION(Integer.class, Integer.class, Float[].class, Float[].class, Float[].class),
 

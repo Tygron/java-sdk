@@ -408,7 +408,7 @@ public class FileUtils {
 
     public static final boolean writeString(File file, String contents) {
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file));) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(contents);
             return true;
         } catch (IOException e) {

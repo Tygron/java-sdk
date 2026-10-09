@@ -52,13 +52,11 @@ public enum UserServiceEventType implements ServiceEventType {
     GET_DOMAIN_NEW_PROJECTS_FOR_LICENSE_YEAR(Creation[].class, AccessLevel.HOST_SESSION, String.class),
 
     @EventIDField(nullable = { 0 })
-    @EventParamData(desc = "Get the names of users in the Domain.", params = {
-            OPTIONAL_DOMAIN_NAME }, hidden = 0)
+    @EventParamData(desc = "Get the names of users in the Domain.", params = { OPTIONAL_DOMAIN_NAME }, hidden = 0)
     GET_DOMAIN_USER_NAMES(String[].class, AccessLevel.DOMAIN_ADMIN, String.class),
 
     @EventIDField(nullable = { 0 })
-    @EventParamData(desc = "Get all users in the Domain, including detailed user data.", params = {
-            OPTIONAL_DOMAIN_NAME }, hidden = 0)
+    @EventParamData(desc = "Get all users in the Domain, including detailed user data.", params = { OPTIONAL_DOMAIN_NAME }, hidden = 0)
     GET_DOMAIN_USERS(User[].class, AccessLevel.DOMAIN_ADMIN, String.class),
 
     @EventIDField(nullable = { 0 })
@@ -95,6 +93,9 @@ public enum UserServiceEventType implements ServiceEventType {
     @EventParamData(desc = "Set the Domain security policy.", params = { "Two Factor Level", "Min password length",
             "Login Key Expiration (in milliseconds)", "Support access to GeoShare" })
     SET_DOMAIN_SECURITY_POLICY(Boolean.class, AccessLevel.DOMAIN_ADMIN, AccessLevel.class, Integer.class, Long.class, Boolean.class),
+
+    @EventParamData(desc = "Set the Domain logging retention period.", params = { "Log Type", "Retention period (in months)" })
+    SET_DOMAIN_LOG_RETENTION(Boolean.class, AccessLevel.DOMAIN_ADMIN, Log.Type.class, Integer.class),
 
     @EventIDField(nullable = { 0 })
     @EventParamData(desc = "Change the License of a Domain to a different level.", params = { OPTIONAL_DOMAIN_NAME, "License" })
@@ -164,7 +165,7 @@ public enum UserServiceEventType implements ServiceEventType {
     public Class<?> getResponseClass(Object[] args) {
 
         if ((this == GET_LOG || this == GET_LOGS) && args[1] instanceof Log.Type logType) {
-            return logType.getArrayClass();
+            return logType.getLogClass().arrayType();
         } else {
             return responseClass;
         }

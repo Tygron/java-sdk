@@ -19,6 +19,7 @@ import nl.tytech.core.item.annotations.ItemIDField;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
+import nl.tytech.data.editor.serializable.AgentState;
 import nl.tytech.naming.EngineNC;
 import nl.tytech.util.StringUtils;
 
@@ -30,53 +31,6 @@ import nl.tytech.util.StringUtils;
  *
  */
 public class ChatMessage extends Item {
-
-    public enum AIState {
-
-        @Description("Message has not been processed yet")
-        NONE(0),
-
-        @Description("Message queued for processing by " + EngineNC.AI_AGENT)
-        QUEUING(1),
-
-        @Description(EngineNC.AI_AGENT + " is reading the message prompt")
-        READING(2),
-
-        @Description(EngineNC.AI_AGENT + " is generating the message contents")
-        GENERATING(3),
-
-        @Description(EngineNC.AI_AGENT + " has finished")
-        FINISHED(4);
-
-        public static final AIState fromStep(int step) {
-
-            for (AIState s : AIState.values()) {
-                if (s.getStep() == step) {
-                    return s;
-                }
-            }
-            return null;
-        }
-
-        private final int step;
-
-        private AIState(int step) {
-            this.step = step;
-        }
-
-        public int getStep() {
-            return step;
-        }
-
-        public final boolean isBusy() {
-            return this == QUEUING || this == READING || this == GENERATING;
-        }
-
-        @Override
-        public String toString() {
-            return name().toLowerCase();
-        }
-    }
 
     public enum Role {
 
@@ -125,8 +79,8 @@ public class ChatMessage extends Item {
         this.date = System.currentTimeMillis();
     }
 
-    public AIState getAIState() {
-        return AIState.NONE;
+    public AgentState getAgentState() {
+        return AgentState.NONE;
     }
 
     public ChatChannel getChannel() {

@@ -148,7 +148,7 @@ public abstract class Source extends UniqueNamedItem {
     }
 
     public boolean isSpecific() {
-        return this.getID().intValue() >= Item.SPECIFIC_START_ID;
+        return !isGenericID();
     }
 
     public void setDate(long date) {

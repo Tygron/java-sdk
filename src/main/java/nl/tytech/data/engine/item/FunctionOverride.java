@@ -24,7 +24,8 @@ import nl.tytech.util.StringUtils;
 import nl.tytech.util.logger.TLogger;
 
 /**
- * FunctionOverride provides scoring for custom indicators and overrides default function values, where the function ID matches the override ID.
+ * FunctionOverride provides scoring for custom indicators and overrides default function values, where the function ID matches the override
+ * ID.
  *
  * @author Maxim Knepfle
  */
@@ -32,7 +33,7 @@ public class FunctionOverride extends AttributeItem implements ImageItem {
 
     public enum AssetValue {
 
-        NAME, DESCRIPTION, ID, IMAGELOCATION,
+        NAME, DESCRIPTION, ID, IMAGELOCATION, //
         ROOF_COLOR(FunctionValue.ROOF_COLOR), //
         BASEMENT_COLOR(FunctionValue.BASEMENT_COLOR), //
         GROUND_COLOR(FunctionValue.GROUND_COLOR), //
@@ -89,6 +90,7 @@ public class FunctionOverride extends AttributeItem implements ImageItem {
     public void clearFunctionValues() {
         this.categories.clear();
         this.removeAllAttributes();
+        this.readDefaults();
     }
 
     public boolean deleteCategory(Category cat) {

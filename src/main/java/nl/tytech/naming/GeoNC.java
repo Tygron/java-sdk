@@ -64,6 +64,8 @@ public class GeoNC {
 
     public static final String TXT = "Text File";
 
+    public static final String MARKDOWN = "Markdown File";
+
     public static final String IFC = "buildingSMART IFC";
 
 }

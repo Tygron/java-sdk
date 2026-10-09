@@ -18,18 +18,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.tytech.core.item.annotations.ListOfClass;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.GPUJob;
-import nl.tytech.data.editor.other.AIToolCall;
+import nl.tytech.data.editor.serializable.AgentState;
+import nl.tytech.data.editor.serializable.AgentToolCall;
 import nl.tytech.util.MathUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * An AIChatMessage that contains the reasoning process of the LLM
+ * An AgentChatMessage that contains the reasoning process of the Agent
  *
  * @author Maxim Knepfle
  */
-public class AIChatMessage extends ChatMessage {
+public class AgentChatMessage extends ChatMessage {
 
     private static final long serialVersionUID = -5830351765378047529L;
+
+    public static final String ERROR_FORMAT = "***%s***";
+
+    private static final String NO_RESPONSE = ERROR_FORMAT.formatted("No response");
+
+    private static final String CANCEL_RESPONSE = ERROR_FORMAT.formatted("Response cancelled");
 
     public static final String QUEUING_TAG = "Queuing...";
 
@@ -45,11 +52,11 @@ public class AIChatMessage extends ChatMessage {
     private String thinking = StringUtils.EMPTY;
 
     @XMLValue
-    private AIState state = AIState.QUEUING;
+    private AgentState state = AgentState.QUEUING;
 
     @XMLValue
-    @ListOfClass(AIToolCall.class)
-    private ArrayList<AIToolCall> toolCalls = new ArrayList<>(0);
+    @ListOfClass(AgentToolCall.class)
+    private ArrayList<AgentToolCall> toolCalls = new ArrayList<>(0);
 
     @XMLValue
     private long calcTimeMS = 0;
@@ -57,16 +64,25 @@ public class AIChatMessage extends ChatMessage {
     @JsonIgnore
     private transient int thinkCounter = 0;
 
-    public AIChatMessage() {
+    public AgentChatMessage() {
 
     }
 
-    public AIChatMessage(Integer channelID) {
+    public AgentChatMessage(Integer channelID) {
         super(channelID, Role.ASSISTANT, StringUtils.EMPTY);
     }
 
+    public final void cancel() {
+
+        if (StringUtils.containsData(message)) {
+            message += "\n\n";
+        }
+        message += CANCEL_RESPONSE;
+        state = AgentState.FINISHED;
+    }
+
     @Override
-    public AIState getAIState() {
+    public AgentState getAgentState() {
         return state;
     }
 
@@ -77,10 +93,10 @@ public class AIChatMessage extends ChatMessage {
     @Override
     public String getMessage(boolean showThinking) {
 
-        if (getAIState() == AIState.QUEUING) {
+        if (getAgentState() == AgentState.QUEUING) {
             return QUEUING_TAG;
         }
-        if (getAIState() == AIState.READING) {
+        if (getAgentState() == AgentState.READING) {
             return READING_TAG;
         }
 
@@ -90,18 +106,22 @@ public class AIChatMessage extends ChatMessage {
             result.append(THINK_TAG);
             result.append(thinking);
         }
-        if (StringUtils.containsData(message)) {
+        String response = message;
+        if (getAgentState() == AgentState.FINISHED && !StringUtils.containsData(response)) {
+            response = NO_RESPONSE;
+        }
+        if (StringUtils.containsData(response)) {
             if (reasoning) {
                 result.append("\n\n" + ANSWER_TAG);
             }
-            result.append(message);
+            result.append(response);
         }
         String r = result.toString();
         if (StringUtils.containsData(r)) {
             return r;
         }
         if (!showThinking && StringUtils.containsData(thinking)) {
-            return randomDots(BUSY_THINKING_TAG);
+            return BUSY_THINKING_TAG;
         }
         return randomDots(".");
     }
@@ -110,7 +130,7 @@ public class AIChatMessage extends ChatMessage {
         return thinking;
     }
 
-    public List<AIToolCall> getToolCalls() {
+    public List<AgentToolCall> getToolCalls() {
         return toolCalls;
     }
 
@@ -132,14 +152,14 @@ public class AIChatMessage extends ChatMessage {
     public void reset() {
         super.reset();
         // reset messages are always finished (only new can generate)
-        state = AIState.FINISHED;
+        state = AgentState.FINISHED;
     }
 
     public void setCalcTimeMS(long calcTimeMS) {
         this.calcTimeMS = calcTimeMS;
     }
 
-    public void setState(AIState state) {
+    public void setState(AgentState state) {
         this.state = state;
     }
 
@@ -147,7 +167,7 @@ public class AIChatMessage extends ChatMessage {
         this.thinking = thinking;
     }
 
-    public void setToolCalls(List<AIToolCall> toolCalls) {
+    public void setToolCalls(List<AgentToolCall> toolCalls) {
         this.toolCalls = new ArrayList<>(toolCalls);
     }
 }

@@ -127,7 +127,7 @@ public abstract class LogicPanel extends Panel implements LogicItem {
 
     public String getWarnings() {
 
-        if (!StringUtils.containsData(warnings)) {
+        if (!StringUtils.containsData(warnings) && StringUtils.containsData(getText())) {
             if (HEAD.matcher(getText()).find()) {
                 return "WARNING: <head> tags are not allowed!";
             }

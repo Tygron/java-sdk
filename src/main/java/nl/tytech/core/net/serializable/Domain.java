@@ -225,6 +225,11 @@ public class Domain implements Serializable {
      */
     private boolean shareSupport = false;
 
+    /**
+     * Log retention in months
+     */
+    private HashMap<Log.Type, Integer> logRetentions = new HashMap<>();
+
     public Domain() {
 
     }
@@ -372,6 +377,14 @@ public class Domain implements Serializable {
 
     public long getLoginKeyExpiration() {
         return loginKeyExpiration;
+    }
+
+    public int getLogRetention(Log.Type type) {
+        return logRetentions.getOrDefault(type, Log.DEFAULT_RETENTION);
+    }
+
+    public HashMap<Log.Type, Integer> getLogRetentions() {
+        return logRetentions;
     }
 
     public int getMinPasswdLength() {
@@ -529,6 +542,10 @@ public class Domain implements Serializable {
 
     public void setLoginKeyExpiration(long loginKeyExpiration) {
         this.loginKeyExpiration = loginKeyExpiration;
+    }
+
+    public void setLogRetentions(HashMap<Log.Type, Integer> logRetentions) {
+        this.logRetentions = logRetentions;
     }
 
     public void setMinPasswdLength(int minPasswdLength) {

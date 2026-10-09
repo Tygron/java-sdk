@@ -33,6 +33,11 @@ public enum EditorExcelSheetEventType implements IndicatorEventTypeEnum {
     @EventParamData(desc = "Add new Excel sheet", params = { "Name", "Byte array content", "Uploader Name" }, response = "Excel ID")
     ADD(String.class, byte[].class, String.class),
 
+    @EventParamData(desc = "Add new Excel sheet based on matrix (rows and columns) containing the values and formulas for each cell and a second with optional labels.", params = {
+            "Name", "Matrix containing content (numeric value, text of formula starting with =) for each cell.",
+            "Matrix containing labels for each cell, may be empty.", "Uploader Name" }, response = "Excel ID")
+    ADD_MATRIX(String.class, Object[][].class, String[][].class, String.class),
+
     @EventIDField(links = { EXCEL_SHEETS }, params = { 0 })
     EXPORT(Integer.class),
 
@@ -40,7 +45,12 @@ public enum EditorExcelSheetEventType implements IndicatorEventTypeEnum {
     REMOVE(Integer[].class),
 
     @EventIDField(links = { EXCEL_SHEETS }, params = { 0 })
-    SET_EXCEL_SHEET(Integer.class, byte[].class, String.class);
+    SET_EXCEL_SHEET(Integer.class, byte[].class, String.class),
+
+    @EventParamData(desc = "Set existing Excel sheet based on matrix (rows and columns) containing the values and formulas for each cell and a second with optional labels.", params = {
+            "Name", "Matrix containing content (numeric value, text of formula starting with =) for each cell.",
+            "Matrix containing labels for each cell, may be empty.", "Uploader Name" }, response = "Excel ID")
+    SET_MATRIX(Integer.class, Object[][].class, String[][].class, String.class);
 
     private final List<Class<?>> classes;
 
@@ -61,7 +71,7 @@ public enum EditorExcelSheetEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
+        if (this == ADD || this == ADD_MATRIX) {
             return Integer.class;
         }
         if (this == EXPORT) {

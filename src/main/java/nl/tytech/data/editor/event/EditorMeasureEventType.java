@@ -81,7 +81,7 @@ public enum EditorMeasureEventType implements EventTypeEnum {
     ADD_LEVEE(Integer.class, Integer.class),
 
     @EventParamData(desc = "Add polygons to existing outer (or inner) polygons of a Levee Spatial of a Measure.", params = { "Measure ID",
-            "Levee Spatial ID", "Multipolygon" })
+            "Levee Spatial ID", "MultiPolygon" })
     @EventIDField(links = { MEASURES }, params = { 0 })
     ADD_LEVEE_POLYGONS(Integer.class, Integer.class, MultiPolygon.class),
 

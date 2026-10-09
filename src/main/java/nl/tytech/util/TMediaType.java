@@ -144,6 +144,11 @@ public class TMediaType extends MediaType {
     public static final String TEXT_PLAIN_UTF8 = MediaType.TEXT_PLAIN + CHARSET_UTF8;
 
     /**
+     * Mime Type for plain Markdown text.
+     */
+    public static final String TEXT_MARKDOWN = "text/markdown";
+
+    /**
      * Mime Sup Type header
      */
     public static final String SUBTYPE = "subtype";

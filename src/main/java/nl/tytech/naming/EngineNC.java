@@ -28,7 +28,7 @@ public class EngineNC {
 
     public static final String CLIENT_NAME = COMPANY + " Client";
 
-    public static final String SUB_TITLE = "Accelerated Simulations for Engineers";
+    public static final String SUB_TITLE = "Explore what your decisions do, before you make them";
 
     public static final String SHARE = "GeoShare";
 

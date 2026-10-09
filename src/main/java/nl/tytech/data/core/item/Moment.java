@@ -79,7 +79,8 @@ public class Moment extends Item {
     public static long getMillis(int year, int month, int day, int hour) {
 
         Calendar cal = Calendar.getInstance();
-        cal.set(year, month - 1, day, hour, 0); // note: months start at 0 in Calendar
+        cal.set(year, month - 1, day, hour, 0, 0); // note: months start at 0 in Calendar
+        cal.clear(Calendar.MILLISECOND);
         return cal.getTimeInMillis();
     }
 

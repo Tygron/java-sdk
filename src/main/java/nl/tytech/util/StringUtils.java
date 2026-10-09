@@ -165,7 +165,7 @@ public abstract class StringUtils {
 
     /**
      * From xml spec valid chars: #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF] any Unicode character, excluding
-     * the surrogate blocks, FFFE, and FFFF.
+     * the surrogate blocks, FFFE, and FFFF. This includes several surrogate char emoji found here: https://unicodeplus.com/block/1F600
      */
     private static final String XML_REGEX = "[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]";
 
@@ -1245,9 +1245,9 @@ public abstract class StringUtils {
         }
 
         /**
-         * Extension should be at least 3 char
+         * Extension should be at least 2 char
          */
-        return parts[parts.length - 1].length() >= 3;
+        return parts[parts.length - 1].length() >= 2;
     }
 
     public static final boolean validPhone(String number) {
@@ -1275,7 +1275,14 @@ public abstract class StringUtils {
      * Filter out invalid chars that are not XML supported.
      */
     public static final String validXML(String value) {
-        return value != null ? value.replaceAll(XML_REGEX, REPLACEMENT_CHAR) : null;
+        return validXML(value, REPLACEMENT_CHAR);
+    }
+
+    /**
+     * Filter out invalid chars that are not XML supported and replace them with replacement.
+     */
+    public static final String validXML(String value, String replacement) {
+        return value != null ? value.replaceAll(XML_REGEX, replacement) : null;
     }
 
     public static final File writeToFile(long value, String filePathName) {

@@ -411,6 +411,12 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Amount of Iterations during a recalculation update. Min Value: 1 and Max Value: " + MAX_ITERATIONS)
         ITERATIONS(Integer.class, "1"),
 
+        @Description("When true AI Agents are allowed to edit project data.")
+        AI_EDITING(Boolean.class, "true"),
+
+        @Description("When true allow TQL Queries to access the API Token.")
+        TQL_TOKEN(Boolean.class, "true"),
+
         ;
 
         private final String defaultValue;

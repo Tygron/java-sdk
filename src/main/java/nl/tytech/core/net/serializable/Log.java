@@ -15,6 +15,8 @@ package nl.tytech.core.net.serializable;
 import java.io.File;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.util.ObjectUtils;
 import nl.tytech.util.StringUtils;
 import nl.tytech.util.logger.TLogger;
 
@@ -28,81 +30,59 @@ public abstract class Log implements Serializable, Comparable<Log> {
 
     public enum Type {
 
-        /**
-         * Session logs
-         */
+        @Description("Session related logging, e.g. startup time, session type.")
         SESSIONS,
 
-        /**
-         * User logs
-         */
+        @Description("User related logging, e.g. user or domain add/remove.")
         USERS,
 
-        /**
-         * Security incidents
-         */
+        @Description("Security related logging, e.g. invalid logins, unlawful access.")
         SECURITY,
 
-        /**
-         * Backup logs
-         */
-        BACKUP;
+        @Description("Backup related logging, e.g. successful or failed backup of GeoShare and Projects.")
+        BACKUP,
 
-        public final Log[] getArray(int size) {
+        @Description("Daily User logins from all IP addresses, updated at midnight.")
+        LOGINS,
 
-            switch (this) {
-                case SECURITY:
-                    return new SecurityLog[size];
-                case USERS:
-                    return new UserLog[size];
-                case SESSIONS:
-                    return new SessionLog[size];
-                case BACKUP:
-                    return new BackupLog[size];
-                default:
-                    TLogger.severe("Unknown log type: " + this);
-                    return null;
-            }
-        }
-
-        public final Class<?> getArrayClass() {
-
-            switch (this) {
-                case SECURITY:
-                    return SecurityLog[].class;
-                case USERS:
-                    return UserLog[].class;
-                case SESSIONS:
-                    return SessionLog[].class;
-                case BACKUP:
-                    return BackupLog[].class;
-                default:
-                    TLogger.severe("Unknown log type: " + this);
-                    return null;
-            }
-        }
+        @Description("Daily Domain simulation jobs, updated at midnight.")
+        JOBS;
 
         public final String getDescription() {
-
-            switch (this) {
-                case SECURITY:
-                    return "Security related logging, e.g. invalid logins, unlawful access.";
-                case USERS:
-                    return "User related logging, e.g. user or domain add/remove.";
-                case SESSIONS:
-                    return "Session related logging, e.g. startup time, session type.";
-                case BACKUP:
-                    return "Backup related logging, e.g. successful or failed backup of GeoShare and Projects.";
-                default:
-                    TLogger.severe("Unknown log type: " + this);
-                    return null;
-            }
+            return ObjectUtils.getDescription(this);
         }
 
         public final String getDirectory() {
             return LOGS_DIR + StringUtils.capitalizeWithSpacedUnderScores(this) + File.separator;
         }
+
+        public final Class<? extends Log> getLogClass() {
+
+            switch (this) {
+                case SECURITY:
+                    return SecurityLog.class;
+                case USERS:
+                    return UserLog.class;
+                case SESSIONS:
+                    return SessionLog.class;
+                case BACKUP:
+                    return BackupLog.class;
+                case LOGINS:
+                    return LoginLog.class;
+                case JOBS:
+                    return JobLog.class;
+                default:
+                    TLogger.severe("Unknown log type: " + this);
+                    return null;
+            }
+        }
     }
+
+    public static final int MIN_RETENTION = 6;
+
+    public static final int DEFAULT_RETENTION = 5 * 12;
+
+    public static final int MAX_RETENTION = 10 * 12;
 
     private static final String LOGS_DIR = "Logs" + File.separator;
 

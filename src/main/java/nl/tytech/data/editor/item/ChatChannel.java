@@ -13,23 +13,23 @@
 package nl.tytech.data.editor.item;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import nl.tytech.core.item.annotations.Description;
 import nl.tytech.core.item.annotations.ItemIDField;
 import nl.tytech.core.item.annotations.NoDefaultText;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
 import nl.tytech.data.core.serializable.MapType;
-import nl.tytech.data.editor.item.ChatMessage.AIState;
+import nl.tytech.data.editor.serializable.AgentAttribute;
+import nl.tytech.data.editor.serializable.AgentState;
+import nl.tytech.data.editor.serializable.AgentTool;
 import nl.tytech.data.engine.item.AttributeItem;
 import nl.tytech.data.engine.item.GenAI;
-import nl.tytech.util.ObjectUtils;
+import nl.tytech.data.engine.item.Setting;
 import nl.tytech.util.StringUtils;
 
 /**
@@ -41,147 +41,11 @@ import nl.tytech.util.StringUtils;
  */
 public class ChatChannel extends AttributeItem {
 
-    public enum LLMAttribute implements ReservedAttribute {
-
-        TEMPERATURE(Double.class, 0.8, 2),
-
-        TOP_P(Double.class, 0.95, 2),
-
-        TOP_K(Integer.class, 64, 1024),
-
-        MAX_TOKENS(Integer.class, 5_000, Integer.MAX_VALUE), // https://openllmbridge.com/blog/why-gemma-4-overthinks
-
-        THINKING_BUDGET_TOKENS(Integer.class, 1_000, Integer.MAX_VALUE),
-
-        TIMEOUT_SEC(Integer.class, 10 * 60, 20 * 60), // default 10min timeout
-
-        THINK_MODE(Boolean.class, 1, 1),
-
-        SHOW_THINKING(Boolean.class, 0, 1),
-
-        CACHEABLE(Boolean.class, 1, 1), // when > 0 WIKI queries will be cached for faster tool execution
-
-        PROJECT_INFO(Boolean.class, 0, 1);
-
-        public static final LLMAttribute fromText(String text) {
-
-            text = text.toUpperCase();
-            for (LLMAttribute a : LLMAttribute.values()) {
-                if (a.name().equals(text)) {
-                    return a;
-                }
-            }
-            return null;
-        }
-
-        private final Class<?> type;
-        private final double[] defaultArray;
-        private final double maxValue;
-
-        private LLMAttribute(Class<?> type, double defaultValue, double maxValue) {
-            this.type = type;
-            this.defaultArray = new double[] { defaultValue };
-            this.maxValue = maxValue;
-        }
-
-        @Override
-        public double[] defaultArray() {
-            return defaultArray;
-        }
-
-        @Override
-        public double defaultValue() {
-            return defaultArray()[0];
-        }
-
-        public double getMaxValue() {
-            return maxValue;
-        }
-
-        public double getMinValue() {
-            return 0;
-        }
-
-        @Override
-        public Class<?> getType() {
-            return type;
-        }
-
-        public final boolean isOption() {
-            return switch (this) {
-                case PROJECT_INFO, SHOW_THINKING -> false;
-                default -> true;
-            };
-        }
-    }
-
-    public enum Tool {
-
-        @Description("Get AI Summary on a Tygron Wiki subject")
-        GET_SUMMARY,
-
-        @Description("Search Tygron Wiki Pages")
-        SEARCH_PAGE,
-
-        @Description("Get specific Tygron Wiki Page")
-        GET_PAGE,
-
-        @Description("Validate Tygron API Endpoint")
-        VALIDATE_ENDPOINT,
-
-        @Description("Validate Tygron TQL Query")
-        VALIDATE_QUERY,
-
-        @Description("Execute Tygron TQL Query")
-        EXECUTE_QUERY,
-
-        @Description("Execute Tygron API Endpoint")
-        EXECUTE_ENDPOINT,
-
-        @Description("Get screenshot of user interface")
-        GET_SCREEN,
-
-        @Description("Open a panel in user interface")
-        OPEN_PANEL;
-
-        public static final Tool fromText(String text) {
-            return Arrays.stream(values()).filter(t -> t.toString().equals(text) || t.name().equals(text)).findAny().orElse(null);
-        }
-
-        public final String getDescription() {
-            return ObjectUtils.getDescription(this);
-        }
-
-        public final boolean isRead() {
-            return switch (this) {
-                case VALIDATE_QUERY, EXECUTE_QUERY, EXECUTE_ENDPOINT -> true;
-                default -> false;
-            };
-        }
-
-        public final boolean isSee() {
-            return switch (this) {
-                case GET_SCREEN -> true;
-                default -> false;
-            };
-        }
-
-        public final boolean isWrite() {
-            return switch (this) {
-                case EXECUTE_ENDPOINT -> true;
-                default -> false;
-            };
-        }
-
-        @Override
-        public final String toString() {
-            return name().toLowerCase().replace("_", "-");
-        }
-    }
-
     public static final String CHANNEL = "channelid";
 
     public static final String STAKEHOLDER = "stakeholderid";
+
+    public static final String EDITING = "edit";
 
     public static final Integer DOMAIN_CHANNEL = 0;
 
@@ -201,7 +65,7 @@ public class ChatChannel extends AttributeItem {
     private String intro = StringUtils.EMPTY;
 
     @XMLValue
-    private ArrayList<Tool> tools = new ArrayList<>();
+    private ArrayList<AgentTool> tools = new ArrayList<>();
 
     @NoDefaultText
     private HashMap<Integer, String> agentTasks = new HashMap<>();
@@ -222,9 +86,9 @@ public class ChatChannel extends AttributeItem {
         return agentTasks;
     }
 
-    public final AIState getAIState() {
-        return AIState.fromStep(getMessageStream().filter(m -> m instanceof AIChatMessage).mapToInt(m -> m.getAIState().getStep()).min()
-                .orElse(AIState.NONE.getStep()));
+    public final AgentState getAIState() {
+        return AgentState.fromStep(getMessageStream().filter(m -> m instanceof AgentChatMessage).mapToInt(m -> m.getAgentState().getStep()).min()
+                .orElse(AgentState.NONE.getStep()));
     }
 
     @Override
@@ -246,7 +110,7 @@ public class ChatChannel extends AttributeItem {
 
     @Override
     protected ReservedAttribute[] getDefaultAttributes() {
-        return LLMAttribute.values();
+        return AgentAttribute.values();
     }
 
     public String getInstructions() {
@@ -290,7 +154,7 @@ public class ChatChannel extends AttributeItem {
         return attribute.defaultArray();
     }
 
-    public List<Tool> getTools() {
+    public List<AgentTool> getTools() {
         return tools;
     }
 
@@ -303,7 +167,7 @@ public class ChatChannel extends AttributeItem {
     }
 
     public final boolean isRead() {
-        return getAttribute(LLMAttribute.PROJECT_INFO) > 0 || tools.stream().anyMatch(t -> t != null && t.isRead());
+        return getAttribute(AgentAttribute.PROJECT_INFO) > 0 || tools.stream().anyMatch(t -> t != null && t.isRead());
     }
 
     public final boolean isSee() {
@@ -311,7 +175,8 @@ public class ChatChannel extends AttributeItem {
     }
 
     public final boolean isWrite() {
-        return tools.stream().anyMatch(t -> t != null && t.isWrite());
+        Setting setting = this.getItem(MapLink.SETTINGS, Setting.Type.AI_EDITING);
+        return setting.getBooleanValue() && tools.stream().anyMatch(t -> t != null && t.isWrite());
     }
 
     public void setInstructions(String instructions) {
@@ -322,7 +187,7 @@ public class ChatChannel extends AttributeItem {
         this.neuralNetworkID = neuralNetworkID;
     }
 
-    public void setTools(List<Tool> tools) {
+    public void setTools(List<AgentTool> tools) {
         this.tools = new ArrayList<>(tools);
     }
 }

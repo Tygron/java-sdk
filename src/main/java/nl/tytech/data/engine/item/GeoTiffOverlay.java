@@ -108,9 +108,8 @@ public class GeoTiffOverlay extends ResultParentOverlay<GeoTiffResult, NoPrequel
         return GeoTiffResult.NEAREST;
     }
 
-    public final List<String> getGeoTiffFileNames(Integer geoTiffID) {
-        List<GeoTiff> geoTiffs = getGeoTiffs();
-        return geoTiffs.stream().map(g -> g.getFileName()).collect(Collectors.toList());
+    public final List<String> getGeoTiffFileNames() {
+        return getGeoTiffs().stream().map(g -> g.getFileName()).collect(Collectors.toList());
     }
 
     public List<Integer> getGeoTiffIDs() {

@@ -150,6 +150,10 @@ public class DuplicateFunction extends Function {
         return getOriginal().getOriginalCategories();
     }
 
+    public Integer getOriginalFunctionID() {
+        return this.orginalFunctionID;
+    }
+
     @Override
     public PlacementType getPlacementType() {
         return getOriginal().getPlacementType();

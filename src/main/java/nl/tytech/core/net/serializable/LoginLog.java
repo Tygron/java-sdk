@@ -12,86 +12,88 @@
  *******************************************************************************************************************************************/
 package nl.tytech.core.net.serializable;
 
+import java.util.Collection;
 import nl.tytech.util.DateUtils;
 import nl.tytech.util.StringUtils;
 
 /**
- * Logging of user noticeable actions
+ * Logging of daily user logins from different addresses during the day
  *
  * @author Maxim Knepfle
  *
  */
-public class BackupLog extends Log {
+public class LoginLog extends Log {
 
-    private static final long serialVersionUID = 8505302259584226577L;
+    private static final long serialVersionUID = 8505302259584226522L;
 
-    private long time = System.currentTimeMillis();
+    private String userName = StringUtils.EMPTY;
 
-    private int success = 0;
+    private long firstLoginTime = 0;
 
-    private int total = 0;
+    private String[] addresses = new String[0];
 
-    public BackupLog() {
+    public LoginLog() {
 
     }
 
-    public BackupLog(Long domainID, String domainName, Integer success, Integer total) {
+    public LoginLog(Long domainID, String domainName, String userName, long firstLoginTime, Collection<String> addresses) {
 
         super(domainID, domainName, StringUtils.randomTimeHex());
-        this.success = success == null ? 0 : success.intValue();
-        this.total = total == null ? 0 : total.intValue();
+        this.userName = userName;
+        this.firstLoginTime = firstLoginTime;
+        this.addresses = addresses.toArray(String[]::new);
+    }
+
+    public String[] getAddresses() {
+        return addresses;
+    }
+
+    public long getFirstLoginTime() {
+        return firstLoginTime;
     }
 
     @Override
     public String getLogDescription() {
-        return success >= total ? "Successful backup of " + success + "/" + total + " Items."
-                : "Failed backup for " + (total - success) + "/" + total + " Items, contact support for more details.";
+        return "User first login: " + StringUtils.dateToHumanString(firstLoginTime, null) + " (IP addresses: " + String.join(",", addresses)
+                + ")";
     }
 
     @Override
     public long getLogTime() {
-        return getTime();
-    };
+        return getFirstLoginTime();
+    }
 
     @Override
     public String getLogTitle() {
-        return success >= total ? "Success" : "Failed";
+        return getUserName();
     }
 
     @Override
     public Type getLogType() {
-        return Type.BACKUP;
+        return Type.LOGINS;
     }
 
-    public int getSuccess() {
-        return success;
+    public String getUserName() {
+        return userName;
     }
 
-    public long getTime() {
-        return time;
+    public void setAddresses(String[] addresses) {
+        this.addresses = addresses;
     }
 
-    public int getTotal() {
-        return total;
+    public void setFirstLoginTime(long firstLoginTime) {
+        this.firstLoginTime = firstLoginTime;
     }
 
-    public void setSuccess(int success) {
-        this.success = success;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override
     public String toString() {
 
         StringBuilder builder = new StringBuilder();
-        builder.append(DateUtils.formatLocal(time));
+        builder.append(DateUtils.formatLocal(getFirstLoginTime()));
         builder.append(StringUtils.WHITESPACE);
         builder.append(getDomainName());
         builder.append(StringUtils.WHITESPACE);

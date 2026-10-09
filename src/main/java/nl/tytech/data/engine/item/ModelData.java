@@ -315,10 +315,6 @@ public class ModelData extends Item implements ModelObject {
         return isAlpha;
     }
 
-    public boolean isGeneric() {
-        return this.getID() < Item.SPECIFIC_START_ID;
-    }
-
     public void setFileName(String fileName) {
         this.name = fileName;
     }

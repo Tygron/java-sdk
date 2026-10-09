@@ -42,6 +42,12 @@ public enum EditorSettingEventType implements IndicatorEventTypeEnum {
 
     SET_CURRENCY(TCurrency.class),
 
+    @EventParamData(desc = "Set if AI Agents are allowed to edit Project data.", params = { "True for allow, false to disable editing" })
+    SET_AI_EDITING(Boolean.class),
+
+    @EventParamData(desc = "Set if TQL Queries are allowed access the API Token.", params = { "True for allow, false to disable TQL API Tokens." })
+    SET_TQL_TOKEN(Boolean.class),
+
     SET_DECIMALS(Integer.class),
 
     @Deprecated

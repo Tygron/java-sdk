@@ -59,6 +59,8 @@ public class Shareable implements Serializable, Comparable<Shareable> {
 
         TXT(TMediaType.TEXT_PLAIN_UTF8, "txt"),
 
+        MARKDOWN(TMediaType.TEXT_MARKDOWN, "md"),
+
         DOC(TMediaType.APPLICATION_DOCX, "docx"),
 
         SLIDES(TMediaType.APPLICATION_PPTX, "pptx"),

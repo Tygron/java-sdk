@@ -23,6 +23,7 @@ import nl.tytech.core.event.Event;
 import nl.tytech.core.event.Event.IndicatorEventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
 import nl.tytech.core.item.annotations.EventParamData;
+import nl.tytech.core.item.annotations.Internal;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.editor.serializable.PDResult;
@@ -82,6 +83,9 @@ public enum EditorParametricEventType implements IndicatorEventTypeEnum {
 
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
+
+    @Internal
+    SET_PROMPT(String.class),
 
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 })
     SET_POLYGONS(Integer[].class, MultiPolygon[].class),

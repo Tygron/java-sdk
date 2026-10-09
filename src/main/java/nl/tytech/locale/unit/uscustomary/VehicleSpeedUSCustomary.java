@@ -22,7 +22,7 @@ import nl.tytech.util.StringUtils;
  */
 public enum VehicleSpeedUSCustomary implements LocalUnit {
 
-    MPH("mi", 1, Double.MAX_VALUE); //
+    MPH("mph", 1, Double.MAX_VALUE); //
 
     public static final double KMPH_TO_MPH = 0.6213712d;
 

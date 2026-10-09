@@ -486,7 +486,7 @@ public class PackageUtils {
         /**
          * 3: Maybe already a valid url?
          */
-        if (path.startsWith("http")) {
+        if (path.startsWith("http") || path.startsWith("file:")) {
             // web url
             try {
                 return new URI(path).toURL();

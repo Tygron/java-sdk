@@ -10,29 +10,50 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.core.serializable;
+package nl.tytech.data.editor.serializable;
+
+import java.io.Serializable;
+import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.util.StringUtils;
 
 /**
- * Controlled Feature Rollout: Feature type
+ * Represents a tool call made by an AI.
  *
  * @author Maxim Knepfle
- *
  */
-public enum CFRFeature {
+public class AgentToolCall implements Serializable {
 
-    GRID_STORAGE(CFRRollout.ALL),
+    private static final long serialVersionUID = 5107188523631763204L;
 
-    AI_CHAT(CFRRollout.PREVIEW_DOMAINS),
+    @XMLValue
+    private String id = StringUtils.EMPTY;
 
-    PD_GENAI(CFRRollout.ROOT_DOMAINS);
+    @XMLValue
+    private String name = StringUtils.EMPTY;
 
-    private final CFRRollout defaultValue;
+    @XMLValue
+    private String arguments = StringUtils.EMPTY;
 
-    private CFRFeature(CFRRollout defaultValue) {
-        this.defaultValue = defaultValue;
+    public AgentToolCall() {
+
     }
 
-    public CFRRollout getDefaultValue() {
-        return defaultValue;
+    public AgentToolCall(String id, String name, String arguments) {
+
+        this.id = id;
+        this.name = name;
+        this.arguments = arguments;
+    }
+
+    public String getArguments() {
+        return arguments;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

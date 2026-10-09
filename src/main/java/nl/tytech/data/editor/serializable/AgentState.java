@@ -10,50 +10,59 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.editor.other;
+package nl.tytech.data.editor.serializable;
 
-import java.io.Serializable;
-import nl.tytech.core.item.annotations.XMLValue;
-import nl.tytech.util.StringUtils;
+import nl.tytech.core.item.annotations.Description;
+import nl.tytech.naming.EngineNC;
 
 /**
- * Represents a tool call made by an AI.
+ * AI Agent State
  *
  * @author Maxim Knepfle
  */
-public class AIToolCall implements Serializable {
+public enum AgentState {
 
-    private static final long serialVersionUID = 5107188523631763204L;
+    @Description("Message has not been processed yet")
+    NONE(0),
 
-    @XMLValue
-    private String id = StringUtils.EMPTY;
+    @Description("Message queued for processing by " + EngineNC.AI_AGENT)
+    QUEUING(1),
 
-    @XMLValue
-    private String name = StringUtils.EMPTY;
+    @Description(EngineNC.AI_AGENT + " is reading the prompt")
+    READING(2),
 
-    @XMLValue
-    private String arguments = StringUtils.EMPTY;
+    @Description(EngineNC.AI_AGENT + " is generating the contents")
+    GENERATING(3),
 
-    public AIToolCall() {
+    @Description(EngineNC.AI_AGENT + " has finished")
+    FINISHED(4);
 
+    public static final AgentState fromStep(int step) {
+
+        for (AgentState s : AgentState.values()) {
+            if (s.getStep() == step) {
+                return s;
+            }
+        }
+        return null;
     }
 
-    public AIToolCall(String id, String name, String arguments) {
+    private final int step;
 
-        this.id = id;
-        this.name = name;
-        this.arguments = arguments;
+    private AgentState(int step) {
+        this.step = step;
     }
 
-    public String getArguments() {
-        return arguments;
+    public int getStep() {
+        return step;
     }
 
-    public String getId() {
-        return id;
+    public final boolean isBusy() {
+        return this == QUEUING || this == READING || this == GENERATING;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String toString() {
+        return name().toLowerCase();
     }
 }

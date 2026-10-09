@@ -10,29 +10,66 @@
  * ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************************************************************************/
-package nl.tytech.data.core.serializable;
+package nl.tytech.data.editor.item;
+
+import nl.tytech.core.item.annotations.NoDefaultText;
+import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.data.core.item.UniqueNamedItem;
+import nl.tytech.data.engine.other.ActiveItem;
+import nl.tytech.util.StringUtils;
 
 /**
- * Controlled Feature Rollout: Feature type
+ *
+ * AI Skill file
  *
  * @author Maxim Knepfle
  *
  */
-public enum CFRFeature {
+public class Skill extends UniqueNamedItem implements ActiveItem {
 
-    GRID_STORAGE(CFRRollout.ALL),
+    private static final long serialVersionUID = 6153041251982274279L;
 
-    AI_CHAT(CFRRollout.PREVIEW_DOMAINS),
-
-    PD_GENAI(CFRRollout.ROOT_DOMAINS);
-
-    private final CFRRollout defaultValue;
-
-    private CFRFeature(CFRRollout defaultValue) {
-        this.defaultValue = defaultValue;
+    public static final String toValidName(String name) {
+        return name.toLowerCase().replaceAll(" ", "-");
     }
 
-    public CFRRollout getDefaultValue() {
-        return defaultValue;
+    @XMLValue
+    @NoDefaultText
+    private String description = StringUtils.EMPTY;
+
+    @XMLValue
+    @NoDefaultText
+    private String content = StringUtils.EMPTY;
+
+    @XMLValue
+    private boolean active = true;
+
+    public Skill() {
+
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

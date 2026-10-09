@@ -74,7 +74,7 @@ public class RestManager {
         SSML(TMediaType.APPLICATION_SSML),
 
         /**
-         * GML, almost similar to XML, but can contain suptypes
+         * GML, almost similar to XML, but can contain subtypes
          */
         GML(TMediaType.APPLICATION_GML),
 

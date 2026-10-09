@@ -324,6 +324,13 @@ public abstract class Item implements Serializable, Comparable<Item> {
     }
 
     /**
+     * Returns if the Item ID is generic. This does not means the Item itself is Generic since that is only available for certain items.
+     */
+    public final boolean isGenericID() {
+        return id.intValue() < SPECIFIC_START_ID;
+    }
+
+    /**
      * Reset the version and id of the item.
      */
     public void reset() {

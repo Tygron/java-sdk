@@ -229,7 +229,7 @@ public class GeoOption extends AbstractSetting<GeoOption.Type> {
         @Description("Use 3D BAG by tudelft3d for Building Geometries")
         BAG3D_GEOMETRIES(DEFAULT, Boolean.class, "false", Source.BAG3D),
 
-        @Description("Use I3S Scenelayer for Building Geometries" + EngineNC.BETA)
+        @Description("Use I3S Scenelayer for Building Geometries")
         I3S_GEOMETRIES(DEFAULT, Boolean.class, "false", Item.NONE, "https://www.opengeospatial.org/standards/i3s"),
 
         @Description("INWEVA 24h Traffic Data")

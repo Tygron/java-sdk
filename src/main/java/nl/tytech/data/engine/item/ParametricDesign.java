@@ -59,6 +59,8 @@ public class ParametricDesign extends PolygonAttributeItem {
 
         KEEP_EXISTING_ROADS(Double.class, 1),
 
+        GEN_AI(Boolean.class, 0),
+
         ROAD_WIDTH_M(Double.class, 6),
 
         ROAD_DISTANCE_Y_M(Double.class, 40),
@@ -455,6 +457,10 @@ public class ParametricDesign extends PolygonAttributeItem {
             return !plotDesigns.isEmpty();
         }
         return type == FunctionType.REMAINDER || !Item.NONE.equals(getFunctionTypeID(type, DEFAULT_VARIANT_ID));
+    }
+
+    public final boolean isGenAI() {
+        return getAttribute(DesignAttribute.GEN_AI) > 0;
     }
 
     public final boolean keepExistingRoads() {

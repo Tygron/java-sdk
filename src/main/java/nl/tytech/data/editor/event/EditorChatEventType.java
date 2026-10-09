@@ -23,7 +23,7 @@ import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Internal;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.core.net.serializable.MapLink;
-import nl.tytech.data.editor.item.ChatChannel.Tool;
+import nl.tytech.data.editor.serializable.AgentTool;
 
 /**
  *
@@ -31,14 +31,19 @@ import nl.tytech.data.editor.item.ChatChannel.Tool;
  *
  */
 @Linked(CHAT_CHANNELS)
-public enum EditorChatChannelEventType implements EventTypeEnum {
+public enum EditorChatEventType implements EventTypeEnum {
 
     @EventParamData(response = "ChatChannel ID")
     ADD(),
 
-    @EventParamData(desc = "Add ChatChannel related to specfic Item", params = { "Item MapLink", "Item ID" }, response = "ChatChannel IDs")
+    @EventParamData(desc = "Add Chat Channel related to specfic Item", params = { "Item MapLink", "Item ID" }, response = "ChatChannel IDs")
     @EventIDField(sameLength = true)
     ADD_ITEM_CHANNEL(MapLink[].class, Integer[].class),
+
+    @EventParamData(desc = "Add a new Chat Message with optional Image or PDF content", params = { "Channel ID", "Message",
+            "Content Mime Type (optional)", "Content bytes (optional)" }, response = "Returns the ID of the resulting response message.")
+    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 }, nullable = { 2, 3 })
+    ADD_MESSAGE(Integer.class, String.class, String.class, byte[].class),
 
     @EventIDField(sameLength = true, links = { CHAT_CHANNELS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
@@ -47,7 +52,7 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
     SET_INSTRUCTIONS(Integer[].class, String[].class),
 
     @EventIDField(sameLength = true, links = { CHAT_CHANNELS }, params = { 0 })
-    SET_TOOLS(Integer[].class, Tool[][].class),
+    SET_TOOLS(Integer[].class, AgentTool[][].class),
 
     @EventParamData(desc = "Set the LLM Neural Network for the Channel.", params = { "Chat Channels", "LLM Neural Networks" })
     @EventIDField(links = { CHAT_CHANNELS, NEURAL_NETWORKS }, params = { 0, 1 })
@@ -78,6 +83,9 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
     REMOVE(Integer[].class),
 
     @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
+    CANCEL(Integer[].class),
+
+    @EventIDField(links = { CHAT_CHANNELS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
     /**
@@ -101,7 +109,7 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
 
     private final List<Class<?>> classes;
 
-    private EditorChatChannelEventType(Class<?>... classes) {
+    private EditorChatEventType(Class<?>... classes) {
         this.classes = Arrays.asList(classes);
     }
 
@@ -120,6 +128,7 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
 
         return switch (this) {
             case ADD -> Integer.class;
+            case ADD_MESSAGE -> Integer.class;
             case ADD_ITEM_CHANNEL -> Integer[].class;
             case SET_NAME -> Boolean.class;
             case ADD_AGENT_TASK -> Boolean.class;
@@ -127,6 +136,7 @@ public enum EditorChatChannelEventType implements EventTypeEnum {
             case REMOVE_AGENT_RESULT -> String.class;
             case SET_INSTRUCTIONS -> Boolean.class;
             case RESET -> Boolean.class;
+            case CANCEL -> Boolean.class;
             case DUPLICATE -> Integer[].class;
             case REMOVE -> Boolean.class;
             case SET_ATTRIBUTE -> Boolean.class;
