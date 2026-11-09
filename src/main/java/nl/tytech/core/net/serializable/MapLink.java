@@ -30,6 +30,8 @@ import static nl.tytech.core.net.serializable.MapGroup.Sub.INTERACTION;
 import static nl.tytech.core.net.serializable.MapGroup.Sub.NETWORK;
 import static nl.tytech.core.net.serializable.MapGroup.Sub.URBAN_SUBDIVISION;
 import static nl.tytech.core.net.serializable.MapGroup.Sub.VISUALS;
+import static nl.tytech.util.StringUtils.EMPTY;
+import static nl.tytech.util.StringUtils.UNDER_SCORE;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,7 +41,6 @@ import nl.tytech.core.net.Network;
 import nl.tytech.core.net.Network.SessionType;
 import nl.tytech.core.structure.DataLord;
 import nl.tytech.naming.EngineNC;
-import nl.tytech.util.StringUtils;
 
 /**
  * MapLink
@@ -170,10 +171,10 @@ public enum MapLink implements EventTypeEnum {
     @Description("Connection of a particular type between Net Nodes")
     NET_LINES(CURRENT_SITUATION, NETWORK, false),
 
-    @Description("Connection of a particular type between Net Nodes")
+    @Description("Definitions of supply or demand connected to a Net Node")
     NET_LOADS(CURRENT_SITUATION, NETWORK, false),
 
-    @Description("Definitions of supply or demand, connected to a Net Node")
+    @Description("Cluster of one or more Net Loads")
     NET_CLUSTERS(CURRENT_SITUATION, NETWORK, false),
 
     @Description("Configuration of properties related to a type of Network")
@@ -305,10 +306,10 @@ public enum MapLink implements EventTypeEnum {
         }
 
         /**
-         * Second test human readable string
+         * Second test API path
          */
         for (MapLink mapLink : validmapLinks) {
-            if (StringUtils.capitalizeUnderScores(mapLink.name()).equalsIgnoreCase(string)) {
+            if (mapLink.getAPIPath().equalsIgnoreCase(string)) {
                 return mapLink;
             }
         }
@@ -350,6 +351,13 @@ public enum MapLink implements EventTypeEnum {
     @Override
     public boolean canBePredefined() {
         return false;
+    }
+
+    /**
+     * Default API path in URL's
+     */
+    public final String getAPIPath() {
+        return name().replace(UNDER_SCORE, EMPTY).toLowerCase();
     }
 
     @Override

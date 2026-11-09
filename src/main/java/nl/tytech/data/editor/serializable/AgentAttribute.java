@@ -23,13 +23,7 @@ public enum AgentAttribute implements ReservedAttribute {
 
     TEMPERATURE(Double.class, 0.8, 2),
 
-    TOP_P(Double.class, 0.95, 2),
-
-    TOP_K(Integer.class, 64, 1024),
-
     MAX_TOKENS(Integer.class, 5_000, Integer.MAX_VALUE), // https://openllmbridge.com/blog/why-gemma-4-overthinks
-
-    THINKING_BUDGET_TOKENS(Integer.class, 1_000, Integer.MAX_VALUE),
 
     TIMEOUT_SEC(Integer.class, 10 * 60, 60 * 60), // default 10min timeout, max 1 hour
 
@@ -76,7 +70,7 @@ public enum AgentAttribute implements ReservedAttribute {
 
     public double getMinValue() {
         return switch (this) {
-            case MAX_TOKENS, THINKING_BUDGET_TOKENS, TIMEOUT_SEC -> 1.0;
+            case MAX_TOKENS, TIMEOUT_SEC -> 1.0;
             default -> 0.0;
         };
     }

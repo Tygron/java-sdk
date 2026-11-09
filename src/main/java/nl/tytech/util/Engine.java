@@ -28,7 +28,7 @@ public class Engine {
     /**
      * Clients using API/SDK are compatible on this version level.
      */
-    public static final String VERSION_API_COMPATIBLE = "2026.3.0";
+    public static final String VERSION_API_COMPATIBLE = "2026.3.1";
 
     /**
      * Minor version updates, no breaking API/SDK changes here.

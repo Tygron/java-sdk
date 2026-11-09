@@ -47,11 +47,22 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventParamData(desc = "Add a new Overlay of the specified type.", params = { "OverlayType" }, response = "Overlay ID")
     ADD(OverlayType.class),
 
-    @EventParamData(desc = "Add a Legend Entry to a specified Overlay. The Overlay must have a custom legend before entries can be added to it.", params = {
-            "Overlay ID", "Add to custom difference legend (false adds the entry to the normal custom legend)", "Name (optional)",
-            "Color (optional)", "Value (optional)" })
+    @Deprecated
+    @EventParamData(desc = "Add a Legend Entry to a specified Overlay.", params = { "Overlay ID",
+            "Add to custom difference legend (false adds the entry to the normal custom legend)", "Name (optional)", "Color (optional)",
+            "Value (optional)" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 }, nullable = { 2, 3, 4 })
     ADD_LEGEND_ENTRY(Integer[].class, Boolean[].class, String[].class, TColor[].class, Float[].class),
+
+    @EventParamData(desc = "Add an entry to the legend of to a specified Overlay.", params = { "Overlay ID", "Name", "Color (optional)",
+            "Value (optional)" })
+    @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 }, nullable = { 2, 3 })
+    ADD_ENTRY(Integer[].class, String[].class, TColor[].class, Float[].class),
+
+    @EventParamData(desc = "Add an entry to the difference legend a specified Overlay.", params = { "Overlay ID", "Name",
+            "Color (optional)", "Value (optional)" })
+    @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 }, nullable = { 2, 3 })
+    ADD_DIFFERENCE_ENTRY(Integer[].class, String[].class, TColor[].class, Float[].class),
 
     @EventParamData(desc = "Add a highlighted Function to a specified FUNCTION Overlay.", params = {
             "Overlay ID (must relate to a FUNCTION Overlay)", "Function IDs" })
@@ -86,11 +97,22 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Remove the specified legend entries from a specified Overlay. The Overlay must have a custom legend before entries can be removed from it.", params = {
-            "Overlay ID", "Remove from custom difference legend (false removes the entry from the normal custom legend)",
+    @Deprecated
+    @EventParamData(desc = "Remove the specified legend entries from a specified Overlay.", params = { "Overlay ID",
+            "Remove from custom difference legend (false removes the entry from the normal custom legend)",
             "Ids of entries which should be removed" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_LEGEND_ENTRY(Integer.class, Boolean.class, Integer[].class),
+
+    @EventParamData(desc = "Remove the specified legend entries from the legend of a specified Overlay.", params = { "Overlay ID",
+            "Ids of entries which should be removed" })
+    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    REMOVE_ENTRY(Integer.class, Integer[].class),
+
+    @EventParamData(desc = "Remove the specified legend entries from the difference legend of a specified Overlay.", params = {
+            "Overlay ID", "Ids of entries which should be removed" })
+    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    REMOVE_DIFFERENCE_ENTRY(Integer.class, Integer[].class),
 
     @EventParamData(desc = "Remove a highlighted Function from a specified FUNCTION_HIGHLIGHT Overlay.", params = {
             "Overlay ID (must relate to a FUNCTION_HIGHLIGHT Overlay)", "Function IDs" })
@@ -146,23 +168,56 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_CUSTOM_LEGEND(Integer.class, Boolean.class),
 
+    @Deprecated
     @EventParamData(desc = "Change the color of a specified legend entry of a custom legend of a specified Overlay.", params = {
             "Overlay ID", "Affect the custom difference legend (false means affect the normal custom legend)",
             "ID of entry which should be changed", "Color" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_LEGEND_ENTRY_COLOR(Integer.class, Boolean.class, Integer.class, TColor.class),
 
+    @EventParamData(desc = "Change the color of a specified legend entry of a custom legend of a specified Overlay.", params = {
+            "Overlay ID", "ID of entry which should be changed", "Color" })
+    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    SET_ENTRY_COLOR(Integer.class, Integer.class, TColor.class),
+
+    @EventParamData(desc = "Change the color of a specified legend entry of a custom difference legend of a specified Overlay.", params = {
+            "Overlay ID", "ID of entry which should be changed", "Color" })
+    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    SET_DIFFERENCE_ENTRY_COLOR(Integer.class, Integer.class, TColor.class),
+
+    @Deprecated
     @EventParamData(desc = "Change the name of a specified legend entry of a custom legend of a specified Overlay.", params = {
             "Overlay ID", "Affect the custom difference legend (false means affect the normal custom legend)",
             "ID of entry which should be changed", "New name for the entry" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_LEGEND_ENTRY_NAME(Integer.class, Boolean.class, Integer.class, String.class),
 
+    @EventParamData(desc = "Change the name of a specified legend entry of a custom legend of a specified Overlay.", params = {
+            "Overlay ID", "ID of entry which should be changed", "New name for the entry" })
+    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    SET_ENTRY_NAME(Integer.class, Integer.class, String.class),
+
+    @EventParamData(desc = "Change the name of a specified legend entry of a custom difference legend of a specified Overlay.", params = {
+            "Overlay ID", "ID of entry which should be changed", "New name for the entry" })
+    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    SET_DIFFERENCE_ENTRY_NAME(Integer.class, Integer.class, String.class),
+
+    @Deprecated
     @EventParamData(desc = "Change the value of a specified legend entry of a custom legend of a specified Overlay.", params = {
             "Overlay ID", "Affect the custom difference legend (false means affect the normal custom legend)",
             "ID of entry which should be changed", "New value for the entry" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_LEGEND_ENTRY_VALUE(Integer.class, Boolean.class, Integer.class, Float.class),
+
+    @EventParamData(desc = "Change the value of a specified legend entry of a custom legend of a specified Overlay.", params = {
+            "Overlay ID", "ID of entry which should be changed", "New value for the entry" })
+    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    SET_ENTRY_VALUE(Integer.class, Integer.class, Float.class),
+
+    @EventParamData(desc = "Change the value of a specified legend entry of a custom legend of a specified Overlay.", params = {
+            "Overlay ID", "ID of entry which should be changed", "New value for the entry" })
+    @EventIDField(links = { OVERLAYS }, params = { 0 })
+    SET_DIFFERENCE_ENTRY_VALUE(Integer.class, Integer.class, Float.class),
 
     @EventParamData(desc = "Change the GeoTIFF displayed by a specified GeoTIFF Overlay.", params = {
             "Overlay ID (must relate to a GeoTIFF Overlay)", "Unique GeoTIFF IDs" })
@@ -350,7 +405,10 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
         if (this == ADD_TYPE || this == DUPLICATE) {
             return Integer[].class;
         }
-        if (this == REMOVE) {
+        if (this == REMOVE || this == SET_LEGEND_ENTRY_VALUE || this == SET_ENTRY_VALUE || this == SET_DIFFERENCE_ENTRY_VALUE
+                || this == SET_LEGEND_ENTRY_NAME || this == SET_ENTRY_NAME || this == SET_DIFFERENCE_ENTRY_NAME
+                || this == SET_LEGEND_ENTRY_COLOR || this == SET_ENTRY_COLOR || this == SET_DIFFERENCE_ENTRY_COLOR
+                || this == REMOVE_LEGEND_ENTRY || this == REMOVE_ENTRY || this == REMOVE_DIFFERENCE_ENTRY) {
             return Boolean.class;
         }
         return null;
@@ -369,7 +427,12 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
             case SET_VISIBLE, SET_PARENT, SAVE_GRID, SET_SHOW_DIFFERENCE, SET_OVERLAY_SOURCE, SWAP_ORDER -> null; // ignore visuals only
             case ADD_OVERLAY_FUNCTION, REMOVE_OVERLAY_FUNCTION -> null;
             case SET_OVERLAY_PRIMARY_COLOR, SET_OVERLAY_REMAINDER_COLOR -> null;
-            case ADD_LEGEND_ENTRY, REMOVE_LEGEND_ENTRY, SET_CUSTOM_LEGEND, SET_LEGEND_ENTRY_NAME, SET_LEGEND_ENTRY_COLOR, SET_LEGEND_ENTRY_VALUE -> null;
+            case ADD_ENTRY, ADD_DIFFERENCE_ENTRY, ADD_LEGEND_ENTRY -> null;
+            case SET_CUSTOM_LEGEND -> null;
+            case REMOVE_ENTRY, REMOVE_DIFFERENCE_ENTRY, REMOVE_LEGEND_ENTRY -> null;
+            case SET_ENTRY_NAME, SET_DIFFERENCE_ENTRY_NAME, SET_LEGEND_ENTRY_NAME -> null;
+            case SET_ENTRY_COLOR, SET_DIFFERENCE_ENTRY_COLOR, SET_LEGEND_ENTRY_COLOR -> null;
+            case SET_ENTRY_VALUE, SET_DIFFERENCE_ENTRY_VALUE, SET_LEGEND_ENTRY_VALUE -> null;
             default -> OVERLAYS;
         };
     }

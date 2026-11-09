@@ -22,7 +22,7 @@ public enum CFRFeature {
 
     GRID_STORAGE(CFRRollout.ALL),
 
-    AI_CHAT(CFRRollout.PREVIEW_DOMAINS),
+    AI_CHAT(CFRRollout.ALL),
 
     PD_GENAI(CFRRollout.ROOT_DOMAINS);
 

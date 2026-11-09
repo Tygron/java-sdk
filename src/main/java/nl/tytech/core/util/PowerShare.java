@@ -54,6 +54,11 @@ public final class PowerShare {
         MAX_CPU2,
 
         /**
+         * Server-side AI pool: AI runs in parallel to regular sim/clone updates in CPU1 and CPU2 and may be terminated.
+         */
+        MAX_AI,
+
+        /**
          * Virtual Threads: unlimited amount of runnables that area limited by the amount of e.g. available Internet speed, disk IO or
          * thread sleeps a lot.
          */
@@ -71,7 +76,7 @@ public final class PowerShare {
         }
 
         private boolean isKillable() {
-            return this == Bound.MAX_CPU || this == Bound.MAX_CPU2;
+            return this == Bound.MAX_CPU || this == Bound.MAX_CPU2 || this == Bound.MAX_AI;
         }
     }
 
@@ -103,7 +108,7 @@ public final class PowerShare {
 
             // select matching pool
             service = switch (bound) {
-                case MAX_CPU, MAX_CPU2 -> getCPUPool(bound.getToken(group));
+                case MAX_CPU, MAX_CPU2, MAX_AI -> getCPUPool(bound.getToken(group));
                 case MAX_PURPOSE -> getPurposePool(purpose, purposeThreads);
                 case MAX_PARRALISM -> maxParallelService;
                 default -> maxParallelService;
@@ -348,11 +353,11 @@ public final class PowerShare {
         execute(null, bound, runnable);
     }
 
-    private static final void execute(PoolGroup group, Bound bound, Runnable runnable) {
+    public static final void execute(PoolGroup group, Bound bound, Runnable runnable) {
 
         // select matching service
         ExecutorService service = switch (bound) {
-            case MAX_CPU, MAX_CPU2 -> getCPUPool(bound.getToken(group));
+            case MAX_CPU, MAX_CPU2, MAX_AI -> getCPUPool(bound.getToken(group));
             case MAX_PURPOSE -> throw new IllegalArgumentException("Purpose only allowed as MultiTask.");
             case MAX_PARRALISM -> maxParallelService;
             default -> maxParallelService;

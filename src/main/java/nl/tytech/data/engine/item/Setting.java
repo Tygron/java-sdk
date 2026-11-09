@@ -288,13 +288,13 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Timestamp format for importing and exporting date/time values, such as in CSV files")
         TIMESTAMP_FORMAT(String.class, "dd/MM HH:mm:ss"),
 
-        @Description("Water visualisation type in Tygron Client")
+        @Description("Water visualization type in Tygron Client")
         WATER_TYPE(String.class, "CANAL"),
 
-        @Description("Sky visualisation type in Tygron Client")
+        @Description("Sky visualization type in Tygron Client")
         SKY_TYPE(String.class, "DEFAULT"),
 
-        @Description("Traffic visualisation multiplier in Tygron Client (not used in calculations)")
+        @Description("Traffic visualization multiplier in Tygron Client (not used in calculations)")
         TRAFFIC_VISUAL_MULTIPLIER(Double.class, "4.0"),
 
         @Description("Wind direction angle in degrees")
@@ -318,13 +318,13 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("World reference point (upper left corner) used to convert local coordinates to EPSG 3857 world coordinates")
         WORLD_REFERENCE_POINT(Double[].class, "0 0"),
 
-        @Description("Average water elevation reference point used for visualisation in Tygron Client")
+        @Description("Average water elevation reference point used for visualization in Tygron Client")
         WATER_HEIGHT(Double.class, "" + NO_WATER_HEIGHT_SET),
 
         @Description("Model (buildings, bridges, trees, etc.) style used for visualization in Tygron Client")
         MODEL_STYLE(ModelStyle.class, "TEXTURED"),
 
-        @Description("Solar panel positioning used for visualisation in Tygron Client")
+        @Description("Solar panel positioning used for visualization in Tygron Client")
         SOLAR_PANEL_POSITION(Double[].class, "0.0 -0.5 -1.0"),
 
         @Description("Compensates for dark satellite backgrounds in Tygron Client visualization")
@@ -366,7 +366,7 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Web Viewer Model style (COLORED or WHITE)")
         WEB_MODEL_STYLE(String.class, WebModelStyle.DEFAULT),
 
-        @Description("3D Web Viewer shadow visualisation enabled")
+        @Description("3D Web Viewer shadow visualization enabled")
         WEB_MODEL_SHADOW(Boolean.class, "true"),
 
         @Description("3D Web Viewer texture quality/size (SMALL, MEDIUM, LARGE)")
@@ -390,7 +390,7 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Project timezone offset")
         TIME_ZONE(int.class, ""),
 
-        @Description("Project sun dates used for Sun visualisation in Tygron Client")
+        @Description("Project sun dates used for Sun visualization in Tygron Client")
         SUN_DATES(long[].class, ""),
 
         @Description("Height Sector tile size in meters")
@@ -415,9 +415,7 @@ public class Setting extends AbstractSetting<Setting.Type> {
         AI_EDITING(Boolean.class, "true"),
 
         @Description("When true allow TQL Queries to access the API Token.")
-        TQL_TOKEN(Boolean.class, "true"),
-
-        ;
+        TQL_TOKEN(Boolean.class, "true");
 
         private final String defaultValue;
         private final Class<?> valueType;

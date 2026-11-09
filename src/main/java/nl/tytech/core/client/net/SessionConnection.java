@@ -585,7 +585,7 @@ public class SessionConnection {
         }
 
         long start = System.currentTimeMillis();
-        String path = Rest.ITEMS + StringUtils.capitalizeUnderScores(mapLink.name());
+        String path = Rest.ITEMS + mapLink.getAPIPath();
         Item[] features = RestManager.post(sessionApiTarget, path, null, ids, Item[].class, Format.DEFAULT_EVENT, Format.DEFAULT_ITEMS,
                 null);
         if (TLogger.isAll()) {
@@ -599,7 +599,7 @@ public class SessionConnection {
     }
 
     public final Integer getVersion(MapLink mapLink) {
-        String path = Rest.ITEMS + StringUtils.capitalizeUnderScores(mapLink.name()) + "/version";
+        String path = Rest.ITEMS + mapLink.getAPIPath() + "/version";
         return RestManager.get(sessionApiTarget, path, null, Integer.class, Format.JSON);
     }
 

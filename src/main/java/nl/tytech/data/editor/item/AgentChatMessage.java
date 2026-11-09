@@ -32,6 +32,8 @@ public class AgentChatMessage extends ChatMessage {
 
     private static final long serialVersionUID = -5830351765378047529L;
 
+    public static final String TOOL_DESCRIPTION = "Description:";
+
     public static final String ERROR_FORMAT = "***%s***";
 
     private static final String NO_RESPONSE = ERROR_FORMAT.formatted("No response");

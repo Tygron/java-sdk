@@ -486,6 +486,14 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
         return type == null ? NORMAL : type.name().toLowerCase() + DOT_EXTENSION;
     }
 
+    public final List<LegendEntry> getDifferenceLegend() {
+        return getLegend(true);
+    }
+
+    public final LegendEntry getDifferenceLegendEntry(Integer id) {
+        return getLegendEntry(true, id);
+    }
+
     @Override
     public String getImageLocation() {
         return OVERLAY_IMAGE_LOCATION + imageName;
@@ -505,7 +513,7 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
         return getTimeframes() - 1;
     }
 
-    public List<LegendEntry> getLegend() {
+    public final List<LegendEntry> getLegend() {
         return legend;
     }
 
@@ -521,6 +529,10 @@ public class Overlay extends AttributeItem implements IndexSortedItem, ImageItem
             }
         }
         return null;
+    }
+
+    public final LegendEntry getLegendEntry(Integer id) {
+        return getLegendEntry(false, id);
     }
 
     public Overlay getParent() {
