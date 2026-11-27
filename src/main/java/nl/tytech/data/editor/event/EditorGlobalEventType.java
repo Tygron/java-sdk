@@ -20,6 +20,7 @@ import org.locationtech.jts.geom.Point;
 import nl.tytech.core.event.Event;
 import nl.tytech.core.event.Event.IndicatorEventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item.Timing;
@@ -32,8 +33,10 @@ import nl.tytech.data.core.item.Item.Timing;
 @Linked(GLOBALS)
 public enum EditorGlobalEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Add a new Global with a default name", response = "Global")
     ADD(),
 
+    @EventParamData(desc = "Add a new Global with a TQL Query", params = { "TQL Query" }, response = "Global")
     ADD_QUERY(String.class),
 
     @EventIDField(links = { GLOBALS }, params = { 0 })
@@ -42,30 +45,38 @@ public enum EditorGlobalEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { GLOBALS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove the Book Value of a Global", params = { "Global" })
     @EventIDField(links = { GLOBALS }, params = { 0 })
     REMOVE_BOOK_VALUE(Integer.class),
 
     @EventIDField(links = { GLOBALS }, params = { 0 })
     REMOVE_POINT(Integer.class),
 
+    @EventParamData(desc = "Assign the Global as a Book Value for a Stakeholder", params = { "Global", "Stakeholder" })
     @EventIDField(links = { GLOBALS, STAKEHOLDERS }, params = { 0, 1 })
     SET_BOOK_VALUE(Integer.class, Integer.class),
 
+    @EventParamData(desc = "Set the name of a Global", params = { "Globals", "Names" })
     @EventIDField(sameLength = true, links = { GLOBALS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the position of a Global", params = { "Global", "Point" })
     @EventIDField(links = { GLOBALS }, params = { 0 })
     SET_POINT(Integer.class, Point.class),
 
+    @EventParamData(desc = "Set the calculation Timing of a TQL Query Global", params = { "Globals", "Timings" })
     @EventIDField(sameLength = true, links = { GLOBALS }, params = { 0 })
     SET_QUERY_TIMING(Integer[].class, Timing[].class),
 
+    @EventParamData(desc = "Set the TQL Query of a Global", params = { "Global", "TQL Query" })
     @EventIDField(links = { GLOBALS }, params = { 0 })
     SET_QUERY(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the initial values of a Global", params = { "Globals", "Array of values" })
     @EventIDField(sameLength = true, links = { GLOBALS }, params = { 0 })
     SET_START_VALUE(Integer[].class, double[][].class),
 
+    @EventParamData(desc = "Set the name of a Global shown in the 3D Visualization", params = { "Global", "Name" })
     @EventIDField(links = { GLOBALS }, params = { 0 })
     SET_VISUALISATION_NAME(Integer.class, String.class);
 
@@ -88,16 +99,16 @@ public enum EditorGlobalEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == ADD_QUERY) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, ADD_QUERY -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

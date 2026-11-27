@@ -37,6 +37,8 @@ public class GPUJob implements Serializable, Comparable<GPUJob> {
 
     public static final long INVALID_CLUSTER = -5;
 
+    public static final long UPGRADE = -6;
+
     private static final long serialVersionUID = -1715752299974456885L;
 
     /**

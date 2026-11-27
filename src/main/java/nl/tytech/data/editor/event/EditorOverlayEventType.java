@@ -44,39 +44,33 @@ import nl.tytech.util.color.TColor;
 @Linked(OVERLAYS)
 public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add a new Overlay of the specified type.", params = { "OverlayType" }, response = "Overlay ID")
+    @EventParamData(desc = "Add a new Overlay of the specified type", params = { "Overlay Type" }, response = "Overlay ID")
     ADD(OverlayType.class),
 
     @Deprecated
-    @EventParamData(desc = "Add a Legend Entry to a specified Overlay.", params = { "Overlay ID",
-            "Add to custom difference legend (false adds the entry to the normal custom legend)", "Name (optional)", "Color (optional)",
-            "Value (optional)" })
+    @EventParamData(desc = "Add an entry to the (difference) legend an Overlay", params = { "Overlays", "Difference Legend", "Name",
+            "Color", "Value" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 }, nullable = { 2, 3, 4 })
     ADD_LEGEND_ENTRY(Integer[].class, Boolean[].class, String[].class, TColor[].class, Float[].class),
 
-    @EventParamData(desc = "Add an entry to the legend of to a specified Overlay.", params = { "Overlay ID", "Name", "Color (optional)",
-            "Value (optional)" })
+    @EventParamData(desc = "Add an entry to the legend an Overlay", params = { "Overlays", "Names", "Colors", "Values" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 }, nullable = { 2, 3 })
     ADD_ENTRY(Integer[].class, String[].class, TColor[].class, Float[].class),
 
-    @EventParamData(desc = "Add an entry to the difference legend a specified Overlay.", params = { "Overlay ID", "Name",
-            "Color (optional)", "Value (optional)" })
+    @EventParamData(desc = "Add an entry to the difference legend an Overlay", params = { "Overlays", "Names", "Colors", "Values" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 }, nullable = { 2, 3 })
     ADD_DIFFERENCE_ENTRY(Integer[].class, String[].class, TColor[].class, Float[].class),
 
-    @EventParamData(desc = "Add a highlighted Function to a specified FUNCTION Overlay.", params = {
-            "Overlay ID (must relate to a FUNCTION Overlay)", "Function IDs" })
+    @EventParamData(desc = "Add a Function to a Function Overlay", params = { "Function Overlay", "Functions" })
     @EventIDField(links = { OVERLAYS, FUNCTIONS }, params = { 0, 1 })
     ADD_OVERLAY_FUNCTION(Integer.class, Integer[].class),
 
-    @EventParamData(desc = "Add a specified result type as a child Overlay to a specified grid Overlay. The child Overlay's result will be based on the parent's"
-            + " calculation, allowing you to get multiple types of results from the same calculation.", params = {
-                    "Overlay ID (must relate to a grid Overlay with result types)",
-                    "Result type for new child Overlay (must be a valid result for the parent Overlay type)" }, response = "Overlay ID")
+    @EventParamData(desc = "Add a specified result type as a Result Child Overlay to a Result Parent Overlay", params = {
+            "Result Parent Overlay", "Result type" }, response = "Overlay ID")
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     ADD_RESULT_CHILD(Integer.class, String.class),
 
-    @EventParamData(desc = "Add multiple new Overlays of the specified types.", params = { "Array of OverlayTypes" })
+    @EventParamData(desc = "Add an Overlay with the specified type", params = { "Overlay Types" }, response = "Overlay IDs")
     ADD_TYPE(OverlayType[].class),
 
     @EventIDField(links = { OVERLAYS }, params = { 0 })
@@ -85,298 +79,274 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @Deprecated
     @EventParamData(desc = "Deprecated functionality, entire map is always updated when UPDATE is called. "
             + "Note that when the \"Auto calculation\" is not active, an editor/update/ event is required to generate the new Overlay results. "
-            + "Or for long-running updates use: editor/set_scheduled_update/ to schedule an update.", params = {})
+            + "Or for long-running updates use: editor/set_scheduled_update/ to schedule an update", params = {})
     REFRESH_GRID(),
 
-    @EventParamData(desc = "Remove the specified Overlays.", params = { "Overlay IDs" })
+    @EventParamData(desc = "Remove the specified Overlays", params = { "Overlays" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(desc = "Remove the specified attributes of the specified Overlay. The attributes, including attributes which are added to an Overlay by default, are removed entirely.", params = {
-            "Overlay ID", "Attributes to remove" })
+    @EventParamData(desc = "Remove the specified Attributes of the specified Overlay. The Attributes, including Attributes which are added to an Overlay by default, are removed entirely", params = {
+            "Overlays", "Attributes to remove" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
     @Deprecated
-    @EventParamData(desc = "Remove the specified legend entries from a specified Overlay.", params = { "Overlay ID",
-            "Remove from custom difference legend (false removes the entry from the normal custom legend)",
-            "Ids of entries which should be removed" })
+    @EventParamData(desc = "Remove entries from an Overlay's legend", params = { "Overlay",
+            "Remove from custom difference legend (false removes the entry from the normal custom legend)", "Entry IDs" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_LEGEND_ENTRY(Integer.class, Boolean.class, Integer[].class),
 
-    @EventParamData(desc = "Remove the specified legend entries from the legend of a specified Overlay.", params = { "Overlay ID",
-            "Ids of entries which should be removed" })
+    @EventParamData(desc = "Remove entries from an Overlay's legend", params = { "Overlay", "Entry IDs" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_ENTRY(Integer.class, Integer[].class),
 
-    @EventParamData(desc = "Remove the specified legend entries from the difference legend of a specified Overlay.", params = {
-            "Overlay ID", "Ids of entries which should be removed" })
+    @EventParamData(desc = "Remove entries from an Overlay's difference legend", params = { "Overlay", "Entry IDs" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_DIFFERENCE_ENTRY(Integer.class, Integer[].class),
 
-    @EventParamData(desc = "Remove a highlighted Function from a specified FUNCTION_HIGHLIGHT Overlay.", params = {
-            "Overlay ID (must relate to a FUNCTION_HIGHLIGHT Overlay)", "Function IDs" })
+    @EventParamData(desc = "Remove a Function from a Function Highlight Overlay", params = { "Function Overlay", "Functions" })
     @EventIDField(links = { OVERLAYS, FUNCTIONS }, params = { 0, 1 })
     REMOVE_OVERLAY_FUNCTION(Integer.class, Integer[].class),
 
+    @EventParamData(desc = "Remove the Weather from a Water Overlay", params = { "Water Overlay" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_WATER_WEATHER(Integer.class),
 
-    @EventParamData(desc = "Create a copy of each specified Overlay. The copies will have the same settings and attributes, but can be edited independently of the originals.", params = {
-            "Overlay ID" })
+    @EventParamData(desc = "Create a deactivated copy of each specified Overlay", params = { "Overlays" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SAVE_GRID(Integer[].class),
 
-    @EventParamData(params = { "Overlays", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Overlays", "Attribute Name", "Numeric Attribute Values", "Source" })
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Overlays", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Overlays", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source" })
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Overlays", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Overlays", "Attribute Names", "Numeric Attribute Values", "Source" })
     @EventIDField(sameLength = true, links = { OVERLAYS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
-    @EventParamData(desc = "Set which attribute a specified ATTRIBUTE Overlay should use to color the items it finds. "
-            + "If present in the item, it will use that attribute's color to color the item in the 3D world. If absent, the Overlay's color will be used.", params = {
-                    "Overlay ID (must relate to an ATTRIBUTE Overlay)", "Attribute to use to color a found item" })
+    @EventParamData(desc = "Set which attribute an Attribute Overlay uses to obtain the color from an Item to paint it with. If absent, the Overlay's color will be used", params = {
+            "Attribute Overlay", "Color Attribute" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_ATTRIBUTE_OVERLAY_COLOR_ATTRIBUTE(Integer.class, String.class),
 
-    @EventParamData(desc = "Set which type of item and which attribute a specified ATTRIBUTE Overlay should highlight. The ATTRIBUTE Overlay will highlight each item it finds which is"
-            + " both of the specified maptype as well as has the specified attribute", params = {
-                    "Overlay ID (must relate to an ATTRIBUTE Overlay)",
-                    "MapLink: AREAS, BUILDINGS, NEIGHBORHOODS, NET_LOADS, TERRAINS, ZONES", "Attribute to look for" })
+    @EventParamData(desc = "Set which type of Item and which attribute an Attribute Overlay should highlight", params = {
+            "Attribute Overlay", "MapLink: AREAS, BUILDINGS, NEIGHBORHOODS, NET_LOADS, TERRAINS, ZONES", "Attribute" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_ATTRIBUTE_OVERLAY_VALUES(Integer.class, MapLink.class, String.class),
 
-    @EventParamData(desc = "Set the averaging distance for a specified AVG Overlay.", params = {
-            "Overlay ID (must relate to an AVG Overlay)", "Averaging distance" })
+    @EventParamData(desc = "Set the averaging distance for an Average Overlay", params = { "Avg Overlay", "Averaging distance" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_AVG_DISTANCE(Integer.class, Double.class),
 
-    @EventParamData(desc = "Set the type of rasterization a specified Average, Combo or Distance Overlay should perform.", params = {
-            "Overlay ID (must relate to an Average, Combo or Distance Overlay)", "Rasterization type: FIRST, MIN, MAX, SINGLE_LAYER, GRID",
+    @EventParamData(desc = "Set the type of rasterization used by a Average, Combo or Distance Overlay", params = {
+            "Overlay (Average, Combo or Distance)", "Rasterization type",
             "MapLink (will only affect the SINGLE_LAYER rasterization type): BUILDINGS, TERRAINS, AREAS, NEIGHBORHOODS" })
     @EventIDField(links = { OVERLAYS }, params = { 0 }, nullable = { 2 })
     SET_RASTERIZATION(Integer.class, Rasterization.class, MapLink.class),
 
-    @EventParamData(desc = "Set whether the specified Overlay has a custom legend. If the specified Overlay is reverted to use a default Overlay, any custom legend information for the Overlay is removed.", params = {
-            "Overlay ID", "Has a custom legend (false sets the Overlay to use the default legend)" })
+    @EventParamData(desc = "Set whether an Overlay has a custom legend. If set to false, its legends are reverted to a generated default", params = {
+            "Overlay", "Has a custom legend" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_CUSTOM_LEGEND(Integer.class, Boolean.class),
 
     @Deprecated
-    @EventParamData(desc = "Change the color of a specified legend entry of a custom legend of a specified Overlay.", params = {
-            "Overlay ID", "Affect the custom difference legend (false means affect the normal custom legend)",
-            "ID of entry which should be changed", "Color" })
+    @EventParamData(desc = "Set the color of an entry of an Overlay's legend", params = { "Overlay",
+            "Affect the custom difference legend (false means affect the normal custom legend)", "Entry ID", "Color" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_LEGEND_ENTRY_COLOR(Integer.class, Boolean.class, Integer.class, TColor.class),
 
-    @EventParamData(desc = "Change the color of a specified legend entry of a custom legend of a specified Overlay.", params = {
-            "Overlay ID", "ID of entry which should be changed", "Color" })
+    @EventParamData(desc = "Set the color of an entry of an Overlay's legend", params = { "Overlay", "Entry ID", "Color" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_ENTRY_COLOR(Integer.class, Integer.class, TColor.class),
 
-    @EventParamData(desc = "Change the color of a specified legend entry of a custom difference legend of a specified Overlay.", params = {
-            "Overlay ID", "ID of entry which should be changed", "Color" })
+    @EventParamData(desc = "Set the color of an entry of an Overlay's difference legend", params = { "Overlay", "Entry ID", "Color" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_DIFFERENCE_ENTRY_COLOR(Integer.class, Integer.class, TColor.class),
 
     @Deprecated
-    @EventParamData(desc = "Change the name of a specified legend entry of a custom legend of a specified Overlay.", params = {
-            "Overlay ID", "Affect the custom difference legend (false means affect the normal custom legend)",
-            "ID of entry which should be changed", "New name for the entry" })
+    @EventParamData(desc = "Set the value of an entry of a custom legend of an Overlay", params = { "Overlay",
+            "Affect the custom difference legend (false means affect the normal custom legend)", "Entry ID", "Name" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_LEGEND_ENTRY_NAME(Integer.class, Boolean.class, Integer.class, String.class),
 
-    @EventParamData(desc = "Change the name of a specified legend entry of a custom legend of a specified Overlay.", params = {
-            "Overlay ID", "ID of entry which should be changed", "New name for the entry" })
+    @EventParamData(desc = "Set the name of an entry of an Overlay's legend", params = { "Overlay", "Legend Entry ID", "Name" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_ENTRY_NAME(Integer.class, Integer.class, String.class),
 
-    @EventParamData(desc = "Change the name of a specified legend entry of a custom difference legend of a specified Overlay.", params = {
-            "Overlay ID", "ID of entry which should be changed", "New name for the entry" })
+    @EventParamData(desc = "Set the name of an entry of an Overlay's difference legend", params = { "Overlay", "Entry ID", "Name" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_DIFFERENCE_ENTRY_NAME(Integer.class, Integer.class, String.class),
 
     @Deprecated
-    @EventParamData(desc = "Change the value of a specified legend entry of a custom legend of a specified Overlay.", params = {
-            "Overlay ID", "Affect the custom difference legend (false means affect the normal custom legend)",
-            "ID of entry which should be changed", "New value for the entry" })
+    @EventParamData(desc = "Set the value of an entry of a custom legend of an Overlay", params = { "Overlay",
+            "Affect the custom difference legend (false means affect the normal custom legend)", "Entry ID", "Value" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_LEGEND_ENTRY_VALUE(Integer.class, Boolean.class, Integer.class, Float.class),
 
-    @EventParamData(desc = "Change the value of a specified legend entry of a custom legend of a specified Overlay.", params = {
-            "Overlay ID", "ID of entry which should be changed", "New value for the entry" })
+    @EventParamData(desc = "Set the value of an entry of an Overlay's legend", params = { "Overlay", "Entry ID", "Value" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_ENTRY_VALUE(Integer.class, Integer.class, Float.class),
 
-    @EventParamData(desc = "Change the value of a specified legend entry of a custom legend of a specified Overlay.", params = {
-            "Overlay ID", "ID of entry which should be changed", "New value for the entry" })
+    @EventParamData(desc = "Set the value of an entry of an Overlay's difference legend", params = { "Overlay", "Entry ID", "Value" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_DIFFERENCE_ENTRY_VALUE(Integer.class, Integer.class, Float.class),
 
-    @EventParamData(desc = "Change the GeoTIFF displayed by a specified GeoTIFF Overlay.", params = {
-            "Overlay ID (must relate to a GeoTIFF Overlay)", "Unique GeoTIFF IDs" })
+    @EventParamData(desc = "Set the GeoTIFF displayed by a specified GeoTIFF Overlay", params = { "GeoTIFF Overlay", "GeoTIFFs" })
     @EventIDField(links = { OVERLAYS, GEO_TIFFS }, params = { 0, 1 })
     SET_GEOTIFF(Integer.class, Integer[].class),
 
-    @EventParamData(desc = "Set the Neural Network for an Inference Overlay.", params = { "Overlay ID (must relate to a Inference Overlay)",
-            "Neural Network ID" })
+    @EventParamData(desc = "Set the Neural Network for an Inference Overlay", params = { "Inference Overlay", "Neural Network" })
     @EventIDField(links = { OVERLAYS, NEURAL_NETWORKS }, params = { 0, 1 })
     SET_NEURAL_NETWORK(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Activates or deactivates an Overlay. Only active Overlays are recalculated by the simulation.", params = {
-            "Overlay ID", "Activated" })
+    @EventParamData(desc = "Set a Grid Overlay active or inactive. Only active Overlays are recalculated by the simulation", params = {
+            "Grid Overlays", "Active" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_GRID_ACTIVE(Integer[].class, Boolean[].class),
 
-    @EventParamData(desc = "Change the image displayed by a specified IMAGE Overlay. The image must be uploaded in the \"Overlays\" directory.", params = {
-            "Overlay IDs (must relate to an IMAGE Overlay)", "Array of Project asset names, omitting the directory" })
+    @EventParamData(desc = "Change the image displayed by an Image Overlay", params = { "Image Overlays", "Image Names" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_OVERLAY_IMAGE(Integer[].class, String[][].class),
 
-    @EventParamData(desc = "Change the icon displayed in the navigation window by the Overlay. Only existing overlay project assets are allowed.", params = {
-            "Overlay ID", "Project asset name, omitting the directory" })
+    @EventParamData(desc = "Change the icon displayed in the navigation window by the Overlay", params = { "Overlays", "Image Names" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Visualizes or hides an Overlay in the navigation panel.", params = { "Overlay ID", "Visualized" })
+    @EventParamData(desc = "Set whether an Overlay is visualized in the Navigation Panel", params = { "Overlays", "Visualized" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_VISIBLE(Integer[].class, Boolean[].class),
 
-    @EventParamData(desc = "Change a key for a specified Overlay. The Overlay must use keys to read geographical item attributes as calculation input.", params = {
-            "Overlay ID (must relate to a grid Overlay). Note: to change attribute values use set_attribute instead.", "Key name",
-            "Attribute name to look for" })
+    @EventParamData(desc = "Set a key to an Attribute for a Grid Overlay", params = { "Grid Overlay", "Key", "Attribute" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_KEY_VALUE(Integer.class, String.class, String.class),
 
-    @EventParamData(desc = "Set the name for a specified Overlay.", params = { "Overlay ID", "Name for the Overlay" })
+    @EventParamData(desc = "Set the name of an Overlay", params = { "Overlays", "Names" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Set the visualization style for a specified network Overlay.", params = {
-            "Overlay ID (must relate to a network Overlay)", "NetType",
-            "Whether to show the network (false means no lines will be visualized)",
+    @EventParamData(desc = "Set the visualization style for a Network Overlay", params = {
+            "Overlay (Network Ownership or Network Overview)", "NetType", "Whether to show the network",
             "Whether only active connections should be visualized (false means both active and inactive connections are visualized)" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_NET_OVERLAY(Integer.class, NetType.class, Boolean.class, Boolean.class),
 
-    @EventParamData(desc = "Add or remove specified areas to or from a specified AREAS Overlay. Unincluded areas which are already related to the Overlay will remain related."
-            + " Unincluded areas which are not related to the Overlay will remain unrelated.", params = {
-                    "Overlay ID (must relate to an AREAS Overlay)", "Array of area IDs",
-                    "Should be added to the Overlay (false removes the areas from the Overlay)" })
+    @EventParamData(desc = "Add or remove Areas to or from an Area Overlay", params = { "Area Overlay", "Areas",
+            "Should be added to the Area Overlay (false removes the areas from the Area Overlay)" })
     @EventIDField(links = { OVERLAYS, AREAS }, params = { 0, 1 })
     SET_OVERLAY_AREA(Integer.class, Integer[].class, Boolean.class),
 
-    @EventParamData(desc = "Set the color a specified FUNCTION or ATTRIBUTE Overlay uses to highlight found data.", params = {
-            "Overlay ID (must relate to a FUNCTION or ATTRIBUTE Overlay)", "Color" })
+    @EventParamData(desc = "Set the color of a Function or Attribute Overlay, used to highlight features", params = {
+            "Overlay (Function or Attribute)", "Color" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_OVERLAY_PRIMARY_COLOR(Integer.class, TColor.class),
 
-    @EventParamData(desc = "Set formula for a Combo Overlay.", params = { "Overlay ID", "Formula" })
+    @EventParamData(desc = "Set formula for a Combo Overlay", params = { "Combo Overlay", "Formula" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_COMBO_FORMULA(Integer.class, String.class),
 
-    @EventParamData(desc = "Set prequel Overlay.", params = { "Overlay ID", "Prequel Overlay ID", "Prequel Type Name",
-            "Prequel Timeframe ID (optional)", "Previous Iteration (optional)" })
+    @EventParamData(desc = "Set Prequel Overlay for a Grid Overlay and a Prequel Type supported by the Grid Overlay. Optionally a specific Timeframe is used to obtain Grid values, with the last timeframe of the Prequel Overlay as default"
+            + "Optionally Grid Values are obtain from a previous Iteration, allowing cyclic dependencies between Grid Overlays", params = {
+                    "Grid Overlay", "Prequel Overlay", "Prequel Type Name", "Prequel Timeframe ID (optional)",
+                    "Previous Iteration (optional)" })
     @EventIDField(links = { OVERLAYS, OVERLAYS }, params = { 0, 1 }, nullable = { 3, 4 })
     SET_PREQUEL(Integer.class, Integer.class, String.class, Integer.class, Boolean.class),
 
-    @EventParamData(desc = "Set the color a specified FUNCTION or ATTRIBUTE Overlay uses to color parts of the map where no relevant data is found.", params = {
-            "Overlay ID (must relate to a FUNCTION or ATTRIBUTE Overlay)", "Color" })
+    @EventParamData(desc = "Set the color a specified Function or Attribute Overlay uses to color parts of the map where no relevant data is found", params = {
+            "Overlay (Function or Attribute)", "Color" })
     @EventIDField(links = { OVERLAYS }, params = { 0 }, nullable = { 1 })
     SET_OVERLAY_REMAINDER_COLOR(Integer.class, TColor.class),
 
-    @EventParamData(desc = "Add or remove specified sources to or from a specified SOURCE Overlay. Unincluded sources which are already related to the Overlay will remain related."
-            + " Unincluded sources which are not related to the Overlay will remain unrelated.", params = {
-                    "Overlay ID (must relate to a SOURCES Overlay)", "Array of source IDs",
-                    "Should be added to the Overlay (false removes the sources from the Overlay)" })
+    @EventParamData(desc = "Add or remove specific Sources to or from a Source Overlay", params = { "Source Overlay", "Sources",
+            "Add to the Overlay (false removes the sources from the Overlay)" })
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 0, 1 })
     SET_OVERLAY_SOURCE(Integer.class, Integer[].class, Boolean.class),
 
-    @EventParamData(desc = "Set a parent Overlay for a specified Overlay, making it a subselectable child. An Overlay with a parent cannot be assigned as a parent to another Overlay.", params = {
-            "Overlay ID", "Overlay ID of parent (overlays without a parent should have their parent Overlay ID set to -1)" })
+    @EventParamData(desc = "Set a parent Overlay for an Overlay. An Overlay with a parent cannot be assigned as a parent to another Overlay", params = {
+            "Overlay", "Parent Overlay" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_PARENT(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Set the result type of a specified grid Overlay. The same calculation will be performed, but a different aspect of the calculation will be tracked and output.", params = {
-            "Overlay ID (must relate to a grid Overlay with result types)",
-            "Result type for the Overlay (must be a valid result type of the Overlay type)" })
+    @EventParamData(desc = "Set the result type of a Grid Overlay. The same calculation will be performed, but a different aspect of the calculation will be tracked and output", params = {
+            "Grid Overlays", "Result type for the Overlay (must be a valid result type of the Overlay type)" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_RESULT_TYPE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Set whether a specified grid Overlay has a difference option. If an Overlay has a difference option, an addition output is available computed from the difference between the CURRENT and MAQUETTE outputs.", params = {
-            "Overlay ID (must relate to a grid Overlay)",
-            "Has a difference option (false means there is no difference option for this Overlay)" })
+    @EventParamData(desc = "Set whether a Grid Overlay has a difference option. If an Overlay has a difference option, an addition output is available computed from the difference between the CURRENT and MAQUETTE outputs", params = {
+            "Grid Overlays", "Has a difference option (false means there is no difference option for this Overlay)" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_SHOW_DIFFERENCE(Integer[].class, Boolean[].class),
 
-    @EventParamData(desc = "Set whether a specified Overlay visualizes the graph of systems which dictates its calculation. Pipes, center points of areas, etc.", params = {
-            "Overlay ID (must relate to a water Overlay)", "Visual Type", "Show" })
+    @EventParamData(desc = "Set whether a Water Overlay visualizes the graph of systems which dictates its calculation. Pipes, center points of Areas, etc", params = {
+            "Water Overlay", "Water System", "Visualized" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_SHOW_SYSTEM_VISUALIZATION(Integer.class, WaterSystem.class, Boolean.class),
 
-    @EventParamData(desc = "Set the Inference Prequel for an input tensor of an Inference Overlay.", params = { "Inference Overlay ID",
+    @EventParamData(desc = "Set the Inference Prequel for an input tensor of an Inference Overlay", params = { "Inference Overlay",
             "Tensor Link ID", "Inference Prequel" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_TENSOR_PREQUEL(Integer.class, Integer.class, String.class),
 
-    @EventParamData(desc = "Set whether an input tensor of an Inference Overlay should be normalized when provided to a neural network.", params = {
-            "Inference Overlay ID", "Tensor Link ID", "Normalize" })
+    @EventParamData(desc = "Set whether an input tensor of an Inference Overlay should be normalized when provided to a Neural Network", params = {
+            "Inference Overlay", "Tensor Link ID", "Normalize" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_TENSOR_NORMALIZED(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(desc = "Set the Inference Result for an output tensor of an Inference Overlay.", params = { "Inference Overlay ID",
+    @EventParamData(desc = "Set the Inference Result for an output tensor of an Inference Overlay", params = { "Inference Overlay",
             "Tensor Link ID", "Output Result" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_TENSOR_RESULT_TYPE(Integer.class, Integer.class, String.class),
 
-    @EventParamData(desc = "Set the Value Type for an input tensor of an Inference Overlay.", params = { "Inference Overlay ID",
+    @EventParamData(desc = "Set the Value Type for an input tensor of an Inference Overlay", params = { "Inference Overlay",
             "Tensor Link ID", "Value Type" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_TENSOR_VALUE_TYPE(Integer.class, Integer.class, String.class),
 
+    @EventParamData(desc = "Set the Water Mode of a Water Overlay", params = { "Water Overlay", "Water Mode" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_WATER_MODE(Integer.class, WaterOverlay.Mode.class),
 
+    @EventParamData(desc = "Set the Discharge Method of a Watershed Overlay", params = { "Watershed Overlay", "Discharge Method" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_DISCHARGE_METHOD(Integer.class, WatershedOverlay.DischargeMethod.class),
 
+    @EventParamData(desc = "Set the Heat Model of a Heat Stress Overlay", params = { "Heat Stress Overlay", "Heat Model" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_HEAT_MODEL(Integer.class, HeatModel.class),
 
-    @EventParamData(desc = "Set the Service layer names for a specified Service Overlay and timeframe.", params = { "Service Overlay ID ",
-            "Layer name(s)" })
+    @EventParamData(desc = "Set the Service layer names for a specified Service Overlay and timeframe", params = { "Overlay (WMS or WCS)",
+            "Layer names" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SET_SERVICE_LAYER(Integer.class, String[].class),
 
-    @EventParamData(desc = "Set the Service source for a specified Service Overlay.", params = { "Service Overlay ID ", "Source ID" })
+    @EventParamData(desc = "Set the Service Source for a specified Service Overlay", params = { "Overlay (WMS or WCS)", "Source" })
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 0, 1 })
     SET_SERVICE_SOURCE(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Set the preferred CRS for the Service source of a specified Service Overlay.", params = { "Service Overlay ID ",
-            "CRS name" })
+    @EventParamData(desc = "Set the preferred CRS for the Service Source of a specified Service Overlay", params = {
+            "Overlays (WMS or WCS)", "CRS name" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_SERVICE_CRS(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Set the preferred option to force the CRS order to longitude/latitude for the Service source of a specified Service Overlay.", params = {
-            "Service Overlay ID ", "Longitude first (force XY)" })
+    @EventParamData(desc = "Set the preferred option to force the CRS order to longitude/latitude for the Service Source of a specified Service Overlay", params = {
+            "Overlays (WMS or WCS)", "Longitude first (force XY)" })
     @EventIDField(sameLength = true, links = { OVERLAYS }, params = { 0 })
     SET_SERVICE_FORCE_XY(Integer[].class, Boolean[].class),
 
-    @EventParamData(desc = "Set a specified weather to serve as input for a specified water Overlay.", params = { "Water Overlay ID ",
-            "Weather ID" })
+    @EventParamData(desc = "Set a specified Weather to serve as input for a specified Water Overlay", params = { "Water Overlay",
+            "Weather" })
     @EventIDField(links = { OVERLAYS, WEATHERS }, params = { 0, 1 })
     SET_WATER_WEATHER(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Remove a Grid Overlay's prequel Overlay.", params = { "Grid Overlay ID", "Prequel Type Name" })
+    @EventParamData(desc = "Remove a Grid Overlay's prequel Overlay", params = { "Grid Overlay", "Prequel Type Name" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     REMOVE_PREQUEL(Integer.class, String.class),
 
+    @EventParamData(desc = "Swap the order of paired Overlays", params = { "Overlays (main)", "Overlays (other)" })
     @EventIDField(sameLength = true, links = { OVERLAYS, OVERLAYS }, params = { 0, 1 })
     SWAP_ORDER(Integer[].class, Integer[].class);
 
@@ -399,19 +369,22 @@ public enum EditorOverlayEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == ADD_RESULT_CHILD) {
-            return Integer.class;
-        }
-        if (this == ADD_TYPE || this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE || this == SET_LEGEND_ENTRY_VALUE || this == SET_ENTRY_VALUE || this == SET_DIFFERENCE_ENTRY_VALUE
-                || this == SET_LEGEND_ENTRY_NAME || this == SET_ENTRY_NAME || this == SET_DIFFERENCE_ENTRY_NAME
-                || this == SET_LEGEND_ENTRY_COLOR || this == SET_ENTRY_COLOR || this == SET_DIFFERENCE_ENTRY_COLOR
-                || this == REMOVE_LEGEND_ENTRY || this == REMOVE_ENTRY || this == REMOVE_DIFFERENCE_ENTRY) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, ADD_RESULT_CHILD -> Integer.class;
+
+            case ADD_TYPE, DUPLICATE -> Integer[].class;
+
+            case REMOVE, REMOVE_LEGEND_ENTRY, REMOVE_ENTRY, REMOVE_DIFFERENCE_ENTRY -> Boolean.class;
+
+            case SET_LEGEND_ENTRY_NAME, SET_ENTRY_NAME, SET_DIFFERENCE_ENTRY_NAME -> Boolean.class;
+
+            case SET_LEGEND_ENTRY_VALUE, SET_ENTRY_VALUE, SET_DIFFERENCE_ENTRY_VALUE -> Boolean.class;
+
+            case SET_LEGEND_ENTRY_COLOR, SET_ENTRY_COLOR, SET_DIFFERENCE_ENTRY_COLOR -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

@@ -80,8 +80,7 @@ public enum TStatus {
     FAIR_CAPACITY(598,
             "Fair Usage Limit: The Server is almost at full capacity and therefore only two sessions are allowed per domain.\nIf possible close (keep-alive) sessions or try again later."), // unique
 
-    MAX_CAPACITY(599,
-            "Maximum Server capacity reached, cannot start new session.\nIf possible close (keep-alive) sessions or try again later."), // unique
+    MAX_CAPACITY(599, "Maximum Server capacity reached, cannot continue.\nIf possible close (keep-alive) sessions or try again later."), // unique
 
     ;
 

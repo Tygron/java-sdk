@@ -30,8 +30,8 @@ import nl.tytech.util.color.TColor;
 @Linked(CUSTOM_GEOMETRIES)
 public enum EditorCustomGeometryEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add a custom geometry to render.", params = { "3D Data array", "Color", "Texture Names",
-            "Use absolute height from 3D Data array", "Render both the front and back face" })
+    @EventParamData(desc = "Add a renderable Custom Geometry", params = { "3D Data array", "Color", "Texture Names",
+            "Use absolute height from 3D Data array", "Render both the front and back face" }, response = "Custom Geometry IDs")
     @EventIDField(sameLength = true)
     ADD(float[][].class, TColor[].class, String[].class, boolean[].class, boolean[].class);
 
@@ -53,7 +53,14 @@ public enum EditorCustomGeometryEventType implements IndicatorEventTypeEnum {
 
     @Override
     public Class<?> getResponseClass(Object[] args) {
-        return this == ADD ? Integer[].class : null;
+
+        return switch (this) {
+
+            case ADD -> Integer[].class;
+
+            default -> null;
+
+        };
     }
 
     @Override

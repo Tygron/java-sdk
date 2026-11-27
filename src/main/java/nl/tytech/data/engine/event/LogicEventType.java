@@ -53,227 +53,221 @@ import nl.tytech.data.engine.serializable.TimeState;
 /**
  * LogicEventType: These server events trigger functionality in test runs.
  *
- * @author Maxim Knepfle
+ * @author Maxim Knepfle, Frank Baars
  */
-@Description("Endpoints that change functionality in a testrun or impact Session.")
+@Description("Endpoints that change functionality in a testrun or impact Session")
 public enum LogicEventType implements SessionEventTypeEnum {
 
-    @EventParamData(editor = true, desc = "Export history of actions taken by participants.", params = {})
+    @EventParamData(editor = true, desc = "Export history of actions taken by Stakeholders", params = {})
     ACTION_LOG_EXPORT,
 
-    @EventParamData(editor = true, desc = "Add or remove a function from a particular Action Menu.", params = { "Action Menu ID",
-            "Function ID", "Available" })
+    @EventParamData(editor = true, desc = "Add or remove a Function from an Action Menu", params = { "Action Menu", "Function",
+            "Add (false = remove)" })
     @EventIDField(links = { ACTION_MENUS, FUNCTIONS }, params = { 0, 1 })
     ACTION_MENU_SET_FUNCTION_AVAILABLE(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Add or remove a measure from a particular Action Menu.", params = { "Action Menu ID",
-            "Measure ID", "Available" })
+    @EventParamData(editor = true, desc = "Add or remove a Measure from an Action Menu", params = { "Action Menu", "Measure",
+            "Add (false = remove)" })
     @EventIDField(links = { ACTION_MENUS, MEASURES }, params = { 0, 1 })
     ACTION_MENU_SET_MEASURE_AVAILABLE(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Add or remove an upgrade from a particular Action Menu.", params = { "Action Menu ID",
-            "Upgrade ID", "Available" })
+    @EventParamData(editor = true, desc = "Add or remove an Upgrade Type from an Action Menu", params = { "Action Menu", "Upgrade Type",
+            "Add (false = remove)" })
     @EventIDField(links = { ACTION_MENUS, UPGRADE_TYPES }, params = { 0, 1 })
     ACTION_MENU_SET_UPGRADE_AVAILABLE(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Activate/deactivate an Area.", params = { "Area ID", "Activated" })
+    @EventParamData(editor = true, desc = "Activate/deactivate an Area", params = { "Areas", "Active Array" })
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0, })
     AREA_SET_ACTIVE(Integer[].class, Boolean[].class),
 
-    @EventParamData(editor = true, desc = "Set the Area attribute to the specified numeric value.", params = { "Area ID", "Attribute Name", "Value",
+    @EventParamData(editor = true, desc = "Set an Area Attribute to the provided values", params = { "Areas", "Attribute", "Values",
             "Update Indicators (optional)" }, defaults = { "", "", "", "true" })
     @EventIDField(links = { AREAS }, params = { 0 }, nullable = { 3 })
     AREA_SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Per entry in the array, set the value of the attribute for the Area.", params = {
-            "Array of Area IDs", "Array of Attributes", "Array of Values", "Update Indicators (optional)" })
+    @EventParamData(editor = true, desc = "Per entry in the array, set the value of the Attribute for the Area", params = { "Areas",
+            "Attributes", "Value Array", "Update Indicators (optional)" })
     @EventIDField(sameLength = true, links = { AREAS, }, params = { 0 }, nullable = { 3 })
     AREAS_SET_ATTRIBUTES(Integer[].class, String[].class, double[].class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Set the Building attribute to the specified numeric value.", params = { "Building ID", "Attribute Name",
-            "Value" })
+    @EventParamData(editor = true, desc = "Set a Building Attribute to the specified value", params = { "Building", "Attribute", "Value" })
     @EventIDField(links = { BUILDINGS }, params = { 0 })
     BUILDING_SET_ATTRIBUTE(Integer.class, String.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Per entry in the array, set the values of the attribute for the Building.", params = {
-
-            "Array of Building IDs", "Attribute Names", "Array of values" })
+    @EventParamData(editor = true, desc = "Per entry in the array, set the values of the Attribute for the Building", params = {
+            "Buildings", "Attributes", "Array of values" })
     @EventIDField(sameLength = true, links = { BUILDINGS, }, params = { 0 })
     BUILDING_SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class),
 
-    @EventParamData(desc = "Flightpoint reached for a specific cinematic.", params = { "Stakeholder ID", "Cinematic ID",
-            "ID of point in cinematic reached" })
+    @EventParamData(desc = "Notify a Key point is reached for a Cinematic", params = { "Stakeholder", "Cinematic Data", "Key Point ID" })
     @EventIDField(links = { STAKEHOLDERS, CINEMATIC_DATAS }, params = { 0, 1 })
     CINEMATIC_REACHED_POINT(Integer.class, Integer.class, Integer.class),
 
-    @EventParamData(editor = true, desc = "Start a cinematic for a specific stakeholder.", params = { "Stakeholder ID", "Cinematic ID",
-            "Animate to cinematic starting point" })
+    @EventParamData(editor = true, desc = "Start a cinematic for a Stakeholder", params = { "Stakeholder", "Cinematic Data",
+            "Animate to Cinematic starting point" })
     @EventIDField(links = { STAKEHOLDERS, CINEMATIC_DATAS }, params = { 0, 1 })
     CINEMATIC_STAKEHOLDER_START(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Stop any cinematic for a specific Stakeholder.", params = { "Stakeholder ID" })
+    @EventParamData(editor = true, desc = "Stop a playing Cinematic for a Stakeholder", params = { "Stakeholder" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     CINEMATIC_STAKEHOLDER_STOP(Integer.class),
 
-    @EventParamData(editor = false, desc = "Dismiss error log.", params = { "ErrorLog ID" })
+    @EventParamData(editor = false, desc = "Dismiss an Error Log", params = { "Error Logs" })
     @EventIDField(links = { ERROR_LOGS }, params = { 0 })
     DISMISS_ERROR(Integer[].class),
 
-    @EventParamData(editor = true, desc = "Set the Global variable to the specified numeric value.", params = { "Global ID", "Value" })
+    @EventParamData(editor = true, desc = "Set the Global to the specified value", params = { "Globals", "Value Array" })
     @EventIDField(links = { GLOBALS }, params = { 0 })
     GLOBAL_SET_VALUE(Integer[].class, double[].class),
 
-    @EventParamData(editor = true, desc = "Set the Global variable to the specified numeric values.", params = { "Global ID", "Values" })
+    @EventParamData(editor = true, desc = "Set the Global to the specified values", params = { "Globals", "Array of Values" })
     @EventIDField(sameLength = true, links = { GLOBALS }, params = { 0 })
     GLOBAL_SET_VALUES(Integer[].class, double[][].class),
 
-    @EventParamData(editor = true, desc = "Activate a level.", params = { "Level ID" })
+    @EventParamData(editor = true, desc = "Activate a Scenario", params = { "Scenario" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     SCENARIO_SET_ACTIVE(Integer.class),
 
-    @EventParamData(editor = true, desc = "Set the Scenario attribute to the specified numeric value.", params = { "Scenario ID", "Attribute Name",
-            "Value", "Update Indicators (optional)" }, defaults = { "", "", "", "true" })
+    @EventParamData(editor = true, desc = "Set the Scenario Attribute to the specified numeric value", params = { "Scenarios", "Attribute",
+            "Value Array", "Update Indicators (optional)" }, defaults = { "", "", "", "true" })
     @EventIDField(links = { SCENARIOS }, params = { 0 }, nullable = { 3 })
     SCENARIO_SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Boolean.class),
 
-    @EventParamData(desc = "Direct sale of land without requiring approval.", params = { "Selling Stakeholder ID", "Buying Stakeholder ID",
-            "Area of land being sold", "Price per square meter" })
+    @EventParamData(desc = "Directly sell land without requiring approval", params = { "Stakeholder (selling)", "Stakeholder (buying)",
+            "MultiPolygon of land", "Price per square meter" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     MAP_DIRECT_SELL_LAND(Integer.class, Integer.class, MultiPolygon.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Add a LineMeasurement for an Overlay for a specific timeframe.", params = { "Overlay IDs",
+    @EventParamData(editor = true, desc = "Add a Line Measurement for an Overlay for a specific timeframe", params = { "Overlays",
             "Point start", "Point end", "Name", "Timeframe (-1 for automatic last)", "Save Measurement",
-            "Sum" }, defaults = { "", "", "", "", "-1", "true", "true" }, response = "Measurement ID")
+            "Sum" }, defaults = { "", "", "", "", "-1", "true", "true" }, response = "Measurement")
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     MEASUREMENT_LINE_ADD(Integer[].class, Point.class, Point.class, String.class, Integer.class, Boolean.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Add a PointMeasurement for an Overlay.", params = { "Overlay IDs", "Point", "Name",
-            "Save Measurement", "Sum" }, defaults = { "", "", "", "true", "true" }, response = "Measurement ID")
+    @EventParamData(editor = true, desc = "Add a Point Measurement for an Overlay", params = { "Overlays", "Point", "Name",
+            "Save Measurement", "Sum" }, defaults = { "", "", "", "true", "true" }, response = "Measurement")
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     MEASUREMENT_POINT_ADD(Integer[].class, Point.class, String.class, Boolean.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Add an ItemMeasurement for an Overlay.", //
-            params = { "Overlay ID", "MapLink ID", "Item ID", "Identifying Key", "Name", "Save Measurement" }, //
-            defaults = { "", "", "", "", "Item measurement", "true" }, response = "Measurement ID")
+    @EventParamData(editor = true, desc = "Add an Item Measurement for an Overlay", //
+            params = { "Overlay", "Item MapLink", "Item ID", "Identifying Key", "Name", "Save Measurement" }, //
+            defaults = { "", "", "", "", "Item measurement", "true" }, response = "Measurement")
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     MEASUREMENT_ITEM_ADD(Integer.class, MapLink.class, Integer.class, String.class, String.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Set a Measurement to add its base Overlays to itself.", params = { "Measurement ID",
+    @EventParamData(editor = true, desc = "Set a Measurement to add its base Overlays to itself", params = { "Measurement",
             "Add base Overlays" }, defaults = { "", "true" })
     @EventIDField(links = { MEASUREMENTS }, params = { 0 })
     MEASUREMENT_SET_SUM(Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Remove a measurement.", params = { "Measurement ID" })
+    @EventParamData(editor = true, desc = "Remove a Measurement", params = { "Measurements" })
     @EventIDField(links = { MEASUREMENTS }, params = { 0 })
     MEASUREMENT_REMOVE(Integer[].class),
 
-    @EventParamData(editor = true, desc = "Save a measurement.", params = { "Measurement ID" })
+    @EventParamData(editor = true, desc = "Save a Measurement", params = { "Measurement" })
     @EventIDField(links = { MEASUREMENTS }, params = { 0 })
     MEASUREMENT_SAVE(Integer.class),
 
-    @EventParamData(editor = true, desc = "Set base overlays for an existing Measurement.", params = { "Measurement ID",
-            "Overlay ID" }, defaults = { "", "" })
+    @EventParamData(editor = true, desc = "Set base Overlays for a Measurement", params = { "Measurement", "Overlays" })
     @EventIDField(links = { MEASUREMENTS, OVERLAYS }, params = { 0, 1 })
     MEASUREMENT_SET_OVERLAYS(Integer.class, Integer[].class),
 
-    @EventParamData(desc = "Create a new money transfer between two Stakeholders.", params = { "Stakeholder From ID", "Stakeholder To ID",
+    @EventParamData(desc = "Create a Money Transfer between two Stakeholders", params = { "Stakeholder (from)", "Stakeholder (to)",
             "Money transfer Type", "Provided motivation", "Transfer amount" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     MONEY_TRANSFER_ADD(Integer.class, Integer.class, MoneyTransfer.Type.class, String.class, Double.class),
 
-    @EventParamData(desc = "Approve a money transfer.", params = { "Money transfer ID", "Approved" })
+    @EventParamData(desc = "Approve a Money Transfer", params = { "Money Transfer", "Approved" })
     @EventIDField(links = { MONEY_TRANSFERS }, params = { 0 })
     MONEY_TRANSFERS_SET_APPROVED(Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Set an attribute for a neighborhood.", params = { "Neighborhood ID", "Valid attribute name",
-            "Attribute value", "Update Indicators (optional)" }, defaults = { "", "", "", "true" })
+    @EventParamData(editor = true, desc = "Set an Attribute for a Neighborhood", params = { "Neighborhoods", "Attribute", "Value Array",
+            "Update Indicators (optional)" }, defaults = { "", "", "", "true" })
     @EventIDField(links = { NEIGHBORHOODS }, params = { 0 }, nullable = { 3 })
     NEIGHBORHOOD_SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Set the fraction of connected loads with a cluster.", params = { "NetCluster ID",
+    @EventParamData(editor = true, desc = "Set the fraction of connected loads with a Net Cluster", params = { "Net Cluster",
             "Fraction connected, between 0 and 1" })
     @EventIDField(links = { NET_CLUSTERS, }, params = { 0 })
     NET_CLUSTER_SET_FRACTION_CONNECTED(Integer.class, Double.class),
 
-    @EventParamData(editor = true, desc = "For each NetLoad of a NetCluster, set the value of the attribute.", params = { "NetCluster ID",
-            "Attribute name", "Value" })
+    @EventParamData(editor = true, desc = "For each Net Load of a Net Cluster, set the value of the Attribute", params = { "Net Cluster",
+            "Attribute", "Value" })
     @EventIDField(links = { NET_CLUSTERS, }, params = { 0 })
     NET_CLUSTER_SET_LOAD_ATTRIBUTE(Integer.class, String.class, Double.class),
 
-    @EventParamData(editor = true, desc = "For each NetLoad of a NetCluster, set the values of the provided attributes.", params = {
-            "NetCluster ID", "Array with attribute names", "Array with values" })
+    @EventParamData(editor = true, desc = "For each Net Load of a Net Cluster, set the values of the provided Attributes", params = {
+            "Net Cluster", "Attributes", "Array with values" })
     @EventIDField(links = { NET_CLUSTERS, }, params = { 0 })
     NET_CLUSTER_SET_LOAD_ATTRIBUTES(Integer.class, String[].class, double[].class),
 
-    @EventParamData(editor = true, desc = "Per NetCluster, set all its Net Loads of the provided NetType to the given TimeState.", params = {
-            "NetCluster IDs", "NetType of loads to be changed.",
+    @EventParamData(editor = true, desc = "Per Net Cluster, set all its Net Loads of the provided NetType to the given TimeState", params = {
+            "Net Clusters", "NetType of loads to be changed",
             "Time State (NOTHING, REQUEST_CONSTRUCTION_APPROVAL, REQUEST_ZONING_APPROVAL, READY)" })
     @EventIDField(sameLength = true, links = { NET_CLUSTERS }, params = { 0 })
     NET_CLUSTERS_SET_STATE(Integer[].class, NetType[].class, TimeState[].class),
 
-    @EventParamData(editor = true, desc = "Set the provided attribute values for each NetLoad within the specified NetClusters.", params = {
-            "NetCluster IDs", "Array with attribute names", "Array with values" })
+    @EventParamData(editor = true, desc = "Set the provided Attribute values for each Net Load within the specified Net Clusters", params = {
+            "Net Clusters", "Array with Attributes", "Array with values" })
     @EventIDField(sameLength = true, links = { NET_CLUSTERS, }, params = { 0 })
     NET_CLUSTERS_SET_LOAD_ATTRIBUTES(Integer[].class, String[].class, double[][].class),
 
-    @EventParamData(editor = true, desc = "Set the default fraction of connected loads with a cluster.", params = {
+    @EventParamData(editor = true, desc = "Set the default fraction of connected loads with a cluster", params = {
             "Fraction connected, between 0 and 1" })
     NET_CLUSTERS_SET_DEFAULT_FRACTION_CONNECTED(Double.class),
 
-    @EventParamData(editor = true, desc = "Set the attribute of a NetLine to the provided value.", params = { "NetLine ID", "Attribute",
-            "Value" })
+    @EventParamData(editor = true, desc = "Set the Attribute of a Net Line to a value", params = { "Net Line", "Attribute", "Value" })
     @EventIDField(links = { NET_LINES, }, params = { 0 })
     NET_LINE_SET_ATTRIBUTE(Integer.class, String.class, Double.class),
 
-    @EventParamData(editor = true, desc = "For each NetLine, set the value of the attribute.", params = { "Array of NetLine IDs",
-            "Attribute", "Value" })
+    @EventParamData(editor = true, desc = "For each Net Line, set the value of the Attribute", params = { "Net Lines", "Attribute",
+            "Value" })
     @EventIDField(links = { NET_LINES, }, params = { 0 })
     NET_LINES_SET_ATTRIBUTE(Integer[].class, String.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Per entry in the array, set the value of the attribute for the NetLine.", params = {
-            "Array of NetLine IDs", "Array of Attributes", "Array of Values" })
+    @EventParamData(editor = true, desc = "Per entry in the array, set the value of the Attribute for the Net Line", params = { "Net Lines",
+            "Attributes", "Values" })
     @EventIDField(sameLength = true, links = { NET_LINES, }, params = { 0 })
     NET_LINES_SET_ATTRIBUTES(Integer[].class, String[].class, double[].class),
 
-    @EventParamData(editor = true, desc = "Search for Neighborhood, Building or Address.", params = { "Map", "Query" })
+    @EventParamData(editor = true, desc = "Search for Neighborhood, Building or Address", params = { "Map Type", "Search Query" })
     SEARCH(MapType.class, String.class),
 
-    @EventParamData(desc = "Release a client from a session using its client token.", params = { "ClientToken" })
+    @EventParamData(desc = "Release a client from a session using its client token", params = { "ClientToken" })
     SESSION_RELEASE(String.class),
 
-    @EventParamData(editor = true, desc = "Set a boolean value for the specified NetSetting.", params = {
-            "NetSetting Type", "True or false" })
+    @EventParamData(editor = true, desc = "Set a boolean value for the specified NetSetting", params = { "NetSetting Types",
+            "Array of Booleans" })
     SET_NET_SETTING_BOOLEAN(NetSetting.Type[].class, Boolean[].class),
 
-    @EventParamData(editor = true, desc = "Multiply the visual traffic density by this factor.", params = { "Factor, default 4.0" })
+    @EventParamData(editor = true, desc = "Multiply the visual traffic density by a factor", params = { "Factor" }, defaults = { "4.0" })
     SET_TRAFFIC_MULTIPLIER(Double.class),
 
-    @EventParamData(editor = true, desc = "Activate/deactivate a special effect.", params = { "Special Effect ID", "Activated" })
+    @EventParamData(editor = true, desc = "Activate/deactivate a Special Effect", params = { "Special Effect", "Activate" })
     @EventIDField(links = { SPECIAL_EFFECTS }, params = { 0 })
     SPECIAL_EFFECT_SET_ACTIVE(Integer.class, Boolean.class),
 
-    @EventParamData(desc = "Release a stakeholder from a session.", params = { "Stakeholder ID" })
+    @EventParamData(desc = "Release a Stakeholder from a session", params = { "Stakeholder" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     STAKEHOLDER_RELEASE(Integer.class),
 
-    @EventParamData(desc = "Select the preferred Stakeholder or the next available option if unavailable.", params = {
-            "Preferred Stakeholder ID or empty", "Client Token (from Join Session event)" }, response = "Selected Stakeholder ID")
+    @EventParamData(desc = "Select the preferred Stakeholder or the next available option if unavailable", params = {
+            "Preferred Stakeholder or empty", "Client Token (from Join Session event)" }, response = "Selected Stakeholder ID")
     STAKEHOLDER_SELECT(Integer.class, String.class),
 
-    @EventParamData(desc = "Undo the last building action of a stakeholder.", params = { "Stakeholder ID" })
+    @EventParamData(desc = "Undo the last Building action of a Stakeholder", params = { "Stakeholder" })
     @EventIDField(links = { STAKEHOLDERS, }, params = { 0 })
     UNDO_LAST_BUILDING_ACTION(Integer.class),
 
-    @EventParamData(editor = true, desc = "Activate/deactivate units of a specific type.", params = { "UnitDataOverride ID", "Activated" })
+    @EventParamData(editor = true, desc = "Activate/deactivate units of a specific type", params = { "Unit Data Override", "Activate" })
     @EventIDField(links = { UNIT_DATA_OVERRIDES }, params = { 0 })
     UNIT_TYPE_SET_ACTIVE(Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Set an attribute for a zone.", params = { "Zone ID", "Valid attribute name", "Attribute value" })
+    @EventParamData(editor = true, desc = "Set an Attribute for a Zone", params = { "Zone", "Attribute", "Value" })
     @EventIDField(links = { ZONES }, params = { 0 })
     ZONE_SET_ATTRIBUTE(Integer.class, String.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Set attribute values for zones.", params = { "Zone IDs", "Valid attribute names",
-            "Attribute values" })
+    @EventParamData(editor = true, desc = "Set Attributes values for Zones", params = { "Zones", "Attributes", "Array of Values" })
     @EventIDField(sameLength = true, links = { ZONES }, params = { 0 })
     ZONES_SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class);
 
@@ -296,14 +290,17 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == STAKEHOLDER_SELECT || this == MEASUREMENT_POINT_ADD || this == MEASUREMENT_LINE_ADD || this == MEASUREMENT_ITEM_ADD) {
-            return Integer.class;
-        } else if (this == SEARCH) {
-            return HashMap.class;
-        } else if (this == ACTION_LOG_EXPORT) {
-            return byte[].class;
-        }
-        return null;
+        return switch (this) {
+
+            case STAKEHOLDER_SELECT, MEASUREMENT_POINT_ADD, MEASUREMENT_LINE_ADD, MEASUREMENT_ITEM_ADD -> Integer.class;
+
+            case SEARCH -> HashMap.class;
+
+            case ACTION_LOG_EXPORT -> byte[].class;
+
+            default -> null;
+        };
+
     }
 
     @Override
@@ -314,13 +311,18 @@ public enum LogicEventType implements SessionEventTypeEnum {
     @Override
     public boolean triggerTestRun() {
 
-        if (this == STAKEHOLDER_SELECT || this == STAKEHOLDER_RELEASE || this == SET_TRAFFIC_MULTIPLIER || this == DISMISS_ERROR
-                || this == MEASUREMENT_LINE_ADD || this == MEASUREMENT_POINT_ADD || this == MEASUREMENT_ITEM_ADD
-                || this == MEASUREMENT_REMOVE || this == MEASUREMENT_SAVE || this == MEASUREMENT_SET_OVERLAYS || this == MEASUREMENT_SET_SUM
-                || this == SEARCH || this == SCENARIO_SET_ACTIVE) {
-            return false;
-        }
-        return true;
+        return switch (this) {
+
+            case STAKEHOLDER_SELECT, STAKEHOLDER_RELEASE, SET_TRAFFIC_MULTIPLIER -> false;
+
+            case MEASUREMENT_LINE_ADD, MEASUREMENT_POINT_ADD, MEASUREMENT_ITEM_ADD -> false;
+
+            case MEASUREMENT_REMOVE, MEASUREMENT_SAVE, MEASUREMENT_SET_OVERLAYS, MEASUREMENT_SET_SUM -> false;
+
+            case DISMISS_ERROR, SEARCH, SCENARIO_SET_ACTIVE -> false;
+
+            default -> true;
+        };
     }
 
     @Override

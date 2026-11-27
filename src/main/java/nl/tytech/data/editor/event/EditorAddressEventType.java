@@ -33,13 +33,14 @@ import nl.tytech.core.net.serializable.MapLink;
 @Linked(ADDRESSES)
 public enum EditorAddressEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Assign building address", params = { "Building", "Street name" })
+    @EventParamData(desc = "Assign new Addresses to Buildings", params = { "Buildings", "Street names" })
     @EventIDField(sameLength = true, links = { BUILDINGS }, params = { 0 })
     ADD(Integer[].class, String[].class),
 
     @EventIDField(links = { ADDRESSES }, params = { 0 })
     DUPLICATE(Integer[].class),
 
+    @EventParamData(desc = "Get the Building related to each Addresses", params = { "Addresses" })
     @EventIDField(links = { ADDRESSES }, params = { 0 })
     GET_BUILDING(Integer[].class),
 
@@ -49,6 +50,7 @@ public enum EditorAddressEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { ADDRESSES }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the addition of an Address", params = { "Addresses", "Addition" })
     @EventIDField(sameLength = true, links = { ADDRESSES }, params = { 0 })
     SET_ADDITION(Integer[].class, String[].class),
 
@@ -64,26 +66,31 @@ public enum EditorAddressEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { ADDRESSES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
+    @EventParamData(desc = "Set the letter of an Address", params = { "Addresses", "Letters" })
     @EventIDField(sameLength = true, links = { ADDRESSES }, params = { 0 })
     SET_LETTER(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the number of an Address", params = { "Addresses", "Address Number" })
     @EventIDField(sameLength = true, links = { ADDRESSES }, params = { 0 })
     SET_NUMBER(Integer[].class, Integer[].class),
 
-    @EventParamData(desc = "Set the point of an address", params = { "Address ID", "Point" }, defaults = { "", "" })
+    @EventParamData(desc = "Set the point of an Address", params = { "Addresses", "Points" })
     @EventIDField(sameLength = true, links = { ADDRESSES }, params = { 0 })
     SET_POINT(Integer[].class, Point[].class),
 
+    @EventParamData(desc = "Set the street name of an Address", params = { "Addresses", "Street Names" })
     @EventIDField(sameLength = true, links = { ADDRESSES }, params = { 0 })
     SET_STREET(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the surface size of an Address", params = { "Addresses", "Surface Sizes" })
     @EventIDField(sameLength = true, links = { ADDRESSES }, params = { 0 })
     SET_SURFACE_SIZE(Integer[].class, double[].class),
 
+    @EventParamData(desc = "Set the Zip Code of an Address", params = { "Addresses", "Zip Codes" })
     @EventIDField(sameLength = true, links = { ADDRESSES }, params = { 0 })
     SET_ZIP_CODE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Search addresses", params = { "Search Query" })
+    @EventParamData(desc = "Get Addresses matching a Search Query", params = { "Search Query" })
     SEARCH(String.class);
 
     private final List<Class<?>> classes;
@@ -105,10 +112,12 @@ public enum EditorAddressEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == GET_BUILDING || this == DUPLICATE || this == SEARCH) {
-            return Integer[].class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, GET_BUILDING, DUPLICATE, SEARCH -> Integer[].class;
+
+            default -> null;
+        };
     }
 
     @Override

@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event;
 import nl.tytech.core.event.Event.IndicatorEventTypeEnum;
+import nl.tytech.core.item.annotations.EventParamData;
+import nl.tytech.core.item.annotations.Internal;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.core.net.serializable.MapLink;
 
@@ -25,9 +27,13 @@ import nl.tytech.core.net.serializable.MapLink;
  *
  * @author Maxim Knepfle
  */
+@Internal
 @Linked(TIMES)
 public enum EditorTimeEventType implements IndicatorEventTypeEnum {
 
+    @Internal
+    @EventParamData(desc = "Set the start date and time of a Project, as milliseconds from Epoch", params = {
+            "Milliseconds since 00:00:00 UTC on 1 January 1970" })
     SET_START_DATE(Long.class);
 
     private final List<Class<?>> classes;

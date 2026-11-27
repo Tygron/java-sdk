@@ -30,72 +30,88 @@ import nl.tytech.locale.TCurrency;
 import nl.tytech.locale.unit.UnitSystemType;
 
 /**
- * @author Jeroen Warmerdam
+ * @author Frank Baars, Jeroen Warmerdam
  *
  */
 @Linked(SETTINGS)
 public enum EditorSettingEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Set a CRS to the recently used CRSs array", params = { "EPSG CRS Code" })
     ADD_CRS(String.class),
 
+    @EventParamData(desc = "Remove a CRS from the recently used CRSs array", params = { "EPSG CRS Code" })
     REMOVE_CRS(String.class),
 
+    @EventParamData(desc = "Set which the Currency is displayed in the interface", params = { "Number of decimal places" })
     SET_CURRENCY(TCurrency.class),
 
-    @EventParamData(desc = "Set if AI Agents are allowed to edit Project data.", params = { "True for allow, false to disable editing" })
+    @EventParamData(desc = "Set if AI Agents are allowed to edit Project data", params = { "True for allow, false to disable editing" })
     SET_AI_EDITING(Boolean.class),
 
-    @EventParamData(desc = "Set if TQL Queries are allowed access the API Token.", params = { "True for allow, false to disable TQL API Tokens." })
+    @EventParamData(desc = "Set if TQL Queries are allowed access the API Token", params = {
+            "True for allow, false to disable TQL API Tokens" })
     SET_TQL_TOKEN(Boolean.class),
 
+    @EventParamData(desc = "Set how many decimal places Attributes are allowed to have", params = { "Number of decimal places" })
     SET_DECIMALS(Integer.class),
 
     @Deprecated
-    @EventParamData(desc = "Deprecated: replaced by editorevent/set_scheduled_update/. Schedule a long-running Update.", params = {
-            "Scheduled time in milliseconds since epoch 1970 (0 for direct execution, -1 to cancel).",
+    @EventParamData(desc = "Deprecated: replaced by editorevent/set_scheduled_update/. Schedule a long-running Update", params = {
+            "Scheduled time in milliseconds since epoch 1970 (0 for direct execution, -1 to cancel)",
             "Send Email to this address when finished (optional)",
             "Send SMS to this number when finished (optional)" }, defaults = { "0", "", "" })
     @EventIDField(nullable = { 0, 1, 2 })
     SET_SCHEDULED_UPDATE(Long.class, String.class, String.class),
 
+    @EventParamData(desc = "Set the Default Export CRS, used in Item Export Panels", params = { "EPSG CRS Code" })
     SET_EXPORT_CRS(String.class),
 
+    @EventParamData(desc = "Set the Default Import CRS, used in the Geo Import Wizard", params = { "EPSG CRS Code" })
     SET_IMPORT_CRS(String.class),
 
+    @EventParamData(desc = "Set the Timestamp format for Dates and Times, used for displaying Dates and Times", params = {
+            "Date-time format" })
     SET_TIMESTAMP_FORMAT(String.class),
 
+    @EventParamData(desc = "Set the Default Geo Plugin of a MapLink, used in the Geo Import Wizard", params = { "MapLink",
+            "Geo Plugin ID" })
     SET_DEFAULT_GEOPLUGIN(MapLink.class, Integer.class),
 
+    @EventParamData(desc = "Set the Dates between which the Sun movement is interpolated in the 3D Visualization", params = {
+            "Array of times in milliseconds since epoch (Milliseconds since 00:00:00 UTC on 1 January 1970)" })
     SET_SUN_DATES(long[].class),
 
-    @EventParamData(desc = "Change the project's grid cell size, used by active overlays.", params = {
-            "The new grid cell size in meters." }, response = "Value is updated")
+    @EventParamData(desc = "Change the Project's grid cell size, used by active Overlays", params = {
+            "Grid cell size in meters" }, response = "Value is updated")
     SET_GRID_CELL_SIZE(Double.class),
 
+    @EventParamData(desc = "Restrict which Panels are active or inactive in a Project", params = { "Panel Enum", "Active" })
     SET_PANEL_AVAILABILITY(PanelEnum.class, Boolean.class),
 
+    @EventParamData(desc = "Set whether permission Popups for spatial actions are active in a Project", params = {
+            "Permission Popup Active" })
     SET_PERMISSION_POPUP_ACTIVE(Boolean.class),
 
-    /**
-     * Set region, e.g. Asia.
-     */
+    @EventParamData(desc = "Set the Region of a Project", params = { "Region" })
     SET_REGION(Region.class),
 
+    @EventParamData(desc = "Set the rasterization method used by the Rasterizers in a Project", params = { "Rasterization Method" })
     SET_RASTERIZATION(RasterizationMethod.class),
 
-    @EventParamData(desc = "Set Project setting", params = { "Setting Type", "Value as String (can be an integer, boolean, text, etc.)" })
+    @EventParamData(desc = "Set Project wide Setting", params = { "Setting Type",
+            "Value as String (can be an integer, boolean, text, etc.)" })
     SET_SETTING(Setting.Type.class, String.class),
 
+    @EventParamData(desc = "Set the Unit System of a Project, used in the interface", params = { "Unit System Type" })
     SET_UNIT_SYSTEM_TYPE(UnitSystemType.class),
 
+    @EventParamData(desc = "Set the Wind Speed", params = { "Wind Speed (m/s)" })
     SET_WIND_SPEED(Double.class),
 
     @EventParamData(desc = "Set Project Map Limit Area", params = { "Limit Polygon" })
     SET_LIMIT_MAP(MultiPolygon.class),
 
-    /**
-     * Triggered at the end of the wizard.
-     */
+    @EventParamData(desc = "Manually finish the Geo Wizard process. (Triggered automatically at the end of the New Project Wizard.)")
     WIZARD_FINISHED(),
 
     @EventParamData(desc = "Get Sun Azimuth value for local time in this Project", params = { "Year", "Month", "Day", "Hour", "Minute",
@@ -135,18 +151,16 @@ public enum EditorSettingEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        switch (this) {
-            case GET_SUN_AZIMUTH:
-            case GET_SUN_ALTITUDE:
-            case GET_SUN_MOTION:
-                return Double.class;
-            case GET_EPOCH_TIME:
-                return Long.class;
-            case SET_GRID_CELL_SIZE:
-                return Boolean.class;
-            default:
-                return null;
-        }
+        return switch (this) {
+
+            case GET_SUN_AZIMUTH, GET_SUN_ALTITUDE, GET_SUN_MOTION -> Double.class;
+
+            case GET_EPOCH_TIME -> Long.class;
+
+            case SET_GRID_CELL_SIZE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

@@ -34,27 +34,27 @@ import nl.tytech.data.engine.serializable.PanelEnum;
  */
 public enum ClientEventType implements EventTypeEnum {
 
-    @EventParamData(editor = true, desc = "Weather to show", params = { "Weather ID" })
+    @EventParamData(editor = true, desc = "Weather to show", params = { "Weather" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     ACTIVATE_WEATHER(Integer.class),
 
-    @EventParamData(editor = true, desc = "Blink ActionMenu in left menu panel", params = { "ActionMenu", "Blinking on" })
+    @EventParamData(editor = true, desc = "Blink Action Menu in left menu Panel", params = { "Action Menu", "Blinking on" })
     @EventIDField(links = { ACTION_MENUS }, params = { 0 })
     BLINK_CATEGORY(Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Blink Indicator icon in top menu", params = { "Indicator ID" })
+    @EventParamData(editor = true, desc = "Blink Indicator icon in top menu", params = { "Indicator" })
     @EventIDField(links = { INDICATORS }, params = { 0 })
     BLINK_INDICATOR(Integer.class),
 
-    @EventParamData(editor = true, desc = "Blink Overlay icon below map panel", params = { "Overlay ID" })
+    @EventParamData(editor = true, desc = "Blink Overlay icon below Map Panel", params = { "Overlay" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     BLINK_OVERLAY(Integer.class),
 
-    @EventParamData(editor = true, desc = "Stop all blinking Indicators and ActionMenus", params = {})
+    @EventParamData(editor = true, desc = "Stop all blinking Indicators and Action Menus", params = {})
     BLINK_STOP_ALL(),
 
-    @EventParamData(editor = true, desc = "Change a building's zoning permit by specifying its function and permission feedback", params = {
-            "Zone ID", "Function ID", "Permission feedback" })
+    @EventParamData(editor = true, desc = "Change a Building's zoning permit by specifying its Function and permission feedback", params = {
+            "Zones", "Function", "Permission feedback" })
     @EventIDField(links = { ZONES, FUNCTIONS }, params = { 0, 1 })
     CHANGE_ZONING_PERMIT(Integer[].class, Integer.class, String[].class),
 
@@ -71,37 +71,37 @@ public enum ClientEventType implements EventTypeEnum {
     @Deprecated
     GOTO_START_LOCATION(),
 
-    @EventParamData(editor = true, desc = "Respond to a Panel with chosen answer", params = { "Panel ID", "Answer ID" })
+    @EventParamData(editor = true, desc = "Respond to a Panel with chosen answer", params = { "Panel", "Answer ID" })
     @EventIDField(links = { PANELS }, params = { 0 })
     PANEL_ANSWER(Integer.class, Integer.class),
 
-    @EventParamData(editor = true, desc = "Respond to a popup using its first answer based on a specified probability", params = {
+    @EventParamData(editor = true, desc = "Respond to a Popup using its first answer based on a specified probability", params = {
             "Chance to respond between 0 and 1" })
     RANDOM_ACTIVATE_POPUP_PERCENTAGE(Double.class),
 
     @EventParamData(editor = true, desc = "Change the visualisation speed", params = { "Speed factor" })
     SET_VISUALISATION_SPEED(Double.class),
 
-    @EventParamData(editor = true, desc = "Show the browser for ESRI Layers applicable to the city area", params = {})
+    @EventParamData(editor = true, desc = "Show the browser for ESRI Layers applicable to the City Area", params = {})
     SHOW_BROWSER_MAP,
 
-    @EventParamData(editor = true, desc = "Show a specific panel", params = { "Panel ID", "Visible" })
+    @EventParamData(editor = true, desc = "Show a specific Panel", params = { "Panel", "Visible" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SHOW_CUSTOM_PANEL(Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Show a specific overlay", params = { "Overlay ID", "Timeframe", "Play Timeframes" }, defaults = {
+    @EventParamData(editor = true, desc = "Show a specific Overlay", params = { "Overlay", "Timeframe", "Play Timeframes" }, defaults = {
             "", "0", "false" })
     @EventIDField(links = { OVERLAYS }, params = { 0 })
     SHOW_OVERLAY(Integer.class, Integer.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Set a specific panel visible/invisible", params = { "Panel", "Visible" })
+    @EventParamData(editor = true, desc = "Set a specific Panel visible/invisible", params = { "Panel", "Visible" })
     SHOW_PANEL(PanelEnum.class, Boolean.class),
 
-    @EventParamData(editor = true, desc = "Stop any weather that is visually active on a client", params = {})
+    @EventParamData(editor = true, desc = "Stop any Weather that is visually active on a client", params = {})
     STOP_WEATHER(),
 
-    @EventParamData(editor = true, desc = "Draw visual attention to a specific point for a specified duration", params = { "Point in the city",
-            "Duration (seconds)" })
+    @EventParamData(editor = true, desc = "Draw visual attention to a specific point for a specified duration", params = {
+            "Point in the city", "Duration (seconds)" })
     TILE_ATTENTION(Point.class, Double.class);
 
     private final List<Class<?>> classes;

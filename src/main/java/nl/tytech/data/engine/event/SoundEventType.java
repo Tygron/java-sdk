@@ -27,32 +27,33 @@ import nl.tytech.core.item.annotations.EventParamData;
  */
 public enum SoundEventType implements EventTypeEnum {
 
-    @EventParamData(editor = true, desc = "Pause a particular sound", params = { "Sound" })
+    @EventParamData(editor = true, desc = "Pause a particular Sound", params = { "Sound" })
     @EventIDField(links = { SOUNDS }, params = { 0 })
     PAUSE(Integer.class),
 
-    @EventParamData(editor = true, desc = "Start a sound for a specific Stakeholder", params = { "Stakeholder",
-            "Sound" })
+    @EventParamData(editor = true, desc = "Start a Sound for a specific Stakeholder", params = { "Stakeholder", "Sound" })
     @EventIDField(links = { STAKEHOLDERS, SOUNDS }, params = { 0, 1 })
     START(Integer.class, Integer.class),
 
+    @EventParamData(editor = true, desc = "Notification that a Sound started with a particular waiting duration", params = { "Sound",
+            "Waiting Duration" })
     @EventIDField(links = { SOUNDS }, params = { 0 })
     STARTED(Integer.class, Double.class),
 
-    @EventParamData(editor = true, desc = "Stop a sound for a specific Stakeholder", params = { "Stakeholder",
-            "Sound" })
+    @EventParamData(editor = true, desc = "Stop a Sound for a specific Stakeholder", params = { "Stakeholder", "Sound" })
     @EventIDField(links = { STAKEHOLDERS, SOUNDS }, params = { 0, 1 })
     STOP(Integer.class, Integer.class),
 
-    @EventParamData(editor = true, desc = "Stop all sounds for a particular Stakeholder", params = { "Stop for Stakeholder",
+    @EventParamData(editor = true, desc = "Stop all Sounds for a particular Stakeholder", params = { "Stakeholder",
             "Stop background music" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     STOP_ALL(Integer.class, Boolean.class),
 
+    @EventParamData(editor = true, desc = "Notification that a Sound stopped", params = { "Sound" })
     @EventIDField(links = { SOUNDS }, params = { 0 })
     STOPPED(Integer.class),
 
-    @EventParamData(editor = true, desc = "Unpause a particular sound", params = { "Sound" })
+    @EventParamData(editor = true, desc = "Unpause a particular Sound", params = { "Sound" })
     @EventIDField(links = { SOUNDS }, params = { 0 })
     UNPAUSE(Integer.class);
 

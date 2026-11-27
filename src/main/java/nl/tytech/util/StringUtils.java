@@ -1134,6 +1134,28 @@ public abstract class StringUtils {
         return text != null ? text.toUpperCase().trim().replace(WHITESPACE, UNDER_SCORE) : null;
     }
 
+    /**
+     * Return a valid asset directory path (simple names and end with file seperator) or null
+     *
+     */
+    public static final String toValidAssetDirectories(String dirNames) {
+
+        StringBuilder dirPath = new StringBuilder();
+        String[] dirs = dirNames.split(File.separator);
+        for (int i = 0; i < dirs.length; i++) {
+            String dir = dirs[i];
+            if (i == 0 && dir.length() == 0) {
+                continue;
+            } else if (dir.matches("[a-zA-Z0-9_-]{1,100}")) {
+                dirPath.append(dir);
+                dirPath.append(File.separator);
+            } else {
+                return null;
+            }
+        }
+        return dirPath.toString();
+    }
+
     public static final String toValidFileName(String name) {
 
         // replace all invalid chars with single under score
@@ -1212,7 +1234,7 @@ public abstract class StringUtils {
         return name.split("\\.").length > 1;
     }
 
-    public static final boolean validFilename(String fileName, String extension) {
+    public static final boolean validFilename(String fileName, String... extensions) {
 
         if (fileName == null) {
             return false;
@@ -1240,14 +1262,20 @@ public abstract class StringUtils {
         /**
          * Finally check extension
          */
-        if (extension != null) {
-            return parts[parts.length - 1].equalsIgnoreCase(extension);
+        String last = parts[parts.length - 1];
+        if (extensions != null && extensions.length > 0) {
+            for (String extension : extensions) {
+                if (last.equalsIgnoreCase(extension)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /**
          * Extension should be at least 2 char
          */
-        return parts[parts.length - 1].length() >= 2;
+        return last.length() >= 2;
     }
 
     public static final boolean validPhone(String number) {

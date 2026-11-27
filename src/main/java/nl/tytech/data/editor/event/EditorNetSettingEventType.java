@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.data.engine.item.NetLine.NetType;
 import nl.tytech.data.engine.item.NetSetting;
@@ -30,13 +31,17 @@ import nl.tytech.data.engine.item.NetSetting;
 @Linked(NET_SETTINGS)
 public enum EditorNetSettingEventType implements EventTypeEnum {
 
+    @EventParamData(desc = "Set the value of a Net Setting to true or false", params = { "Net Setting Type", "Boolean" })
     SET_BOOLEAN(NetSetting.Type.class, Boolean.class),
 
+    @EventParamData(desc = "Set the fraction with Net Loads of Net Clusters that are set to connected", params = { "Fraction" })
     SET_CLUSTER_FRACTION_CONNECTED(Double.class),
 
+    @EventParamData(desc = "Set the Owner of a particular Net", params = { "Net Type", "Stakeholder" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 1 })
     SET_OWNER(NetType.class, Integer.class),
 
+    @EventParamData(desc = "Set the Attribute of the matter transported through a particular Net", params = { "Net Type", "Attribute" })
     SET_TRANSPORTED_TYPE_NAME(NetType.class, String.class);
 
     private final List<Class<?>> classes;

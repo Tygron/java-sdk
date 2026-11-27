@@ -33,11 +33,14 @@ import nl.tytech.util.color.TColor;
 @Linked(STAKEHOLDERS)
 public enum EditorStakeholderEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Add a new Stakeholder", response = "Stakeholder ID")
     ADD(),
 
+    @EventParamData(desc = "Assign land to a particular Stakeholder", params = { "Stakeholder", "MultiPolygon" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     ADD_LAND_OWNERSHIP(Integer.class, MultiPolygon.class),
 
+    @EventParamData(desc = "Add a new (active) Stakeholder", params = { "Stakeholder Type", "Active" }, response = "Stakeholder ID")
     ADD_WITH_TYPE_AND_ACTIVE(Stakeholder.Type.class, Boolean.class),
 
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
@@ -46,40 +49,50 @@ public enum EditorStakeholderEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Reset the Web Token of a Stakeholder and generate a new one with a default length", params = { "Stakeholders" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     RESET_WEB_TOKEN(Integer[].class),
 
+    @EventParamData(desc = "Reset the Web Token of a Stakeholder and generate new one with a particular length", params = { "Stakeholders",
+            "Web Token Length" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     RESET_WEB_TOKEN_WITH_LENGTH(Integer[].class, Integer.class),
 
-    @EventParamData(desc = "Select Stakeholder using the preferred ID; if unavailable, fall back to the next best option.", params = {
+    @EventParamData(desc = "Select Stakeholder using the preferred ID; if unavailable, fall back to the next best option", params = {
             "Preferred Stakeholder ID or empty", "Client Token (from Join Session event)" }, response = "Selected Stakeholder ID")
     SELECT_STAKEHOLDER(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the Color of a Stakeholder", params = { "Stakeholders", "Colors" })
     @EventIDField(sameLength = true, links = { STAKEHOLDERS }, params = { 0 })
     SET_COLOR(Integer[].class, TColor[].class),
 
+    @EventParamData(desc = "Set the image of a Stakeholder", params = { "Stakeholders", "Image Names" })
     @EventIDField(sameLength = true, links = { STAKEHOLDERS }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the name of a Stakeholder", params = { "Stakeholders", "Names" })
     @EventIDField(sameLength = true, links = { STAKEHOLDERS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set whether a Stakeholder is an active participant of a session", params = { "Stakeholders",
+            "Active per Stakeholder" })
     @EventIDField(sameLength = true, links = { STAKEHOLDERS }, params = { 0 })
     SET_ACTIVE(Integer[].class, Boolean[].class),
 
+    @EventParamData(desc = "Set the short name of a Stakeholder", params = { "Stakeholder", "Short Name" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     SET_SHORT_NAME(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the start budget of a Stakeholder", params = { "Stakeholder", "Budget" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     SET_START_BUDGET(Integer.class, Double.class),
 
+    @EventParamData(desc = "Set the type of a Stakeholder", params = { "Stakeholder", "Type" })
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     SET_TYPE(Integer.class, Stakeholder.Type.class),
 
-    /**
-     * Transfer ownership of plots and buildings, and optionally the perimeter of zones.
-     */
+    @EventParamData(desc = "Transfer the ownership of Buildings and Plots from one Stakeholder to an other Stakeholder. Optionally include Zones", params = {
+            "Stakeholder (seller)", "Stakeholder (receiver)", "Include Zoning" })
     @EventIDField(links = { STAKEHOLDERS, STAKEHOLDERS }, params = { 0, 1 })
     TRANSFER_OWNERSHIP(Integer.class, Integer.class, Boolean.class);
 
@@ -102,19 +115,18 @@ public enum EditorStakeholderEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD_WITH_TYPE_AND_ACTIVE || this == SELECT_STAKEHOLDER) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, ADD_WITH_TYPE_AND_ACTIVE, SELECT_STAKEHOLDER -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+
+        };
+
     }
 
     @Override

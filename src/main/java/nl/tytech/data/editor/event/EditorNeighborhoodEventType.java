@@ -45,7 +45,8 @@ public enum EditorNeighborhoodEventType implements IndicatorEventTypeEnum {
 
     @EventParamData(desc = "Import Neighborhood Collection", params = { "Collection of Neighborhood geometries", "Neighborhood Names",
             "Attribute Names", "Numeric Attribute Values", "Buffer for creating Polygons from Points and Lines (optional)",
-            "Source (optional)" }, defaults = { "", "", "", "", "" + Setting.DEFAULT_PL_BUFFER, "" }, exampleAmount = { 3, 3, 2, 6 })
+            "Source (optional)" }, defaults = { "", "", "", "", "" + Setting.DEFAULT_PL_BUFFER,
+                    "" }, exampleAmount = { 3, 3, 2, 6 }, response = "Neighborhood IDs")
     @EventIDField(links = { SOURCES }, params = { 5 }, nullable = { 4, 5 })
     IMPORT(GeometryCollection.class, String[].class, String[].class, double[][].class, Double.class, Integer.class),
 
@@ -65,7 +66,8 @@ public enum EditorNeighborhoodEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { NEIGHBORHOODS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Neighborhoods", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Neighborhoods", "Attribute Name", "Numeric Attribute Values appended to existing values",
+            "Source (optional)" })
     @EventIDField(links = { NEIGHBORHOODS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
@@ -73,9 +75,11 @@ public enum EditorNeighborhoodEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { NEIGHBORHOODS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
+    @EventParamData(desc = "Set the color of a Neighborhood", params = { "Neighborhoods", "Colors" })
     @EventIDField(sameLength = true, links = { NEIGHBORHOODS }, params = { 0 })
     SET_COLOR(Integer[].class, TColor[].class),
 
+    @EventParamData(desc = "Set the name of a Neighborhood", params = { "Neighborhoods", "Names" })
     @EventIDField(sameLength = true, links = { NEIGHBORHOODS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
@@ -101,16 +105,16 @@ public enum EditorNeighborhoodEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE || this == IMPORT) {
-            return Integer[].class;
-        }
-        if (this == REMOVE || this == SET_NAME || this == SET_ATTRIBUTE || this == SET_POLYGONS) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case DUPLICATE, IMPORT -> Integer[].class;
+
+            case REMOVE, SET_NAME, SET_ATTRIBUTE, SET_POLYGONS -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

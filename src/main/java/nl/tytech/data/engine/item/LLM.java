@@ -12,6 +12,11 @@
  *******************************************************************************************************************************************/
 package nl.tytech.data.engine.item;
 
+import nl.tytech.core.item.annotations.ItemIDField;
+import nl.tytech.core.item.annotations.XMLValue;
+import nl.tytech.core.net.serializable.MapLink;
+import nl.tytech.data.core.item.Item;
+
 /**
  * Large Language Model (LLM) for Chat Channels
  *
@@ -24,7 +29,15 @@ public class LLM extends GenAI {
 
     private static final long serialVersionUID = 5221401657101259581L;
 
+    @XMLValue
+    @ItemIDField(MapLink.NEURAL_NETWORKS)
+    private Integer upgradeID = Item.NONE;
+
     public LLM() {
         super(Type.LLM);
+    }
+
+    public final LLM getUpgrade() {
+        return getItem(MapLink.NEURAL_NETWORKS, upgradeID) instanceof LLM llm ? llm : null;
     }
 }

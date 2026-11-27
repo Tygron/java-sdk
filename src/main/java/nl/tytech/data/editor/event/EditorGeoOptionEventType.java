@@ -16,6 +16,7 @@ import static nl.tytech.core.net.serializable.MapLink.GEO_OPTIONS;
 import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.data.editor.item.GeoOption;
 
@@ -25,14 +26,19 @@ import nl.tytech.data.editor.item.GeoOption;
 @Linked(GEO_OPTIONS)
 public enum EditorGeoOptionEventType implements EventTypeEnum {
 
+    @EventParamData(desc = "Reset the value of all GeoOptions to their default value")
     RESET(),
 
+    @EventParamData(desc = "Set the value of a GeoOption to true or false", params = { "GeoOption Type", "Boolean" })
     SET_BOOLEAN(GeoOption.Type.class, Boolean.class),
 
+    @EventParamData(desc = "Set the value of a GeoOption to a text value", params = { "GeoOption Type", "Text Value" })
     SET_STRING(GeoOption.Type.class, String.class),
 
+    @EventParamData(desc = "Set the value of a GeoOption to a numeric value", params = { "GeoOption Type", "Numeric Value" })
     SET_NUMBER(GeoOption.Type.class, Double.class),
 
+    @EventParamData(desc = "Set the value of a GeoOption to an array of numeric values", params = { "GeoOption Type", "Numeric Values" })
     SET_NUMBERS(GeoOption.Type.class, double[].class);
 
     private final List<Class<?>> classes;

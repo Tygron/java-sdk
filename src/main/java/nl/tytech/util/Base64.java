@@ -13,7 +13,8 @@
 package nl.tytech.util;
 
 /**
- * Base64 encoder with no external dependencies beyond the Java Standard Library.
+ * Base64 encoder with no external dependencies beyond the Java Standard Library. Note: not affected by CVE-2026-114938 since no AVX-512 is
+ * used.
  *
  * @author Maxim Knepfle & George K.
  */

@@ -31,16 +31,21 @@ import nl.tytech.naming.GeoNC;
 @Linked(NEURAL_NETWORKS)
 public enum EditorNeuralNetworkEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add new RCNN via " + GeoNC.ONNX, params = { "Name", "Byte array content",
+    @EventParamData(desc = "Add a new RCNN via a byte array of a " + GeoNC.ONNX, params = { "Name", "Byte array content",
             "Uploader Name" }, response = "Neural Network ID")
     ADD(String.class, byte[].class, String.class),
 
+    @EventParamData(desc = "Export the RCCN of a Neural Network as a byte array", params = {
+            "Neural Network" }, response = "Byte array content")
     @EventIDField(links = { NEURAL_NETWORKS }, params = { 0 })
     EXPORT(Integer.class),
 
+    @EventParamData(desc = "Remove a Neural Network", params = { "Neural Networks" }, response = "Byte array content")
     @EventIDField(links = { NEURAL_NETWORKS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Set the RCNN for a Neural Network via a byte array of a " + GeoNC.ONNX, params = { "Neural Network",
+            "Byte array content", "Uploader Name" }, response = "Neural Network ID")
     @EventIDField(links = { NEURAL_NETWORKS }, params = { 0 })
     SET_NEURAL_NETWORK(Integer.class, byte[].class, String.class);
 
@@ -63,16 +68,16 @@ public enum EditorNeuralNetworkEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == EXPORT) {
-            return byte[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case EXPORT -> byte[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

@@ -59,6 +59,7 @@ public enum UserServiceEventType implements ServiceEventType {
     @EventParamData(desc = "Get all users in the Domain, including detailed user data.", params = { OPTIONAL_DOMAIN_NAME }, hidden = 0)
     GET_DOMAIN_USERS(User[].class, AccessLevel.DOMAIN_ADMIN, String.class),
 
+    @Deprecated
     @EventIDField(nullable = { 0 })
     @EventParamData(desc = "Get a specific log.", params = { OPTIONAL_DOMAIN_NAME, "Type", "Log Token" }, defaults = { "", "SESSIONS", "" })
     GET_LOG(Log.class, AccessLevel.DOMAIN_ADMIN, String.class, Log.Type.class, String.class),

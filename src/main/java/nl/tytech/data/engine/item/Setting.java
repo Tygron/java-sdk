@@ -264,7 +264,7 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Overlay grid cell size in meters")
         GRID_CELL_SIZE_M(Double.class, "2"),
 
-        @Description("Project map size in X (longitude) and Y (latitude) in meters")
+        @Description("Project map size in X (east) and Y (south) in meters")
         MAP_SIZE_M(Integer[].class, "0 0"),
 
         @Description("Super user message to all clients")
@@ -405,7 +405,7 @@ public class Setting extends AbstractSetting<Setting.Type> {
         @Description("Default import CRS (force XY) for polygon data in Tygron Client")
         IMPORT_CRS_FORCE_XY(Boolean.class, "true"),
 
-        @Description("Keep Project alive (active) base on this setting")
+        @Description("Keep Project alive (active) based on this setting")
         KEEP_ALIVE(KeepAlive.class, "NEVER"),
 
         @Description("Amount of Iterations during a recalculation update. Min Value: 1 and Max Value: " + MAX_ITERATIONS)

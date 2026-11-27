@@ -36,33 +36,44 @@ import nl.tytech.util.color.TColor;
 @Linked(AREAS)
 public enum EditorAreaEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(params = { "Amount (optional)" }, response = "Area IDs", defaults = { "1" })
+    @EventParamData(desc = "Add one or more Areas", params = { "Amount (optional)" }, response = "Area IDs", defaults = { "1" })
     @EventIDField(nullable = { 0 })
     ADD(Integer.class),
 
-    @EventParamData(params = { "Attribute name to group Areas by" })
+    @EventParamData(desc = "Add a group Attribute for Areas", params = { "Attribute name to group Areas by" })
     ADD_GROUP(String.class),
 
+    @EventParamData(params = { "Areas", "Area MultiPolygons" })
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0 })
     ADD_POLYGONS(Integer[].class, MultiPolygon[].class),
 
     @EventIDField(links = { AREAS }, params = { 0 })
     ADD_RELATION(Integer.class, Relation.class),
 
+    @EventParamData(desc = "Add an Area with the provided Attribute and value", params = { "Attribute",
+            "Attribute value" }, response = "Area ID")
     ADD_WITH_ATTRIBUTE(String.class, Double.class),
 
     @EventIDField(links = { AREAS }, params = { 0 })
     DUPLICATE(Integer[].class),
 
+    @EventParamData(desc = "Generate new Areas with a specified Border Attribute and a particular width, at borders of nearby Areas, identified by a Filter Attribute", params = {
+            "Filter Attribute", "Border Attribute", "Border Width" })
     GENERATE_BORDER_AREAS(String.class, String.class, Double.class),
 
+    @EventParamData(desc = "Generate Water Inundation Area(s) with the Inundation Level Attribute set to the provided value", params = {
+            "Inundation Level (m)" })
     GENERATE_INUNDATION_AREAS(Double.class),
 
-    @EventParamData(desc = "Generate Sewer Areas for Neighborhoods", params = { "Degree of Urbanization",
-            "Sewer Storage (M) for neighborhood older than 1965", "Sewer Storage (M) for neighborhood younger than 1965",
-            "Pump speed (m/H)", "Water Level Attribute" }, response = "Number of generated Sewer Areas")
+    @EventParamData(desc = "Generate Sewer Areas for Neighborhoods, with a Sewer Storage depending on the Neighborhood's degree of Urbanization. "
+            + "A Sewer Overflow is generated for an overlapping Water Level Area identified by the provided Water Level Attribute", params = {
+                    "Degree of Urbanization", "Sewer Storage (M) for neighborhood older than 1965",
+                    "Sewer Storage (M) for neighborhood younger than 1965", "Pump speed (m/H)",
+                    "Water Level Attribute" }, response = "Number of generated Sewer Areas")
     GENERATE_SEWER_AREAS(Integer.class, Double.class, Double.class, Double.class, String.class),
 
+    @EventParamData(desc = "Generate Water Level Area(s) with the Water Level Attribute set to the provided value", params = {
+            "Water Level (m)" })
     GENERATE_WATER_AREAS(Double.class),
 
     @EventParamData(desc = "Import Area Collection", params = { "Collection of Area geometries", "Area Names", "Attribute Names",
@@ -74,6 +85,7 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { AREAS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove all Attributes of an Area", params = { "Areas" })
     @EventIDField(links = { AREAS }, params = { 0 })
     REMOVE_ALL_ATTRIBUTES(Integer[].class),
 
@@ -84,11 +96,13 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
     @Deprecated
-    @EventParamData(desc = "Use REMOVE_GROUP for the same result.", params = { "Group name" })
+    @EventParamData(desc = "Use REMOVE_GROUP for the same result", params = { "Group name" })
     REMOVE_FILTER(String[].class),
 
+    @EventParamData(desc = "Remove the provided group Attributes", params = { "Group Attributes" })
     REMOVE_GROUP(String[].class),
 
+    @EventParamData(desc = "Remove Relations from an Area", params = { "Area", "Relations" })
     @EventIDField(links = { AREAS }, params = { 0 })
     REMOVE_RELATIONS(Integer.class, Relation[].class),
 
@@ -119,6 +133,7 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { AREAS }, params = { 0 })
     SET_POLYGONS(Integer[].class, MultiPolygon[].class),
 
+    @EventParamData(desc = "Set an Area Relation to an Item ID", params = { "Area", "Relation", "Item ID" })
     @EventIDField(links = { AREAS }, params = { 0 })
     SET_RELATION(Integer.class, Relation.class, Integer.class);
 
@@ -141,16 +156,16 @@ public enum EditorAreaEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == DUPLICATE || this == IMPORT) {
-            return Integer[].class;
-        }
-        if (this == ADD_WITH_ATTRIBUTE || this == GENERATE_SEWER_AREAS) {
-            return Integer.class;
-        }
-        if (this == REMOVE || this == SET_NAME || this == SET_ATTRIBUTE || this == SET_POLYGONS) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, DUPLICATE, IMPORT -> Integer[].class;
+
+            case ADD_WITH_ATTRIBUTE, GENERATE_SEWER_AREAS -> Integer.class;
+
+            case REMOVE, SET_NAME, SET_ATTRIBUTE, SET_POLYGONS -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

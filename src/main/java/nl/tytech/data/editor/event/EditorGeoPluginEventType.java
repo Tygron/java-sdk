@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.data.editor.serializable.GeoLinkType;
 
@@ -30,6 +31,7 @@ import nl.tytech.data.editor.serializable.GeoLinkType;
 @Linked(GEO_PLUGINS)
 public enum EditorGeoPluginEventType implements EventTypeEnum {
 
+    @EventParamData(desc = "Add a new Geo Plugin of a Geo Link Type", params = { "Geo Link Types" }, response = "Geo Plugin")
     ADD(GeoLinkType.class),
 
     @EventIDField(links = { GEO_PLUGINS }, params = { 0 })
@@ -38,42 +40,60 @@ public enum EditorGeoPluginEventType implements EventTypeEnum {
     @EventIDField(links = { GEO_PLUGINS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Set the Source of a Geo Plugin, used to obtain data or features", params = { "Geo Plugins", "Sources" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS, SOURCES }, params = { 0, 1 })
     SET_SOURCE(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Remove the Source of a Geo Plugin", params = { "Geo Plugins", "Sources" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS, SOURCES }, params = { 0, 1 })
     REMOVE_SOURCE(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Add a Geo Link to a Geo Plugin", params = { "Geo Plugins", "Geo Links" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS, GEO_LINKS }, params = { 0, 1 })
     ADD_LINK(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Add a new Geo Link to a Geo Plugin with a provided name", params = { "Geo Plugins",
+            "Names" }, response = "Geo Links")
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     ADD_NEW_LINKS(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Remove a Geo Link from a Geo Plugin", params = { "Geo Plugins", "Geo Links" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS, GEO_LINKS }, params = { 0, 1 })
     REMOVE_LINK(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Set the image of a Geo Plugin", params = { "Geo Plugins", "Image Names" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the name of a Geo Plugin", params = { "Geo Plugins", "Names" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set whether a Geo Plugin is active in the New Project Wizard", params = { "Geo Plugins", "Booleans" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     SET_NEW_PROJECT(Integer[].class, Boolean[].class),
 
+    @EventParamData(desc = "Set the layer used by a Geo Plugin to obtain data from its Source", params = { "Geo Plugins", "Layer Names" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     SET_LAYER_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Override the CRS used by a Geo Plugin to transform data from its Source", params = { "Geo Plugins",
+            "CRS Names" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     SET_CRS(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Override the CRS's Force XY parameter, used by a Geo Plugin to transform data from its Source", params = {
+            "Geo Plugins", "Booleans" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     SET_FORCE_XY(Integer[].class, Boolean[].class),
 
+    @EventParamData(desc = "Set the Name Attribute used by a Geo Plugin to retrieve names of features obtained from its Source", params = {
+            "Geo Plugins", "Name Attributes" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     SET_NAME_ATTRIBUTE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the ID Attribute used by a Geo Plugin to retrieve unique IDs of features obtained from its Source", params = {
+            "Geo Plugins", "Name Attributes" })
     @EventIDField(sameLength = true, links = { GEO_PLUGINS }, params = { 0 })
     SET_ID_ATTRIBUTE(Integer[].class, String[].class);
 
@@ -96,12 +116,14 @@ public enum EditorGeoPluginEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        } else if (this == DUPLICATE || this == ADD_NEW_LINKS) {
-            return Integer[].class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case DUPLICATE, ADD_NEW_LINKS -> Integer[].class;
+
+            default -> null;
+        };
     }
 
     @Override

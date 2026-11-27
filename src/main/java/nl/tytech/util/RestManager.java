@@ -27,6 +27,7 @@ import java.util.zip.GZIPInputStream;
 import javax.net.ssl.SSLException;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.HttpUrlConnectorProvider;
 import org.glassfish.jersey.client.RequestEntityProcessing;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
@@ -34,11 +35,13 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.Invocation.Builder;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 import nl.tytech.core.net.Network;
 import nl.tytech.core.util.SettingsManager;
@@ -304,10 +307,10 @@ public class RestManager {
      *
      */
     private enum HttpMethod {
-        GET, POST, PUT, DELETE;
+        GET, POST, PUT, DELETE, PATCH;
     }
 
-    private record ServerSettings(MultivaluedMap<String, Object> headers, boolean chunked) {
+    private record ServerSettings(MultivaluedMap<String, Object> headers, boolean chunked, Map<String, Cookie> cookies) {
 
         public RequestEntityProcessing getEntityProcessing() {
             return chunked ? RequestEntityProcessing.CHUNKED : RequestEntityProcessing.BUFFERED;
@@ -452,6 +455,11 @@ public class RestManager {
         return SingletonHolder.INSTANCE._getWebTargetURL(serverURL, path, params);
     }
 
+    public static final <T> T jsonPatch(String serverURL, String restPath, Object content) throws TWebApplicationException {
+        return SingletonHolder.INSTANCE._actionOther(serverURL, restPath, null, content, null, Format.JSON, Format.JSON, HttpMethod.PATCH,
+                null, true);
+    }
+
     public static final <T> T jsonPut(String serverURL, String restPath, Object content) throws TWebApplicationException {
         return SingletonHolder.INSTANCE._actionOther(serverURL, restPath, null, content, null, Format.JSON, Format.JSON, HttpMethod.PUT,
                 null, true);
@@ -542,7 +550,12 @@ public class RestManager {
     }
 
     public static void setServerSettings(String serverURL, MultivaluedMap<String, Object> headers, boolean chunked) {
-        SingletonHolder.INSTANCE._setServerSettings(serverURL, headers, chunked);
+        setServerSettings(serverURL, headers, chunked, new HashMap<>());
+    }
+
+    public static void setServerSettings(String serverURL, MultivaluedMap<String, Object> headers, boolean chunked,
+            Map<String, Cookie> cookies) {
+        SingletonHolder.INSTANCE._setServerSettings(serverURL, headers, chunked, cookies);
     }
 
     private final Client client;
@@ -662,10 +675,15 @@ public class RestManager {
         }
     }
 
-    private final synchronized void _setServerSettings(String serverURL, final MultivaluedMap<String, Object> headers, boolean chunked) {
+    private final synchronized void _setServerSettings(String serverURL, final MultivaluedMap<String, Object> headers, boolean chunked,
+            Map<String, Cookie> cookies) {
 
         if (headers == null) {
             TLogger.severe("Invalid headers for server: " + serverURL);
+            return;
+        }
+        if (cookies == null) {
+            TLogger.severe("Invalid cookies for server: " + serverURL);
             return;
         }
         // add user agent and referrer headers
@@ -673,7 +691,7 @@ public class RestManager {
         headers.putSingle(Network.REFERER_HEADER, SettingsManager.getServerWebAddress());
 
         // add to map
-        ServerSettings settings = new ServerSettings(headers, chunked);
+        ServerSettings settings = new ServerSettings(headers, chunked, cookies);
         Map<String, ServerSettings> newSettingsMap = new HashMap<>(settingsMap);
         newSettingsMap.put(serverURL, settings);
 
@@ -726,6 +744,11 @@ public class RestManager {
         Builder builder = target.request(format.getMediaType());
         builder = builder.headers(settings.getHeaders());
 
+        // add optional cookies
+        for (Cookie cookie : settings.cookies().values()) {
+            builder.cookie(cookie);
+        }
+
         // override timeout for this connection only
         if (overrideTimeout != null) {
             builder.property(ClientProperties.CONNECT_TIMEOUT, overrideTimeout);
@@ -745,6 +768,10 @@ public class RestManager {
                 response = builder.post(entity);
             } else if (method == HttpMethod.PUT) {
                 response = builder.put(entity);
+            } else if (method == HttpMethod.PATCH) {
+                // JVM: --add-opens=java.base/sun.net.www.protocol.https=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED
+                builder.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
+                response = builder.method(HttpMethod.PATCH.name(), entity);
             }
 
         } catch (Exception e) {
@@ -762,6 +789,13 @@ public class RestManager {
 
             if (TStatus.OK.isCode(statusCode) || TStatus.CREATED.isCode(statusCode) || TStatus.ACCEPTED.isCode(statusCode)) {
                 try {
+                    // add new cookies to server settings
+                    if (response.getCookies() != null) {
+                        for (NewCookie newCookie : response.getCookies().values()) {
+                            settings.cookies().put(newCookie.getName(), newCookie.toCookie());
+                        }
+                    }
+                    // handle response
                     return responseClass != null ? RestUtils.readResponse(response, responseClass, format) : null;
                 } catch (Exception e) {
                     throwConnectionException(target, method, e);
@@ -796,7 +830,7 @@ public class RestManager {
 
             // always have basic headers
             if (!settingsMap.containsKey(serverURL)) {
-                this._setServerSettings(serverURL, new MultivaluedHashMap<>(), true);
+                this._setServerSettings(serverURL, new MultivaluedHashMap<>(), true, new HashMap<>());
             }
         }
 

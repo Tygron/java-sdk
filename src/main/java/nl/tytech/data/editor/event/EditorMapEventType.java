@@ -31,16 +31,17 @@ import nl.tytech.core.net.serializable.MapLink;
 @Linked(HEIGHTS)
 public enum EditorMapEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Update Elevation Model using a GeoTIFF", params = { "GeoTIFFs" }, response = "Amount of sectors updated")
     @EventIDField(links = { GEO_TIFFS }, params = { 0 })
     SET_HEIGHT_GEOTIFF(Integer[].class),
 
-    @EventParamData(desc = "Update Elevation Model from Grid Overlay", params = { "Overlay ID", "Timeframe (optional)" }, defaults = { "",
+    @EventParamData(desc = "Update Elevation Model using a Grid Overlay", params = { "Overlay", "Timeframe (optional)" }, defaults = { "",
             "0" }, response = "Amount of sectors updated")
     @EventIDField(links = { OVERLAYS }, params = { 0 }, nullable = { 1 })
     SET_HEIGHT_OVERLAY(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Update Heightmap Sector Data", params = { "Height Sector ID",
-            "Header: sector widthPoints, columns, rows, baseX, baseY", "Matrix Data Array", })
+    @EventParamData(desc = "Update Heightmap Sector Data", params = { "Height", "Header: sector widthPoints, columns, rows, baseX, baseY",
+            "Matrix Data Array" })
     @EventIDField(links = { HEIGHTS }, params = { 0 })
     SET_HEIGHT_SECTOR(Integer.class, int[].class, float[].class);
 
@@ -63,7 +64,13 @@ public enum EditorMapEventType implements IndicatorEventTypeEnum {
 
     @Override
     public Class<?> getResponseClass(Object[] args) {
-        return this == SET_HEIGHT_GEOTIFF || this == SET_HEIGHT_OVERLAY ? Integer.class : null;
+
+        return switch (this) {
+
+            case SET_HEIGHT_GEOTIFF, SET_HEIGHT_OVERLAY -> Integer.class;
+
+            default -> null;
+        };
     }
 
     @Override

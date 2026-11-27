@@ -32,38 +32,42 @@ import nl.tytech.data.engine.item.NetLine.NetType;
 @Linked(NET_FUNCTIONS)
 public enum EditorNetFunctionEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Add a Net Function with a particular Net Type", params = { "Net Type" }, response = "Net Function ID")
     ADD(NetType.class),
 
-    /**
-     * names, NetTypes, AttributeNames, AttributeValues, sourceID.
-     */
+    @EventParamData(desc = "Import Net Functions by providing names, Net Types and Attributes with accompanying values", params = { "Names",
+            "Net Types", "Attributes", "Attribute Values", "Source" })
     @EventIDField(links = { SOURCES }, params = { 4 })
     IMPORT(String[].class, NetType[].class, String[].class, double[][].class, Integer.class),
 
     @EventIDField(links = { NET_FUNCTIONS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove all Attributes of a Net Function", params = { "Net Functions" })
     @EventIDField(links = { NET_FUNCTIONS }, params = { 0 })
     REMOVE_ALL_ATTRIBUTES(Integer[].class),
 
     @EventIDField(links = { NET_FUNCTIONS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    @EventParamData(params = { "Functions", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Net Functions", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { NET_FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Functions", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Net Functions", "Attribute Name", "Numeric Attribute Values appended to existing values",
+            "Source (optional)" })
     @EventIDField(links = { NET_FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Functions", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Net Functions", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { NET_FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
+    @EventParamData(desc = "Set the name of a Net Function", params = { "Net Functions", "Names" })
     @EventIDField(sameLength = true, links = { NET_FUNCTIONS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the Net Type of a Net Function", params = { "Net Function", "Net Type" })
     @EventIDField(links = { NET_FUNCTIONS }, params = { 0 })
     SET_TYPE(Integer.class, NetType.class);
 
@@ -86,13 +90,14 @@ public enum EditorNetFunctionEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

@@ -29,37 +29,50 @@ import nl.tytech.core.item.annotations.Linked;
 @Linked(SPECIAL_EFFECTS)
 public enum EditorSpecialEffectEventType implements EventTypeEnum {
 
-    @EventParamData(params = { "Location (optional)", "Particle Emitter (optional)" }, response = "Special Effect ID")
+    @EventParamData(desc = "Add a new Special Effect at a location with an optional Particle Emitter", params = { "Location (optional)",
+            "Particle Emitter (optional)" }, response = "Special Effect ID")
     @EventIDField(links = { PARTICLE_EMITTERS }, params = { 1 }, nullable = { 0, 1 })
     ADD(Point.class, Integer.class),
 
+    @EventParamData(desc = "Add a new Particle Emitter to a Special Effect", params = { "Special Effect" })
     @EventIDField(links = { SPECIAL_EFFECTS }, params = { 0 })
     ADD_PARTICLE_PAIR(Integer.class),
 
     @EventIDField(links = { SPECIAL_EFFECTS }, params = { 0 })
     DUPLICATE(Integer[].class),
 
+    @EventParamData(desc = "Duplicate a Particle Emitter Pair for a Special Effect", params = { "Special Effect",
+            "Particle Emitter Pair ID" })
     @EventIDField(links = { SPECIAL_EFFECTS }, params = { 0 })
     DUPLICATE_PAIR(Integer.class, Integer.class),
 
     @EventIDField(links = { SPECIAL_EFFECTS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove a Particle Emitter Pair from a Special Effect", params = { "Special Effects",
+            "Particle Emitter Pair IDs" })
     @EventIDField(links = { SPECIAL_EFFECTS }, params = { 0 })
     REMOVE_PARTICLE_PAIR(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Set a Special Effect active", params = { "Special Effects", "Active Array" })
     @EventIDField(sameLength = true, links = { SPECIAL_EFFECTS }, params = { 0 })
     SET_ACTIVE(Integer[].class, Boolean[].class),
 
+    @EventParamData(desc = "Set the location of a Special Effect", params = { "Special Effect", "Point" })
     @EventIDField(links = { SPECIAL_EFFECTS }, params = { 0 })
     SET_LOCATION(Integer.class, Point.class),
 
+    @EventParamData(desc = "Set the name of a Special Effect", params = { "Special Effects", "Names" })
     @EventIDField(sameLength = true, links = { SPECIAL_EFFECTS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the offset (x is east, y is up, z is north) for a Particle Emitter Pair of a Special Effect", params = {
+            "Special Effect", "Particle Emitter Pair ID", "XYZ-values" })
     @EventIDField(links = { SPECIAL_EFFECTS }, params = { 0 })
     SET_PARTICLE_PAIR_LOCATION(Integer.class, Integer.class, double[].class),
 
+    @EventParamData(desc = "Set the Particle Emitter for a Particle Emitter Pair of a Special Effect", params = { "Special Effect",
+            "Particle Emitter Pair ID", "Particle Emitter" })
     @EventIDField(links = { SPECIAL_EFFECTS, PARTICLE_EMITTERS }, params = { 0, 2 })
     SET_PARTICLE_PAIR_TYPE(Integer.class, Integer.class, Integer.class);
 
@@ -83,16 +96,17 @@ public enum EditorSpecialEffectEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
+
     }
 
     @Override

@@ -621,6 +621,10 @@ public class SessionConnection {
                     // throw invalid input
                     setProcessing(false);
                     throw new InputException(wexp.getMessage());
+                case MAX_CAPACITY:
+                    // throw invalid input
+                    setProcessing(false);
+                    throw new InputException(wexp.getTStatus().getDescription());
                 case CLIENT_RELEASED:
                     type = ConnectionEvent.RELEASED_FROM_SESSION;
                     offline = true;

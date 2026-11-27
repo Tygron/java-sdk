@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.data.core.serializable.GeoCatalog;
 import nl.tytech.data.core.serializable.GeoFormat;
@@ -29,33 +30,34 @@ import nl.tytech.data.core.serializable.GeoFormat;
 @Linked(SOURCES)
 public enum EditorSourceEventType implements EventTypeEnum {
 
-    /**
-     * Geo Catalog, Name, URL
-     */
+    @EventParamData(desc = "Add a new Catalog Source, given a Geo Catalog Type, Name and URL", params = { "Geo Catalog Type", "Name",
+            "URL" }, response = "Catalog Source ID")
     ADD_CATALOG(GeoCatalog.class, String.class, String.class),
 
-    /**
-     * Name, User
-     */
+    @EventParamData(desc = "Add a new File Source, given a Name and Uploader", params = { "File Name",
+            "Uploader Name" }, response = "File Source ID")
     ADD_FILE(String.class, String.class),
 
-    /**
-     * Geo Format, Name, URL, Owner
-     */
+    @EventParamData(desc = "Add a new Service Source, given a Geo Format, Name, URL and Uploader", params = { "Geo Format", "Name", "URL",
+            "Uploader Name" }, response = "Service Source ID")
     ADD_SERVICE(GeoFormat.class, String.class, String.class, String.class),
 
     @EventIDField(links = { SOURCES }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Set the description of a Source", params = { "Source", "Description" })
     @EventIDField(links = { SOURCES }, params = { 0 })
     SET_DESCRIPTION(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the name of a Source", params = { "Sources", "Names" })
     @EventIDField(sameLength = true, links = { SOURCES }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the uploader name of a Source", params = { "Source", "Uploader Name" })
     @EventIDField(links = { SOURCES }, params = { 0 })
     SET_UPLOADER(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the URL of a Service or Catalog Source", params = { "Source (service or catalog)", "URL" })
     @EventIDField(links = { SOURCES }, params = { 0 })
     SET_URL(Integer.class, String.class);
 
@@ -78,10 +80,15 @@ public enum EditorSourceEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return Integer.class;
+        return switch (this) {
+
+            case ADD_CATALOG, ADD_FILE, ADD_SERVICE -> Integer.class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
+
     }
 
     @Override

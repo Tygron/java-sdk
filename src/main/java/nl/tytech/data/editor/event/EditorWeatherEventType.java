@@ -33,24 +33,23 @@ import nl.tytech.data.engine.item.Weather.WeatherTypeEffect;
 @Linked(WEATHERS)
 public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add a new weather of a specified type.", params = { "Weather Type Effect" }, response = "Weather ID")
+    @EventParamData(desc = "Add a new Weather with a Weather Type Effect", params = { "Weather Type Effect" }, response = "Weather ID")
     ADD(WeatherTypeEffect.class),
 
-    @EventParamData(desc = "Duplicate the specified weathers as independent copies.", params = {
-            "Weather IDs" })
+    @EventParamData(desc = "Duplicate Weathers", params = { "Weathers" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     DUPLICATE(Integer[].class),
 
-    @EventParamData(desc = "Remove the specified weathers.", params = { "Weather IDs" })
+    @EventParamData(desc = "Remove Weathers", params = { "Weathers" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(desc = "Remove specified attributes from the specified weather, including default attributes.", params = {
-            "Weather ID", "Attributes to remove" })
+    @EventParamData(desc = "Remove specified Attributes a Weather, including default attributes", params = { "Weathers",
+            "Attributes to remove" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Remove the specified visualization overlay from the specified weather.", params = { "Weather ID" })
+    @EventParamData(desc = "Remove the visualization Overlay from a Weather", params = { "Weathers" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     REMOVE_FLOOD_OVERLAY(Integer[].class),
 
@@ -66,26 +65,25 @@ public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { WEATHERS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
-    @EventParamData(desc = "Set the duration of the specified weather's visualization.", params = { "Weather ID",
+    @EventParamData(desc = "Set the duration of the Weather's visualization", params = { "Weather",
             "Duration of visualization in seconds" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     SET_DURATION(Integer.class, Double.class),
 
-    @EventParamData(desc = "Set the type of the specified weather.", params = { "Weather ID", "Weather Type Effect" })
+    @EventParamData(desc = "Set the Weather Type Effect of a Weather", params = { "Weather", "Weather Type Effect" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     SET_EFFECT(Integer.class, WeatherTypeEffect.class),
 
-    @EventParamData(desc = "Set the name for a specified weather.", params = { "Weather ID", "Name for the weather" })
+    @EventParamData(desc = "Set the name of a Weather", params = { "Weathers", "Names" })
     @EventIDField(sameLength = true, links = { WEATHERS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Set a specific visualization overlay for a specified weather.", params = { "Weather ID",
-            "Visualization Overlay ID" })
+    @EventParamData(desc = "Set a specific visualization Overlay for a Weather", params = { "Weathers", "Water Overlays" })
     @EventIDField(sameLength = true, links = { WEATHERS, OVERLAYS }, params = { 0, 1 })
     SET_FLOOD_OVERLAY(Integer[].class, Integer[].class),
 
-    @EventParamData(desc = "Set the trigger time for the specified weather's visualization.", params = { "Weather ID",
-            "Auto-trigger" })
+    @EventParamData(desc = "Set the trigger time for the specified Weather's visualization", params = { "Weather",
+            "Auto-trigger time in seconds" })
     @EventIDField(links = { WEATHERS }, params = { 0 })
     SET_TRIGGER_SEC(Integer.class, Double.class);
 
@@ -108,16 +106,16 @@ public enum EditorWeatherEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

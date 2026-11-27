@@ -34,13 +34,14 @@ public enum EditorMeasurementEventType implements EventTypeEnum {
     @EventIDField(links = { MEASUREMENTS }, params = { 0 })
     DUPLICATE(Integer[].class),
 
-    @EventParamData(params = { "Measurements", "Measurement Names", "Overlays", "Source (optional)" })
+    @EventParamData(params = { "Measurements", "Measurement Names", "Grid Overlays", "Source (optional)" })
     @EventIDField(links = { OVERLAYS, SOURCES }, params = { 2, 3 }, nullable = { 3 })
     IMPORT(GeometryCollection.class, String[].class, Integer[].class, Integer.class),
 
     @EventIDField(links = { MEASUREMENTS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Set the name of a Measurement", params = { "Measurements", "Names" })
     @EventIDField(sameLength = true, links = { MEASUREMENTS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class);
 
@@ -63,13 +64,14 @@ public enum EditorMeasurementEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

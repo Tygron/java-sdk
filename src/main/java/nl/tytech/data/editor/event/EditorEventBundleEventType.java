@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.data.core.item.CodedEvent;
 
@@ -28,6 +29,7 @@ public enum EditorEventBundleEventType implements EventTypeEnum {
 
     ADD,
 
+    @EventParamData(desc = "Add a Coded Event to an Event Bundle", params = { "Event Bundle", "Serverside" }, response = "Coded Event ID")
     @EventIDField(links = { EVENT_BUNDLES }, params = { 0 })
     ADD_EVENT(Integer.class, Boolean.class),
 
@@ -37,18 +39,24 @@ public enum EditorEventBundleEventType implements EventTypeEnum {
     @EventIDField(links = { EVENT_BUNDLES }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove a Coded Event of an Event Bundle", params = { "Event Bundle", "Serverside", "Coded Event ID" })
     @EventIDField(links = { EVENT_BUNDLES }, params = { 0 })
     REMOVE_EVENT(Integer.class, Boolean.class, Integer.class),
 
+    @EventParamData(desc = "Set the description of an Event Bundle", params = { "Event Bundle", "Descriptions" })
     @EventIDField(links = { EVENT_BUNDLES }, params = { 0 })
     SET_DESCRIPTION(Integer.class, String.class),
 
+    @EventParamData(desc = "Replaces a Coded Event of an Event Bundle based on its ID", params = { "Event Bundle", "Serverside",
+            "Coded Event" })
     @EventIDField(links = { EVENT_BUNDLES }, params = { 0 })
     SET_EVENT(Integer.class, Boolean.class, CodedEvent.class),
 
+    @EventParamData(desc = "Set the image of an Event Bundle", params = { "Event Bundles", "Image Names" })
     @EventIDField(sameLength = true, links = { EVENT_BUNDLES }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the name of an Event Bundle", params = { "Event Bundles", "Names" })
     @EventIDField(sameLength = true, links = { EVENT_BUNDLES }, params = { 0 })
     SET_NAME(Integer[].class, String[].class);
 
@@ -71,16 +79,16 @@ public enum EditorEventBundleEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == ADD_EVENT) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, ADD_EVENT -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

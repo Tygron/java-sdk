@@ -18,6 +18,7 @@ import java.util.List;
 import nl.tytech.core.event.Event;
 import nl.tytech.core.event.Event.IndicatorEventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item.Timing;
@@ -31,6 +32,7 @@ import nl.tytech.data.engine.item.Trigger;
 @Linked(TRIGGERS)
 public enum EditorTriggerEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Add a new Trigger with a particular Timing", params = { "Timing" }, response = "Trigger ID")
     @EventIDField(nullable = { 0 })
     ADD(Trigger.Timing[].class),
 
@@ -40,24 +42,31 @@ public enum EditorTriggerEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { TRIGGERS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Set whether a Trigger is active", params = { "Triggers", "Active Array" })
     @EventIDField(sameLength = true, links = { TRIGGERS }, params = { 0 })
     SET_ACTIVE(Integer[].class, Boolean[].class),
 
+    @EventParamData(desc = "Set the name of an Trigger", params = { "Triggers", "Names" })
     @EventIDField(sameLength = true, links = { TRIGGERS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the Request Method of a Trigger", params = { "Triggers", "Request Methods" })
     @EventIDField(sameLength = true, links = { TRIGGERS }, params = { 0 })
     SET_METHOD(Integer[].class, Trigger.Method[].class),
 
+    @EventParamData(desc = "Set the calculation Timing of a Trigger", params = { "Triggers", "Timings" })
     @EventIDField(sameLength = true, links = { TRIGGERS }, params = { 0 })
     SET_TIMING(Integer[].class, Timing[].class),
 
+    @EventParamData(desc = "Add the Trigger Type of a Trigger", params = { "Triggers", "Trigger Types" })
     @EventIDField(sameLength = true, links = { TRIGGERS }, params = { 0 })
     SET_TYPE(Integer[].class, Trigger.Type[].class),
 
+    @EventParamData(desc = "Add the URL of a Trigger", params = { "Triggers", "URLs" })
     @EventIDField(sameLength = true, links = { TRIGGERS }, params = { 0 })
     SET_URL(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the timeout of a Trigger", params = { "Triggers", "Array of Timeouts in seconds" })
     @EventIDField(sameLength = true, links = { TRIGGERS }, params = { 0 })
     SET_TIMEOUT(Integer[].class, Integer[].class);
 
@@ -80,13 +89,14 @@ public enum EditorTriggerEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

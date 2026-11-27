@@ -35,18 +35,20 @@ import nl.tytech.data.engine.item.HeightSector;
 @Linked(TERRAIN_TYPES)
 public enum EditorTerrainTypeEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Add a new Surface or Underground Terrain Type", params = {
+            "Layer (Surface or Underground)" }, response = "Terrain Type ID")
     ADD(Layer.class),
 
-    @EventParamData(params = { "Terrain Type ID", "Geometry", "Height adjustment for Water/non-Water transitions" })
+    @EventParamData(desc = "Add Terrain of a particular Terrain Type for a MultiPolygon. Optionally adjust the terrain height for transitions between Water and non-water Terrains", params = {
+            "Terrain Types", "MultiPolygons", "Array of height adjustments for Water/non-Water transitions" })
     @EventIDField(sameLength = true, links = { TERRAIN_TYPES }, params = { 0 })
     ADD_POLYGONS(Integer[].class, MultiPolygon[].class, Boolean[].class),
 
     @EventIDField(links = { TERRAIN_TYPES }, params = { 0 })
     DUPLICATE(Integer[].class),
 
-    @EventParamData(desc = "Import Terrain collection", params = { "Collection of Terrain Geometries", "Terrain Type IDs",
-            "Height adjustment for Water/non-Water transitions",
-            "Angle of Repose (optional; negative values use default)",
+    @EventParamData(desc = "Import Terrain collection", params = { "Collection of Terrain Geometries", "Terrain Types",
+            "Height adjustment for Water/non-Water transitions", "Angle of Repose (optional; negative values use default)",
             "Override Height (optional; use " + HeightSector.INVALID_DATA + " to ignore)",
             "Buffer for Points and Lines to make Polygons (optional)", "Source (optional)" })
     @EventIDField(links = { TERRAIN_TYPES, SOURCES }, params = { 1, 6 }, nullable = { 3, 4, 5, 6 })
@@ -55,6 +57,8 @@ public enum EditorTerrainTypeEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { TERRAIN_TYPES }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Remove a Terrain Type and replace it with another", params = { "Terrain Types (removed)",
+            "Terrain Types (replacement)" })
     @EventIDField(links = { TERRAIN_TYPES, TERRAIN_TYPES }, params = { 0, 1 })
     REMOVE_AND_REPLACE(Integer[].class, Integer[].class),
 
@@ -66,12 +70,15 @@ public enum EditorTerrainTypeEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { TERRAIN_TYPES, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
+    @EventParamData(desc = "Set the code name of a Terrain Type", params = { "Terrain Type", "Code name" })
     @EventIDField(links = { TERRAIN_TYPES }, params = { 0 })
     SET_CODE(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the name of a Terrain Type", params = { "Terrain Types", "Names" })
     @EventIDField(sameLength = true, links = { TERRAIN_TYPES }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the Terrain Type parent of a Terrain Type", params = { "Terrain Type", "Parent Terrain Type" })
     @EventIDField(links = { TERRAIN_TYPES }, params = { 0 })
     SET_PARENT(Integer.class, Integer.class);
 
@@ -94,13 +101,15 @@ public enum EditorTerrainTypeEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            default -> null;
+        };
+
     }
 
     @Override

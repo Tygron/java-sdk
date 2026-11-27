@@ -38,19 +38,19 @@ public enum TLicense {
 
     // Table 2025 series with 2026 prices
 
-    T25_BRONZE(5, 2, 6_430, DEFAULT_MAX_PROJECT_DIM_M, 75, 0, new TColor(214, 122, 78), 1l * MemoryUtils.GB),
+    T25_BRONZE(5, 2, 6_635, DEFAULT_MAX_PROJECT_DIM_M, 75, 0, new TColor(214, 122, 78), 1l * MemoryUtils.GB),
 
-    T25_SILVER(20, 10, 19_290, DEFAULT_MAX_PROJECT_DIM_M, 150, 0, new TColor(220, 220, 220), 10l * MemoryUtils.GB),
+    T25_SILVER(20, 10, 19_900, DEFAULT_MAX_PROJECT_DIM_M, 150, 0, new TColor(220, 220, 220), 10l * MemoryUtils.GB),
 
-    T25_GOLD(50, 40, 37_450, DEFAULT_MAX_PROJECT_DIM_M, 1000, 500, new TColor(238, 183, 68), 40l * MemoryUtils.GB),
+    T25_GOLD(50, 40, 38_650, DEFAULT_MAX_PROJECT_DIM_M, 1000, 500, new TColor(238, 183, 68), 40l * MemoryUtils.GB),
 
-    T25_PLATINUM(100, 80, 55_550, DEFAULT_MAX_PROJECT_DIM_M, 2500, 1000, new TColor(164, 193, 201), 200l * MemoryUtils.GB),
+    T25_PLATINUM(100, 80, 57_325, DEFAULT_MAX_PROJECT_DIM_M, 2500, 1000, new TColor(164, 193, 201), 200l * MemoryUtils.GB),
 
-    T25_DIAMOND(100, 100, 69_000, DEFAULT_MAX_PROJECT_DIM_M, 4000, 2000, new TColor(120, 168, 164), 400l * MemoryUtils.GB),
+    T25_DIAMOND(100, 100, 71_210, DEFAULT_MAX_PROJECT_DIM_M, 4000, 2000, new TColor(120, 168, 164), 400l * MemoryUtils.GB),
 
     T25_EDU_FREE(1000, 30, 0, 1_000, 50, 0, new TColor(56, 86, 129), 1l * MemoryUtils.GB),
 
-    T25_EDU_PRO(1000, 50, 6_275, DEFAULT_MAX_PROJECT_DIM_M, 250, 0, new TColor(56, 86, 129), 1l * MemoryUtils.GB),
+    T25_EDU_PRO(1000, 50, 6_475, DEFAULT_MAX_PROJECT_DIM_M, 250, 0, new TColor(56, 86, 129), 1l * MemoryUtils.GB),
 
     ;
 

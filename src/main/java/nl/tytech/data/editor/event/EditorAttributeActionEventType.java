@@ -37,30 +37,36 @@ public enum EditorAttributeActionEventType implements EventTypeEnum {
     @EventIDField(links = { ATTRIBUTE_ACTIONS }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(params = { "Actions", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Attribute Actions", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { ATTRIBUTE_ACTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Actions", "Attribute Name", "Numeric Attribute Values appended to existing values", "Source (optional)" })
+    @EventParamData(params = { "Attribute Actions", "Attribute Name", "Numeric Attribute Values appended to existing values",
+            "Source (optional)" })
     @EventIDField(links = { ATTRIBUTE_ACTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Actions", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Attribute Actions", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { ATTRIBUTE_ACTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
     @EventIDField(sameLength = true, links = { ATTRIBUTE_ACTIONS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the description of an Attribute Action", params = { "Attribute Actions", "Descriptions" })
     @EventIDField(sameLength = true, links = { ATTRIBUTE_ACTIONS }, params = { 0 })
     SET_DESCRIPTION(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the name of an Attribute Action", params = { "Attribute Actions", "Names" })
     @EventIDField(sameLength = true, links = { ATTRIBUTE_ACTIONS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the image of an Attribute Action", params = { "Attribute Actions", "Images" })
     @EventIDField(sameLength = true, links = { ATTRIBUTE_ACTIONS }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Make the Attributes of an Attribute Action unadjustable to Stakeholders", params = { "Attribute Actions",
+            "Fixed" })
     @EventIDField(sameLength = true, links = { ATTRIBUTE_ACTIONS }, params = { 0 })
     SET_FIXED_VALUE(Integer[].class, Boolean[].class);
 
@@ -82,8 +88,15 @@ public enum EditorAttributeActionEventType implements EventTypeEnum {
 
     @Override
     public Class<?> getResponseClass(Object[] args) {
-        return this == ADD ? Integer.class : //
-                this == DUPLICATE ? Integer[].class : null;
+
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            default -> null;
+        };
     }
 
     @Override

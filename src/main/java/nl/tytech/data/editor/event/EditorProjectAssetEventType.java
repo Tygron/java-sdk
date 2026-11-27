@@ -28,11 +28,11 @@ import nl.tytech.core.item.annotations.Linked;
 @Linked(PROJECT_ASSETS)
 public enum EditorProjectAssetEventType implements EventTypeEnum {
 
-    @EventParamData(desc = "Upload a new image as a Project asset.", params = { "Directory to upload to",
-            "Filename. This should a simple file name, including extension", "File data" }, response = "Project Asset ID")
+    @EventParamData(desc = "Upload a byte array of an image as a Project Asset", params = { "Directory to upload to",
+            "Filename. This should a simple file name, including extension png, jpg, css or jsl", "File data" }, response = "Project Asset ID")
     ADD(String.class, String.class, byte[].class),
 
-    @EventParamData(desc = "Upload new Textures as a Project assets, auto rescaled to small, medium, large.", params = {
+    @EventParamData(desc = "Upload an array of byte arrays, representing Textures, as Project Assets, auto rescaled to small, medium, large", params = {
             "Directory to upload to", "Filename. This should a simple file name, including extension", "File data" })
     @EventIDField(sameLength = true)
     ADD_TEXTURE(String[].class, String[].class, byte[][].class);
@@ -55,7 +55,14 @@ public enum EditorProjectAssetEventType implements EventTypeEnum {
 
     @Override
     public Class<?> getResponseClass(Object[] args) {
-        return this == ADD ? Integer.class : null;
+
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            default -> null;
+
+        };
     }
 
     @Override

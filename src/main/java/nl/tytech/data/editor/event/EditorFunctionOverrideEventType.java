@@ -35,24 +35,32 @@ import nl.tytech.data.engine.serializable.FunctionValue;
 @Linked(FUNCTION_OVERRIDES)
 public enum EditorFunctionOverrideEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Add a Function Override for the provided Function", params = {
+            "Functions" }, response = "Function Override IDs")
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     ADD(Integer[].class),
 
+    @EventParamData(desc = "Add a Category to a Function, if allowed by the Function's main Category", params = { "Function", "Category" })
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     ADD_CATEGORY(Integer.class, Category.class),
 
+    @EventParamData(desc = "Duplicate a Function", params = { "Functions" }, response = "Function Override IDs")
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     DUPLICATE(Integer[].class),
 
+    @EventParamData(desc = "Remove an Attribute from a Function", params = { "Functions", "Attributes" })
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Remove a Category from a Function, if it has more than one", params = { "Function", "Category" })
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     REMOVE_CATEGORY(Integer.class, Category.class),
 
+    @EventParamData(desc = "Reset a Function", params = { "Function" })
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     RESET(Integer.class),
 
+    @EventParamData(desc = "Reset the asset properties of a Function", params = { "Function" })
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     RESET_ASSETS(Integer.class),
 
@@ -67,18 +75,23 @@ public enum EditorFunctionOverrideEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { FUNCTIONS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
+    @EventParamData(desc = "Set the Category Value of a Function", params = { "Function", "Category", "Category Value", "Values" })
     @EventIDField(links = { FUNCTIONS }, params = { 0 })
     SET_CATEGORY_VALUE(Integer.class, Category.class, CategoryValue.class, double[].class),
 
-    @EventIDField(links = { FUNCTION_OVERRIDES }, params = { 0 })
+    @EventParamData(desc = "Set the description of a Function", params = { "Function", "Description" })
+    @EventIDField(links = { FUNCTIONS }, params = { 0 })
     SET_DESCRIPTION(Integer.class, String.class),
 
-    @EventIDField(links = { FUNCTION_OVERRIDES }, params = { 0 })
+    @EventParamData(desc = "Set the Function Value of a Function", params = { "Function", "Function Value", "Values" })
+    @EventIDField(links = { FUNCTIONS }, params = { 0 })
     SET_FUNCTION_VALUE(Integer.class, FunctionValue.class, double[].class),
 
+    @EventParamData(desc = "Set the image of a Function", params = { "Functions", "Image Names" })
     @EventIDField(sameLength = true, links = { FUNCTIONS }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the name of a Function", params = { "Functions", "Names" })
     @EventIDField(sameLength = true, links = { FUNCTIONS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class);
 
@@ -100,10 +113,13 @@ public enum EditorFunctionOverrideEventType implements IndicatorEventTypeEnum {
 
     @Override
     public Class<?> getResponseClass(Object[] args) {
-        if (this == ADD || this == DUPLICATE) {
-            return Integer[].class;
-        }
-        return null;
+
+        return switch (this) {
+
+            case ADD, DUPLICATE -> Integer[].class;
+
+            default -> null;
+        };
     }
 
     @Override

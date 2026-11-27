@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.core.net.serializable.MapLink;
 
@@ -30,9 +31,11 @@ import nl.tytech.core.net.serializable.MapLink;
 @Linked(ACTION_MENUS)
 public enum EditorActionMenuEventType implements EventTypeEnum {
 
+    @EventParamData(desc = "Add an Action Menu for a Stakeholder", params = { "Stakeholder" }, response = "Action Menu ID")
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     ADD(Integer.class),
 
+    @EventParamData(desc = "Add an Action to an Action Menu", params = { "Action Menu", "Action's MapLink", "Action's Item ID" })
     @EventIDField(links = { ACTION_MENUS }, params = { 0 })
     ADD_ACTION(Integer.class, MapLink.class, Integer.class),
 
@@ -42,18 +45,24 @@ public enum EditorActionMenuEventType implements EventTypeEnum {
     @EventIDField(links = { ACTION_MENUS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove Actions from Action Menus", params = { "Action Menus", "Actions' MapLink", "Actions' Item ID" })
     @EventIDField(sameLength = true, links = { ACTION_MENUS }, params = { 0 })
     REMOVE_ACTIONS(Integer[].class, MapLink[].class, Integer[].class),
 
+    @EventParamData(desc = "Make an Action Menu active for a Stakeholder in a particular Scenario", params = { "Action Menu", "Stakeholder",
+            "Scenario", "Active" })
     @EventIDField(links = { ACTION_MENUS, STAKEHOLDERS, SCENARIOS }, params = { 0, 1, 2 })
     SET_ACTIVE_FOR_STAKEHOLDER_AND_SCENARIO(Integer.class, Integer.class, Integer.class, Boolean.class),
 
+    @EventParamData(desc = "Set the image of an Action Menu", params = { "Action Menus", "Image names" })
     @EventIDField(sameLength = true, links = { ACTION_MENUS }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the name of an Action Menu", params = { "Action Menus", "Names" })
     @EventIDField(sameLength = true, links = { ACTION_MENUS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Swap the order of paired Action Menus", params = { "Action Menus (main)", "Action Menus (other)" })
     @EventIDField(sameLength = true, links = { ACTION_MENUS, ACTION_MENUS }, params = { 0, 1 })
     SWAP_ORDER(Integer[].class, Integer[].class);
 
@@ -76,16 +85,16 @@ public enum EditorActionMenuEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

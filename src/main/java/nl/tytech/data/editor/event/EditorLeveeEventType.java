@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 
 /**
@@ -36,42 +37,55 @@ public enum EditorLeveeEventType implements EventTypeEnum {
     @EventIDField(links = { LEVEES }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove the side Function configured for a Levee", params = { "Levees" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     REMOVE_SIDE_FUNCTION(Integer[].class),
 
+    @EventParamData(desc = "Remove the top Function configured for a Levee", params = { "Levees" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     REMOVE_TOP_FUNCTION(Integer[].class),
 
+    @EventParamData(desc = "Set the slope angle of a Levee", params = { "Levee", "Angle in Degrees" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     SET_ANGLE_DEGREES(Integer.class, Double.class),
 
+    @EventParamData(desc = "Set the default height of a Levee", params = { "Levee", "Height" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     SET_DEFAULT_HEIGHT(Integer.class, Double.class),
 
+    @EventParamData(desc = "Set the default width of a Levee", params = { "Levee", "Width" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     SET_DEFAULT_WIDTH(Integer.class, Double.class),
 
+    @EventParamData(desc = "Set the description of a Levee", params = { "Levee", "Descriptions" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     SET_DESCRIPTION(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the image of a Levee", params = { "Levees", "Image Names" })
     @EventIDField(sameLength = true, links = { LEVEES }, params = { 0 })
     SET_IMAGE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the Levee to a fixed width", params = { "Levee", "Is Fixed" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     SET_IS_FIXED_SIZE(Integer.class, Boolean.class),
 
+    @EventParamData(desc = "Let the Levee raise land relatively instead of a particular datum height", params = { "Levee", "Is Relative" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     SET_IS_RELATIVE_INCREASE(Integer.class, Boolean.class),
 
+    @EventParamData(desc = "Set the name of a Levee", params = { "Levees", "Names" })
     @EventIDField(sameLength = true, links = { LEVEES }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the Function placed on the sides of a Levee", params = { "Levees", "Functions" })
     @EventIDField(sameLength = true, links = { LEVEES, FUNCTIONS }, params = { 0, 1 })
     SET_SIDE_FUNCTION(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Set the Function placed on the top of a Levee", params = { "Levees", "Functions" })
     @EventIDField(sameLength = true, links = { LEVEES, FUNCTIONS }, params = { 0, 1 })
     SET_TOP_FUNCTION(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Let the Levee retain existing Functions when applied", params = { "Levee", "Use Existing" })
     @EventIDField(links = { LEVEES }, params = { 0 })
     SET_USE_EXISTING_FUNCTION(Integer.class, Boolean.class);
 
@@ -94,16 +108,16 @@ public enum EditorLeveeEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

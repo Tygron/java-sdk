@@ -28,7 +28,7 @@ public class JobLog extends Log {
 
     public static final String getLogDescription(int count, long simTime, double kwh) {
         return "Count: " + count + " (total sim time: " + StringUtils.toSimpleTime(simTime)
-                + (kwh > 0 ? " ~" + (kwh < 0.001 ? UnitSystemType.SI.getImpl().formatLocalValue(kwh, 0, 6) : StringUtils.toSI(kwh)) + " KwH"
+                + (kwh > 0 ? " ~" + (kwh < 0.001 ? UnitSystemType.SI.getImpl().formatLocalValue(kwh, 0, 6) : StringUtils.toSI(kwh)) + " kWh"
                         : "")
                 + ")";
     }

@@ -30,20 +30,20 @@ import nl.tytech.data.core.item.CodedEvent;
 import nl.tytech.data.engine.item.Scenario.LimitType;
 
 /**
- * @author Jeroen Warmerdam
+ * @author Frank Baars, Jeroen Warmerdam
  *
  */
 @Linked(SCENARIOS)
 public enum EditorScenarioEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add new Scenario.", response = "Scenario ID")
+    @EventParamData(desc = "Add new Scenario", response = "Scenario ID")
     ADD,
 
-    @EventParamData(desc = "Add a placeholder event that is triggered on Scenario activation.", params = { "Scenario ID" })
+    @EventParamData(desc = "Add a new Coded Event that is triggered on Scenario activation", params = { "Scenario" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     ADD_EVENT(Integer.class),
 
-    @EventParamData(desc = "Add a Measure that is triggered on Scenario activation.", params = { "Scenario ID", "Measure ID" })
+    @EventParamData(desc = "Add a Measure that is triggered on Scenario activation", params = { "Scenario", "Measure" })
     @EventIDField(links = { SCENARIOS, MEASURES }, params = { 0, 1 })
     ADD_MEASURE(Integer.class, Integer.class),
 
@@ -53,42 +53,52 @@ public enum EditorScenarioEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove the starting Cinematic of a Stakeholder for a Scenario", params = { "Scenario", "Stakeholder" })
     @EventIDField(links = { SCENARIOS, STAKEHOLDERS }, params = { 0, 1 })
     REMOVE_CINEMATIC(Integer.class, Integer.class),
 
+    @EventParamData(desc = "Remove a Coded Event from a Scenario", params = { "Scenario", "Coded Event ID" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     REMOVE_EVENT(Integer.class, Integer.class),
 
+    @EventParamData(desc = "Remove the activated Measure of a Scenario", params = { "Scenario", "Measure" })
     @EventIDField(links = { SCENARIOS, MEASURES }, params = { 0, 1 })
     REMOVE_MEASURE(Integer.class, Integer.class),
 
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Activate Scenario. If a test run is active, the Scenario can restart it.", params = { "Scenario ID" })
+    @EventParamData(desc = "Activate Scenario. If a test run is active, the Scenario can restart it", params = { "Scenario" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     SET_ACTIVE(Integer.class),
 
+    @EventParamData(desc = "Set the starting Cinematic of a Stakeholder for a Scenario", params = { "Scenario", "Stakeholder",
+            "Cinematic Data" })
     @EventIDField(links = { SCENARIOS, STAKEHOLDERS, CINEMATIC_DATAS }, params = { 0, 1, 2 })
     SET_CINEMATIC(Integer.class, Integer.class, Integer.class),
 
+    @EventParamData(desc = "Replace the Coded Event of a Scenario", params = { "Scenario", "Coded Event" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     SET_EVENT(Integer.class, CodedEvent.class),
 
+    @EventParamData(desc = "Set the description of a Scenario", params = { "Scenario", "Description" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     SET_DESCRIPTION(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the spatial limitation of a Scenario", params = { "Scenario", "Limit Type" })
     @EventIDField(links = { SCENARIOS }, params = { 0 })
     SET_LIMIT_TYPE(Integer.class, LimitType.class),
 
+    @EventParamData(desc = "Set the Neighborhoods a Scenario is limited to", params = { "Scenario", "Neighborhoods" })
     @EventIDField(links = { SCENARIOS, NEIGHBORHOODS }, params = { 0, 1 })
     SET_LIMIT_NEIGHBORHOODS(Integer.class, Integer[].class),
 
+    @EventParamData(desc = "Set the name of a Scenario", params = { "Scenarios", "Names" })
     @EventIDField(sameLength = true, links = { SCENARIOS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
-    @EventParamData(desc = "If true, the test run is restarted on Scenario activation. Deprecated in favor of multiple maps.", params = {
-            "Scenario ID", "Restart required" })
+    @EventParamData(desc = "If true, the test run is restarted on Scenario activation. Deprecated in favor of multiple maps", params = {
+            "Scenarios", "Restart required" })
     @EventIDField(sameLength = true, links = { SCENARIOS }, params = { 0 })
     SET_RESTART_TESTRUN(Integer[].class, Boolean[].class),
 
@@ -123,10 +133,16 @@ public enum EditorScenarioEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return this == ADD ? Integer.class : this == DUPLICATE ? Integer[].class : null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            case REMOVE -> Boolean.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            default -> null;
+        };
     }
 
     @Override

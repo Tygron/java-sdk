@@ -28,53 +28,75 @@ import nl.tytech.core.item.annotations.Linked;
 @Linked(CINEMATIC_DATAS)
 public enum EditorCinematicEventType implements EventTypeEnum {
 
+    @EventParamData(desc = "Add a Cinematic for a Stakeholder", params = { "Stakeholder" }, response = "Cinematic Data ID")
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     ADD(Integer.class),
 
+    @EventParamData(desc = "Add a Key Point to a Cinematic", params = { "Cinematic Data" }, response = "Key Point ID")
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     ADD_KEYPOINT(Integer.class),
 
+    @EventParamData(desc = "Add an Event Bundle to a Key Point of a Cinematic", params = { "Cinematic Data", "Key Point ID",
+            "Event Bundle" })
     @EventIDField(links = { CINEMATIC_DATAS, EVENT_BUNDLES }, params = { 0, 2 })
     ADD_KEYPOINT_EVENT_BUNDLE(Integer.class, Integer.class, Integer.class),
 
+    @EventParamData(desc = "Add a Key Point with the provided camera location, orientation and lookat in 3D Visualization coordinates (X is east, Y is up, Z is south)", params = {
+            "Cinematic Data", "Key Point ID", "Camera Location", "Up Vector",
+            "Lookat location" }, defaults = { "", "", "", "", "" }, response = "Key Point ID")
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     ADD_KEYPOINT_WITH_PARAMETERS(Integer.class, Integer.class, Float[].class, Float[].class, Float[].class),
 
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     DUPLICATE(Integer[].class),
 
+    @EventParamData(desc = "Duplicate a Key Point of a Cinematic", params = { "Cinematic Data", "Key Point ID" }, response = "Key Point ID")
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     DUPLICATE_KEYPOINT(Integer.class, Integer.class),
 
+    @EventParamData(desc = "Move a Key Point to an index of the array of Key Points of a Cinematic", params = { "Cinematic Data",
+            "Key Point ID", "Index" })
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     MOVE_KEYPOINT(Integer.class, Integer.class, Integer.class),
 
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove an Event Bundle from a Key Point of a Cinematic", params = { "Cinematic Datas", "Key Point IDs",
+            "Event Bundles" })
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     REMOVE_KEYPOINT_EVENT_BUNDLE(Integer[].class, Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Remove Key Points from Cinematics", params = { "Cinematic Datas", "Key Point IDs" })
     @EventIDField(sameLength = true, links = { CINEMATIC_DATAS }, params = { 0 })
     REMOVE_KEYPOINT(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Set the description of a Key Point of a Cinematic", params = { "Cinematic Data", "Key Point ID",
+            "Description" })
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     SET_KEYPOINT_DESCRIPTION(Integer.class, Integer.class, String.class),
 
-    @EventParamData(desc = "Set the camera location, orientation and lookat of a Keypoint in 3D Visualization coordinates (Y is up).", params = {
-            "Cinematic Data ID", "Keypoint ID", "Camera Location", "Up Vector", "Lookat location" }, defaults = { "", "", "", "", "" })
+    @EventParamData(desc = "Set the camera location, orientation and lookat of a Key Point in 3D Visualization coordinates (X is east, Y is up, Z is south)", params = {
+            "Cinematic Data", "Key Point ID", "Camera Location", "Up Vector", "Lookat location" }, defaults = { "", "", "", "", "" })
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     SET_KEYPOINT_ORIENTATION(Integer.class, Integer.class, Float[].class, Float[].class, Float[].class),
 
+    @EventParamData(desc = "Let the Key Point of a Cinematic pause the Cinematic once it is reached", params = { "Cinematic Data",
+            "Key Point ID", "Paused" })
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     SET_KEYPOINT_PAUSED(Integer.class, Integer.class, Boolean.class),
 
+    @EventParamData(desc = "Set the time it takes to move from the specified Key Point of a Cinematic to the next", params = {
+            "Cinematic Data", "Key Point ID", "Time in seconds" })
     @EventIDField(links = { CINEMATIC_DATAS }, params = { 0 })
     SET_KEYPOINT_TIME(Integer.class, Integer.class, Double.class),
 
+    @EventParamData(desc = "Set the name of a Cinematic", params = { "Cinematic Datas", "Names" })
     @EventIDField(sameLength = true, links = { CINEMATIC_DATAS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the voice used for text-to-speech of Keypoint descriptions of a Cinematic", params = { "Cinematic Datas",
+            "Voice Names" })
     @EventIDField(sameLength = true, links = { CINEMATIC_DATAS }, params = { 0 })
     SET_VOICE(Integer[].class, String[].class);
 
@@ -97,16 +119,18 @@ public enum EditorCinematicEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == ADD_KEYPOINT || this == ADD_KEYPOINT_WITH_PARAMETERS || this == DUPLICATE_KEYPOINT) {
-            return Integer.class;
-        }
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, ADD_KEYPOINT, ADD_KEYPOINT_WITH_PARAMETERS, DUPLICATE_KEYPOINT -> Integer.class;
+
+            case DUPLICATE -> Integer[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+
+        };
+
     }
 
     @Override

@@ -30,26 +30,29 @@ import nl.tytech.core.net.serializable.MapLink;
 @Linked(EXCEL_SHEETS)
 public enum EditorExcelSheetEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add new Excel sheet", params = { "Name", "Byte array content", "Uploader Name" }, response = "Excel ID")
+    @EventParamData(desc = "Add new Excel Sheet", params = { "Name", "Byte array content", "Uploader Name" }, response = "Excel Sheet")
     ADD(String.class, byte[].class, String.class),
 
-    @EventParamData(desc = "Add new Excel sheet based on matrix (rows and columns) containing the values and formulas for each cell and a second with optional labels.", params = {
-            "Name", "Matrix containing content (numeric value, text of formula starting with =) for each cell.",
-            "Matrix containing labels for each cell, may be empty.", "Uploader Name" }, response = "Excel ID")
+    @EventParamData(desc = "Add new Excel Sheet based on matrix (rows and columns) containing the values and formulas for each cell and a second with optional labels", params = {
+            "Name", "Matrix containing content (numeric value, text or formula starting with =) for each cell",
+            "Matrix containing labels for each cell, may be empty", "Uploader Name" }, response = "Excel Sheet ID")
     ADD_MATRIX(String.class, Object[][].class, String[][].class, String.class),
 
+    @EventParamData(desc = "Export an Excel Sheet to Byte array content", params = { "Excel Sheet" }, response = "Byte array content")
     @EventIDField(links = { EXCEL_SHEETS }, params = { 0 })
     EXPORT(Integer.class),
 
     @EventIDField(links = { EXCEL_SHEETS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Set the Byte array content of an Excel Sheet", params = { "Excel Sheet", "Byte array content",
+            "Uploader Name" })
     @EventIDField(links = { EXCEL_SHEETS }, params = { 0 })
     SET_EXCEL_SHEET(Integer.class, byte[].class, String.class),
 
-    @EventParamData(desc = "Set existing Excel sheet based on matrix (rows and columns) containing the values and formulas for each cell and a second with optional labels.", params = {
-            "Name", "Matrix containing content (numeric value, text of formula starting with =) for each cell.",
-            "Matrix containing labels for each cell, may be empty.", "Uploader Name" }, response = "Excel ID")
+    @EventParamData(desc = "Set existing Excel Sheet based on matrix (rows and columns) containing the values and formulas for each cell and a second with optional labels", params = {
+            "Excel Sheet ID", "Matrix containing content (numeric value, text or formula starting with =) for each cell",
+            "Matrix containing labels for each cell, may be empty", "Uploader Name" })
     SET_MATRIX(Integer.class, Object[][].class, String[][].class, String.class);
 
     private final List<Class<?>> classes;
@@ -71,16 +74,16 @@ public enum EditorExcelSheetEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == ADD_MATRIX) {
-            return Integer.class;
-        }
-        if (this == EXPORT) {
-            return byte[].class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, ADD_MATRIX -> Integer.class;
+
+            case EXPORT -> byte[].class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

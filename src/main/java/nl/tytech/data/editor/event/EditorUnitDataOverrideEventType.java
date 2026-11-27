@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.util.color.TColor;
 
@@ -29,12 +30,15 @@ import nl.tytech.util.color.TColor;
 @Linked(UNIT_DATAS)
 public enum EditorUnitDataOverrideEventType implements EventTypeEnum {
 
+    @EventParamData(desc = "Add a Unit Data Override for a Unit Data", params = { "Unit Data" }, response = "Unit Data Override ID")
     @EventIDField(links = { UNIT_DATAS }, params = { 0 })
     ADD(Integer.class),
 
+    @EventParamData(desc = "Add a new color to a Unit Data Override's available unit colors", params = { "Unit Data Override", "Color" })
     @EventIDField(links = { UNIT_DATA_OVERRIDES }, params = { 0 })
     ADD_COLOR(Integer.class, TColor.class),
 
+    @EventParamData(desc = "Add a new random color to a Unit Data Override's available unit colors", params = { "Unit Data Override" })
     @EventIDField(links = { UNIT_DATA_OVERRIDES }, params = { 0 })
     ADD_RANDOM_COLOR(Integer.class),
 
@@ -44,15 +48,21 @@ public enum EditorUnitDataOverrideEventType implements EventTypeEnum {
     @EventIDField(links = { UNIT_DATA_OVERRIDES }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove a color from the Unit Data Override's available unit colors", params = { "Unit Data Override",
+            "Array Index of Color", "Color" })
     @EventIDField(links = { UNIT_DATA_OVERRIDES }, params = { 0 })
     REMOVE_COLOR(Integer.class, Integer.class, TColor.class),
 
+    @EventParamData(desc = "Set whether a Unit Data (Override) is active", params = { "Unit Data Overrides", "Active array" })
     @EventIDField(sameLength = true, links = { UNIT_DATA_OVERRIDES }, params = { 0 })
     SET_ACTIVE(Integer[].class, Boolean[].class),
 
+    @EventParamData(desc = "Set a color from the Unit Data Override's at an index in the available unit color array", params = {
+            "Unit Data Override", "Array Index of Color", "Color" })
     @EventIDField(links = { UNIT_DATA_OVERRIDES }, params = { 0 })
     SET_INDEX_COLOR(Integer.class, Integer.class, TColor.class),
 
+    @EventParamData(desc = "Set the name of an Unit Data Override", params = { "Unit Data Overrides", "Names" })
     @EventIDField(sameLength = true, links = { UNIT_DATA_OVERRIDES }, params = { 0 })
     SET_NAME(Integer[].class, String[].class);
 
@@ -75,16 +85,16 @@ public enum EditorUnitDataOverrideEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == ADD) {
-            return Integer.class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case DUPLICATE -> Integer[].class;
+
+            case ADD -> Integer.class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

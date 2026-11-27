@@ -25,49 +25,40 @@ import nl.tytech.core.item.annotations.EventParamData;
  *
  * @author Maxim Knepfle
  */
-@Description("Generic Editor endpoints for creating and updating a Project.")
+@Description("Generic Editor endpoints for creating and updating a Project")
 public enum EditorEventType implements EventTypeEnum {
 
-    /**
-     * When true activate the testrun and when false restore to previous point.
-     */
-    @EventParamData(desc = "Start or stop a Scenario Testrun.", params = { "True to start the Scenario Testrun, false to stop.",
+    @EventParamData(desc = "Start or stop a Scenario Testrun", params = { "True to start the Scenario Testrun, false to stop",
             "DEPRECATED (history graph)" }, hidden = 1)
     @EventIDField(nullable = { 1 })
     ACTIVATE_TESTRUN(Boolean.class, Boolean.class),
 
-    /**
-     * Delete entire map set true to delete all (e.g. dimensions and do not fire events)
-     */
-    @EventParamData(desc = "Remove all geospatial data of the Project, such as buildings, areas, etc.", params = {
-            "True to delete map size and georeference; false to delete only geospatial data.", })
+    @EventParamData(desc = "Remove all geospatial data of the Project, such as Buildings, Areas, etc", params = {
+            "True to delete map size and georeference; false to delete only geospatial data", })
     CLEAR_MAP(Boolean.class),
 
-    /**
-     * Set the initial (empty) map size before adding stuff to it
-     */
-    @EventParamData(desc = "Set the size of the map. This can only be done once.", params = { "Width of the map", "Height of the map", })
+    @EventParamData(desc = "Set the size of the map. This can only be done once", params = { "Width of the map", "Height of the map", })
     SET_INITIAL_MAP_SIZE(Integer.class, Integer.class),
 
-    @EventParamData(desc = "Set the Project's georeference center point to the provided coordinates and begin automatically loading available data.", params = {
+    @EventParamData(desc = "Set the Project's georeference center point to the provided coordinates and begin automatically loading available data", params = {
             "Center point (Longitude or X coordinate)", "Center point (Latitude or Y coordinate)",
             "Optional: Limit data loading to this Polygon", "Optional: Area of Interest Polygons" })
     @EventIDField(nullable = { 2, 3 })
     START_MAP_CREATION(Double.class, Double.class, MultiPolygon.class, MultiPolygon[].class),
 
-    @EventParamData(desc = "Calculate all active overlays, indicators, panels and triggers and wait for the update. "
-            + "Note: for long-running calculations use: set_scheduled_update/ to schedule an update.", params = {
+    @EventParamData(desc = "Calculate all active Overlays, Indicators, Panels and Triggers and wait for the update. "
+            + "Note: for long-running calculations use: set_scheduled_update/ to schedule an update", params = {
                     "Reset all X-Queries (optional)", }, defaults = { "false", })
     @EventIDField(nullable = { 0 })
     UPDATE(Boolean.class),
 
-    @EventParamData(desc = "Waits for update of all active overlays, indicators, panels and triggers with unique ID. "
-            + "Note: for long-running updates use: set_scheduled_update/ to schedule an update.", params = { "Reset all X-Queries",
+    @EventParamData(desc = "Waits for update of all active Overlays, Indicators, Panels and Triggers with unique ID. "
+            + "Note: for long-running updates use: set_scheduled_update/ to schedule an update", params = { "Reset all X-Queries",
                     "Unique Update ID to prevent multiple updates" })
     UPDATE_WITH_ID(Boolean.class, Long.class),
 
-    @EventParamData(desc = "Schedule a long-running update of all active overlays, indicators, panels and triggers.", params = {
-            "Scheduled time in milliseconds since the Unix epoch. Use 0 for direct execution or -1 to cancel.",
+    @EventParamData(desc = "Schedule a long-running update of all active Overlays, Indicators, Panels and Triggers", params = {
+            "Scheduled time in milliseconds since the Unix epoch. Use 0 for direct execution or -1 to cancel",
             "Send Email to this address when finished (optional)",
             "Send SMS to this number when finished (optional)" }, defaults = { "0", "", "" })
     @EventIDField(nullable = { 0, 1, 2 })
@@ -92,10 +83,12 @@ public enum EditorEventType implements EventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (UPDATE == this || UPDATE_WITH_ID == this) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case UPDATE, UPDATE_WITH_ID -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

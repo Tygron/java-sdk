@@ -793,7 +793,7 @@ public class Building extends AttributeItem implements SourceInterface, TimeStat
 
     @Override
     public final TimeState getTimeState() {
-        return isPartOfMeasure() ? getMeasure().getTimeState() : this.state;
+        return getMeasure() instanceof MapMeasure m ? m.getTimeState() : this.state;
     }
 
     public int getTopFloor() {

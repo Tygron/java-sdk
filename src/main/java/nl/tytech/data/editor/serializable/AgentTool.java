@@ -17,8 +17,8 @@ import nl.tytech.core.item.annotations.Description;
 import nl.tytech.util.ObjectUtils;
 
 /**
- * AI Tools 
- * 
+ * AI Tools
+ *
  * @author Maxim Knepfle
  */
 public enum AgentTool {
@@ -46,6 +46,9 @@ public enum AgentTool {
 
     @Description("Execute Tygron API Endpoint")
     EXECUTE_ENDPOINT,
+
+    @Description("Start a worker AI Agent with a new prompt")
+    START_WORKER,
 
     @Description("Get screenshot of user interface")
     GET_SCREEN,

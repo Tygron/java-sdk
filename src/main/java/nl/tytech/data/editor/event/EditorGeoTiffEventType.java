@@ -31,39 +31,39 @@ import nl.tytech.core.net.serializable.MapLink;
 @Linked(GEO_TIFFS)
 public enum EditorGeoTiffEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(desc = "Add new GeoTIFF Item with provided file. For files larger than 2GB, use the Stream API or Web URL.", params = {
-            "GeoTIFF Name", "File bytes (< 2GB)", "Uploader", "CRS Override (optional)" }, response = "GeoTIFF ID")
+    @EventParamData(desc = "Add a new GeoTIFF for a GeoTIFF file provided as an array of bytes. For files larger than 2GB, use the Stream API or Web URL", params = {
+            "GeoTIFF Name", "File bytes (< 2GB)", "Uploader", "Override CRS" }, response = "GeoTIFF ID")
     @EventIDField(nullable = { 3 })
     ADD(String.class, byte[].class, String.class, String.class),
 
-    @EventParamData(desc = "Add new GeoTIFF Item from Web URL.", params = { "GeoTIFF Name", "Web URL", "Uploader",
-            "CRS Override (optional)" }, response = "GeoTIFF IDs")
+    @EventParamData(desc = "Add a new GeoTIFF from a Web URL", params = { "GeoTIFF Names", "Web URLs", "Uploaders",
+            "Override CRSs" }, response = "GeoTIFF IDs")
     @EventIDField(nullable = { 3 }, sameLength = true)
     ADD_URL(String[].class, String[].class, String[].class, String[].class),
 
-    @EventParamData(desc = "Add new GeoTIFF Item with provided ASCII file. For files larger than 2GB, use the Stream API or Web URL.", params = {
+    @EventParamData(desc = "Add new GeoTIFF for a provided ASCII file. For files larger than 2GB, use the Stream API or Web URL", params = {
             "GeoTIFF Name", "ASCII File bytes (< 2GB)", "Uploader", "CRS" }, response = "GeoTIFF ID")
     ADD_ASCII(String.class, byte[].class, String.class, String.class),
 
-    @EventParamData(desc = "Add new GeoTIFF Item from Web ASCII URL.", params = { "GeoTIFF Name", "Web ASCII URL", "Uploader",
-            "CRS" }, response = "GeoTIFF IDs")
+    @EventParamData(desc = "Add new GeoTIFF Item from Web ASCII URL", params = { "GeoTIFF Names", "Web ASCII URLs", "Uploaders",
+            "CRSs" }, response = "GeoTIFF IDs")
     @EventIDField(sameLength = true)
     ADD_ASCII_URL(String[].class, String[].class, String[].class, String[].class),
 
-    @EventParamData(desc = "Export GeoTIFF. For files larger than 2GB, use the Stream API.", params = { "GeoTIFF ID" })
+    @EventParamData(desc = "Export a GeoTIFF as a byte array. For files larger than 2GB, use the Stream API", params = {
+            "GeoTIFF" }, response = "Byte array")
     @EventIDField(links = { GEO_TIFFS }, params = { 0 })
     EXPORT(Integer.class),
 
     @EventIDField(links = { GEO_TIFFS }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(desc = "Update existing GeoTIFF Item with provided file. For files larger than 2GB, use the Stream API or Web URL.", params = {
-            "GeoTIFF ID", "File bytes (< 2GB)", "Uploader", "CRS Override (optional)" })
+    @EventParamData(desc = "Update existing GeoTIFF Item with provided file. For files larger than 2GB, use the Stream API or Web URL", params = {
+            "GeoTIFF", "File bytes (< 2GB)", "Uploader", "Override CRS" })
     @EventIDField(links = { GEO_TIFFS }, params = { 0 }, nullable = { 3 })
     SET_GEOTIFF(Integer.class, byte[].class, String.class, String.class),
 
-    @EventParamData(desc = "Update existing GeoTIFF Item from Web URL.", params = { "GeoTIFF ID", "Web URL", "Uploader",
-            "CRS Override (optional)" })
+    @EventParamData(desc = "Update existing GeoTIFF Item from Web URL", params = { "GeoTIFFs", "Web URL", "Uploader", "Override CRS" })
     @EventIDField(links = { GEO_TIFFS }, params = { 0 }, nullable = { 3 }, sameLength = true)
     SET_GEOTIFF_URL(Integer[].class, String[].class, String[].class, String[].class);
 
@@ -86,14 +86,16 @@ public enum EditorGeoTiffEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD || this == ADD_ASCII) {
-            return Integer.class;
-        } else if (this == ADD_URL || this == ADD_ASCII_URL) {
-            return Integer[].class;
-        } else if (this == EXPORT) {
-            return byte[].class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD, ADD_ASCII -> Integer.class;
+
+            case ADD_URL, ADD_ASCII_URL -> Integer[].class;
+
+            case EXPORT -> byte[].class;
+
+            default -> null;
+        };
     }
 
     @Override

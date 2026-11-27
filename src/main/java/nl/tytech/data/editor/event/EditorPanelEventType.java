@@ -42,63 +42,88 @@ import nl.tytech.data.engine.serializable.Relation;
 @Linked(PANELS)
 public enum EditorPanelEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Add a Panel of a particular Type", params = { "Panel Type" }, response = "Panel ID")
     ADD(PanelType.class),
 
+    @EventParamData(desc = "Add an Answer to a Panel", params = { "Panel" })
     @EventIDField(links = { PANELS }, params = { 0 })
     ADD_ANSWER(Integer.class),
 
+    @EventParamData(desc = "Add a Server or Clientside Event to an Answer of a Panel", params = { "Panel", "Answer ID", "Server side" })
     @EventIDField(links = { PANELS }, params = { 0 })
     ADD_ANSWER_EVENT(Integer.class, Integer.class, Boolean.class),
 
+    @EventParamData(desc = "Add Globals to a Global Panel", params = { "Global Panel", "Globals" })
     @EventIDField(links = { PANELS, GLOBALS }, params = { 0, 1 })
     ADD_GLOBAL(Integer.class, Integer[].class),
 
+    @EventParamData(desc = "Add a Template Excel Panel using a Panel Template. Also adds a new Overlay when associated", params = {
+            "Panel Template" }, response = "Template Panel ID")
     ADD_TEMPLATE(PanelTemplate.class),
 
+    @EventParamData(desc = "Add a Template Excel Panel associated with an Overlay using a Panel Template", params = { "Panel Template",
+            "Overlay" }, response = "Template Panel ID")
     @EventIDField(links = { OVERLAYS }, params = { 1 })
     ADD_OVERLAY_TEMPLATE(PanelTemplate.class, Integer.class),
 
+    @EventParamData(desc = "Apply each provided Template (Excel / Text) Panel, after removing previous instances", params = {
+            "Template Panels" })
     @EventIDField(links = { PANELS }, params = { 0 })
     APPLY_TEMPLATE_PANELS(Integer[].class),
 
     @EventIDField(links = { PANELS }, params = { 0 })
     DUPLICATE(Integer[].class),
 
+    @EventParamData(desc = "Duplicate an Answer of a Panel", params = { "Panels", "Answer IDs" })
     @EventIDField(sameLength = true, links = { PANELS }, params = { 0 })
     DUPLICATE_ANSWER(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Replace the Coded Event of a Server or Clientside Event of an Answer of a Panel, using the Coded Event ID", params = {
+            "Panel", "Answer ID", "Server side", "Coded Event" })
     @EventIDField(links = { PANELS }, params = { 0 })
     EDIT_ANSWER_EVENT(Integer.class, Integer.class, Boolean.class, CodedEvent.class),
 
+    @EventParamData(desc = "Export an Excel Sheet, populated with data related to the Excel Panel, to Byte array content", params = {
+            "Excel Panel" }, response = "Byte array content")
     @EventIDField(links = { PANELS }, params = { 0 })
     EXPORT_DEBUG_EXCEL(Integer.class),
 
+    @EventParamData(desc = "Export a performance report of an Excel Sheet, populated with data related to the Excel Panel, to text as Byte array content", params = {
+            "Excel Panel" }, response = "Byte array content")
     @EventIDField(links = { PANELS }, params = { 0 })
     EXPORT_EXCEL_CALL_TREE(Integer.class),
 
+    @EventParamData(desc = "Add a positioned Web Panel for each identified Wikipedia Point of Interest")
     IMPORT_WIKIPEDIA_POINTS(),
 
     @EventIDField(links = { PANELS }, params = { 0 })
     REMOVE(Integer[].class),
 
+    @EventParamData(desc = "Remove an Answer from a Panel", params = { "Panels", "Answer IDs" })
     @EventIDField(sameLength = true, links = { PANELS }, params = { 0 })
     REMOVE_ANSWER(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Remove a Coded Event of a Server or Clientside Event of an Answer of a Panel", params = { "Panel", "Answer ID",
+            "Server side", "Coded Event ID" })
     @EventIDField(links = { PANELS }, params = { 0 })
     REMOVE_ANSWER_EVENT(Integer.class, Integer.class, Boolean.class, Integer.class),
 
     @EventIDField(links = { PANELS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Remove Globals from a Global Panel", params = { "Global Panel", "Globals" })
     @EventIDField(links = { PANELS, GLOBALS }, params = { 0, 1 })
     REMOVE_GLOBAL(Integer.class, Integer[].class),
 
+    @EventParamData(desc = "Remove the Overlay association from a Panel", params = { "Panel" })
     @EventIDField(links = { PANELS }, params = { 0 })
     REMOVE_OVERLAY(Integer.class),
 
+    @EventParamData(desc = "Set the text content of an an Answer of a Panel", params = { "Panel", "Answer ID", "Text" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_ANSWER_CONTENTS(Integer.class, Integer.class, String.class),
 
+    @EventParamData(desc = "Set whether the Panel requires attention", params = { "Panel", "Requires attention" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_ATTENTION(Integer.class, Boolean.class),
 
@@ -114,60 +139,78 @@ public enum EditorPanelEventType implements IndicatorEventTypeEnum {
     @EventIDField(sameLength = true, links = { PANELS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
+    @EventParamData(desc = "Set the Excel Sheet used by a (Template) Excel Panel", params = { "Excel Panel", "Excel Sheet" })
     @EventIDField(links = { PANELS, EXCEL_SHEETS }, params = { 0, 1 })
     SET_EXCEL(Integer.class, Integer.class),
 
+    @EventParamData(desc = "Set a Panel accessible by each Stakeholder", params = { "Panel" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_FOR_EVERYONE(Integer.class),
 
+    @EventParamData(desc = "Set a Panel only accessible to a particular Stakeholder", params = { "Panel", "Stakeholder" })
     @EventIDField(links = { PANELS, STAKEHOLDERS }, params = { 0, 1 })
     SET_FOR_STAKEHOLDER(Integer.class, Integer.class),
 
+    @EventParamData(desc = "Set the interface position of a Panel", params = { "Panel", "X", "Y" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_LAYOUT_XY(Integer.class, Double.class, Double.class),
 
+    @EventParamData(desc = "Set the name of a Panel", params = { "Panels", "Names" })
     @EventIDField(sameLength = true, links = { PANELS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the Overlay associated by a Panel", params = { "Panel", "Overlay" })
     @EventIDField(links = { PANELS, OVERLAYS }, params = { 0, 1 })
     SET_OVERLAY(Integer.class, Integer.class),
 
+    @EventParamData(desc = "Set the position of a Panel", params = { "Panel", "Point" })
     @EventIDField(links = { PANELS }, params = { 0 }, nullable = { 1 })
     SET_POINT(Integer.class, Point.class),
 
+    @EventParamData(desc = "Set the calculation Timing of an Excel Panel", params = { "Excel Panels", "Timings" })
     @EventIDField(sameLength = true, links = { PANELS }, params = { 0 })
     SET_EXCEL_UPDATE_TIMING(Integer[].class, Timing[].class),
 
     @Deprecated
-    @EventParamData(desc = "Use SET_ATTRIBUTE with name: POPUP_TYPE for the same result.", params = { "Panel", "Popup Type" })
+    @EventParamData(desc = "Use SET_ATTRIBUTE with name: POPUP_TYPE for the same result", params = { "Panel", "Popup Type" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_POPUP_MODEL_TYPE(Integer.class, PopupModelType.class),
 
+    @EventParamData(desc = "Set the interface size of a Panel", params = { "Panel", "Width", "Height" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_SIZE(Integer.class, Double.class, Double.class),
 
-    @EventParamData(params = { "Template Panels", "Apply automatically at start of Session" })
+    @EventParamData(desc = "Configure whether the specified Template Panels are automiticatelly reapplied at the start of a session", params = {
+            "Template Panels", "Apply automatically" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_TEMPLATE_APPLY_AUTOMATICALLY(Integer[].class, Boolean.class),
 
+    @EventParamData(desc = "Set which Attribute is used by a Template Panel to create Panel instances", params = { "Panel", "Attribute" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_TEMPLATE_ATTRIBUTE(Integer.class, String.class),
 
+    @EventParamData(desc = "Set which MapLink is used by a Template Panel to create Panel instances", params = { "Panel", "MapLink" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_TEMPLATE_PANEL_MAPLINK(Integer.class, MapLink.class),
 
+    @EventParamData(desc = "Set which Relation is used by a Template Panel to create Panel instances", params = { "Panel", "MapLink" })
     @EventIDField(links = { PANELS }, params = { 0 }, nullable = { 1 })
     SET_TEMPLATE_RELATION(Integer.class, Relation.class),
 
+    @EventParamData(desc = "Set whether Panel instances of a Template Panel are owned by Stakeholders of their associated MapLink Items. (When false, Template Panel stakeholder is used)", params = {
+            "Panel", "Use MapLink's associated Stakeholder" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_TEMPLATE_USE_OWNER(Integer.class, Boolean.class),
 
+    @EventParamData(desc = "Set the text content of a (Template) Text Panel", params = { "Text Panel", "Text" }, response = "")
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_TEXT(Integer.class, String.class),
 
+    @EventParamData(desc = "Set the URL of a Web Panel", params = { "Web Panel", "URL" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_URL(Integer.class, String.class),
 
+    @EventParamData(desc = "Set whether a Panel is visible in the 3D Visualization", params = { "Panel", "Visible" })
     @EventIDField(links = { PANELS }, params = { 0 })
     SET_VISIBLE(Integer.class, Boolean.class);
 
@@ -190,9 +233,6 @@ public enum EditorPanelEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == SET_EXCEL || this == SET_URL || this == ADD_GLOBAL || this == SET_TEXT) {
-            return String.class;
-        }
         if (this == EXPORT_DEBUG_EXCEL || this == EXPORT_EXCEL_CALL_TREE) {
             return byte[].class;
         }

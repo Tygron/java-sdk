@@ -33,11 +33,10 @@ import nl.tytech.data.engine.item.NetLine.NetType;
 @Linked(NET_NODES)
 public enum EditorNetNodeEventType implements IndicatorEventTypeEnum {
 
-    @EventParamData(params = { "Net Node ID" })
     @EventIDField(links = { NET_NODES }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(params = { "Network type", "Net Node ID", "Location Point",
+    @EventParamData(params = { "Network type", "Net Node", "Location Point",
             "Node merge distance (optional, default: " + NetLine.DEFAULT_MERGE_M + "m)" }, //
             defaults = { "", "", "", "" + NetLine.DEFAULT_MERGE_M }, dim3 = { 2 })
     @EventIDField(links = { NET_NODES }, params = { 1 }, nullable = { 3 })
@@ -62,10 +61,12 @@ public enum EditorNetNodeEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

@@ -21,8 +21,8 @@ import nl.tytech.core.item.annotations.ItemIDField;
 import nl.tytech.core.item.annotations.XMLValue;
 import nl.tytech.core.net.serializable.MapLink;
 import nl.tytech.data.core.item.Item;
+import nl.tytech.data.engine.item.GeoTiff;
 import nl.tytech.data.engine.item.MapMeasure;
-import nl.tytech.data.engine.item.Overlay;
 import nl.tytech.data.engine.item.Terrain;
 import nl.tytech.data.engine.item.TerrainType;
 import nl.tytech.data.engine.other.AbstractSpatial;
@@ -111,13 +111,13 @@ public class GeoTiffSpatial extends AbstractSpatial {
         return geoTiffIDs;
     }
 
-    public List<Overlay> getGeoTiffs(MapMeasure mapMeasure) {
+    public List<GeoTiff> getGeoTiffs(MapMeasure mapMeasure) {
 
-        List<Overlay> overlays = new ArrayList<>();
-        for (Integer overlayID : geoTiffIDs) {
-            overlays.add(mapMeasure.getItem(MapLink.GEO_TIFFS, overlayID));
+        List<GeoTiff> geotiffs = new ArrayList<>();
+        for (Integer tiffID : geoTiffIDs) {
+            geotiffs.add(mapMeasure.getItem(MapLink.GEO_TIFFS, tiffID));
         }
-        return overlays;
+        return geotiffs;
     }
 
     @Override

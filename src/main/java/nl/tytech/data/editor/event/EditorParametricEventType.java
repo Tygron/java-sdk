@@ -40,11 +40,15 @@ import nl.tytech.data.engine.item.ParametricDesign.FunctionType;
 @Linked(PARAMETRIC_DESIGNS)
 public enum EditorParametricEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Generate a result for a Parametric Design", params = {
+            "Parametric Design" }, response = "Parametric Design Result")
     @EventIDField(links = { PARAMETRIC_DESIGNS }, params = { 0 })
     GENERATE(Integer.class),
 
+    @EventParamData(desc = "Add a Parametric Design of a particular Alignment", params = { "Alignment" }, response = "Parametric Design ID")
     ADD(ParametricDesign.Alignment.class),
 
+    @EventParamData(desc = "Add a Parametric Design using a particular example", params = { "Example" }, response = "Parametric Design ID")
     ADD_EXAMPLE(Example.class),
 
     @EventIDField(links = { PARAMETRIC_DESIGNS }, params = { 0 })
@@ -53,60 +57,75 @@ public enum EditorParametricEventType implements IndicatorEventTypeEnum {
     @EventIDField(links = { PARAMETRIC_DESIGNS }, params = { 0 })
     DUPLICATE(Integer[].class),
 
+    @EventParamData(desc = "Set a Function of a Function Type for a Parametric Design. Use Function ID -1 to remove it for a Function Type", params = {
+            "Parametric Designs", "Function Type", "Function ID" }, response = "Parametric Design ID")
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS, }, params = { 0 })
     SET_FUNCTION(Integer[].class, FunctionType[].class, Integer[].class),
 
+    @EventParamData(desc = "Apply a Parametric Design for a Stakeholder, Function Types, Function IDs and one or more MultiPolygons per Function Type", params = {
+            "Parametric Design", "Stakeholder (owner)", "Function Types", "Function IDs",
+            "Array of MultiPolygons per Function Type" }, response = "Building IDs")
     @EventIDField(links = { PARAMETRIC_DESIGNS, STAKEHOLDERS }, params = { 0, 1 })
     APPLY(Integer.class, Integer.class, FunctionType[].class, Integer[].class, MultiPolygon[][].class),
 
+    @EventParamData(desc = "Save a Parametric Design as a new Measure for a Stakeholder, using Function Types, Function IDs and one or more MultiPolygons per Function Type", params = {
+            "Parametric Design", "Stakeholder (owner)", "Function Types", "Function IDs",
+            "Array of MultiPolygons per Function Type" }, response = "Measure ID")
     @EventIDField(links = { PARAMETRIC_DESIGNS, STAKEHOLDERS }, params = { 0, 1 })
     SAVE_AS_MEASURE(Integer.class, Integer.class, FunctionType[].class, Integer[].class, MultiPolygon[][].class),
 
-    @EventParamData(params = { "Parametric Design", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Parametric Designs", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { PARAMETRIC_DESIGNS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Parametric Design", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Parametric Designs", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(links = { PARAMETRIC_DESIGNS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     APPEND_ATTRIBUTE(Integer[].class, String.class, double[].class, Integer.class),
 
-    @EventParamData(params = { "Parametric Design", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(params = { "Parametric Designs", "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ATTRIBUTES(Integer[].class, String[].class, double[][].class, Integer.class),
 
-    @EventParamData(params = { "Parametric Design", "Attribute Name" })
+    @EventParamData(params = { "Parametric Designs", "Attribute Names" })
     @EventIDField(links = { PARAMETRIC_DESIGNS }, params = { 0 })
     REMOVE_ATTRIBUTE(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the alignment of a Parametric Design", params = { "Parametric Designs", "Names" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 })
     SET_ALIGNMENT(Integer[].class, ParametricDesign.Alignment[].class),
 
+    @EventParamData(desc = "Set the name of a Parametric Design", params = { "Parametric Designs", "Names" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the prompt for Parametric Designs", params = { "Prompt" })
     @Internal
     SET_PROMPT(String.class),
 
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 })
     SET_POLYGONS(Integer[].class, MultiPolygon[].class),
 
-    @EventParamData(params = { "Parametric Design", "Function" })
+    @EventParamData(desc = "Add a Plot Design of a particular Function to a Parametric Design", params = { "Parametric Designs",
+            "Functions" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS, FUNCTIONS }, params = { 0, 1 })
     ADD_PLOT(Integer[].class, Integer[].class),
 
-    @EventParamData(params = { "Parametric Design", "Plot" })
+    @EventParamData(desc = "Remove a Plot Design of a Parametric Design", params = { "Parametric Designs", "Plot Design IDs" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 })
     REMOVE_PLOT(Integer[].class, Integer[].class),
 
-    @EventParamData(params = { "Parametric Design", "Plot", "Function" })
+    @EventParamData(desc = "Set the Function of a Plot Design of a Parametric Design", params = { "Parametric Designs", "Plot Design IDs",
+            "Functions" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS, FUNCTIONS }, params = { 0, 2 })
     SET_PLOT_FUNCTION(Integer[].class, Integer[].class, Integer[].class),
 
-    @EventParamData(params = { "Parametric Design", "Plot", "Attribute Name", "Numeric Attribute Values", "Source (optional)" })
+    @EventParamData(desc = "Set Attributes of a Plot Design of a Parametric Design", params = { "Parametric Designs", "Plot Design IDs",
+            "Attribute Names", "Numeric Attribute Values Array", "Source (optional)" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 }, nullable = { 4 })
     SET_PLOT_ATTRIBUTES(Integer[].class, Integer[].class, String[].class, double[][].class, Integer.class),
 
-    @EventParamData(params = { "Parametric Design", "Plot", "Attribute Name" })
+    @EventParamData(desc = "Remove Attributes from a Plot Design of a Parametric Design", params = { "Parametric Designs", "Plots",
+            "Attribute Names" })
     @EventIDField(sameLength = true, links = { PARAMETRIC_DESIGNS }, params = { 0 })
     REMOVE_PLOT_ATTRIBUTES(Integer[].class, Integer[].class, String[].class);
 
@@ -129,19 +148,18 @@ public enum EditorParametricEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == GENERATE) {
-            return PDResult.class;
-        }
-        if (this == APPLY || this == DUPLICATE) {
-            return Integer[].class;
-        }
-        if (this == ADD || this == SAVE_AS_MEASURE) {
-            return Integer.class;
-        }
-        if (this == REMOVE) {
-            return Boolean.class;
-        }
-        return null;
+        return switch (this) {
+
+            case GENERATE -> PDResult.class;
+
+            case APPLY, DUPLICATE -> Integer[].class;
+
+            case ADD, SAVE_AS_MEASURE -> Integer.class;
+
+            case REMOVE -> Boolean.class;
+
+            default -> null;
+        };
     }
 
     @Override

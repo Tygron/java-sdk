@@ -32,6 +32,8 @@ import nl.tytech.data.editor.serializable.GeometryMode;
 @Linked(GEO_LINKS)
 public enum EditorGeoLinkEventType implements EventTypeEnum {
 
+    @EventParamData(desc = "Add a new CustomGeoLink with a name and a Geo Link Type", params = { "Geo Link Types",
+            "Names" }, response = "CustomGeoLinks")
     @EventIDField(sameLength = true)
     ADD(GeoLinkType[].class, String[].class),
 
@@ -41,53 +43,63 @@ public enum EditorGeoLinkEventType implements EventTypeEnum {
     @EventIDField(links = { GEO_LINKS }, params = { 0 })
     REMOVE(Integer[].class),
 
-    @EventParamData(desc = "Map original Attribute name to a new name in the created feature.", params = { "CustomGeoLink IDs",
+    @EventParamData(desc = "Map original Attribute name to a new name in the created feature", params = { "Geo Links (custom)",
             "Original Attribute Names", "New Attribute Names" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     SET_MAPPING(Integer[].class, String[].class, String[].class),
 
-    @EventParamData(desc = "Remove mapping of original Attribute name to a new name in the created feature.", params = { "CustomGeoLink IDs",
-            "Attribute Names" })
+    @EventParamData(desc = "Remove mapping of original Attribute name to a new name in the created feature", params = {
+            "Geo Links (custom)", "Attribute Names" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     REMOVE_MAPPING(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Match incoming features against this Attribute name and value.", params = { "CustomGeoLink IDs",
+    @EventParamData(desc = "Match incoming features against this Attribute name and value", params = { "Geo Links (custom)",
             "Attribute Names", "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { GEO_LINKS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_MATCHING(Integer[].class, String[].class, String[][].class, Integer.class),
 
-    @EventParamData(desc = "Remove matching of incoming features against Attributes.", params = { "CustomGeoLink IDs", "Attribute Names" })
+    @EventParamData(desc = "Remove matching of incoming features against Attributes", params = { "Geo Links (custom)", "Attribute Names" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     REMOVE_MATCHING(Integer[].class, String[].class),
 
-    @EventParamData(desc = "Inject additional attributes into the created feature.", params = { "CustomGeoLink IDs", "Attribute Names",
+    @EventParamData(desc = "Inject additional Attributes into the created feature", params = { "Geo Links (custom)", "Attribute Names",
             "Numeric Attribute Values", "Source (optional)" })
     @EventIDField(sameLength = true, links = { GEO_LINKS, SOURCES }, params = { 0, 3 }, nullable = { 3 })
     SET_ADDITIONAL(Integer[].class, String[].class, double[][].class, Integer.class),
 
-    @EventParamData(desc = "Remove additional attribute injection from the created feature.", params = { "CustomGeoLink IDs",
+    @EventParamData(desc = "Remove additional Attribute injection from the created feature", params = { "Geo Links (custom)",
             "Attribute Names" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     REMOVE_ADDITIONAL(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the name of a CustomGeoLink", params = { "Geo Links (custom)", "Names" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the priority of a CustomGeoLink", params = { "Geo Links (custom)", "Priority" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     SET_PRIORITY(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Set the Function of a CustomGeoLink", params = { "Geo Links (custom)", "Functions" })
     @EventIDField(sameLength = true, links = { GEO_LINKS, FUNCTIONS }, params = { 0, 1 })
     SET_FUNCTION(Integer[].class, Integer[].class),
 
+    @EventParamData(desc = "Remove the Function of a CustomGeoLink", params = { "Geo Links (custom)" })
     @EventIDField(links = { GEO_LINKS }, params = { 0 })
     REMOVE_FUNCTION(Integer[].class),
 
+    @EventParamData(desc = "Set the distance used by a CustomGeoLink to buffer Point Geometries", params = { "Geo Links (custom)",
+            "Buffer Distance" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     SET_POINT_BUFFER(Integer[].class, double[].class),
 
+    @EventParamData(desc = "Set the distance used by a CustomGeoLink to buffer Line Geometries", params = { "Geo Links (custom)",
+            "Buffer Distance" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     SET_LINE_BUFFER(Integer[].class, double[].class),
 
+    @EventParamData(desc = "Set the Geometry Mode used by a CustomGeoLink to interpret Feature Geometries", params = { "Geo Links (custom)",
+            "Geometry Modes" })
     @EventIDField(sameLength = true, links = { GEO_LINKS }, params = { 0 })
     SET_GEOMETRY_MODE(Integer[].class, GeometryMode[].class),;
 
@@ -109,10 +121,13 @@ public enum EditorGeoLinkEventType implements EventTypeEnum {
 
     @Override
     public Class<?> getResponseClass(Object[] args) {
-        if (this == ADD || this == DUPLICATE) {
-            return Integer[].class;
-        }
-        return null;
+
+        return switch (this) {
+
+            case ADD, DUPLICATE -> Integer[].class;
+
+            default -> null;
+        };
     }
 
     @Override

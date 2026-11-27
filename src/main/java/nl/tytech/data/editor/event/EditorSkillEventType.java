@@ -28,18 +28,22 @@ import nl.tytech.core.item.annotations.Linked;
 @Linked(SKILLS)
 public enum EditorSkillEventType implements EventTypeEnum {
 
-    @EventParamData(desc = "Add a new AI Skill file item", response = "Returns the ID of new Skill file item.")
+    @EventParamData(desc = "Add a new Skill", response = "Skill ID")
     ADD(),
 
+    @EventParamData(desc = "Set a Skill active", params = { "Skills", "Active" })
     @EventIDField(sameLength = true, links = { SKILLS }, params = { 0 })
     SET_ACTIVE(Integer[].class, Boolean[].class),
 
+    @EventParamData(desc = "Set the name of a Skill", params = { "Skills", "Names" })
     @EventIDField(sameLength = true, links = { SKILLS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the description of a Skill", params = { "Skills", "Descriptions" })
     @EventIDField(sameLength = true, links = { SKILLS }, params = { 0 })
     SET_DESCRIPTION(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the text content of a Skill", params = { "Skills", "Text Content" })
     @EventIDField(sameLength = true, links = { SKILLS }, params = { 0 })
     SET_CONTENT(Integer[].class, String[].class),
 
@@ -71,8 +75,11 @@ public enum EditorSkillEventType implements EventTypeEnum {
     public Class<?> getResponseClass(Object[] args) {
 
         return switch (this) {
+
             case ADD -> Integer.class;
+
             case DUPLICATE -> Integer[].class;
+
             default -> Boolean.class;
         };
     }

@@ -47,6 +47,8 @@ public class ChatChannel extends AttributeItem {
 
     public static final String EDITING = "edit";
 
+    public static final String UPGRADABLE = "upgradable";
+
     public static final Integer DOMAIN_CHANNEL = 0;
 
     private static final long serialVersionUID = 6153041331983174279L;
@@ -74,6 +76,10 @@ public class ChatChannel extends AttributeItem {
     @NoDefaultText
     private HashMap<Integer, String> agentResults = new HashMap<>();
 
+    @XMLValue
+    @ItemIDField(MapLink.CHAT_CHANNELS)
+    private Integer parentID = Item.NONE;
+
     public ChatChannel() {
 
     }
@@ -87,8 +93,8 @@ public class ChatChannel extends AttributeItem {
     }
 
     public final AgentState getAIState() {
-        return AgentState.fromStep(getMessageStream().filter(m -> m instanceof AgentChatMessage).mapToInt(m -> m.getAgentState().getStep()).min()
-                .orElse(AgentState.NONE.getStep()));
+        return AgentState.fromStep(getMessageStream().filter(m -> m instanceof AgentChatMessage).mapToInt(m -> m.getAgentState().getStep())
+                .min().orElse(AgentState.NONE.getStep()));
     }
 
     @Override
@@ -154,6 +160,10 @@ public class ChatChannel extends AttributeItem {
         return attribute.defaultArray();
     }
 
+    public Integer getParentID() {
+        return parentID;
+    }
+
     public List<AgentTool> getTools() {
         return tools;
     }
@@ -162,8 +172,16 @@ public class ChatChannel extends AttributeItem {
         return StringUtils.containsData(instructions);
     }
 
-    public boolean isDomain() {
+    public final boolean isChild() {
+        return !Item.NONE.equals(getParentID());
+    }
+
+    public final boolean isDomain() {
         return DOMAIN_CHANNEL.equals(getID());
+    }
+
+    public final boolean isParent() {
+        return Item.NONE.equals(getParentID());
     }
 
     public final boolean isRead() {
@@ -185,6 +203,10 @@ public class ChatChannel extends AttributeItem {
 
     public void setNeuralNetworkID(Integer neuralNetworkID) {
         this.neuralNetworkID = neuralNetworkID;
+    }
+
+    public void setParentID(Integer parentOverlayID) {
+        this.parentID = parentOverlayID;
     }
 
     public void setTools(List<AgentTool> tools) {

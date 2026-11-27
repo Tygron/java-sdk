@@ -31,7 +31,9 @@ public enum AgentAttribute implements ReservedAttribute {
 
     CACHEABLE(Boolean.class, 1, 1), // when > 0 WIKI queries will be cached for faster tool execution
 
-    PROJECT_INFO(Boolean.class, 1, 1);
+    PROJECT_INFO(Boolean.class, 1, 1),
+
+    MEMORY_USAGE(Double.class, 0.0, 1.0);
 
     public static final AgentAttribute fromText(String text) {
 
@@ -70,7 +72,8 @@ public enum AgentAttribute implements ReservedAttribute {
 
     public double getMinValue() {
         return switch (this) {
-            case MAX_TOKENS, TIMEOUT_SEC -> 1.0;
+            case MAX_TOKENS -> 1025;
+            case TIMEOUT_SEC -> 1.0;
             default -> 0.0;
         };
     }
@@ -82,7 +85,7 @@ public enum AgentAttribute implements ReservedAttribute {
 
     public final boolean isOption() {
         return switch (this) {
-            case PROJECT_INFO -> false;
+            case PROJECT_INFO, MEMORY_USAGE -> false;
             default -> true;
         };
     }

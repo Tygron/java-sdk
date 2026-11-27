@@ -20,6 +20,7 @@ import org.locationtech.jts.geom.MultiPolygon;
 import nl.tytech.core.event.Event;
 import nl.tytech.core.event.Event.IndicatorEventTypeEnum;
 import nl.tytech.core.item.annotations.EventIDField;
+import nl.tytech.core.item.annotations.EventParamData;
 import nl.tytech.core.item.annotations.Linked;
 import nl.tytech.core.net.serializable.MapLink;
 
@@ -31,17 +32,20 @@ import nl.tytech.core.net.serializable.MapLink;
 @Linked(PLOTS)
 public enum EditorPlotEventType implements IndicatorEventTypeEnum {
 
+    @EventParamData(desc = "Add a new Plot with an owner", params = { "Stakeholder (owner)" }, response = "Plot ID")
     @EventIDField(links = { STAKEHOLDERS }, params = { 0 })
     ADD(Integer.class),
 
     @EventIDField(links = { PLOTS }, params = { 0 })
     ADD_POLYGONS(Integer.class, MultiPolygon.class),
 
+    @EventParamData(desc = "Set the name of a Plot", params = { "Plots", "Names" })
     @EventIDField(sameLength = true, links = { PLOTS }, params = { 0 })
     SET_NAME(Integer[].class, String[].class),
 
+    @EventParamData(desc = "Set the owner of a Plot", params = { "Plot", "Stakeholder (owner)" })
     @EventIDField(links = { PLOTS, STAKEHOLDERS }, params = { 0, 1 })
-    SET_OWNER(Integer.class, Integer.class) ;
+    SET_OWNER(Integer.class, Integer.class);
 
     private final List<Class<?>> classes;
 
@@ -62,10 +66,12 @@ public enum EditorPlotEventType implements IndicatorEventTypeEnum {
     @Override
     public Class<?> getResponseClass(Object[] args) {
 
-        if (this == ADD) {
-            return Integer.class;
-        }
-        return null;
+        return switch (this) {
+
+            case ADD -> Integer.class;
+
+            default -> null;
+        };
     }
 
     @Override

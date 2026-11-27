@@ -16,16 +16,18 @@ import java.util.Arrays;
 import java.util.List;
 import nl.tytech.core.event.Event.EventTypeEnum;
 import nl.tytech.core.item.annotations.Description;
+import nl.tytech.core.item.annotations.Internal;
 
 /**
  * Empty dummy Event (does nothing)
  * @author Maxim Knepfle
  *
  */
-
+@Internal
 @Description("Empty dummy endpoint.")
 public enum ServerDummyEventType implements EventTypeEnum {
 
+    @Internal
     NO_DEF();
 
     private final List<Class<?>> classes;
